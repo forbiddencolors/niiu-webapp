@@ -1,10 +1,6 @@
 angular.module('demoWebAppApp')
 .controller('SectionsCtrl', ['$scope','$location', function ($scope, $location, $http) {
-	// $scope.sections = [
-	// 	{ name: 'politic' },
-	// 	{ name: 'AngularJS' },
-	// 	{ name: 'Karma' }
-	// ];
+	
 	$scope.sections = [];
 
 	var getArticleUrl = 'http://dev.niiu.de/articles/sync_3s';
@@ -20,28 +16,21 @@ angular.module('demoWebAppApp')
 }
 };
 	var jsonString = JSON.stringify(DataObject);
-
-
-
 	var getArticleData = {data:jsonString};
-
-
-setTimeout(function(){
-				
-				console.log($scope.sections);
-
-			}, 2500);
-
-
 
 	$.post(getArticleUrl, getArticleData, function(data){
 		if (data) {
-			setTimeout(function(){
 				dataResponse = data.data.newSections;
-				return $scope.sections = dataResponse
-			}, 500);
+
+				for (var i = dataResponse.length - 1; i >= 0; i--) {
+					$scope.sections.push(dataResponse[i])
+				};
+
+				$scope.$apply();
+				
 		}
 	}, 'json');
+
 
 
 	$scope.enterSection = function() {
