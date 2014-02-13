@@ -138,7 +138,9 @@ angular.module('demoWebAppApp')
 
 	$.post(getArticleUrl, getArticleData, function(data){
 		if (data) {
-				dataResponse = data.data.articles[1];
+				dataResponse = data.data.articles;
+
+				console.log(dataResponse);
 
 				for (var i = dataResponse.length - 1; i >= 0; i--) {
 					$scope.articles.push(dataResponse[i])
