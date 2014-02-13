@@ -6,7 +6,7 @@ angular.module('demoWebAppApp', [
 	'ngSanitize',
 	'ngRoute'
 ])
-.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 
 	$routeProvider
 	.when('/', {
@@ -28,6 +28,7 @@ angular.module('demoWebAppApp', [
 	.otherwise({
 		redirectTo: '/'
 	});
+
 
 	if(window.history && window.history.pushState){
 		$locationProvider.html5Mode(true);
