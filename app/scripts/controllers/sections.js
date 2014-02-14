@@ -3,35 +3,115 @@ angular.module('demoWebAppApp')
 	
 	$scope.sections = [];
 
-	var getArticleUrl = 'http://dev.niiu.de/articles/sync_3s';
-	var DataObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
-	'data':{
-			'lastSync':'2013-10-15 13:41:25',
-			'sections':[1,2,3,5,6,7,8,9,10],
-			'sources':[8,9,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],
-			'subsections':[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
-			'sections_subsections':[271,273,274,296,297,298,299,300,301,302,303,304],
-			'sources_sections':[960,1102,1498,1536,1547,1548,1550,1553,1645,1649,1664,1667,1681,1748,1750],
-			'sources_subsections':[62,63,129,140,141,174,176,178,182,184,193,194,195,202,203,204]
-		}
-	};
-	var jsonString = JSON.stringify(DataObject);
-	var getArticleData = {data:jsonString};
 
-	$.post(getArticleUrl, getArticleData, function(data){
-		if (data) {
-			var dataResponse = data.data.newSections;
+	// open pouch db section
+	var db = PouchDB('sections');
+	// remote controle with couchDB false
+	var remoteCouch = false,
+		getArticleUrl = 'http://dev.niiu.de/articles/sync_3s',
+		Doc_count;
 
-			for (var i = dataResponse.length - 1; i >= 0; i--) {
-				$scope.sections.push(dataResponse[i]);
+	db.info(function(err, info) { 
+		Doc_count = info.doc_count;
+	});
+
+	if (Doc_count < 1) {
+		initialDataSettings();
+	} else {
+		updateDataSettings();
+	}
+
+	function getData(DataObject) {
+		// stringify json data object
+		var jsonString = JSON.stringify(DataObject);
+		// put string in object with key = data
+		var getArticleData = {data:jsonString};
+
+		// get section data from api
+		$.post(getArticleUrl, getArticleData, function(data){
+			if (data) {
+				var dataResponse = data.data.newSections;
+				
+				for (var i = dataResponse.length - 1; i >= 0; i--) {
+					$scope.sections.push(dataResponse[i]);
+				}
+
+				// apply data to scope
+				$scope.$apply();
+
+				// call function add to database and add data in bulk to local DB
+				addSection(dataResponse);
+
 			}
+		}, 'json');
+	}
 
-			$scope.$apply();
+	// first time app is turned on and we do not have nothing in local DB
+	function initialDataSettings() {
+		
+		
+		var DataObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
+		'data':{
+				'lastSync':'2013-10-15 13:41:25',
+				'sections':[],
+				'sources':[],
+				'subsections':[],
+				'sections_subsections':[],
+				'sources_sections':[],
+				'sources_subsections':[]
+			}
+		};
 
-		}
-	}, 'json');
+		getData(DataObject);
+
+	}
+
+	// this is update for local DB
+	function updateDataSettings() {
+
+		var sections = [];
+
+		// get all section id from database
+		db.allDocs({include_docs: true}, function(err, response) { 
+
+			var databaseResponse = response.rows;
+
+			for (var i = databaseResponse.length - 1; i >= 0; i--) {
+				var id = databaseResponse[i].doc.id;
+
+				sections.push(id);
+
+			};
 
 
+		});
+
+		var DataObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
+		'data':{
+				'lastSync':'2013-10-15 13:41:25',
+				'sections': sections,
+				'sources':[],
+				'subsections':[],
+				'sections_subsections':[],
+				'sources_sections':[],
+				'sources_subsections':[]
+			}
+		};
+		
+		getData(DataObject);
+		
+	}
+
+
+	// add section in bulk function
+	function addSection(dataResponse) {
+		var data = dataResponse;
+
+		db.bulkDocs({docs: dataResponse}, function(err, response) { console.log(dataResponse) });
+
+	}
+
+	
 
 	$scope.enterSection = function() {
 		$location.path( '/articles' );
