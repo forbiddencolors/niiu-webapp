@@ -10,19 +10,19 @@ angular.module('demoWebAppApp', [
 
 	$routeProvider
 	.when('/', {
-		templateUrl: 'views/login.html',
+		templateUrl: '/views/login.html',
 		controller: 'LoginCtrl'
 	})
 	.when('/main', {
-		templateUrl: 'views/main.html',
+		templateUrl: '/views/main.html',
 		controller: 'SectionsCtrl'
 	})
 	.when('/articles', {
-		templateUrl: 'views/articles.html',
+		templateUrl: '/views/articles.html',
 		controller: 'ArticlesCtrl'
 	})
-	.when('/article', {
-		templateUrl: 'views/article.html',
+	.when('/article/:id', {
+		templateUrl: '/views/article.html',
 		controller: 'ArticleCtrl'
 	})
 	.otherwise({

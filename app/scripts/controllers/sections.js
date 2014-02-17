@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections1');
+	var db = PouchDB('sections12');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 		getArticleUrl = 'http://dev.niiu.de/articles/sync_3s',
@@ -13,14 +13,17 @@ angular.module('demoWebAppApp')
 
 	db.info(function(err, info) { 
 		Doc_count = info.doc_count;
+
+		// check if have data in DB or make fresh load of data
+		if (Doc_count < 1) {
+			initialDataSettings();
+		} else {
+			updateDataSettings();
+		}
+
 	});
 
-	// check if have data in DB or make fresh load of data
-	if (Doc_count < 1) {
-		initialDataSettings();
-	} else {
-		updateDataSettings();
-	}
+	
 
 	
 
@@ -43,8 +46,9 @@ angular.module('demoWebAppApp')
 				// apply data to scope
 				$scope.$apply();
 
-				// call function add to database and add data in bulk to local DB
+				// call function add to database and add data to local DB
 				addSection(dataResponse);
+
 
 			}
 		}, 'json');
@@ -163,7 +167,6 @@ angular.module('demoWebAppApp')
 
 	// add section in bulk function
 	function addSection(dataResponse) {
-
 
 		for (var i = dataResponse.length - 1; i >= 0; i--) {
 			

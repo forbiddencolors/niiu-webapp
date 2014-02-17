@@ -1,13 +1,8 @@
 angular.module('demoWebAppApp')
-.controller('ArticlesCtrl',  ['$scope','$location' ,function ($scope, $location) {
-	// $scope.articles = [
-	// 	{ title: 'Bahn-Schnellstrecke nach Westen ab November wieder offen', content: 'Berlin - Ulrich Homburg und Volker Kefer haben merklich Freude an diesem Termin. Immer neue Worte finden die zwei Bahn-Vorstände für ihre Botschaft, am Dienstagmittag im Bahntower in Berlin-Mitte. „Das volle Angebot, volle Geschwindigkeit.“ – „Sämtliche Verzögerungen aufgehoben.“ – „Der Zugverkehr rollt wieder nach Normalplan.“ – „Leistung in gewohnter Qualität.“</p>' },
-	// 	{ title: 'politic', content: 'Berlin - Ulrich Homburg und Volker Kefer haben merklich Freude an diesem Termin. Immer neue Worte finden die zwei Bahn-Vorstände für ihre Botschaft, am Dienstagmittag im Bahntower in Berlin-Mitte. „Das volle Angebot, volle Geschwindigkeit.“ – „Sämtliche Verzögerungen aufgehoben.“ – „Der Zugverkehr rollt wieder nach Normalplan.“ – „Leistung in gewohnter Qualität.“</p>' },
-	// 	{ title: 'politic', content: 'Berlin - Ulrich Homburg und Volker Kefer haben merklich Freude an diesem Termin. Immer neue Worte finden die zwei Bahn-Vorstände für ihre Botschaft, am Dienstagmittag im Bahntower in Berlin-Mitte. „Das volle Angebot, volle Geschwindigkeit.“ – „Sämtliche Verzögerungen aufgehoben.“ – „Der Zugverkehr rollt wieder nach Normalplan.“ – „Leistung in gewohnter Qualität.“</p>' },
-	// ];
+.controller('ArticlesCtrl',  ['$scope','$location', function ($scope, $location) {
 
     // open pouch db section
-    var db = PouchDB('Articles11');
+    var db = PouchDB('Articles11.3');
     // remote controle with couchDB false
     var remoteCouch = false,
         getArticleUrl = 'http://dev.niiu.de/articles/get_articles';
@@ -19,7 +14,7 @@ angular.module('demoWebAppApp')
         if (Doc_count < 1) {
             initialDataSettings();
         } else {
-            // updateDataSettings();
+            renderFromDB();
         }
     });
 
@@ -49,8 +44,8 @@ angular.module('demoWebAppApp')
         });
         
     }
-    renderFromDB();
     
+
         
     function initialDataSettings() {
         var DataObject = {
@@ -183,11 +178,15 @@ angular.module('demoWebAppApp')
     }
     
     function getData(DataObject) {
+
         var jsonString = JSON.stringify(DataObject);
         var getArticleData = {data:jsonString};
 
+     
         $.post(getArticleUrl, getArticleData, function(data){
+
             if (data) {
+
                     dataResponse = data.data.articles;
 
                     for (var i = dataResponse.length - 1; i >= 0; i--) {
@@ -208,24 +207,34 @@ angular.module('demoWebAppApp')
     function addSection(dataResponse) {
             console.log(dataResponse)
 
+        var data = [];
+        var serverArticleNum = dataResponse.length;
+        var NumOfArticleInArrey = 0;
 
         for (var i = dataResponse.length - 1; i >= 0; i--) {
-            db.put({
+            objectData = {
               _id: dataResponse[i].id,
               content: dataResponse[i].content,
               published_date: dataResponse[i].published_date,
               section_id: dataResponse[i].sections.section_id,
               title: dataResponse[i].title,
               web_link: dataResponse[i].web_link
-            });
+            };
+            
+            NumOfArticleInArrey++
+
+            data.push(objectData);
+
+            console.log(serverArticleNum);
+            console.log(NumOfArticleInArrey);
 
         };
+
+        if (NumOfArticleInArrey == serverArticleNum) {
+            console.log(data);
+            db.bulkDocs({docs: data}, function(err, response) { });
+        }
+
     }
 
-
-
-
-	$scope.enterArticle = function() {
-		$location.path( '/article' );
-	};
 }]);

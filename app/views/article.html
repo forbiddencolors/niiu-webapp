@@ -2,9 +2,16 @@
  
  <article ng-repeat="articleData in article" >
  	<header>
- 		<h1>{{articleData.title}}D</h3>
+ 		<h1>{{articleData.title}}</h3>
+ 		<p class="blog-post-meta">{{articleData.published_date}}</p>
  	</header>
 	<p>{{articleData.content}}</p>
+	<footer>
+		<span>Resurce:</span>
+ 		<p>{{articleData.web_link}}</p>
+	</footer>
  </article>
 				
 </section>
+
+
