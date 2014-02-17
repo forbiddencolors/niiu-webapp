@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections');
+	var db = PouchDB('sections1');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 		getArticleUrl = 'http://dev.niiu.de/articles/sync_3s',
@@ -15,12 +15,16 @@ angular.module('demoWebAppApp')
 		Doc_count = info.doc_count;
 	});
 
+	// check if have data in DB or make fresh load of data
 	if (Doc_count < 1) {
 		initialDataSettings();
 	} else {
 		updateDataSettings();
 	}
 
+	
+
+	// engine for getting data from api
 	function getData(DataObject) {
 		// stringify json data object
 		var jsonString = JSON.stringify(DataObject);
@@ -46,6 +50,54 @@ angular.module('demoWebAppApp')
 		}, 'json');
 	}
 
+	function getDataUpdate(DataObject) {
+
+		// stringify json data object
+		var jsonString = JSON.stringify(DataObject);
+		// put string in object with key = data
+		var getArticleData = {data:jsonString};
+
+		// get section data from api
+		$.post(getArticleUrl, getArticleData, function(data){
+			if (data) {
+				var dataResponse = data.data.updatedSections;
+
+				for (var i = dataResponse.length - 1; i >= 0; i--) {
+					$scope.sections.push(dataResponse[i]);
+				}
+
+				// call function add to database and add data in bulk to local DB
+				updateSection(dataResponse);
+
+			}
+		}, 'json');
+		
+	}
+
+	function renderFromDB() {
+
+		db.allDocs({include_docs: true}, function(err, response) { 
+
+			var databaseResponse = response.rows;
+
+			var sections = [];
+
+			for (var i = databaseResponse.length - 1; i >= 0; i--) {
+				
+				sections.push(databaseResponse[i].doc);
+
+			};
+			$scope.sections = sections;
+			
+			// apply data to scope
+			$scope.$apply();
+			
+		});
+		
+	}
+
+	renderFromDB();
+
 	// first time app is turned on and we do not have nothing in local DB
 	function initialDataSettings() {
 		
@@ -70,6 +122,7 @@ angular.module('demoWebAppApp')
 	function updateDataSettings() {
 
 		var sections = [];
+		var sectionList = [];
 
 		// get all section id from database
 		db.allDocs({include_docs: true}, function(err, response) { 
@@ -77,19 +130,21 @@ angular.module('demoWebAppApp')
 			var databaseResponse = response.rows;
 
 			for (var i = databaseResponse.length - 1; i >= 0; i--) {
-				var id = databaseResponse[i].doc.id;
+				
+				var id = databaseResponse[i].doc._id;
 
 				sections.push(id);
 
 			};
+		 	sectionListString = sections.join(',');
+			sectionList.push(sectionListString);
 
 
-		});
 
 		var DataObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
 		'data':{
 				'lastSync':'2013-10-15 13:41:25',
-				'sections': sections,
+				'sections': sectionList,
 				'sources':[],
 				'subsections':[],
 				'sections_subsections':[],
@@ -98,17 +153,44 @@ angular.module('demoWebAppApp')
 			}
 		};
 		
-		getData(DataObject);
+		// call get data function
+		getDataUpdate(DataObject);
+
+		});
 		
 	}
 
 
 	// add section in bulk function
 	function addSection(dataResponse) {
-		var data = dataResponse;
 
-		db.bulkDocs({docs: dataResponse}, function(err, response) { console.log(dataResponse) });
 
+		for (var i = dataResponse.length - 1; i >= 0; i--) {
+			
+			db.put({
+			  _id: dataResponse[i].id,
+			  name: dataResponse[i].name
+			});
+
+		};
+	}
+
+	function updateSection(dataResponse) {
+
+		for (var i = dataResponse.length - 1; i >= 0; i--) {
+				
+			var id = dataResponse[i].id,
+				name = dataResponse[i].name;
+
+			db.get( id, function(err, resp) {
+				db.put({
+					_id: id,
+					_rev: resp._rev,
+					name: name
+				});
+			});
+
+		};
 	}
 
 	
