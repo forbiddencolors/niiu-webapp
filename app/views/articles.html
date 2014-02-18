@@ -2,7 +2,7 @@
 	<ul class="articles row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in articles">
 			<h3>{{article.title}}</h3>
-			<div ng-bind-html="article.content" class="article"></div>
+			<div ng-bind-html="article.content" class="article" ></div>
 			<a class="btn btn-default" href="#" role="button" ng-href="/article/{{article._id}}">Read more &raquo;</a>
 		</li>
 	</ul>

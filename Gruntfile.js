@@ -398,19 +398,22 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'bower-install',
+    'compass:dist', 
     'useminPrepare',
+    'imagemin',
     'concurrent:dist',
     'autoprefixer',
+    'htmlmin',
     'concat',
     'ngmin',
-    'copy:dist',
     'cdnify',
     'cssmin',
+    'copy:dist',
     'uglify',
     'rev',
-    'usemin',
-    'htmlmin'
+    'usemin'
   ]);
+
 
   grunt.registerTask('default', [
     'newer:jshint',

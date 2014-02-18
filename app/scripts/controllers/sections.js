@@ -5,10 +5,10 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections12');
+	var db = PouchDB('sections12.5');
 	// remote controle with couchDB false
 	var remoteCouch = false,
-		getArticleUrl = 'http://dev.niiu.de/articles/sync_3s',
+		getArticleUrl = 'http://kirkthedev.com/niiu/proxy.php?url=http://dev.niiu.de/articles/sync_3s',
 		Doc_count;
 
 	db.info(function(err, info) { 
@@ -37,7 +37,14 @@ angular.module('demoWebAppApp')
 		// get section data from api
 		$.post(getArticleUrl, getArticleData, function(data){
 			if (data) {
-				var dataResponse = data.data.newSections;
+
+
+
+				var dataRepair = JSON.parse(data.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"3s\",/,'{\"api\":\"3s\",'));
+
+				var dataResponse = dataRepair.data.newSections;
+
+				
 				
 				for (var i = dataResponse.length - 1; i >= 0; i--) {
 					$scope.sections.push(dataResponse[i]);
@@ -64,8 +71,11 @@ angular.module('demoWebAppApp')
 		// get section data from api
 		$.post(getArticleUrl, getArticleData, function(data){
 			if (data) {
-				var dataResponse = data.data.updatedSections;
 
+				var dataRepair = JSON.parse(data.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"3s\",/,'{\"api\":\"3s\",'));
+
+				var dataResponse = dataRepair.data.updatedSections;
+				
 				for (var i = dataResponse.length - 1; i >= 0; i--) {
 					$scope.sections.push(dataResponse[i]);
 				}

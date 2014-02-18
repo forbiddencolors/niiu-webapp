@@ -30,6 +30,40 @@ angular.module('demoWebAppApp', [
 	});
 
 
+	// $routeProvider
+	// .when('/', {
+	// 	templateUrl: 'niiu-demo/views/login.html',
+	// 	controller: 'LoginCtrl'
+	// })
+	// .when('/main', {
+	// 	templateUrl: 'niiu-demo/views/main.html',
+	// 	controller: 'SectionsCtrl'
+	// })
+	// .when('/articles', {
+	// 	templateUrl: 'niiu-demo/views/articles.html',
+	// 	controller: 'ArticlesCtrl'
+	// })
+	// .when('/article/:id', {
+	// 	templateUrl: '../niiu-demo/views/article.html',
+	// 	controller: 'ArticleCtrl'
+	// })
+	// .otherwise({
+	// 	redirectTo: '/'
+	// });
+
+
+
+
+	$httpProvider.defaults.transformRequest = function(data){
+        if (data === undefined) {
+            return data;
+        }
+        return $.param(data);
+    }
+
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+
+
 	if(window.history && window.history.pushState){
 		$locationProvider.html5Mode(true);
 	}
