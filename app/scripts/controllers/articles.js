@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 	var db = PouchDB('Articles11.10');
 	// remote controle with couchDB false
 	var remoteCouch = false,
-	getArticleUrl = 'http://kirkthedev.com/niiu/proxy.php?url=http://dev.niiu.de/articles/get_articles';
+	getArticleUrl = 'http://localhost/niiu/niiu-webapp/articles.json';
 
 	db.info(function(err, info) { 
 		Doc_count = info.doc_count;
@@ -54,7 +54,7 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-19 13:17:50",
+				"last3SSync": "2014-02-20 09:17:50",
 				"lastContentSync": "2013-02-18 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,
@@ -183,29 +183,29 @@ angular.module('demoWebAppApp')
 		var getArticleData = {data:jsonString};
 
 
-		$http.post(getArticleUrl, getArticleData).success(function(response) {
+		$http.get(getArticleUrl).success(function(response) {
 			
 			if (response) {
 
-				var dataClean = response.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"content\",/,'{\"api\":\"content\",');
-				// var dataRepair = JSON.parse(dataClean);
+				// var dataClean = response.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"content\",/,'{\"api\":\"content\",');
+				// // var dataRepair = JSON.parse(dataClean);
 
-				var pa = JSON.stringify(dataClean)
-				var dataRepair2 = JSON.parse(pa);
+				// var pa = JSON.stringify(dataClean)
+				// var dataRepair2 = JSON.parse(pa);
 				
 
-				console.log(dataRepair2);
+				// console.log(response.data);
 
 				// console.log(dataRepair);
 
-				// var dataResponse = dataRepair.data.articles;
+				var dataResponse = response.data.articles;
 
-				// for (var i = dataResponse.length - 1; i >= 0; i--) {
-				// 	$scope.articles.push(dataResponse[i])
-				// };
+				for (var i = dataResponse.length - 1; i >= 0; i--) {
+					$scope.articles.push(dataResponse[i])
+				};
 
-				// // call function add to database and add data to local DB
-				// addSection(dataResponse);
+				// call function add to database and add data to local DB
+				addSection(dataResponse);
 					
 			}
 				

@@ -5,7 +5,7 @@
  		<h1>{{articleData.title}}</h3>
  		<p class="blog-post-meta">{{articleData.published_date}}</p>
  	</header>
-	<p>{{articleData.content}}</p>
+	<p ng-bind-html="articleData.content"></p>
 	<footer>
 		<span>Resurce:</span>
  		<p>{{articleData.web_link}}</p>

@@ -4,7 +4,7 @@ angular.module('demoWebAppApp')
 
 
 	 // open pouch db section
-    var db = PouchDB('Articles11.9');
+    var db = PouchDB('Articles11.10');
 
 	$scope.article
 
