@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections12.5888');
+	var db = PouchDB('sections12.522232');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 		getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s',
