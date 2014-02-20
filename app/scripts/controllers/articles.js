@@ -5,13 +5,14 @@ angular.module('demoWebAppApp')
 	var db = PouchDB('Articles11.10');
 	// remote controle with couchDB false
 	var remoteCouch = false,
-	getArticleUrl = 'http://localhost/niiu/niiu-webapp/articles.json';
+	//getArticleUrl = 'http://localhost/niiu/niiu-webapp/articles.json';
+	getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
 
 	db.info(function(err, info) { 
 		Doc_count = info.doc_count;
 
 		// check if have data in DB or make fresh load of data
-		if (Doc_count < 1) {
+		if (Doc_count < 1|1) {
 			initialDataSettings();
 		} else {
 			renderFromDB();
@@ -54,7 +55,7 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-20 09:17:50",
+				"last3SSync": "2014-02-22 09:17:50",
 				"lastContentSync": "2013-02-18 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,
@@ -181,12 +182,14 @@ angular.module('demoWebAppApp')
 
 		var jsonString = JSON.stringify(DataObject);
 		var getArticleData = {data:jsonString};
+//console.log('asking for data');
 
-
-		$http.get(getArticleUrl).success(function(response) {
-			
+		$.post(getArticleUrl, getArticleData, function(response) {
+			//console.log('asking for data from '+getArticleUrl );
 			if (response) {
+				console.log('asking for data from '+getArticleUrl );
 
+				console.log(response);
 				// var dataClean = response.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"content\",/,'{\"api\":\"content\",');
 				// // var dataRepair = JSON.parse(dataClean);
 
@@ -198,18 +201,21 @@ angular.module('demoWebAppApp')
 
 				// console.log(dataRepair);
 
-				var dataResponse = response.data.articles;
+				//var dataResponse = response.data.articles;
+				//console.log(dataResponse);
+				//$scope.articles.push(dataResponse);
+				$scope.articles=response.contents.data.articles;
 
-				for (var i = dataResponse.length - 1; i >= 0; i--) {
-					$scope.articles.push(dataResponse[i])
-				};
-
+				//for (var i = dataResponse.length - 1; i >= 0; i--) {
+					//$scope.articles.push(dataResponse[i])
+				//};
+				$scope.$apply();
 				// call function add to database and add data to local DB
-				addSection(dataResponse);
+				//addSection(response.contents.data.articles);
 					
 			}
 				
-		});
+		}, 'json');
 
 		
 	}
@@ -219,7 +225,7 @@ angular.module('demoWebAppApp')
 	
 	// add section in bulk function
 	function addSection(dataResponse) {
-		console.log(dataResponse)
+		//console.log(dataResponse)
 
 		var data = [];
 		var serverArticleNum = dataResponse.length;
@@ -235,14 +241,14 @@ angular.module('demoWebAppApp')
 				web_link: dataResponse[i].web_link
 			};
 
-			console.log(dataResponse[i].media);
+			//console.log(dataResponse[i].media);
 
 			
 			NumOfArticleInArrey++
 
 			data.push(objectData);
 
-			console.log(dataResponse);
+			//console.log(dataResponse);
 
 		};
 
