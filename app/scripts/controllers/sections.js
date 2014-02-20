@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections12.5');
+	var db = PouchDB('sections12.5888');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 		getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s',
@@ -15,8 +15,9 @@ angular.module('demoWebAppApp')
 		Doc_count = info.doc_count;
 
 		// check if have data in DB or make fresh load of data
-		if (Doc_count < 1) {
+		if (Doc_count < 1||1) {
 			initialDataSettings();
+			console.log('kirk');
 		} else {
 			updateDataSettings();
 		}
@@ -37,11 +38,12 @@ angular.module('demoWebAppApp')
 		// get section data from api
 		$.post(getArticleUrl, getArticleData, function(data){
 			if (data) {
+					console.log('bojan');
+				console.log(data.contents.data.newSections);
+				//var dataResponse =JSON.parse(data);
 
-				//console.log(JSON.parse(data));
-				var dataResponse =JSON.parse(data);
-
-				$scope.sections = dataResponse.data.newSections;
+				$scope.sections = data.contents.data.newSections;
+				var holdMySections = data.contents.data.newSections;
 				//console.log($scope.sections);
 
 				//var dataRepair = JSON.parse(data.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"3s\",/,'{\"api\":\"3s\",'));
@@ -50,15 +52,15 @@ angular.module('demoWebAppApp')
 
 				
 				
-				for (var i = dataResponse.length - 1; i >= 0; i--) {
+				//for (var i = dataResponse.length - 1; i >= 0; i--) {
 					//$scope.sections.push(dataResponse[i]);
-				}
+				//}
 
 				// apply data to scope
 				$scope.$apply();
 
 				// call function add to database and add data to local DB
-				addSection(dataResponse);
+				addSection(holdMySections);
 
 
 			}
