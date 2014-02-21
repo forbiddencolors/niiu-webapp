@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections12.522232');
+	var db = PouchDB('sections12.8');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 		getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s',
@@ -17,7 +17,6 @@ angular.module('demoWebAppApp')
 		// check if have data in DB or make fresh load of data
 		if (Doc_count < 1||1) {
 			initialDataSettings();
-			console.log('kirk');
 		} else {
 			updateDataSettings();
 		}
@@ -38,29 +37,16 @@ angular.module('demoWebAppApp')
 		// get section data from api
 		$.post(getArticleUrl, getArticleData, function(data){
 			if (data) {
-					console.log('bojan');
-				console.log(data.contents.data.newSections);
-				//var dataResponse =JSON.parse(data);
 
-				$scope.sections = data.contents.data.newSections;
-				var holdMySections = data.contents.data.newSections;
-				//console.log($scope.sections);
+				var Sections = data.contents.data.newSections;
 
-				//var dataRepair = JSON.parse(data.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"3s\",/,'{\"api\":\"3s\",'));
-
-				//var dataResponse = dataRepair.data.newSections;
-
-				
-				
-				//for (var i = dataResponse.length - 1; i >= 0; i--) {
-					//$scope.sections.push(dataResponse[i]);
-				//}
+				$scope.sections = Sections;
 
 				// apply data to scope
 				$scope.$apply();
 
 				// call function add to database and add data to local DB
-				addSection(holdMySections);
+				addSection(Sections);
 
 
 			}
@@ -77,22 +63,13 @@ angular.module('demoWebAppApp')
 		// get section data from api
 		$.post(getArticleUrl, getArticleData, function(data){
 			if (data) {
-				//console.log(data);
-				//var dataRepair = JSON.parse(data.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"3s\",/,'{\"api\":\"3s\",'));
 				var dataContents = data.contents;
-				//console.log(dataContents);
-				//console.log(data.contents.data.updatedSections);
-				//var dataResponse = dataRepair.data.updatedSections;
+				
 				var updatedSections = dataContents.data.updatedSections;
-				console.log(updatedSections);
 
 				$scope.sections.push(updatedSections);
 				$scope.$apply();
 				
-				//for (var i = dataResponse.length - 1; i >= 0; i--) {
-					//$scope.sections.push(dataResponse[i]);
-				//}
-
 				// call function add to database and add data in bulk to local DB
 				updateSection(updatedSections);
 

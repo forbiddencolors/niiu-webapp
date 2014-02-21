@@ -4,14 +4,15 @@ angular.module('demoWebAppApp')
 
 
 	 // open pouch db section
-    var db = PouchDB('Articles11.10');
+    var db = PouchDB('Articles11.11');
 
 	$scope.article
 
 	var articleID = $routeParams.id;
+		console.log(articleID);
 
 	db.get( articleID, function(err, doc) { 
-
+		console.log(doc);
 	    $scope.article = [ doc ];
 
 	    // apply data to scope
