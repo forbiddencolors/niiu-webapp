@@ -8,48 +8,48 @@ angular.module('demoWebAppApp', [
 ])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 
-	$routeProvider
-	.when('/', {
-		templateUrl: '/views/login.html',
-		controller: 'LoginCtrl'
-	})
-	.when('/main', {
-		templateUrl: '/views/main.html',
-		controller: 'SectionsCtrl'
-	})
-	.when('/articles', {
-		templateUrl: '/views/articles.html',
-		controller: 'ArticlesCtrl'
-	})
-	.when('/article/:id', {
-		templateUrl: '/views/article.html',
-		controller: 'ArticleCtrl'
-	})
-	.otherwise({
-		redirectTo: '/'
-	});
-
-
 	// $routeProvider
 	// .when('/', {
-	// 	templateUrl: 'niiu-demo/views/login.html',
+	// 	templateUrl: '/views/login.html',
 	// 	controller: 'LoginCtrl'
 	// })
 	// .when('/main', {
-	// 	templateUrl: 'niiu-demo/views/main.html',
+	// 	templateUrl: '/views/main.html',
 	// 	controller: 'SectionsCtrl'
 	// })
 	// .when('/articles', {
-	// 	templateUrl: 'niiu-demo/views/articles.html',
+	// 	templateUrl: '/views/articles.html',
 	// 	controller: 'ArticlesCtrl'
 	// })
 	// .when('/article/:id', {
-	// 	templateUrl: '../niiu-demo/views/article.html',
+	// 	templateUrl: '/views/article.html',
 	// 	controller: 'ArticleCtrl'
 	// })
 	// .otherwise({
 	// 	redirectTo: '/'
 	// });
+
+
+	$routeProvider
+	.when('/', {
+		templateUrl: 'niiu-demo/views/login.html',
+		controller: 'LoginCtrl'
+	})
+	.when('/main', {
+		templateUrl: 'niiu-demo/views/main.html',
+		controller: 'SectionsCtrl'
+	})
+	.when('/articles', {
+		templateUrl: 'niiu-demo/views/articles.html',
+		controller: 'ArticlesCtrl'
+	})
+	.when('/article/:id', {
+		templateUrl: '../niiu-demo/views/article.html',
+		controller: 'ArticleCtrl'
+	})
+	.otherwise({
+		redirectTo: '/'
+	});
 
 	// $routeProvider
 	// .when('http://localhost/niiu/niiu-webapp/dist/', {
