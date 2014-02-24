@@ -2,7 +2,7 @@ angular.module('demoWebAppApp')
 .controller('ArticlesCtrl',  ['$scope','$location','$http', function ($scope, $location, $http) {
 
 	// open pouch db section
-	var db = PouchDB('Articles11.11');
+	var db = PouchDB('Articles12.26');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 	
@@ -13,7 +13,23 @@ angular.module('demoWebAppApp')
 
 		// check if have data in DB or make fresh load of data
 		if (Doc_count < 1) {
-			initialDataSettings();
+			console.log(1)
+
+
+			            // workaround for iOS 7 - verify whether the insert method's success callback was called
+			            if (/iphone|ipad/i.test(navigator.userAgent) && navigator.userAgent.indexOf('Version/7') !== -1) {
+			                config.timerId = setInterval(function () {
+			                    if (Doc_count < 1) {
+									initialDataSettings();
+			                    }
+			                    else {
+			                        clearInterval(config.timerId);
+			                    }
+			                }, 15000);
+			            } else {
+							initialDataSettings();
+			            };
+
 		} else {
 			renderFromDB();
 		}
@@ -55,7 +71,7 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-22 09:17:50",
+				"last3SSync": "2014-02-24 09:17:50",
 				"lastContentSync": "2013-02-18 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,

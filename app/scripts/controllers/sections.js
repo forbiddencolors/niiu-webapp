@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections12.8');
+	var db = PouchDB('sections12.24');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 		getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s',
@@ -15,7 +15,8 @@ angular.module('demoWebAppApp')
 		Doc_count = info.doc_count;
 
 		// check if have data in DB or make fresh load of data
-		if (Doc_count < 1||1) {
+		if (Doc_count < 1) {
+			console.log(2)
 			initialDataSettings();
 		} else {
 			updateDataSettings();
