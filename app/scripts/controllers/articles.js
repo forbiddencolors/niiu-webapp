@@ -2,18 +2,34 @@ angular.module('demoWebAppApp')
 .controller('ArticlesCtrl',  ['$scope','$location','$http', function ($scope, $location, $http) {
 
 	// open pouch db section
-	var db = PouchDB('Articles11.10');
+	var db = PouchDB('Articles12.26');
 	// remote controle with couchDB false
 	var remoteCouch = false,
-	//getArticleUrl = 'http://localhost/niiu/niiu-webapp/articles.json';
+	
 	getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
 
 	db.info(function(err, info) { 
 		Doc_count = info.doc_count;
 
 		// check if have data in DB or make fresh load of data
-		if (Doc_count < 1|1) {
-			initialDataSettings();
+		if (Doc_count < 1) {
+			console.log(1)
+
+
+			            // workaround for iOS 7 - verify whether the insert method's success callback was called
+			            if (/iphone|ipad/i.test(navigator.userAgent) && navigator.userAgent.indexOf('Version/7') !== -1) {
+			                config.timerId = setInterval(function () {
+			                    if (Doc_count < 1) {
+									initialDataSettings();
+			                    }
+			                    else {
+			                        clearInterval(config.timerId);
+			                    }
+			                }, 15000);
+			            } else {
+							initialDataSettings();
+			            };
+
 		} else {
 			renderFromDB();
 		}
@@ -55,7 +71,7 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-22 09:17:50",
+				"last3SSync": "2014-02-24 09:17:50",
 				"lastContentSync": "2013-02-18 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,
@@ -182,36 +198,16 @@ angular.module('demoWebAppApp')
 
 		var jsonString = JSON.stringify(DataObject);
 		var getArticleData = {data:jsonString};
-//console.log('asking for data');
 
 		$.post(getArticleUrl, getArticleData, function(response) {
-			//console.log('asking for data from '+getArticleUrl );
 			if (response) {
-				console.log('asking for data from '+getArticleUrl );
-
-				console.log(response);
-				// var dataClean = response.contents.replace(/\s/g,'').replace(/^.*{\"api\":\"content\",/,'{\"api\":\"content\",');
-				// // var dataRepair = JSON.parse(dataClean);
-
-				// var pa = JSON.stringify(dataClean)
-				// var dataRepair2 = JSON.parse(pa);
 				
+				var data = response.contents.data.articles;
+				$scope.articles = data;
 
-				// console.log(response.data);
-
-				// console.log(dataRepair);
-
-				//var dataResponse = response.data.articles;
-				//console.log(dataResponse);
-				//$scope.articles.push(dataResponse);
-				$scope.articles=response.contents.data.articles;
-
-				//for (var i = dataResponse.length - 1; i >= 0; i--) {
-					//$scope.articles.push(dataResponse[i])
-				//};
 				$scope.$apply();
 				// call function add to database and add data to local DB
-				//addSection(response.contents.data.articles);
+				addSection(data);
 					
 			}
 				
@@ -241,14 +237,10 @@ angular.module('demoWebAppApp')
 				web_link: dataResponse[i].web_link
 			};
 
-			//console.log(dataResponse[i].media);
-
 			
 			NumOfArticleInArrey++
 
 			data.push(objectData);
-
-			//console.log(dataResponse);
 
 		};
 

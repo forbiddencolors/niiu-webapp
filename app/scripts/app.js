@@ -51,6 +51,28 @@ angular.module('demoWebAppApp', [
 	// 	redirectTo: '/'
 	// });
 
+	// $routeProvider
+	// .when('niiu/niiu-webapp/dist/', {
+	// 	templateUrl: 'views/login.html',
+	// 	controller: 'LoginCtrl'
+	// })
+	// .when('niiu/niiu-webapp/dist/main', {
+	// 	templateUrl: 'views/main.html',
+	// 	controller: 'SectionsCtrl'
+	// })
+	// .when('niiu/niiu-webapp/dist/articles', {
+	// 	templateUrl: 'views/articles.html',
+	// 	controller: 'ArticlesCtrl'
+	// })
+	// .when('niiu/niiu-webapp/dist/article/:id', {
+	// 	templateUrl: 'niiu-demo/views/article.html',
+	// 	controller: 'ArticleCtrl'
+	// })
+	// .otherwise({
+	// 	redirectTo: 'niiu/niiu-webapp/dist/'
+	// });
+
+
 
 
 
