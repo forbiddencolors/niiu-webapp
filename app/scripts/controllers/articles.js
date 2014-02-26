@@ -2,7 +2,7 @@ angular.module('demoWebAppApp')
 .controller('ArticlesCtrl',  ['$scope','$location','$http', function ($scope, $location, $http) {
 
 	// open pouch db section
-	var db = PouchDB('Articles12.26');
+	var db = PouchDB('Articles13');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 	
@@ -71,7 +71,7 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-24 09:17:50",
+				"last3SSync": "2014-02-25 09:17:50",
 				"lastContentSync": "2013-02-18 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,
