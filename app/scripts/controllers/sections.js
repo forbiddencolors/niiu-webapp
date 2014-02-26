@@ -7,6 +7,46 @@ angular.module('demoWebAppApp')
 
 	$scope.sections = [];
 
+	// open DB
+	var db;
+	var objectStore;
+	var dbName = "sectionsDBv2";
+	var request = indexedDB.open(dbName, 1);
+	// Create an objectStore to hold information about our customers. We're
+	// going to use "id" as our key path 
+	request.onupgradeneeded = function(event) {
+		var db = event.target.result;
+		var objectStore = db.createObjectStore("sections", { keyPath: "id" });
+	};
+	
+
+	request.onsuccess = function(event) {
+
+		// Do something with the request.result!
+		var db = event.target.result;
+		var trans = db.transaction(["sections"], "readwrite");
+		var store = trans.objectStore("sections");
+
+		// Get everything in the store;
+		var keyRange = IDBKeyRange.lowerBound(0);
+		var cursorRequest = store.openCursor(keyRange);
+
+		// var result;
+		cursorRequest.onsuccess = function(e) {
+
+		  	var result = e.target.result;
+
+		  	if(!!result == false) {
+		  		initialDataSettings();
+		  		return;
+		  	}
+
+		  	renderFromDB(result.value);
+
+		  	result.continue();
+		};
+
+	};
 
 
 	function initialDataSettings() {
@@ -87,14 +127,9 @@ angular.module('demoWebAppApp')
 
 	}
 
-	database();
-
 	function database(SectionData) {
 		// body...
 		console.log("database start");
-
-		var dbName = "sections";
-		var request = indexedDB.open(dbName, 1);
 
 		request.onerror = function(event) {
 		  // Handle errors.
@@ -104,11 +139,6 @@ angular.module('demoWebAppApp')
 			var db = event.target.result;
 
 			console.log('crating object store')
-
-			  // Create an objectStore to hold information about our customers. We're
-			  // going to use "ssn" as our key path because it's guaranteed to be
-			  // unique.
-			  var objectStore = db.createObjectStore("sections", { keyPath: "id" });
 
 			  // Create an index to search sections by name. We may have duplicates
 			  // so we can't use a unique index.
@@ -140,17 +170,17 @@ angular.module('demoWebAppApp')
 		request.onsuccess = function(event) {
 			console.log('take from DB')
 
-		  // Do something with the request.result!
-		  var db = event.target.result;
-		  var trans = db.transaction(["sections"], "readwrite");
-		  var store = trans.objectStore("sections");
+			// Do something with the request.result!
+			var db = event.target.result;
+			var trans = db.transaction(["sections"], "readwrite");
+			var store = trans.objectStore("sections");
 
-			 // Get everything in the store;
-			 var keyRange = IDBKeyRange.lowerBound(0);
-			 var cursorRequest = store.openCursor(keyRange);
+			// Get everything in the store;
+			var keyRange = IDBKeyRange.lowerBound(0);
+			var cursorRequest = store.openCursor(keyRange);
 
-			  // var result;
-			 cursorRequest.onsuccess = function(e) {
+			// var result;
+			cursorRequest.onsuccess = function(e) {
 
 			  	var result = e.target.result;
 
@@ -162,7 +192,7 @@ angular.module('demoWebAppApp')
 			  	renderFromDB(result.value);
 
 			  	result.continue();
-			  };
+			};
 
 		};
 
