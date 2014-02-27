@@ -5,7 +5,7 @@ angular.module('demoWebAppApp')
 
 
 	// open pouch db section
-	var db = PouchDB('sections12.24');
+	var db = PouchDB('sections12.28');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 		getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s',
@@ -16,9 +16,10 @@ angular.module('demoWebAppApp')
 
 		// check if have data in DB or make fresh load of data
 		if (Doc_count < 1) {
-			console.log(2)
+			console.log('getting initial data')
 			initialDataSettings();
 		} else {
+			console.log('looking for data update')
 			updateDataSettings();
 		}
 
@@ -109,7 +110,7 @@ angular.module('demoWebAppApp')
 		
 		var DataObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
 		'data':{
-				'lastSync':'2013-10-15 13:41:25',
+				'lastSync':'2014-02-26 13:41:25',
 				'sections':[],
 				'sources':[],
 				'subsections':[],
@@ -157,9 +158,12 @@ angular.module('demoWebAppApp')
 				'sources_subsections':[]
 			}
 		};
-		
-		// call get data function
-		getDataUpdate(DataObject);
+		if (navigator.onLine) {
+				// call get data function
+				getDataUpdate(DataObject);
+			} else {
+				console.log("you have to be connected to the internet to get new content.");
+			}
 
 		});
 		
@@ -199,7 +203,7 @@ angular.module('demoWebAppApp')
 
 	
 
-	$scope.enterSection = function() {
+	$scope.enterSection = function(id) {
 		$location.path( '/articles' );
 		//$scope.apply();
 	};

@@ -2,7 +2,7 @@ angular.module('demoWebAppApp')
 .controller('ArticlesCtrl',  ['$scope','$location','$http', function ($scope, $location, $http) {
 
 	// open pouch db section
-	var db = PouchDB('Articles12.26');
+	var db = PouchDB('Articles12.28');
 	// remote controle with couchDB false
 	var remoteCouch = false,
 	
@@ -13,31 +13,30 @@ angular.module('demoWebAppApp')
 
 		// check if have data in DB or make fresh load of data
 		if (Doc_count < 1) {
-			console.log(1)
+			console.log('Db exists but its empty')
 
 
-			            // workaround for iOS 7 - verify whether the insert method's success callback was called
-			            if (/iphone|ipad/i.test(navigator.userAgent) && navigator.userAgent.indexOf('Version/7') !== -1) {
-			                config.timerId = setInterval(function () {
-			                    if (Doc_count < 1) {
-									initialDataSettings();
-			                    }
-			                    else {
-			                        clearInterval(config.timerId);
-			                    }
-			                }, 15000);
-			            } else {
 							initialDataSettings();
-			            };
+
 
 		} else {
+			console.log('Db exists and has some stuff.  Lets render it')
 			renderFromDB();
+			if (navigator.onLine) {
+					checkForNew();
+			}
+
 		}
 	});
 
 
 
 	$scope.articles = [];
+
+	function checkForNew() {
+			console.log('here we should send data to get any new articles');
+			initialDataSettings();
+	}
 
 
 	function renderFromDB() {
@@ -47,16 +46,19 @@ angular.module('demoWebAppApp')
 			var databaseResponse = response.rows;
 
 			var articles = [];
+			console.log(databaseResponse);
 
 			for (var i = databaseResponse.length - 1; i >= 0; i--) {
 				
+				databaseResponse[i].doc.id=databaseResponse[i].doc._id
 				articles.push(databaseResponse[i].doc);
 
 			};
 			$scope.articles = articles;
-			
+
 			// apply data to scope
 			$scope.$apply();
+
 			
 		});
 		
@@ -71,8 +73,8 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-24 09:17:50",
-				"lastContentSync": "2013-02-18 08:13:37",
+				"last3SSync": "2014-02-26 13:17:50",
+				"lastContentSync": "2013-02-23 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,
 				"article_ids": [
@@ -190,6 +192,7 @@ angular.module('demoWebAppApp')
 			}
 		};
 
+		console.log("telling api about our 'current/inital' data settings")
 		getData(DataObject);
 
 	}
@@ -204,6 +207,7 @@ angular.module('demoWebAppApp')
 				
 				var data = response.contents.data.articles;
 				$scope.articles = data;
+				console.log(data.id)
 
 				$scope.$apply();
 				// call function add to database and add data to local DB
@@ -228,8 +232,11 @@ angular.module('demoWebAppApp')
 		var NumOfArticleInArrey = 0;
 
 		for (var i = dataResponse.length - 1; i >= 0; i--) {
+			//the _id property may be redundant calling it id is probably more useful
+			//because it maps to our json unless there is something special about this
 			objectData = {
 				_id: dataResponse[i].id,
+				id: dataResponse[i].id,
 				content: dataResponse[i].content,
 				published_date: dataResponse[i].published_date,
 				section_id: dataResponse[i].sections.section_id,
