@@ -4,21 +4,20 @@ angular.module('demoWebAppApp')
 
 
 	 // open pouch db section
-    var db = PouchDB('Articles12.25');
+	var db = new ydn.db.Storage('ydn-ArticlesTest');
 
-	$scope.article
+	$scope.article = [];
 
 	var articleID = $routeParams.id;
 		console.log(articleID);
 
-	db.get( articleID, function(err, doc) { 
-		console.log(doc);
-	    $scope.article = [ doc ];
+	db.get('articles', articleID).always(function(data) {
+		console.log(data);
 
-	    // apply data to scope
-		$scope.$apply();
-	    
+	   $scope.article.push(data);
+	   $scope.$apply();
 	});
+
 
 
 }]);

@@ -1,69 +1,27 @@
 angular.module('demoWebAppApp')
 .controller('ArticlesCtrl',  ['$scope','$location','$http', function ($scope, $location, $http) {
 
+	$scope.articles = [];
+
 	// open pouch db section
-	var db = PouchDB('Articles12.26');
+	var db = new ydn.db.Storage('ydn-ArticlesTest');
 	// remote controle with couchDB false
-	var remoteCouch = false,
-	
 	getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
 
-	db.info(function(err, info) { 
-		Doc_count = info.doc_count;
 
-		// check if have data in DB or make fresh load of data
-		if (Doc_count < 1) {
-			console.log(1)
-
-
-			            // workaround for iOS 7 - verify whether the insert method's success callback was called
-			            if (/iphone|ipad/i.test(navigator.userAgent) && navigator.userAgent.indexOf('Version/7') !== -1) {
-			                config.timerId = setInterval(function () {
-			                    if (Doc_count < 1) {
-									initialDataSettings();
-			                    }
-			                    else {
-			                        clearInterval(config.timerId);
-			                    }
-			                }, 15000);
-			            } else {
-							initialDataSettings();
-			            };
-
-		} else {
+	db.values('articles').done(function(articles) {
+		var articlesLength = articles.length;
+		if (articlesLength >= 1) {
+			console.log('existing');
 			renderFromDB();
+			// updateDataSettings();
+		} else {
+			console.log('not existing');
+			initialDataSettings();
 		}
 	});
 
-
-
-	$scope.articles = [];
-
-
-	function renderFromDB() {
-
-		db.allDocs({include_docs: true}, function(err, response) { 
-
-			var databaseResponse = response.rows;
-
-			var articles = [];
-
-			for (var i = databaseResponse.length - 1; i >= 0; i--) {
-				
-				articles.push(databaseResponse[i].doc);
-
-			};
-			$scope.articles = articles;
-			
-			// apply data to scope
-			$scope.$apply();
-			
-		});
-		
-	}
-	
-
-
+	// first time app is turned on and we do not have nothing in local DB *********************
 	function initialDataSettings() {
 		var DataObject = {
 			"api": "content",
@@ -71,7 +29,7 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-24 09:17:50",
+				"last3SSync": "2014-02-28 09:17:50",
 				"lastContentSync": "2013-02-18 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,
@@ -193,7 +151,7 @@ angular.module('demoWebAppApp')
 		getData(DataObject);
 
 	}
-	
+
 	function getData(DataObject) {
 
 		var jsonString = JSON.stringify(DataObject);
@@ -216,19 +174,13 @@ angular.module('demoWebAppApp')
 		
 	}
 
-
-
-	
-	// add section in bulk function
+		// add section in bulk function
 	function addSection(dataResponse) {
 		//console.log(dataResponse)
 
-		var data = [];
-		var serverArticleNum = dataResponse.length;
-		var NumOfArticleInArrey = 0;
 
 		for (var i = dataResponse.length - 1; i >= 0; i--) {
-			objectData = {
+			var objectData = {
 				_id: dataResponse[i].id,
 				content: dataResponse[i].content,
 				published_date: dataResponse[i].published_date,
@@ -238,16 +190,28 @@ angular.module('demoWebAppApp')
 			};
 
 			
-			NumOfArticleInArrey++
-
-			data.push(objectData);
+			db.put('articles', objectData, objectData._id );
 
 		};
 
-		if (NumOfArticleInArrey == serverArticleNum) {
-			db.bulkDocs({docs: data}, function(err, response) { });
-		}
+		
 
 	}
+
+	// rendering starting here *****************************************************************
+	function renderFromDB() {
+
+		db.values('articles').done(function(data) {
+			console.log(data);
+			$scope.articles = data;
+
+			// apply data to scope
+			$scope.$apply();
+
+		});
+
+	}
+
+
 
 }]);

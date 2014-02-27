@@ -77,13 +77,13 @@ angular.module('demoWebAppApp', [
 
 
 	$httpProvider.defaults.transformRequest = function(data){
-        if (data === undefined) {
-            return data;
-        }
-        return $.param(data);
-    }
+		if (data === undefined) {
+			return data;
+		}
+		return $.param(data);
+	}
 
-    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
 
 	if(window.history && window.history.pushState){
