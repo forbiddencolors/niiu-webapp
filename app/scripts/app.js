@@ -30,21 +30,42 @@ angular.module('demoWebAppApp', [
 	// });
 
 
+	// $routeProvider
+	// .when('/', {
+	// 	templateUrl: '/niiu-demo/views/login.html',
+	// 	controller: 'LoginCtrl'
+	// })
+	// .when('/main', {
+	// 	templateUrl: '/niiu-demo/views/main.html',
+	// 	controller: 'SectionsCtrl'
+	// })
+	// .when('/articles', {
+	// 	templateUrl: '/niiu-demo/views/articles.html',
+	// 	controller: 'ArticlesCtrl'
+	// })
+	// .when('/article/:id', {
+	// 	templateUrl: '../niiu-demo/views/article.html',
+	// 	controller: 'ArticleCtrl'
+	// })
+	// .otherwise({
+	// 	redirectTo: '/'
+	// });
+
 	$routeProvider
 	.when('/', {
-		templateUrl: '/niiu-demo/views/login.html',
+		templateUrl: '/niiu/niiu-webapp/dist/views/login.html',
 		controller: 'LoginCtrl'
 	})
 	.when('/main', {
-		templateUrl: '/niiu-demo/views/main.html',
+		templateUrl: '/niiu/niiu-webapp/dist/views/main.html',
 		controller: 'SectionsCtrl'
 	})
 	.when('/articles', {
-		templateUrl: '/niiu-demo/views/articles.html',
+		templateUrl: '/niiu/niiu-webapp/dist/views/articles.html',
 		controller: 'ArticlesCtrl'
 	})
 	.when('/article/:id', {
-		templateUrl: '../niiu-demo/views/article.html',
+		templateUrl: '/niiu/niiu-webapp/dist/views/article.html',
 		controller: 'ArticleCtrl'
 	})
 	.otherwise({

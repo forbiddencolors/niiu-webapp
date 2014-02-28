@@ -11,7 +11,7 @@ angular.module('demoWebAppApp')
 	var articleID = $routeParams.id;
 		console.log(articleID);
 
-	db.get('articles', articleID).always(function(data) {
+	db.get('articles', articleID).done(function(data) {
 		console.log(data);
 
 	   $scope.article.push(data);

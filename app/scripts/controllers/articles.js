@@ -6,7 +6,7 @@ angular.module('demoWebAppApp')
 	// open pouch db section
 	var db = new ydn.db.Storage('ydn-ArticlesTest');
 	// remote controle with couchDB false
-	getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
+	var getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
 
 
 	db.values('articles').done(function(articles) {
