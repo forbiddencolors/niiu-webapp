@@ -38,12 +38,12 @@ angular.module('demoWebAppApp')
 			'sections_subsections':[],
 			'sources_sections':[],
 			'sources_subsections':[]
-		}
-	};
+			}
+		};
 
-	getData(DataObject);
+		getData(DataObject);
 
-}
+	}
 
 	// engine for getting data from api
 	function getData(DataObject) {
@@ -128,26 +128,24 @@ angular.module('demoWebAppApp')
 
 	function getDataUpdate(DataObject) {
 
-		// stringify json data object
-		var jsonString = JSON.stringify(DataObject);
-		// put string in object with key = data
-		var getArticleData = {data:jsonString};
+		// // stringify json data object
+		// var jsonString = JSON.stringify(DataObject);
+		// // put string in object with key = data
+		// var getArticleData = {data:jsonString};
 
-		// get section data from api
-		$.post(getArticleUrl, getArticleData, function(data){
-			if (data) {
-				var dataContents = data.contents;
+		// // get section data from api
+		// $.post(getArticleUrl, getArticleData, function(data){
+		// 	if (data) {
+		// 		var dataContents = data.contents;
 				
-				var updatedSections = dataContents.data.updatedSections;
+		// 		var updatedSections = dataContents.data.updatedSections;
 
-				$scope.sections.push(updatedSections);
-				$scope.$apply();
 				
-				// call function add to database and add data in bulk to local DB
-				updateSection(updatedSections);
+		// 		// call function add to database and add data in bulk to local DB
+		// 		updateSection(updatedSections);
 
-			}
-		}, 'json');
+		// 	}
+		// }, 'json');
 		
 	}
 
@@ -162,13 +160,19 @@ angular.module('demoWebAppApp')
 
 		db.values('sections').done(function(data) {
 			console.log(data);
-			$scope.sections = data;
-
-			// apply data to scope
-			$scope.$apply();
+			AddToScope(data);
 
 		});
 
+	}
+
+
+	function AddToScope(data) {
+		$scope.sections = data;
+		console.log($scope.sections);
+
+		// apply data to scope
+		$scope.$apply();
 	}
 
 	
