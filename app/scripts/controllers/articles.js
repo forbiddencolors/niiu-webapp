@@ -4,7 +4,7 @@ angular.module('demoWebAppApp')
 	$scope.articles = [];
 
 	// open pouch db section
-	var db = new ydn.db.Storage('ydn-ArticlesTest');
+	var db = new ydn.db.Storage('ydn-ArticlesTest2');
 	// remote controle with couchDB false
 	var getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
 
@@ -189,8 +189,8 @@ angular.module('demoWebAppApp')
 				web_link: dataResponse[i].web_link
 			};
 
-			
-			db.put('articles', objectData, objectData._id );
+			db.put({name: 'articles', keyPath: '_id'}, objectData);
+			// db.put('articles', objectData, objectData._id );
 
 		};
 

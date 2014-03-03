@@ -1,0 +1,29 @@
+CACHE MANIFEST
+# 2014-02-28:v1
+
+# Explicitly cached entries
+/niiu/niiu-webapp/dist/views/login.html
+/niiu/niiu-webapp/dist/views/main.html
+/niiu/niiu-webapp/dist/views/articles.html
+/niiu/niiu-webapp/dist/views/article.html
+/niiu/niiu-webapp/dist/styles/29403685.vendor.css
+/niiu/niiu-webapp/dist/styles/359697a5.main.css
+/niiu/niiu-webapp/dist/scripts/ded94bd9.vendor.js
+/niiu/niiu-webapp/dist/scripts/090d88af.scripts.js
+/niiu/niiu-webapp/dist/scripts/ydn.db-isw-core-qry-dev.js.map
+/niiu/niiu-webapp/dist/scripts/ydn.js
+css/style.css
+
+# offline.html will be displayed if the user is offline
+FALLBACK:
+/ /offline.html
+
+# All other resources (e.g. sites) require the user to be online. 
+NETWORK:
+*
+
+# Additional resources to cache
+CACHE:
+images/logo1.png
+images/logo2.png
+images/logo3.png

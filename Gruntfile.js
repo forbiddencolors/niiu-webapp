@@ -138,6 +138,24 @@ module.exports = function (grunt) {
       server: '.tmp'
     },
 
+    // Configuration to be run (and then tested).
+    manifest: {
+      generate: {
+        options: {
+          basePath: 'test/fixtures',
+          timestamp: false
+        },
+        src: [
+          '*.js',
+          '*.css',
+          'folder_one/*',
+          'folder_two/*.js',
+          'folder_two/*.css'
+        ],
+        dest: 'tmp/manifest.appcache'
+      }
+    },
+
     // Add vendor prefixed styles
     autoprefixer: {
       options: {
@@ -411,7 +429,8 @@ module.exports = function (grunt) {
     'copy:dist',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'manifest'
   ]);
 
 

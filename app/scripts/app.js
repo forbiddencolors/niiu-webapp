@@ -51,26 +51,26 @@ angular.module('demoWebAppApp', [
 	// 	redirectTo: '/'
 	// });
 
-	$routeProvider
-	.when('/', {
-		templateUrl: '/niiu/niiu-webapp/dist/views/login.html',
-		controller: 'LoginCtrl'
-	})
-	.when('/main', {
-		templateUrl: '/niiu/niiu-webapp/dist/views/main.html',
-		controller: 'SectionsCtrl'
-	})
-	.when('/articles', {
-		templateUrl: '/niiu/niiu-webapp/dist/views/articles.html',
-		controller: 'ArticlesCtrl'
-	})
-	.when('/article/:id', {
-		templateUrl: '/niiu/niiu-webapp/dist/views/article.html',
-		controller: 'ArticleCtrl'
-	})
-	.otherwise({
-		redirectTo: '/'
-	});
+	// $routeProvider
+	// .when('/', {
+	// 	templateUrl: '/niiu/niiu-webapp/dist/views/login.html',
+	// 	controller: 'LoginCtrl'
+	// })
+	// .when('/main', {
+	// 	templateUrl: '/niiu/niiu-webapp/dist/views/main.html',
+	// 	controller: 'SectionsCtrl'
+	// })
+	// .when('/articles', {
+	// 	templateUrl: '/niiu/niiu-webapp/dist/views/articles.html',
+	// 	controller: 'ArticlesCtrl'
+	// })
+	// .when('/article/:id', {
+	// 	templateUrl: '/niiu/niiu-webapp/dist/views/article.html',
+	// 	controller: 'ArticleCtrl'
+	// })
+	// .otherwise({
+	// 	redirectTo: '/'
+	// });
 
 	// $routeProvider
 	// .when('niiu/niiu-webapp/dist/', {
@@ -95,7 +95,26 @@ angular.module('demoWebAppApp', [
 
 
 
-
+	$routeProvider
+	.when('/', {
+		templateUrl: '/dist/views/login.html',
+		controller: 'LoginCtrl'
+	})
+	.when('/main', {
+		templateUrl: '/dist/views/main.html',
+		controller: 'SectionsCtrl'
+	})
+	.when('/articles', {
+		templateUrl: '/dist/views/articles.html',
+		controller: 'ArticlesCtrl'
+	})
+	.when('/article/:id', {
+		templateUrl: '/dist/views/article.html',
+		controller: 'ArticleCtrl'
+	})
+	.otherwise({
+		redirectTo: '/'
+	});
 
 	$httpProvider.defaults.transformRequest = function(data){
 		if (data === undefined) {

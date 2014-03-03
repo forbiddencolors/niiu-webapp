@@ -4,7 +4,7 @@ angular.module('demoWebAppApp')
 
 
 	 // open pouch db section
-	var db = new ydn.db.Storage('ydn-ArticlesTest');
+	var db = new ydn.db.Storage('ydn-ArticlesTest2');
 
 	$scope.article = [];
 
