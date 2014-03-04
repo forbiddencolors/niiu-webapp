@@ -3,7 +3,7 @@ angular.module('demoWebAppApp')
 
 	$scope.articles = [];
 
-	// open pouch db section
+	// open ydn db section
 	var db = new ydn.db.Storage('ydn-ArticlesTest');
 	// remote controle with couchDB false
 	var getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
@@ -11,7 +11,7 @@ angular.module('demoWebAppApp')
 
 	db.values('articles').done(function(articles) {
 		var articlesLength = articles.length;
-		if (articlesLength >= 1) {
+		if (articlesLength >= 1 && 0) {
 			console.log('existing');
 			renderFromDB();
 			// updateDataSettings();
@@ -29,7 +29,7 @@ angular.module('demoWebAppApp')
 			"appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
 			"apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
 			"data": {
-				"last3SSync": "2014-02-28 09:17:50",
+				"last3SSync": "2014-03-0 09:17:50",
 				"lastContentSync": "2013-02-18 08:13:37",
 				"user_id": "1004",
 				"version": 102.5,
@@ -163,9 +163,13 @@ angular.module('demoWebAppApp')
 				var data = response.contents.data.articles;
 				$scope.articles = data;
 
-				$scope.$apply();
+				$scope.$apply(  );
 				// call function add to database and add data to local DB
+
+
 				addSection(data);
+
+				
 					
 			}
 				
@@ -176,12 +180,12 @@ angular.module('demoWebAppApp')
 
 		// add section in bulk function
 	function addSection(dataResponse) {
-		//console.log(dataResponse)
+		console.log('adding some data');
 
 
 		for (var i = dataResponse.length - 1; i >= 0; i--) {
 			var objectData = {
-				_id: dataResponse[i].id,
+				id: dataResponse[i].id,
 				content: dataResponse[i].content,
 				published_date: dataResponse[i].published_date,
 				section_id: dataResponse[i].sections.section_id,
@@ -189,8 +193,8 @@ angular.module('demoWebAppApp')
 				web_link: dataResponse[i].web_link
 			};
 
-			
-			db.put('articles', objectData, objectData._id );
+			console.log('we are saving into key '+objectData.id)
+			db.put('articles', objectData, objectData.id );
 
 		};
 

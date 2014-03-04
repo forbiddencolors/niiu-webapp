@@ -11,7 +11,7 @@ angular.module('demoWebAppApp')
 
 	db.values('sections').done(function(sections) {
 		var sectionsLength = sections.length;
-		if (sectionsLength >= 1) {
+		if (sectionsLength >= 1 && 0) {
 			console.log('existing');
 			renderFromDB();
 			updateDataSettings();
@@ -60,6 +60,9 @@ angular.module('demoWebAppApp')
 
 				$scope.sections = Sections;
 
+				console.log("We are scoping out these sections "+Sections+". Here is one." );
+				console.log(Sections[1]);
+
 				// apply data to scope
 				$scope.$apply();
 
@@ -76,11 +79,11 @@ angular.module('demoWebAppApp')
 		for (var i = dataResponse.length - 1; i >= 0; i--) {
 			
 			var objectData = {
-				_id: dataResponse[i].id,
-				content: dataResponse[i].name
+				id: dataResponse[i].id,
+				name: dataResponse[i].name
 			};
-
-			db.put('sections', objectData, objectData._id );
+console.log('adding sections to db with key '+objectData.id );
+			db.put('sections', objectData, objectData.id );
 
 		};
 	}
@@ -96,7 +99,7 @@ angular.module('demoWebAppApp')
 		db.values('sections').done(function(data) {
 			for (var i = data.length - 1; i >= 0; i--) {
 				
-				var id = data[i]._id;
+				var id = data[i].id;
 
 				sections.push(id);
 
@@ -128,24 +131,24 @@ angular.module('demoWebAppApp')
 
 	function getDataUpdate(DataObject) {
 
-		// // stringify json data object
-		// var jsonString = JSON.stringify(DataObject);
-		// // put string in object with key = data
-		// var getArticleData = {data:jsonString};
+		// stringify json data object
+		var jsonString = JSON.stringify(DataObject);
+		// put string in object with key = data
+		var getArticleData = {data:jsonString};
 
-		// // get section data from api
-		// $.post(getArticleUrl, getArticleData, function(data){
-		// 	if (data) {
-		// 		var dataContents = data.contents;
+		// get section data from api
+		$.post(getArticleUrl, getArticleData, function(data){
+			if (data) {
+				var dataContents = data.contents;
 				
-		// 		var updatedSections = dataContents.data.updatedSections;
+				var updatedSections = dataContents.data.updatedSections;
 
 				
-		// 		// call function add to database and add data in bulk to local DB
-		// 		updateSection(updatedSections);
+				// call function add to database and add data in bulk to local DB
+				updateSection(updatedSections);
 
-		// 	}
-		// }, 'json');
+			}
+		}, 'json');
 		
 	}
 

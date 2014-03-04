@@ -3,13 +3,14 @@ angular.module('demoWebAppApp')
 .controller('ArticleCtrl',  ['$scope','$location','$routeParams' ,function ($scope, $location, $routeParams) {
 
 
-	 // open pouch db section
+	 // open ydn db section
 	var db = new ydn.db.Storage('ydn-ArticlesTest');
 
 	$scope.article = [];
 
 	var articleID = $routeParams.id;
-		console.log(articleID);
+		console.log('we are looking for '+$routeParams.id);
+
 
 	db.get('articles', articleID).done(function(data) {
 		console.log(data);
