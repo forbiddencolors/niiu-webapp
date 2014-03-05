@@ -4,7 +4,7 @@ angular.module('demoWebAppApp')
 	$scope.articles = [];
 
 	// open pouch db section
-	var db = new ydn.db.Storage('ydn-ArticlesTest2');
+	var db = new ydn.db.Storage('ydn-ArticlesTest33');
 	// remote controle with couchDB false
 	var getArticleUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/get_articles';
 
@@ -152,20 +152,104 @@ angular.module('demoWebAppApp')
 
 	}
 
-	function getData(DataObject) {
+	var urlArray = ['images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png', 
+					'images/yeoman.png',]
+
+	var urlBase64 = [];
+    
+    function getBase64(urlArray) {
+        // body...
+
+        for (var i = urlArray.length - 1; i >= 0; i--) {
+        	
+        	var imgURL = urlArray[i]
+
+	        var can = document.createElement("canvas");
+	        var ctx = can.getContext('2d');
+
+	        var img = new Image();
+	        img.onload = function(){
+	            can.width = img.width;
+	            can.height = img.height;
+	            ctx.drawImage(img, 0, 0, img.width, img.height);
+	            serialize(can);
+	        }
+	        img.src = imgURL;
+        	
+        	console.log(urlBase64)
+
+        };
+
+    }
+
+    // serialize canvas and take data to save in DB
+    function serialize(can) {
+        urlBase64.push(can.toDataURL());
+    }
+
+	
+	getBase64(urlArray);
+
+
+	function getData(DataObject, urlBase64 ) {
 
 		var jsonString = JSON.stringify(DataObject);
 		var getArticleData = {data:jsonString};
 
 		$.post(getArticleUrl, getArticleData, function(response) {
 			if (response) {
-				
+				console.log(response);
 				var data = response.contents.data.articles;
 				$scope.articles = data;
 
 				$scope.$apply();
+				
+
 				// call function add to database and add data to local DB
-				addSection(data);
+				addSection(data, urlBase64);
 					
 			}
 				
@@ -175,22 +259,23 @@ angular.module('demoWebAppApp')
 	}
 
 		// add section in bulk function
-	function addSection(dataResponse) {
+	function addSection(dataResponse, urlBase64) {
 		//console.log(dataResponse)
 
 
 		for (var i = dataResponse.length - 1; i >= 0; i--) {
+
 			var objectData = {
 				_id: dataResponse[i].id,
 				content: dataResponse[i].content,
 				published_date: dataResponse[i].published_date,
 				section_id: dataResponse[i].sections.section_id,
 				title: dataResponse[i].title,
-				web_link: dataResponse[i].web_link
+				web_link: dataResponse[i].web_link,
+				image: urlArray[i]
 			};
 
 			db.put({name: 'articles', keyPath: '_id'}, objectData);
-			// db.put('articles', objectData, objectData._id );
 
 		};
 
