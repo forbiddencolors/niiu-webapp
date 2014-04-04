@@ -1,6 +1,6 @@
 <div >
 	<ul class="list-group">
-		<li ng-repeat="section in sections | orderBy: 'name' ">
+		<li ng-repeat="section in sections | orderBy: 'name' " ng-animate=" 'animates' ">
 			<a ng-href="/articles" class="list-group-item">{{section.content}}</a>
 		</li>
 	</ul>

@@ -1,4 +1,18 @@
-<a ng-href="/main" class="btn btn-default">back</a>
+<div class="menu">
+<a ng-href="/main" class="btn btn-default"><i class="glyphicon glyphicon-tasks"></i>  Section</a>
+<a href="" class="butn btn btn-default" ng-click="GetOldArticles()"><i class="glyphicon glyphicon-chevron-left"></i>  old Articles</a>
+<a href="" class="butn btn btn-default" ng-click="GetNewArticles()">New Articles  <i class="glyphicon glyphicon-chevron-right"></i></a>
+</div>
+    <content ng-repeat="article in articles track by $index" class="animate" article="article"></content>
+
+
+ <h1>ngRepeat</h1>
+    <p><button ng-click="push()">Enter Animation</button> <button ng-click="pop()">Leave Animation</button>
+    <hr>
+    <ul>
+      <li ng-repeat="item in items  track by $index" class="animate">{{item}}</li>
+    </ul>
+<!-- 
 
 <div>
 	<ul class="articles row">
@@ -9,3 +23,4 @@
 		</li>
 	</ul>
 </div>
+ -->

@@ -8,26 +8,26 @@ angular.module('demoWebAppApp', [
 ])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 
-	// $routeProvider
-	// .when('/', {
-	// 	templateUrl: '/views/login.html',
-	// 	controller: 'LoginCtrl'
-	// })
-	// .when('/main', {
-	// 	templateUrl: '/views/main.html',
-	// 	controller: 'SectionsCtrl'
-	// })
-	// .when('/articles', {
-	// 	templateUrl: '/views/articles.html',
-	// 	controller: 'ArticlesCtrl'
-	// })
-	// .when('/article/:id', {
-	// 	templateUrl: '/views/article.html',
-	// 	controller: 'ArticleCtrl'
-	// })
-	// .otherwise({
-	// 	redirectTo: '/'
-	// });
+	$routeProvider
+	.when('/', {
+		templateUrl: '/views/login.html',
+		controller: 'LoginCtrl'
+	})
+	.when('/main', {
+		templateUrl: '/views/main.html',
+		controller: 'SectionsCtrl'
+	})
+	.when('/articles', {
+		templateUrl: '/views/articles.html',
+		controller: 'ArticlesCtrl'
+	})
+	.when('/article/:id', {
+		templateUrl: '/views/article.html',
+		controller: 'ArticleCtrl'
+	})
+	.otherwise({
+		redirectTo: '/'
+	});
 
 
 	// $routeProvider
@@ -95,26 +95,26 @@ angular.module('demoWebAppApp', [
 
 
 
-	$routeProvider
-	.when('/', {
-		templateUrl: '/dist/views/login.html',
-		controller: 'LoginCtrl'
-	})
-	.when('/main', {
-		templateUrl: '/dist/views/main.html',
-		controller: 'SectionsCtrl'
-	})
-	.when('/articles', {
-		templateUrl: '/dist/views/articles.html',
-		controller: 'ArticlesCtrl'
-	})
-	.when('/article/:id', {
-		templateUrl: '/dist/views/article.html',
-		controller: 'ArticleCtrl'
-	})
-	.otherwise({
-		redirectTo: '/'
-	});
+	// $routeProvider
+	// .when('/', {
+	// 	templateUrl: '/dist/views/login.html',
+	// 	controller: 'LoginCtrl'
+	// })
+	// .when('/main', {
+	// 	templateUrl: '/dist/views/main.html',
+	// 	controller: 'SectionsCtrl'
+	// })
+	// .when('/articles', {
+	// 	templateUrl: '/dist/views/articles.html',
+	// 	controller: 'ArticlesCtrl'
+	// })
+	// .when('/article/:id', {
+	// 	templateUrl: '/dist/views/article.html',
+	// 	controller: 'ArticleCtrl'
+	// })
+	// .otherwise({
+	// 	redirectTo: '/'
+	// });
 
 	$httpProvider.defaults.transformRequest = function(data){
 		if (data === undefined) {
