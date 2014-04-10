@@ -6,7 +6,8 @@ angular.module('angular-client-side-auth')
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public };
-    
+    var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
+    //var apiUrl='http://kirkthedev.com/niiu/request_dump.php?url=http://dev.niiu.de';
 
     $cookieStore.remove('user');
 
@@ -35,8 +36,17 @@ angular.module('angular-client-side-auth')
             }).error(error);
         },
         login: function(user, success, error) {
-            $http.post('/login', user).success(function(user){
+            console.log(user);
+            var loginReq = new Object();
+            loginReq.api="user";
+            loginReq.action="authenticate";
+            loginReq.appGuid="3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c";
+            loginReq.data=user;
+            console.log(loginReq);
+
+            $http.post(apiUrl+'/users/authenticate', loginReq).success(function(user){
                 console.log('login function');
+                console.log(user);
                 changeUser(user);
                 success(user);
             }).error(error);

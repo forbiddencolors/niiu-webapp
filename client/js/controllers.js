@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /* Controllers */
 
 angular.module('angular-client-side-auth')
@@ -7,6 +9,9 @@ angular.module('angular-client-side-auth')
     $scope.user = Auth.user;
     $scope.userRoles = Auth.userRoles;
     $scope.accessLevels = Auth.accessLevels;
+
+    // define a constant
+    //$scope.constant('app_guid', '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c');
 
     $scope.logout = function() {
         Auth.logout(function() {
@@ -24,9 +29,9 @@ angular.module('angular-client-side-auth')
     $scope.rememberme = true;
     $scope.login = function() {
         Auth.login({
-                username: $scope.username,
-                password: $scope.password,
-                rememberme: $scope.rememberme
+                "eMail": $scope.eMail,
+                "password": $scope.password
+                //rememberme: $scope.rememberme
             },
             function(res) {
                 $location.path('/');
