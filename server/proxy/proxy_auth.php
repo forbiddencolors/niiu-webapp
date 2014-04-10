@@ -159,7 +159,7 @@ if ( !$url ) {
 } else {
   
   //route locally to see whats going on  
-  $url="kirkthedev.com/niiu/request_dump.php";
+  //$url="kirkthedev.com/niiu/request_dump.php";
     
   $ch = curl_init( $url );
   
@@ -171,11 +171,15 @@ if ( !$url ) {
       //php is not reading the serialized angular post so we need to this to unserialize it
       //$params = json_decode(file_get_contents('php://input'));
       $params = json_decode(file_get_contents('php://input'), true);
-      //print_r($params);
+      
       $params['data']=json_encode($params['data']);
+
+      $params['contents']=json_encode($params['contents']);
+      //echo "dumping";
+      //var_dump(json_encode($params));
       //$params=json_encode($params);
 
-      curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($params) );
+      curl_setopt( $ch, CURLOPT_POST, $params );
 
     }
 

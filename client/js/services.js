@@ -6,8 +6,9 @@ angular.module('angular-client-side-auth')
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public };
-    var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
+    var apiUrl='http://kirkthedev.com/niiu/proxy_auth.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php?url=http://dev.niiu.de';
+    var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
 
     $cookieStore.remove('user');
 
