@@ -25,8 +25,8 @@ If you want to enable any of the social logins make sure to set the appropriate 
 
 | Provider | Key | Default value |
 | ---------| ----| --------------|
-| Twitter  | TWITTER_CONSUMER_KEY    | - |
-| Twitter  | TWITTER_CONSUMER_SECRET | - |
+| Twitter  | TWITTER_CONSUMER_KEY    | z68u41jMxQIfWc6XxpMWBMAlw |
+| Twitter  | TWITTER_CONSUMER_SECRET | Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm |
 | Twitter  | TWITTER_CALLBACK_URL    | http://localhost:8000/auth/twitter/callback |
 | Facebook | FACEBOOK_APP_ID         | -  |
 | Facebook | FACEBOOK_APP_SECRET     | -  |
