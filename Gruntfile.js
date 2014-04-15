@@ -50,6 +50,6 @@ module.exports = function(grunt) {
     grunt.registerTask('serverTests', ['env:test', 'mochaTest']);
     grunt.registerTask('test', ['env:test', 'serverTests']);
     grunt.registerTask('dev', ['env:dev', 'nodemon']);
-    //grunt.registerTask('serve', ['env:dev', 'nodemon']);
+    grunt.registerTask('serve', ['env:dev', 'nodemon']);
 
 };

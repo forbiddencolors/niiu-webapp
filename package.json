@@ -34,7 +34,7 @@
     "supertest": "0.8.0",
     "passport-stub": "0.1.5",
     "nodemon": "~1.0.12",
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.4",
     "grunt-mocha-test": "~0.7.0",
     "grunt-env": "~0.4.1",
     "grunt-nodemon": "~0.2.0",
