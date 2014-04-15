@@ -8,7 +8,8 @@ angular.module('angular-client-side-auth')
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public };
     var apiUrl='http://kirkthedev.com/niiu/proxy_auth.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php?url=http://dev.niiu.de';
-    var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
+    //var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
+    var apiUrl='http://dev.niiu.de';
 
     $cookieStore.remove('user');
 
@@ -43,14 +44,80 @@ angular.module('angular-client-side-auth')
             loginReq.action="authenticate";
             loginReq.appGuid="3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c";
             loginReq.data=user;
-            console.log(loginReq);
+            //console.log(loginReq);
 
-            $http.post(apiUrl+'/users/authenticate', loginReq).success(function(user){
+
+            var userReq = new Object();
+            userReq = {'api':'user','action':'authentication','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
+            'data':{
+            'eMail': 'kirk@niiu.de',
+            'password':'y0Xijiti'
+            }
+            };
+            console.log(userReq);
+
+            $http.post(apiUrl+'/users/authenticate', userReq).success(function(userback){
                 console.log('login function');
-                console.log(user);
-                changeUser(user);
+                console.log(userback);
+                changeUser(userback);
                 success(user);
             }).error(error);
+
+        var SectionObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
+        'data':{
+            'lastSync':'2014-04-11 02:00:00',
+            'sections':[],
+            'sources':[],
+            'subsections':[],
+            'sections_subsections':[],
+            'sources_sections':[],
+            'sources_subsections':[]
+            }
+        };
+
+        getSectionData(SectionObject);
+
+/*
+            $http({
+                method: 'POST',
+                url: apiUrl+'/users/authenticate',
+                data: loginReq,
+                
+            });
+*/
+//var getSectionUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s';
+// engine for getting data from api
+    function getSectionData(DataObject) {
+        // stringify json data object
+        var jsonString = JSON.stringify(DataObject);
+        // put string in object with key = data
+        var getSectionData = {data:jsonString};
+        var getSectionUrl = 'http://dev.niiu.de/articles/sync_3s';
+        // get section data from api
+        $http.post(getSectionUrl, getSectionData, function(data){
+            if (data) {
+
+                var Sections = data.contents.data.newSections;
+
+                $scope.sections = Sections;
+
+                console.log('here is the section scope');
+                console.log($scope.sections)
+
+                // apply data to scope
+                $scope.$apply();
+
+                // call function add to database and add data to local DB
+               // addSection(Sections);
+
+            }
+        }, 'json');
+    }
+    
+
+
+
+
         },
         logout: function(success, error) {
             $http.post('/logout').success(function(){

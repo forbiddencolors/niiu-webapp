@@ -22,10 +22,14 @@ module.exports = function(grunt) {
                 //Shared Options Hash
             },
             dev : {
-                NODE_ENV : 'development'
+                NODE_ENV : 'development',
+                TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
+                TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm'
             },
             test : {
-                NODE_ENV : 'test'
+                NODE_ENV : 'test',
+                TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
+                TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm'
             }
         },
 
@@ -37,10 +41,15 @@ module.exports = function(grunt) {
 
         clean: ["node_modules", "client/components"]
 
+
+
+
+
     });
 
     grunt.registerTask('serverTests', ['env:test', 'mochaTest']);
     grunt.registerTask('test', ['env:test', 'serverTests']);
     grunt.registerTask('dev', ['env:dev', 'nodemon']);
+    grunt.registerTask('serve', ['env:dev', 'nodemon']);
 
 };

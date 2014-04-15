@@ -6,6 +6,7 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.router'])
 
     var access = routingConfig.accessLevels;
 
+
     // Public routes
     $stateProvider
         .state('public', {
@@ -122,6 +123,9 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.router'])
     });
 
     $locationProvider.html5Mode(true);
+
+
+    
 
     $httpProvider.interceptors.push(function($q, $location) {
         return {
