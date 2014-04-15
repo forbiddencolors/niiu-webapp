@@ -6,10 +6,10 @@ angular.module('angular-client-side-auth')
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public };
-    var apiUrl='http://kirkthedev.com/niiu/proxy_auth.php?url=http://dev.niiu.de';
+    var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
-    var apiUrl='http://dev.niiu.de';
+    //var apiUrl='http://dev.niiu.de';
 
     $cookieStore.remove('user');
 
@@ -54,14 +54,48 @@ angular.module('angular-client-side-auth')
             'password':'y0Xijiti'
             }
             };
+
+
             console.log(userReq);
 
-            $http.post(apiUrl+'/users/authenticate', userReq).success(function(userback){
+        var payload = new FormData();
+        // populate payload
+        payload = {'api':'user','action':'authentication','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
+            'data':{
+            'eMail': 'kirk@niiu.de',
+            'password':'y0Xijiti'}};
+            //var stringLoad=JSON.stringify(payload);
+            //payload=JSON.stringify(payload);
+
+        $http.post(apiUrl+'/users/authenticate', JSON.stringify(payload), {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+          transformRequest: function(data) { 
+            console.log(data);
+            return data;
+
+             }
+        });
+
+/*
+            $http.post(apiUrl+'/users/authenticate', userReq, { headers: { 'Content-Type': false },transformRequest: function(userback) {
+                console.log('login function');
+                console.log(userback);
+                changeUser(userback);
+                success(user);
+            }}).error(error);
+        */
+
+/*
+
+
+
+                ).success(function(userback){
                 console.log('login function');
                 console.log(userback);
                 changeUser(userback);
                 success(user);
             }).error(error);
+*/
 
         var SectionObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
         'data':{
@@ -91,8 +125,14 @@ angular.module('angular-client-side-auth')
         // stringify json data object
         var jsonString = JSON.stringify(DataObject);
         // put string in object with key = data
-        var getSectionData = {data:jsonString};
+        var getSectionData = JSON.stringify({data:jsonString});
         var getSectionUrl = 'http://dev.niiu.de/articles/sync_3s';
+
+
+
+
+
+
         // get section data from api
         $http.post(getSectionUrl, getSectionData, function(data){
             if (data) {
@@ -112,10 +152,9 @@ angular.module('angular-client-side-auth')
 
             }
         }, 'json');
+
     }
     
-
-
 
 
         },
