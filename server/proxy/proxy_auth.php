@@ -159,7 +159,7 @@ if ( !$url ) {
 } else {
   
   //route locally to see whats going on  
-  //$url="kirkthedev.com/niiu/request_dump.php";
+  $url="kirkthedev.com/niiu/request_dump.php";
     
   $ch = curl_init( $url );
   
@@ -270,7 +270,8 @@ if ( $_GET['mode'] == 'native' ) {
   
   header('Access-Control-Allow-Headers: X-Requested-With');
   header('Access-Control-Allow-Headers: Content-Type');
-  header( 'Content-type: application/' . ( $is_xhr ? 'json' : 'x-javascript' ) );
+  //header( 'Content-type: application/' . ( $is_xhr ? 'json' : 'x-javascript' ) );
+header('Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
   //header( 'Content-type: application/' . ( $is_xhr ? 'json' : 'json' ) );
   
   // Get JSONP callback.
