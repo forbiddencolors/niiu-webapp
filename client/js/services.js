@@ -10,6 +10,7 @@ angular.module('angular-client-side-auth')
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
     //var apiUrl='http://dev.niiu.de';
+    //var apiUrl='http://kirkthedev.com/niiu/request_dump.php';
 
     $cookieStore.remove('user');
 
@@ -64,10 +65,12 @@ angular.module('angular-client-side-auth')
             'data':{
             'eMail': 'kirk@niiu.de',
             'password':'y0Xijiti'}};
-            //var stringLoad=JSON.stringify(payload);
-            //payload=JSON.stringify(payload);
+            var stringLoad=JSON.stringify(payload);
+            var postData=angular.toJson({data:payload});
 
-        $http.post(apiUrl+'/users/authenticate', JSON.stringify(payload), {
+            
+
+        $http.post(apiUrl+'/users/authenticate', postData, {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
           transformRequest: function(data) { 
             console.log(data);
@@ -126,7 +129,7 @@ angular.module('angular-client-side-auth')
         var jsonString = JSON.stringify(DataObject);
         // put string in object with key = data
         var getSectionData = JSON.stringify({data:jsonString});
-        var getSectionUrl = 'http://dev.niiu.de/articles/sync_3s';
+        var getSectionUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s';
 
 
 

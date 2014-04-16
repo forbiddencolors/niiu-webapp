@@ -144,6 +144,8 @@ $valid_url_regex = '/.*/';
 
 $url = $_GET['url'];
 
+//print_r($_POST);
+
 if ( !$url ) {
   
   // Passed url not specified.
@@ -158,12 +160,30 @@ if ( !$url ) {
   
 } else {
     
-    
+  
+  ///$url="request_dump.php";
   $ch = curl_init( $url );
   
   if ( strtolower($_SERVER['REQUEST_METHOD']) == 'post' ) {
     curl_setopt( $ch, CURLOPT_POST, true );
-    curl_setopt( $ch, CURLOPT_POSTFIELDS, $_POST );
+    if (count($_POST)!=0) { 
+          curl_setopt( $ch, CURLOPT_POSTFIELDS, $_POST );
+        } else {
+          //php is not reading the serialized angular post so we need to this to unserialize it
+          //$params = json_decode(file_get_contents('php://input'));
+          $params = json_decode(file_get_contents('php://input'), true);
+          
+          //$params['data']=json_encode($params['data']);
+
+          //$params['contents']=json_encode($params['contents']);
+          //echo "dumping";
+          //var_dump(json_encode($params));
+          //$params=json_encode($params);
+          //echo json_encode($params);
+
+          curl_setopt( $ch, CURLOPT_POST, json_encode($params) );
+
+        }
   }
   
   if ( $_GET['send_cookies'] ) {
@@ -184,10 +204,13 @@ if ( !$url ) {
   curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
   
   curl_setopt( $ch, CURLOPT_USERAGENT, $_GET['user_agent'] ? $_GET['user_agent'] : $_SERVER['HTTP_USER_AGENT'] );
+
+  //print_r($ch);
   
   list( $header, $contents ) = preg_split( '/([\r\n][\r\n])\\1/', curl_exec( $ch ), 2 );
 
-  //print_r($contents);
+//print_r($params);
+//end;
   
   //$contents=stripslashes($contents);
   $status = curl_getinfo( $ch );
