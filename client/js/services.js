@@ -6,10 +6,10 @@ angular.module('angular-client-side-auth')
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public };
-    //var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
+    var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
-    var apiUrl='http://dev.niiu.de';
+    //var apiUrl='http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php';
 
     $cookieStore.remove('user');
@@ -45,6 +45,45 @@ angular.module('angular-client-side-auth')
             loginReq.action="authenticate";
             loginReq.appGuid="3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c";
             loginReq.data=user;
+            var loginReqString=angular.toJson(user);
+
+
+            $http.post(apiUrl+'/users/authenticate', "data="+angular.toJson(loginReq)).success(function(user){
+                changeUser(user);
+                success(user);
+            }).error(error);
+
+
+
+            $http.post(apiUrl+'/users/authenticate', "data="+angular.toJson(loginReq), {
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+              //,
+              //transformRequest: function(data) { 
+                //console.log("ran the function got the data");
+                //console.log(data);
+                //return data;
+
+               //  }
+            }).error(error);
+
+        },
+    /*
+
+        login: function(user, success, error) {
+            $http.post('/login', user).success(function(user){
+                changeUser(user);
+                success(user);
+            }).error(error);
+        },
+
+
+        login: function(user, success, error) {
+            console.log(user);
+            var loginReq = new Object();
+            loginReq.api="user";
+            loginReq.action="authenticate";
+            loginReq.appGuid="3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c";
+            loginReq.data=user;
             //console.log(loginReq);
 
 
@@ -55,6 +94,7 @@ angular.module('angular-client-side-auth')
             'password':'y0Xijiti'
             }
             };
+            var apidata_userReq="data="+JSON.stringify(userReq);
 
 
             console.log(userReq);
@@ -68,8 +108,8 @@ angular.module('angular-client-side-auth')
             var stringLoad=JSON.stringify(payload);
             var postData="data="+stringLoad;
 
-            
-
+    
+        //hardcoded but working
         $http.post(apiUrl+'/users/authenticate', postData, {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
           transformRequest: function(data) { 
@@ -78,89 +118,23 @@ angular.module('angular-client-side-auth')
 
              }
         });
+        
 
-/*
-            $http.post(apiUrl+'/users/authenticate', userReq, { headers: { 'Content-Type': false },transformRequest: function(userback) {
+            $http.post(apiUrl+'/users/authenticate', apidata_userReq, { headers: { 'Content-Type': false },transformRequest: function(userback) {
                 console.log('login function');
                 console.log(userback);
                 changeUser(userback);
                 success(user);
             }}).error(error);
-        */
-
-/*
-
-
-
-                ).success(function(userback){
-                console.log('login function');
-                console.log(userback);
-                changeUser(userback);
-                success(user);
-            }).error(error);
+        
+        },
 */
 
-        var SectionObject = {'api':'3s','action':'sync','appGuid':'3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
-        'data':{
-            'lastSync':'2014-04-11 02:00:00',
-            'sections':[],
-            'sources':[],
-            'subsections':[],
-            'sections_subsections':[],
-            'sources_sections':[],
-            'sources_subsections':[]
-            }
-        };
 
-        getSectionData(SectionObject);
-
-/*
-            $http({
-                method: 'POST',
-                url: apiUrl+'/users/authenticate',
-                data: loginReq,
-                
-            });
-*/
-//var getSectionUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s';
-// engine for getting data from api
-    function getSectionData(DataObject) {
-        // stringify json data object
-        var jsonString = JSON.stringify(DataObject);
-        // put string in object with key = data
-        var getSectionData = JSON.stringify({data:jsonString});
-        var getSectionUrl = 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/articles/sync_3s';
-
-
-
-
-
-
-        // get section data from api
-        $http.post(getSectionUrl, getSectionData, function(data){
-            if (data) {
-
-                var Sections = data.contents.data.newSections;
-
-                $scope.sections = Sections;
-
-                console.log('here is the section scope');
-                console.log($scope.sections)
-
-                // apply data to scope
-                $scope.$apply();
-
-                // call function add to database and add data to local DB
-               // addSection(Sections);
-
-            }
-        }, 'json');
-
-    }
     
 
 
-        },
+
         logout: function(success, error) {
             $http.post('/logout').success(function(){
                 changeUser({
