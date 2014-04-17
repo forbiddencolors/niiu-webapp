@@ -6,10 +6,10 @@ angular.module('angular-client-side-auth')
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public };
-    var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
+    //var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php?url=http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
-    //var apiUrl='http://dev.niiu.de';
+    var apiUrl='http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php';
 
     $cookieStore.remove('user');
@@ -66,7 +66,7 @@ angular.module('angular-client-side-auth')
             'eMail': 'kirk@niiu.de',
             'password':'y0Xijiti'}};
             var stringLoad=JSON.stringify(payload);
-            var postData=angular.toJson({data:payload});
+            var postData="data="+stringLoad;
 
             
 
