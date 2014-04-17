@@ -1,0 +1,7 @@
+<div >
+	<ul class="list-group">
+		<li ng-repeat="section in sections | orderBy: 'name' ">
+			<a href="" ng-click="enterSection()" class="list-group-item" id="{{section.id}}">{{section.name}}</a>
+		</li>
+	</ul>
+</div>

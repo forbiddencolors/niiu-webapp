@@ -1,0 +1,12 @@
+
+			<a class="btn btn-default" href="#" role="button" ng-href="/main">back</a>
+
+<div>
+	<ul class="articles row">
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in articles">
+			<h3>{{article.title}}</h3>
+			<div ng-bind-html="article.content" class="article" ></div>
+			<a class="btn btn-default" href="#" role="button" ng-href="/article/{{article.id}}">Read more &raquo; {{article.id}}</a>
+		</li>
+	</ul>
+</div>
