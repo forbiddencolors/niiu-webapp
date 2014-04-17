@@ -1,12 +1,5 @@
 language: node_js
 node_js:
-<<<<<<< HEAD
-  - '0.8'
-  - '0.10'
-before_script:
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
-=======
 - '0.11'
 - '0.10'
 - '0.8'
@@ -24,4 +17,3 @@ env:
   - secure: bcCO0Omod0F1VxzGOmXIsFH1TtVpdhG4DolmOsAlzL+GT9n0L3Pn0NRpB3meavqo/BYTA/GyIAAWZy8SYRKNMSLbF+omZu/pEvxeasHV2TxdSRuSkownZzbIXWpupzv8TLsEqHzCEAbH/mYJu0YyXbu+XkurCMhlVX4MmqR+QJk=
   - secure: dRpiJaOJswRKUYyQJ7jAqBWutqbZA6qNCLz7srRkzJQunb50zl/BuuOKX0Oi7gbW7nv4iY7Yjt2o+giopSqv8WElxprLCnqKQ1S8UBAwIkm/BMfcc+zQkGQWW6aprlr07rJQ8ol8j0uYgd3oFbzFdgeSM85C06D7gEpIayNYHRA=
   - secure: NT0DavZOlgfNOOSImTPPHFIfYHtqUkCNsBC6btfJ2gGduQbnfx2G1OSgAImTMXGU8UATiYHWVhBylpUm7hmRnAHYQT9CeAJtT59IAEpQI9BMnnkatnHSEX/rPFP5iydcRcNxTQBOGJDY/Sv8U8KxzOtiN0eE7n5U0Gx1ntS8Tls=
->>>>>>> a71c24fc38a397786979a55bd1762187ec1254a3

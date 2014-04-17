@@ -1,8 +1,3 @@
 {
-<<<<<<< HEAD
-    "directory": "app/bower_components"
-}
-=======
   "directory" : "client/components"
 }
->>>>>>> a71c24fc38a397786979a55bd1762187ec1254a3
