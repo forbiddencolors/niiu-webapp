@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angular-client-side-auth')
-.factory('Auth', function($http, $cookieStore){
+.factory('Auth', function($http, $cookieStore, constants){
 
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles
@@ -11,6 +11,7 @@ angular.module('angular-client-side-auth')
     //var apiUrl='http://kirkthedev.com/niiu/xparent.php?url=http://dev.niiu.de';
     //var apiUrl='http://dev.niiu.de';
     //var apiUrl='http://kirkthedev.com/niiu/request_dump.php';
+    
 
     $cookieStore.remove('user');
 
@@ -33,7 +34,14 @@ angular.module('angular-client-side-auth')
             return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
         },
         register: function(user, success, error) {
-            $http.post('/register', user).success(function(res) {
+            console.log("the app guid is "+constants.NIIU_APP_GUID);
+            var userReg = new Object();
+            userReg.api="user";
+            userReg.action="register";
+            userReg.appGuid=constants.NIIU_APP_GUID;
+            userReg.data=user;
+
+            $http.post(apiUrl + '/users/register', "data="+angular.toJson(userReg)).success(function(res) {
                 changeUser(res);
                 success();
             }).error(error);
@@ -164,6 +172,38 @@ angular.module('angular-client-side-auth')
         user: currentUser
     };
 });
+
+angular.module('angular-client-side-auth')
+.factory('uuid', function() {
+    var svc = {
+        new: function() {
+            function _p8(s) {
+                var p = (Math.random().toString(16)+"000000000").substr(2,8);
+                return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
+            }
+            return _p8() + _p8(true) + _p8(true) + _p8();
+        },
+
+        empty: function() {
+          return '00000000-0000-0000-0000-000000000000';
+        }
+    };
+
+    return svc;
+});
+
+//register a constant object with some constants
+angular.module('angular-client-side-auth')
+.value('constants', {
+               TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
+                TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm',
+                FACEBOOK_APP_ID: '642106902524261',
+                FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4',
+                NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c' 
+
+});
+
+
 
 angular.module('angular-client-side-auth')
 .factory('Users', function($http) {

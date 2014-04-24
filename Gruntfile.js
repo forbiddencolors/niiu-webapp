@@ -20,6 +20,7 @@ module.exports = function(grunt) {
         env : {
             options : {
                 //Shared Options Hash
+                //These Are being used by the node server to do oAuth currently
                 TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
                 TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm',
                 FACEBOOK_APP_ID: '642106902524261',

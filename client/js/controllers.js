@@ -46,17 +46,28 @@ angular.module('angular-client-side-auth')
     };
 }]);
 
+
 angular.module('angular-client-side-auth')
 .controller('RegisterCtrl',
-['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
+['$rootScope', '$scope', '$location', 'uuid', 'constants' ,'Auth', function($rootScope, $scope, $location, uuid, constants, Auth) {
     $scope.role = Auth.userRoles.user;
     $scope.userRoles = Auth.userRoles;
-    console.log($scope);
+    console.log(constants.TWITTER_CONSUMER_KEY);
 
     $scope.register = function() {
+        
+        //var thisUuid = uuid.new();
+        //console.log(thisUuid);
         Auth.register({
-                username: $scope.username,
+                firstName: $scope.firstName,
+                lastName: $scope.lastName,
+                username: $scope.firstName+"_"+$scope.lastName,
+                eMail: $scope.eMail,
                 password: $scope.password,
+                appGuid: uuid.new(),
+                deviceID: "browser_"+uuid.new(), 
+
+
                 role: $scope.role
             },
             function() {
