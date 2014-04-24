@@ -20,16 +20,18 @@ module.exports = function(grunt) {
         env : {
             options : {
                 //Shared Options Hash
+                TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
+                TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm',
+                FACEBOOK_APP_ID: '642106902524261',
+                FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4'
             },
             dev : {
-                NODE_ENV : 'development',
-                TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
-                TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm'
+                NODE_ENV : 'development'
+
             },
             test : {
-                NODE_ENV : 'test',
-                TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
-                TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm'
+                NODE_ENV : 'test'
+
             }
         },
 

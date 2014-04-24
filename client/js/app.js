@@ -124,8 +124,8 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.router'])
 
     $locationProvider.html5Mode(true);
 
-
-    
+    // This should globally set all post requests to send a post variables as opposed to a post payload
+    $httpProvider.defaults.headers.post = { 'Content-Type': 'application/x-www-form-urlencoded'};
 
     $httpProvider.interceptors.push(function($q, $location) {
         return {

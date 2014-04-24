@@ -47,16 +47,16 @@ angular.module('angular-client-side-auth')
             loginReq.data=user;
             var loginReqString=angular.toJson(user);
 
-
+/*
             $http.post(apiUrl+'/users/authenticate', "data="+angular.toJson(loginReq)).success(function(user){
                 changeUser(user);
                 success(user);
             }).error(error);
-
+*/
 
 
             $http.post(apiUrl+'/users/authenticate', "data="+angular.toJson(loginReq), {
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+              //headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
               //,
               //transformRequest: function(data) { 
                 //console.log("ran the function got the data");
@@ -64,6 +64,21 @@ angular.module('angular-client-side-auth')
                 //return data;
 
                //  }
+            }).success(function(userData){
+                console.log(userData);
+                if (userData.contents.status==200) {
+                    var newUser=userData.contents.data;
+                    newUser.username=userData.contents.data.firstName+' '+userData.contents.data.lastName;
+                    newUser.role=userRoles.user;
+                    
+                    changeUser(newUser);
+                //changeUser(user);
+                success(newUser);
+                } else {
+                        //console.log(error);
+                        error(error);
+                }
+
             }).error(error);
 
         },
