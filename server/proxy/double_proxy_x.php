@@ -140,10 +140,12 @@ $enable_jsonp    = false;
 $enable_native   = false;
 $valid_url_regex = '/.*/';
 
+
 // ############################################################################
 
 $url = $_GET['url'];
 
+    //header('Access-Control-Allow-Headers', 'Content-Type');
 //print_r($_POST);
 
 if ( !$url ) {
@@ -218,6 +220,36 @@ if ( !$url ) {
   curl_close( $ch );
 }
 
+
+
+//Cors hack to accept everything
+function cors() {
+
+    // Allow from any origin
+    if (isset($_SERVER['HTTP_ORIGIN'])) {
+       // header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    }
+
+    // Access-Control headers are received during OPTIONS requests
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
+
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+
+        exit(0);
+    }
+
+ //   echo "You have CORS!";
+}
+
+cors();
+
+
 // Split header text into an array.
 $header_text = preg_split( '/[\r\n]+/', $header );
 
@@ -230,9 +262,10 @@ if ( $_GET['mode'] == 'native' ) {
   // Propagate headers to response.
   foreach ( $header_text as $header ) {
     if ( preg_match( '/^(?:Content-Type|Content-Language|Set-Cookie):/i', $header ) ) {
-      header( $header );
+      //header( $header );
     }
   }
+
   
   print $contents;
   
@@ -273,6 +306,7 @@ if ( $_GET['mode'] == 'native' ) {
   // Generate appropriate content-type header.
   $is_xhr = strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
   header( 'Content-type: application/' . ( $is_xhr ? 'json' : 'x-javascript' ) );
+
   
   // Get JSONP callback.
   $jsonp_callback = $enable_jsonp && isset($_GET['callback']) ? $_GET['callback'] : null;
