@@ -36,7 +36,7 @@ var routes = [
     {
         path: '/auth/facebook',
         httpMethod: 'GET',
-        middleware: [passport.authenticate('facebook')]
+        middleware: [passport.authenticate('facebook', {scope: ['basic_info','user_birthday']})]
     },
     {
         path: '/auth/facebook/callback',

@@ -34,15 +34,24 @@ angular.module('angular-client-side-auth')
             return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
         },
         register: function(user, success, error) {
-            console.log("the app guid is "+constants.NIIU_APP_GUID);
+            
             var userReg = new Object();
             userReg.api="user";
             userReg.action="register";
             userReg.appGuid=constants.NIIU_APP_GUID;
             userReg.data=user;
 
-            $http.post(apiUrl + '/users/register', "data="+angular.toJson(userReg)).success(function(res) {
-                changeUser(res);
+            $http.post(apiUrl + '/users/register', "data="+angular.toJson(userReg)).success(function(regData) {
+            console.log(regData.contents.status);
+            console.log("Yeah youre registered! ");
+            console.log(regData.contents.data);
+
+                var newUser = regData.contents.data;
+                var userRole = new Object();
+
+                newUser.username=newUser.firstName;
+                newUser.role={"bitMask":2,"title":"user"}
+                changeUser(newUser);
                 success();
             }).error(error);
         },
