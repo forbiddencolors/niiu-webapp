@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="plunker" >
+<head> 
+  <meta charset="utf-8">
+  <title>AngularJS Plunker</title>
+    <script>//document.write('<base href="' + document.location + '" />');
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="MainCtrl">
+  <div id="fb-root"></div>
+  
+  <div class="ng-cloak" ng-show="user.connected">
+  Hello {{user.first_name}}!
+
+
+  </div>
+  <pre>{{user}}</pre>
+  
+  <div class="ng-cloak" ng-hide="user.connected">
+    One moment please...
+    <!--fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button -->
+      
+  </div> 
+  
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script>
+ /*
+      FB.init({
+      appId      : '642106902524261',     
+      status     : true,                              
+      xfbml      : true 
+    });
+*/
+
+
+    </script>
+
+    <div class="btn-group" ng-controller="LoginCtrl">
+          <a class="btn btn-default" href="" data-ng-click="fb_login()">
+              <i class="fa fa-facebook-square">
+              |  Facebook</i></a>
+          <a class="btn btn-default" href="" data-ng-click="loginOauth('twitter')">
+              <i class="fa fa-twitter">
+              |  Twitter</i></a>
+      </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
