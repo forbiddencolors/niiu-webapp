@@ -73,6 +73,7 @@
   }
 
   function dump(arr,level) {
+    //ust an object/array viewing script
     var dumped_text = "";
     if(!level) level = 0;
     
