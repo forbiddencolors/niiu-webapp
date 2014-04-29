@@ -37,7 +37,7 @@ app.service('Facebook', function($q, $rootScope) {
     getUser: function(FB) {
 
 
-
+console.log('running service');
 
       var deferred = $q.defer();
       FB.getLoginStatus(function(response) {
@@ -117,9 +117,6 @@ $scope.ya = function() {
   $scope.fb_login = function(){
     alert ('someone running fb_login!');
 
-      }
-
-$scope.fb_logno = function() {
     
 
       FB.login(function(response) {
