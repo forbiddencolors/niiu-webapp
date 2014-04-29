@@ -3,3 +3,8 @@
 .ng-cloak {
   display:none;
 }
+
+.dataview {
+	width:500px;
+	height:300px;
+}

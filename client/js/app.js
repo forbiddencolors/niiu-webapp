@@ -86,7 +86,7 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.router'])
         })
         .state('admin.admin', {
             url: '/admin/',
-            templateUrl: 'admin',
+            templateUrl: 'admin.htm',
             controller: 'AdminCtrl'
         });
 

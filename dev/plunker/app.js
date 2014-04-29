@@ -2,22 +2,38 @@ var app = angular.module('plunker', []);
 
 app.controller('MainCtrl', function($scope, Facebook) {
 
+  //$scope.user = Facebook.getUser(FB);
 
-  $scope.user = Facebook.getUser(FB);
+  $scope.fb_logout = function() {
+    console.log('trying to logout')
+    console.log(Facebook);
+    FB.logout();
+    FB.logout(function(response) {
+      // user is now logged out
+      console.log('logged out. user is now...');
+      console.log(response);
+     // $scope.user = {};
+      $scope.apply;
+    });
+    $scope.apply;
+
+  }
+
+  $scope.fb_login = function() {
+    console.log('DOIN IT!');
+    console.log(FB);
+    console.log(Facebook)
+    $scope.user = Facebook.getUser(FB);
+    //FB.login();
+   // $scope.apply();
+   console.log($scope.user)
+
+  }
 
 }); 
 
-
-
 app.service('Facebook', function($q, $rootScope) {
   
-     FB.init({
-      appId      : '642106902524261',     
-      status     : true,                              
-      xfbml      : true 
-    });
-
-
   // resolving or rejecting a promise from a third-party
   // API such as Facebook must be
   // performed within $apply so that watchers get
@@ -35,19 +51,15 @@ app.service('Facebook', function($q, $rootScope) {
     
   return {
     getUser: function(FB) {
-
-
-console.log('running service');
-
       var deferred = $q.defer();
       FB.getLoginStatus(function(response) {
+        console.log(response.status);
         if (response.status == 'connected') {
           FB.api('/me', function(response) {
             resolve(null, response, deferred);
           });
-        } else if (response.status == 'not_authorized') {
-
-          console.log('not logged in yet');
+        } else if (response.status == 'not_authorized' || response.status=="unknown") {
+          
           FB.login(function(response) {
             if (response.authResponse) {
               FB.api('/me', function(response) {
@@ -57,67 +69,30 @@ console.log('running service');
               resolve(response.error, null, deferred);
             }
           });
+          
         } 
       });
       promise = deferred.promise;
       promise.connected = false;
       return promise;
     }
+    ,
+    dropUser: function(FB) {
+      //empty so far
+      FB.logout(function () {
+        this.getUser(FB);
+      });
+    }
+
+
   }; 
+
+
+
+
 });
 
-
-/* Controllers */
-
-app.controller('NavCtrl', ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
-    $scope.user = Auth.user;
-    $scope.userRoles = Auth.userRoles;
-    $scope.accessLevels = Auth.accessLevels;
-
-    // define a constant
-    //$scope.constant('app_guid', '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c');
-
-    $scope.logout = function() {
-        Auth.logout(function() {
-            $location.path('/login');
-        }, function() {
-            $rootScope.error = "Failed to logout";
-        });
-    };
-}]);
-
-
-app.controller('LoginCtrl',
-['$rootScope', '$scope', '$location', '$window',  function($rootScope, $scope, $location, $window) {
-
-    $scope.rememberme = true;
-    $scope.login = function() {
-        Auth.login({
-                "eMail": $scope.eMail,
-                "password": $scope.password
-                //rememberme: $scope.rememberme
-            },
-            function(res) {
-                $location.path('/');
-            },
-            function(err) {
-                $rootScope.error = "Failed to login";
-            });
-    };
-
-    $scope.loginOauth = function(provider) {
-        $window.location.href = '/auth/' + provider;
-    };
-
-$scope.ya = function() {
-  //fb_login();
-  alert('ya');
-}
-
-  $scope.fb_login = function(){
-    alert ('someone running fb_login!');
-
-    
+/*
 
       FB.login(function(response) {
 
@@ -147,16 +122,6 @@ $scope.ya = function() {
 
 
   }
-  (function() {
-     console.log('adding script');
-      var e = document.createElement('script');
-      e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-      e.async = false;
-      document.getElementById('fb-root').appendChild(e);
-      //console.log(document.getElementById('fb-root').innerHTML);
-      
-  }());
-
  
 
 
@@ -168,53 +133,5 @@ $scope.ya = function() {
 
 }]);
 
-
-
-app.controller('RegisterCtrl',
-['$rootScope', '$scope', '$location', 'uuid', 'constants' ,'Auth', function($rootScope, $scope, $location, uuid, constants, Auth) {
-    $scope.role = Auth.userRoles.user;
-    $scope.userRoles = Auth.userRoles;
-    
-    console.log(constants.NIIU_APP_GUID);
-
-    $scope.register = function() {
-        
-        //var thisUuid = uuid.new();
-        //console.log(thisUuid);
-        Auth.register({
-                firstName: $scope.firstName,
-                lastName: $scope.lastName,
-                username: $scope.firstName+"_"+$scope.lastName,
-                eMail: $scope.eMail,
-                password: $scope.password,
-                appGuid: constants.NIIU_APP_GUID,
-                deviceID: "browser_"+uuid.new(), 
-
-
-                role: $scope.role
-            },
-            function() {
-                $location.path('/');
-            },
-            function(err) {
-                $rootScope.error = err;
-            });
-    };
-}]);
-
-
-app.controller('AdminCtrl',
-['$rootScope', '$scope', 'Users', 'Auth', function($rootScope, $scope, Users, Auth) {
-    $scope.loading = true;
-    $scope.userRoles = Auth.userRoles;
-
-    Users.getAll(function(res) {
-        $scope.users = res;
-        $scope.loading = false;
-    }, function(err) {
-        $rootScope.error = "Failed to fetch users.";
-        $scope.loading = false;
-    });
-
-}]);
+*/
 

@@ -1,8 +1,8 @@
-var app = angular.module('plunker', [])
+var app = angular.module('plunker', ['ezfb', 'hljs'])
 
-.config(function ($FBProvider) {
-  $FBProvider.setInitParams({
-    appId: '642106902524261'
+.config(function (ezfbProvider) {
+  ezfbProvider.setInitParams({
+    appId: '386469651480295'
   });  
 })
 

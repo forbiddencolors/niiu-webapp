@@ -131,6 +131,8 @@ module.exports = {
         },
         function(accessToken, refreshToken, profile, done) {
             var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
+            
+            console.log(user);
             done(null, user);
         });
     },

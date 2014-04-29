@@ -15,31 +15,34 @@
 
 
   </div>
-  <pre>{{user}}</pre>
+  <textarea class="dataview">{{user}}</textarea>
   
   <div class="ng-cloak" ng-hide="user.connected">
-    One moment please...
-    <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+    You should Log in...
+    <!--fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button-->
       
   </div> 
   
   <script src="http://connect.facebook.net/en_US/all.js"></script>
   <script>
- /*
+ 
       FB.init({
       appId      : '642106902524261',     
       status     : true,                              
       xfbml      : true 
     });
-*/
+
 
 
     </script>
 
     <div class="btn-group">
-          <a class="btn btn-default" href="" data-ng-click="fb_login()">
+          <a class="btn btn-default" href="" data-ng-click="fb_login()" class="ng-cloak" ng-hide="user.connected">
               <i class="fa fa-facebook-square">
               |  Facebook</i></a>
+          <a class="btn btn-default" href="" data-ng-click="fb_logout()" class="ng-cloak" ng-show="user.connected">
+              <i class="fa fa-twitter">
+              |  Logout</i></a>
           <a class="btn btn-default" href="" data-ng-click="loginOauth('twitter')">
               <i class="fa fa-twitter">
               |  Twitter</i></a>
