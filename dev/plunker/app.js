@@ -6,28 +6,40 @@ app.controller('MainCtrl', function($scope, Facebook) {
 
   $scope.fb_logout = function() {
     console.log('trying to logout')
-    console.log(Facebook);
-    FB.logout();
+    //console.log(Facebook);
+   // FB.logout();
     FB.logout(function(response) {
       // user is now logged out
       console.log('logged out. user is now...');
       console.log(response);
-     // $scope.user = {};
-      $scope.apply;
+      console.log( $scope.user);
+
+
     });
-    $scope.apply;
+    
 
   }
 
   $scope.fb_login = function() {
     console.log('DOIN IT!');
     console.log(FB);
+
     console.log(Facebook)
     $scope.user = Facebook.getUser(FB);
+    console.log('fb auth response');
+    console.log(FB.getAuthResponse());
+    $scope.auth = FB.getAuthResponse();
     //FB.login();
-   // $scope.apply();
-   console.log($scope.user)
+    //$scope.$apply();
+   console.log($scope.user.username)
+   console.log($scope.auth.signedRequest)
+   
 
+
+  }
+
+  $scope.whatScope = function() {
+      console.log($scope);
   }
 
 }); 
@@ -44,10 +56,14 @@ app.service('Facebook', function($q, $rootScope) {
         deferred.reject(errval);
       } else {
         retval.connected = true;
+        console.log('heres the resolved response');
+        console.log(retval);
         deferred.resolve(retval);
       }
     });
   }
+
+
     
   return {
     getUser: function(FB) {
@@ -57,15 +73,26 @@ app.service('Facebook', function($q, $rootScope) {
         if (response.status == 'connected') {
           FB.api('/me', function(response) {
             resolve(null, response, deferred);
+            console.log("youre logged in and the response is: ");
+            console.log(response);
           });
         } else if (response.status == 'not_authorized' || response.status=="unknown") {
-          
+              console.log("youre not logged in and the response is: ");
+              console.log(response);
           FB.login(function(response) {
             if (response.authResponse) {
+              var access_token =   FB.getAuthResponse()['accessToken'];
+              console.log('the access token should be in the following response');
+              console.log(FB.getAuthResponse());
+              auth = FB.getAuthResponse();
+
+
               FB.api('/me', function(response) {
                 resolve(null, response, deferred);
               });
             } else {
+              console.log("it seems like you opted not to authorize");
+              console.log(response);
               resolve(response.error, null, deferred);
             }
           });
@@ -79,9 +106,16 @@ app.service('Facebook', function($q, $rootScope) {
     ,
     dropUser: function(FB) {
       //empty so far
-      FB.logout(function () {
-        this.getUser(FB);
+      console.log("the facebook object we want to logout is ");
+      console.log(FB);
+      FB.logout(function (response) {
+        // this.getUser(FB);
+        console.log(response);
       });
+    } ,
+    getAuth: function(FB) {
+      $scope.auth = FB.getAuthResponse();
+
     }
 
 

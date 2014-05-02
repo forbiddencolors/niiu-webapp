@@ -28,7 +28,8 @@
  
       FB.init({
       appId      : '642106902524261',     
-      status     : true,                              
+      status     : true, 
+      cookie     : true, // enable cookies to allow the server to access the session                             
       xfbml      : true 
     });
 
@@ -46,9 +47,13 @@
           <a class="btn btn-default" href="" data-ng-click="loginOauth('twitter')">
               <i class="fa fa-twitter">
               |  Twitter</i></a>
+          <a class="btn btn-default" href="" data-ng-click="whatScope()">
+              <i class="fa fa-twitter">
+              |  Scope</i></a>
       </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script>
+  <script src="ydn.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
