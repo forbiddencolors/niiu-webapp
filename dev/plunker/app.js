@@ -45,8 +45,20 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
     console.log('heres the current auth');
     console.log($scope.auth);
 
+    var socialObject= new Object();
+
+    //get the faceBook information out of a promise
+    socialUser.then(function(result) {
+      socialObject = result;
+      console.log('lets resolve social user');
+      console.log(socialObject);
+      $scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
+    });
+
+    
+
     //send FB info to niiu
-    $scope.niiuUser=Facebook.niiuAuth(socialUser,$scope.auth);
+    
 
     //FB.login();
     //$scope.$apply();
@@ -139,16 +151,17 @@ app.service('Facebook', function($q, $rootScope, constants) {
     ,
     niiuAuth: function(scopeUser,scopeAuth) {
 console.log('weve got some userscope');
-console.log(scopeUser);
+console.log(scopeUser.birthday);
       
       var niiuAuthData = {
         "birthDate": scopeUser.birthday,
-        "eMail": "js@sanderundspak.de",
-        "fbAccessToken": "CAADCTTHlnHABABdIcTZCNstj4vRtsoPYWhNSrhG9cyjyICTfcDC2BGtk3aNlGuPGSqovvMT9Olz3nOJ6KeqkUKZBcaKC7MGptCQ3sLItkegxDqpLUWYKUWBOrjxMdohK8HpLobJLb2TPA0ZCdRS7BL3TEokh0HVZAJeD6JeCwEZAH5ZClK1mDqDXg6Q6Kycn3kmucyTpL39uldB7uxfVwa",
-        "fbID": "100002999507133",
-        "firstName": "JsTest",
-        "gender": "male",
-        "lastName": "Tester",
+        "eMail": scopeUser.email,
+        "fbAccessToken": scopeAuth.accessToken,
+        "fbID": scopeUser.id,
+        "firstName": scopeUser.first_name,
+        "lastName": scopeUser.last_name,
+        "gender": scopeUser.gender,
+        
         "password": null
 
 
@@ -159,13 +172,12 @@ console.log(scopeUser);
       var niiuAuthObj = {
         action : "login",
         api : "user",
-        appGuid : constants.NIIU_APP_GUID
+        appGuid : constants.NIIU_APP_GUID,
+        data : niiuAuthData;
         
-
-
-
-
       }
+
+      return niiuAuthObj;
 
     }
 
