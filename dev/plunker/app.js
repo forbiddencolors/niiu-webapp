@@ -1,6 +1,17 @@
 var app = angular.module('plunker', []);
 
-app.controller('MainCtrl', function($scope, Facebook) {
+
+ //register a constant object with some constants
+app.value('constants', {
+               TWITTER_CONSUMER_KEY: 'z68u41jMxQIfWc6XxpMWBMAlw',
+                TWITTER_CONSUMER_SECRET: 'Ja1rg57feAN0RVJiIWiNYNr4fSM2vuTf9pd4iVzXf9J035pQmm',
+                FACEBOOK_APP_ID: '642106902524261',
+                FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4',
+                NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c' 
+
+});
+
+app.controller('MainCtrl', function($scope, Facebook, constants) {
 
   //$scope.user = Facebook.getUser(FB);
 
@@ -23,16 +34,24 @@ app.controller('MainCtrl', function($scope, Facebook) {
   $scope.fb_login = function() {
     console.log('DOIN IT!');
     console.log(FB);
+    console.log(constants);
 
     console.log(Facebook)
-    $scope.user = Facebook.getUser(FB);
+    var socialUser = Facebook.getUser(FB)
+    $scope.user = socialUser;
     console.log('fb auth response');
     console.log(FB.getAuthResponse());
     $scope.auth = FB.getAuthResponse();
+    console.log('heres the current auth');
+    console.log($scope.auth);
+
+    //send FB info to niiu
+    $scope.niiuUser=Facebook.niiuAuth(socialUser,$scope.auth);
+
     //FB.login();
     //$scope.$apply();
-   console.log($scope.user.username)
-   console.log($scope.auth.signedRequest)
+   //console.log($scope.user.username)
+   //console.log($scope.auth.signedRequest)
    
 
 
@@ -44,7 +63,7 @@ app.controller('MainCtrl', function($scope, Facebook) {
 
 }); 
 
-app.service('Facebook', function($q, $rootScope) {
+app.service('Facebook', function($q, $rootScope, constants) {
   
   // resolving or rejecting a promise from a third-party
   // API such as Facebook must be
@@ -76,7 +95,7 @@ app.service('Facebook', function($q, $rootScope) {
             console.log("youre logged in and the response is: ");
             console.log(response);
           });
-        } else if (response.status == 'not_authorized' || response.status=="unknown") {
+        } else if (response.status == 'not_authorized') {
               console.log("youre not logged in and the response is: ");
               console.log(response);
           FB.login(function(response) {
@@ -95,7 +114,7 @@ app.service('Facebook', function($q, $rootScope) {
               console.log(response);
               resolve(response.error, null, deferred);
             }
-          });
+          }, {scope: ['basic_info','email','user_birthday']});
           
         } 
       });
@@ -115,6 +134,38 @@ app.service('Facebook', function($q, $rootScope) {
     } ,
     getAuth: function(FB) {
       $scope.auth = FB.getAuthResponse();
+
+    }
+    ,
+    niiuAuth: function(scopeUser,scopeAuth) {
+console.log('weve got some userscope');
+console.log(scopeUser);
+      
+      var niiuAuthData = {
+        "birthDate": scopeUser.birthday,
+        "eMail": "js@sanderundspak.de",
+        "fbAccessToken": "CAADCTTHlnHABABdIcTZCNstj4vRtsoPYWhNSrhG9cyjyICTfcDC2BGtk3aNlGuPGSqovvMT9Olz3nOJ6KeqkUKZBcaKC7MGptCQ3sLItkegxDqpLUWYKUWBOrjxMdohK8HpLobJLb2TPA0ZCdRS7BL3TEokh0HVZAJeD6JeCwEZAH5ZClK1mDqDXg6Q6Kycn3kmucyTpL39uldB7uxfVwa",
+        "fbID": "100002999507133",
+        "firstName": "JsTest",
+        "gender": "male",
+        "lastName": "Tester",
+        "password": null
+
+
+
+
+      }
+
+      var niiuAuthObj = {
+        action : "login",
+        api : "user",
+        appGuid : constants.NIIU_APP_GUID
+        
+
+
+
+
+      }
 
     }
 
