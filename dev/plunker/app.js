@@ -78,7 +78,7 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
   $scope.db_clear = function() {
     var db = new ydn.db.Storage('niiu_user');
     console.log(db);
-    db.clear('niiu_user');
+    db.clear();
     //console.log(db);
   }
 
@@ -86,13 +86,38 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
     var db = new ydn.db.Storage('niiu_user');
 
     console.log('heres the table');
-    console.log(db);
-    user_name= db.get('niiu_user','firstName');
-
-    db.get('niiu_user', 'firstName').always(function(record) {
-      //console.log(record.firstName+"'s user Db");
-      console.log(record);
+    db.values('niiu_user').done(function(records) {
+      console.log(records);
     });
+//    userObject= db.get('niiu_user',10210);
+
+
+
+
+    //Since we are only going to have one users data in the 
+    //application at a time we will refer to this as user 0
+
+    //db.get('niiu_user', '033231333231').always(function(userObject) {
+    db.get("niiu_user", "10210").always(function(userObject) {
+      
+      //console.log('we got the userinfo');
+      //console.log(record);
+
+    console.log('Heres the record from the DB');
+    console.log(userObject);
+    console.log("Heres the data in the in the record");
+    console.log(userObject.userInfo);
+    console.log("Heres the token from the object");
+    console.log(userObject.userInfo.fbAccessToken);
+
+
+      record
+      //console.log(record.userInfo.firstName+"'s user Db");
+
+
+    });
+
+
     //console.log(user_name+"'s user Db");
    // db.clear();
     //console.log(db);
@@ -276,14 +301,14 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
           //db.put(array('id','firstName','lastName','eMail','fbID','fbAccessToken','apiKey','lastUpdated','contentProfile','subscription','newRegistration'), 
           //        array(niiu_user_obj.id,niiu_user_obj.firstName,niiu_user_obj.lastName,niiu_user_obj.eMail,niiu_user_obj.fbID,niiu_user_obj.fbAccessToken,niiu_user_obj.apiKey,niiu_user_obj.lastUpdated,niiu_user_obj.contentProfile,niiu_user_obj.subscription,niiu_user_obj.newRegistration));
           
-          var apiKeyObj = {'apiKey': niiu_user_obj.apiKey};
-          db.put({name:'niiu_user', keyPath:'id'}, {'id': niiu_user_obj.id});
-          db.put({name:'niiu_user', keyPath: 'apiKey'}, apiKeyObj);
+     
+          db.put({name:'niiu_user', keyPath:'user'}, {'user':10210,  'userInfo':niiu_user_obj});
+          /*db.put({name:'niiu_user', keyPath: 'apiKey'}, {'apiKey': niiu_user_obj.apiKey});
           db.put({name:'niiu_user' , keyPath: 'firstName'}, {'firstName' : niiu_user_obj.firstName });
           db.put({name:'niiu_user', keyPath: 'lastName'}, {'lastName' : niiu_user_obj.lastName});
           db.put({name:'niiu_user' , keyPath: 'eMail'}, {'eMail' : niiu_user_obj.eMail});
           db.put({name:'niiu_user' , keyPath:  'fbID'}, {'fbID' : niiu_user_obj.fbID});
-          db.put({name:'niiu_user' , keyPath: 'fbAccessToken'}, {'fbAccessToken' : niiu_user_obj.fbAccessToken});
+          db.put({name:'niiu_user' , keyPath: 'fbAccessToken'}, {'fbAccessToken' : niiu_user_obj.fbAccessToken});*/
 
 
           //db.put('sections', objectData, objectData.id );
