@@ -8,7 +8,8 @@ app.value('constants', {
                 FACEBOOK_APP_ID: '642106902524261',
                 FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4',
                 NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
-                NIIUAPI_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' 
+                NIIUAPI_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
+                USER_LOCATOR : 90210
 
 });
 
@@ -51,11 +52,11 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
    var socialUser = Facebook.dropUser(FB);
    $scope.user = socialUser;
 
-   var db = new ydn.db.Storage('niiu_user');
+   var db = new ydn.db.Storage('niiu_user_table');
 
 
    console.log(db);
-   db.clear('niiu_user');
+   db.clear('niiu_user_table');
    console.log(db);
    console.log(ydn.db.Storage);
 
@@ -76,29 +77,35 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
 
 
   $scope.db_clear = function() {
-    var db = new ydn.db.Storage('niiu_user');
+    var db = new ydn.db.Storage('niiu_user_table');
     console.log(db);
     db.clear();
     //console.log(db);
   }
 
   $scope.db_check = function() {
-    var db = new ydn.db.Storage('niiu_user');
+    var db = new ydn.db.Storage('niiu_user_table');
 
     console.log('heres the table');
+    console.log(db);
     db.values('niiu_user').done(function(records) {
       console.log(records);
     });
 //    userObject= db.get('niiu_user',10210);
+db2 = new ydn.db.Storage('db-name');
+              //db2.put('store-name', {message: 'Hello world!'}, 'id1');
+              db2.get('store-name', 'id1').always(function(record) {
+                console.log('heres id1');
+                console.log(record);
+              });
 
-
-
+    //console.log(db.get(constants.USER_LOCATOR));
 
     //Since we are only going to have one users data in the 
     //application at a time we will refer to this as user 0
 
     //db.get('niiu_user', '033231333231').always(function(userObject) {
-    db.get("niiu_user", "10210").always(function(userObject) {
+    db.get("niiu_user", 'string_10210').always(function(userObject) {
       
       //console.log('we got the userinfo');
       //console.log(record);
@@ -111,11 +118,12 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
     console.log(userObject.userInfo.fbAccessToken);
 
 
-      record
+      //record
       //console.log(record.userInfo.firstName+"'s user Db");
 
 
     });
+
 
 
     //console.log(user_name+"'s user Db");
@@ -294,21 +302,41 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
           console.log('this is the authentication response from the niiu api');
           console.log(data.contents.data);
           console.log('lets save this for later');
-          var db = new ydn.db.Storage('niiu_user');
+
+            var schema = {
+              stores:[{
+                name:'niiu_user',
+                keyPath:"user"
+              }]
+            };
+
+
+            
+
+
+
+
+          var db = new ydn.db.Storage('niiu_user_table');
           var niiu_user_obj=data.contents.data;
           console.log(niiu_user_obj.id);
           // ["id", "firstName", "lastName", "eMail", "birthDate", "fbID", "fbAccessToken", "gender", "apiKey", "lastUpdated", "contentProfile", "subscription", "newRegistration"] 
           //db.put(array('id','firstName','lastName','eMail','fbID','fbAccessToken','apiKey','lastUpdated','contentProfile','subscription','newRegistration'), 
           //        array(niiu_user_obj.id,niiu_user_obj.firstName,niiu_user_obj.lastName,niiu_user_obj.eMail,niiu_user_obj.fbID,niiu_user_obj.fbAccessToken,niiu_user_obj.apiKey,niiu_user_obj.lastUpdated,niiu_user_obj.contentProfile,niiu_user_obj.subscription,niiu_user_obj.newRegistration));
           
-     
-          db.put({name:'niiu_user', keyPath:'user'}, {'user':10210,  'userInfo':niiu_user_obj});
+         // db2.put('store-name', {message: 'Hello world!'}, 'id1');
+
+
+          db.put('niiu_user', { userInfo: niiu_user_obj}, 'string_10210');
+
+          db2 = new ydn.db.Storage('db-name');
+              db2.put('store-name', {message: 'Hello world!'}, 'id1');
           /*db.put({name:'niiu_user', keyPath: 'apiKey'}, {'apiKey': niiu_user_obj.apiKey});
           db.put({name:'niiu_user' , keyPath: 'firstName'}, {'firstName' : niiu_user_obj.firstName });
           db.put({name:'niiu_user', keyPath: 'lastName'}, {'lastName' : niiu_user_obj.lastName});
           db.put({name:'niiu_user' , keyPath: 'eMail'}, {'eMail' : niiu_user_obj.eMail});
           db.put({name:'niiu_user' , keyPath:  'fbID'}, {'fbID' : niiu_user_obj.fbID});
-          db.put({name:'niiu_user' , keyPath: 'fbAccessToken'}, {'fbAccessToken' : niiu_user_obj.fbAccessToken});*/
+          db.put({name:'niiu_user' , keyPath: 'fbAccessToken'}, {'fbAccessToken' : niiu_user_obj.fbAccessToken});
+          */
 
 
           //db.put('sections', objectData, objectData.id );
