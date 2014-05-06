@@ -48,16 +48,54 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
     console.log('trying to logout')
     //console.log(Facebook);
    // FB.logout();
+   var socialUser = Facebook.dropUser(FB);
+   $scope.user = socialUser;
+
+   var db = new ydn.db.Storage('niiu_user');
+
+
+   console.log(db);
+   db.clear('niiu_user');
+   console.log(db);
+   console.log(ydn.db.Storage);
+
+/*
     FB.logout(function(response) {
       // user is now logged out
       console.log('logged out. user is now...');
       console.log(response);
       console.log( $scope.user);
+      //window.reload();
 
 
     });
+*/
     
 
+  }
+
+
+  $scope.db_clear = function() {
+    var db = new ydn.db.Storage('niiu_user');
+    console.log(db);
+    db.clear('niiu_user');
+    //console.log(db);
+  }
+
+  $scope.db_check = function() {
+    var db = new ydn.db.Storage('niiu_user');
+
+    console.log('heres the table');
+    console.log(db);
+    user_name= db.get('niiu_user','firstName');
+
+    db.get('niiu_user', 'firstName').always(function(record) {
+      //console.log(record.firstName+"'s user Db");
+      console.log(record);
+    });
+    //console.log(user_name+"'s user Db");
+   // db.clear();
+    //console.log(db);
   }
 
   $scope.fb_login = function() {
@@ -106,6 +144,12 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
   }
 
 }); 
+
+
+
+
+
+
 
 app.service('Facebook', function($q, $rootScope, $http, constants) {
   
@@ -173,6 +217,7 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
       console.log(FB);
       FB.logout(function (response) {
         // this.getUser(FB);
+
         console.log(response);
       });
     } ,
@@ -222,21 +267,23 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
         success(function (data, status, headers, config) {
           // Hey the server accepted my post
           console.log('this is the authentication response from the niiu api');
-          console.log(Object.keys(data.contents.data));
+          console.log(data.contents.data);
           console.log('lets save this for later');
           var db = new ydn.db.Storage('niiu_user');
-          niiu_user_obj=data.contents.data;
+          var niiu_user_obj=data.contents.data;
           console.log(niiu_user_obj.id);
           // ["id", "firstName", "lastName", "eMail", "birthDate", "fbID", "fbAccessToken", "gender", "apiKey", "lastUpdated", "contentProfile", "subscription", "newRegistration"] 
           //db.put(array('id','firstName','lastName','eMail','fbID','fbAccessToken','apiKey','lastUpdated','contentProfile','subscription','newRegistration'), 
           //        array(niiu_user_obj.id,niiu_user_obj.firstName,niiu_user_obj.lastName,niiu_user_obj.eMail,niiu_user_obj.fbID,niiu_user_obj.fbAccessToken,niiu_user_obj.apiKey,niiu_user_obj.lastUpdated,niiu_user_obj.contentProfile,niiu_user_obj.subscription,niiu_user_obj.newRegistration));
-          db.put('niiu_user', {'id': niiu_user_obj.id}, 'id');
-          db.put('niiu_user', {'apiKey': niiu_user_obj.apiKey}, 'apiKey');
-          db.put('niiu_user', {'firstName' : niiu_user_obj.firstName }, 'firstName');
-          db.put('niiu_user', {'lastName' : niiu_user_obj.lastName}, 'lastName');
-          db.put('niiu_user', {'eMail' : niiu_user_obj.eMail}, 'eMail');
-          db.put('niiu_user', {'fbID' : niiu_user_obj.fbID}, 'fbID');
-          db.put('niiu_user', {'fbAccessToken' : niiu_user_obj.fbAccessToken}, 'fbAccessToken');
+          
+          var apiKeyObj = {'apiKey': niiu_user_obj.apiKey};
+          db.put({name:'niiu_user', keyPath:'id'}, {'id': niiu_user_obj.id});
+          db.put({name:'niiu_user', keyPath: 'apiKey'}, apiKeyObj);
+          db.put({name:'niiu_user' , keyPath: 'firstName'}, {'firstName' : niiu_user_obj.firstName });
+          db.put({name:'niiu_user', keyPath: 'lastName'}, {'lastName' : niiu_user_obj.lastName});
+          db.put({name:'niiu_user' , keyPath: 'eMail'}, {'eMail' : niiu_user_obj.eMail});
+          db.put({name:'niiu_user' , keyPath:  'fbID'}, {'fbID' : niiu_user_obj.fbID});
+          db.put({name:'niiu_user' , keyPath: 'fbAccessToken'}, {'fbAccessToken' : niiu_user_obj.fbAccessToken});
 
 
           //db.put('sections', objectData, objectData.id );

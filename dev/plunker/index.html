@@ -5,6 +5,10 @@
   <title>AngularJS Plunker</title>
     <script>//document.write('<base href="' + document.location + '" />');
     </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script>
+      <!--script type="text/javascript" src="ydn.db-isw-crud.js"></script -->
+      <script type="text/javascript" src="http://dev.yathit.com/jsc/ydn.db-dev.js"></script>
+      <script src="app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body ng-controller="MainCtrl">
@@ -50,10 +54,13 @@
           <a class="btn btn-default" href="" data-ng-click="whatScope()">
               <i class="fa fa-twitter">
               |  Scope</i></a>
+          <a class="btn btn-default" href="" data-ng-click="db_check()">
+              <i class="fa fa-twitter">
+              |  DbCheckup</i></a>
+          <a class="btn btn-default" href="" data-ng-click="db_clear()">
+              <i class="fa fa-twitter">
+              |  DbDrop</i></a>
       </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script>
-  <script src="ydn.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>
