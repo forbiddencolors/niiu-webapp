@@ -87,6 +87,7 @@ app.controller('MainCtrl', function($scope, $rootScope, Facebook, constants) {
 
   $scope.db_check = function() {
     //var db = new ydn.db.Storage('niiu_user_table');
+/*
 
     console.log('heres the DB from the rootScope');
     console.log($rootScope.db);
@@ -111,6 +112,27 @@ dupeDb.values('niiu_user',[10210]).done(function(records) {
   console.log(records);
 
 });
+
+*/
+    var schema = {
+      stores:[{
+        name:'niiu_user',
+        keyPath:"user"
+      }]
+    };
+
+    var db4 = new ydn.db.Storage('db-four', schema);
+
+      db4.get('niiu_user', 10210).done(function(db4User) {
+        console.log('Look at that! I think we got the user from db4, without using the root scope!');
+        console.log(db4User);
+
+        $scope.setRootUser(db4User);
+
+      }).fail(function(e) {
+        console.log('wtf happened to the user from db4')
+        throw e;
+      });
 
 
  /*
@@ -164,9 +186,10 @@ console.log("does executeSQL work?");
   //throw e;
 });
 
-
+/*
 console.log("does db.from work?");
   $rootScope.db.from("niiu_user").where('user', '=', 10210).done(function(records) {
+    //doesnt seem to work, probably has a different dependency
   console.log("Im getting these records using db.from on the old DB object");
   console.log(records);
 }, function(e) {
@@ -174,7 +197,7 @@ console.log("does db.from work?");
   console.log(e)
   //throw e;
 });
-
+*/
 
 
     //console.log(user_name+"'s user Db");
@@ -222,6 +245,11 @@ console.log("does db.from work?");
 
 
   }
+
+  $scope.setRootUser = function(userObject) {
+    $scope.userInfo=userObject.userInfo;
+  }
+
 
   $scope.whatScope = function() {
       console.log($scope);
@@ -362,6 +390,7 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
             };
 
 
+
             
 
 
@@ -377,7 +406,8 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
          // db2.put('store-name', {message: 'Hello world!'}, 'id1');
 
 
-          $rootScope.db.put({name:'niiu_user', keyPath:'user'}, {user: 10210, userInfo: niiu_user_obj});
+         // $rootScope.db.put({name:'niiu_user', keyPath:'user'}, {user: 10210, userInfo: niiu_user_obj});
+           $rootScope.db.put('niiu_user', {user: 10210, userInfo: niiu_user_obj});
 
 
 
@@ -387,6 +417,37 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
                 console.log('heres the user in db3');
                 console.log(record);
               });
+
+
+
+          var db4 = new ydn.db.Storage('db-four', schema);
+
+          var mainUser = {
+            "userInfo":niiu_user_obj,
+            "user":10210
+          };
+          db4.put('niiu_user', mainUser).fail(function(e) {
+            throw e;
+          });
+
+
+            db4.get('niiu_user', 10210).done(function(db4User) {
+              console.log('just checking that we can get the user from db4');
+              console.log(db4User);
+
+            }).fail(function(e) {
+              console.log('wtf happened to the user from db4')
+              throw e;
+            });
+
+          /*
+              $rootScope.db3.put('niiu_user', { userInfo: niiu_user_obj}, 10210);
+              $rootScope.db3.get('niiu_user', 10210).always(function(record) {
+                console.log('heres the user in db3');
+                console.log(record);
+              });
+          */
+
           /*db.put({name:'niiu_user', keyPath: 'apiKey'}, {'apiKey': niiu_user_obj.apiKey});
           db.put({name:'niiu_user' , keyPath: 'firstName'}, {'firstName' : niiu_user_obj.firstName });
           db.put({name:'niiu_user', keyPath: 'lastName'}, {'lastName' : niiu_user_obj.lastName});
