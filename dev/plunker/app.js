@@ -33,7 +33,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
 
-app.controller('MainCtrl', function($scope, Facebook, constants) {
+app.controller('MainCtrl', function($scope, $rootScope, Facebook, constants) {
 
 
 /*
@@ -79,25 +79,49 @@ app.controller('MainCtrl', function($scope, Facebook, constants) {
   $scope.db_clear = function() {
     var db = new ydn.db.Storage('niiu_user_table');
     console.log(db);
-    db.clear();
+    //db.clear();
+    db.deleteDatabase('niiu_user_table');
+
     //console.log(db);
   }
 
   $scope.db_check = function() {
-    var db = new ydn.db.Storage('niiu_user_table');
+    //var db = new ydn.db.Storage('niiu_user_table');
 
-    console.log('heres the table');
-    console.log(db);
-    db.values('niiu_user').done(function(records) {
+    console.log('heres the DB from the rootScope');
+    console.log($rootScope.db);
+    $rootScope.db.values('niiu_user').done(function(records) {
       console.log(records);
     });
 //    userObject= db.get('niiu_user',10210);
 db2 = new ydn.db.Storage('db-name');
-              //db2.put('store-name', {message: 'Hello world!'}, 'id1');
-              db2.get('store-name', 'id1').always(function(record) {
-                console.log('heres id1');
+              db2.put('store-name', {message: 'Hello world!'}, 10210);
+              db2.get('store-name', 10210).always(function(record) {
+                console.log('heres id1 in db2');
                 console.log(record);
               });
+
+console.log('hopefully we still have access to db3');
+console.log($rootScope.db3);
+
+var dupeDb= new ydn.db.Storage('niiu_user_table');
+
+dupeDb.values('niiu_user',[10210]).done(function(records) {
+  console.log('im getting these records by values with a new DB object');
+  console.log(records);
+
+});
+
+
+ /*
+$rootScope.db3
+              $rootScope.db3.put('niiu_user', { userInfo: niiu_user_obj}, 10210);
+              $rootScope.db3.get('niiu_user', 10210).always(function(record) {
+                console.log('heres the user in db3');
+                console.log(record);
+              });
+
+  */
 
     //console.log(db.get(constants.USER_LOCATOR));
 
@@ -105,7 +129,7 @@ db2 = new ydn.db.Storage('db-name');
     //application at a time we will refer to this as user 0
 
     //db.get('niiu_user', '033231333231').always(function(userObject) {
-    db.get("niiu_user", 'string_10210').always(function(userObject) {
+    $rootScope.db.get("niiu_user", 10210).always(function(userObject) {
       
       //console.log('we got the userinfo');
       //console.log(record);
@@ -123,6 +147,33 @@ db2 = new ydn.db.Storage('db-name');
 
 
     });
+
+  $rootScope.db.values('niiu_user',[10210]).done(function(records) {
+  console.log('im getting these records by values with the scope DB object');
+  console.log(records);
+
+  });
+
+console.log("does executeSQL work?");
+  $rootScope.db.executeSql("SELECT * FROM niiu_user WHERE 'user' = 10210").then(function(records) {
+  console.log("Im getting these records using SQL on the new DB object");
+  console.log(records);
+}, function(e) {
+  console.log("Getting records via sql didn't work because of ");
+  console.log(e)
+  //throw e;
+});
+
+
+console.log("does db.from work?");
+  $rootScope.db.from("niiu_user").where('user', '=', 10210).done(function(records) {
+  console.log("Im getting these records using db.from on the old DB object");
+  console.log(records);
+}, function(e) {
+  console.log("Getting records via db.from didn't work because of ");
+  console.log(e)
+  //throw e;
+});
 
 
 
@@ -316,7 +367,7 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
 
 
 
-          var db = new ydn.db.Storage('niiu_user_table');
+          $rootScope.db = new ydn.db.Storage('niiu_user_table',schema);
           var niiu_user_obj=data.contents.data;
           console.log(niiu_user_obj.id);
           // ["id", "firstName", "lastName", "eMail", "birthDate", "fbID", "fbAccessToken", "gender", "apiKey", "lastUpdated", "contentProfile", "subscription", "newRegistration"] 
@@ -326,10 +377,16 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
          // db2.put('store-name', {message: 'Hello world!'}, 'id1');
 
 
-          db.put('niiu_user', { userInfo: niiu_user_obj}, 'string_10210');
+          $rootScope.db.put({name:'niiu_user', keyPath:'user'}, {user: 10210, userInfo: niiu_user_obj});
 
-          db2 = new ydn.db.Storage('db-name');
-              db2.put('store-name', {message: 'Hello world!'}, 'id1');
+
+
+         $rootScope.db3 = new ydn.db.Storage('db-three');
+              $rootScope.db3.put('niiu_user', { userInfo: niiu_user_obj}, 10210);
+              $rootScope.db3.get('niiu_user', 10210).always(function(record) {
+                console.log('heres the user in db3');
+                console.log(record);
+              });
           /*db.put({name:'niiu_user', keyPath: 'apiKey'}, {'apiKey': niiu_user_obj.apiKey});
           db.put({name:'niiu_user' , keyPath: 'firstName'}, {'firstName' : niiu_user_obj.firstName });
           db.put({name:'niiu_user', keyPath: 'lastName'}, {'lastName' : niiu_user_obj.lastName});
