@@ -1,4 +1,4 @@
-var app = angular.module('plunker', []);
+var app = angular.module('plunker',['ngCookies', 'ui.router']);
 
 
  //register a constant object with some constants
@@ -14,26 +14,77 @@ app.value('constants', {
 });
 
 
+/*app.config(function ($httpProvider) {
 
-/*
-app.config(['$routeProvider', function($routeProvider) {
-    // application config here, maybe define some routes?
-    $routeProvider.when('/entity/:id', {templateUrl: 'partials/template.html', controller: 'EntityCtrl'});    
-})
-.run(['$rootScope', '$injector', function($rootScope,$injector) {
-    $injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-        if ($rootScope.oauth) headersGetter()['Authorization'] = "Bearer "+$rootScope.oauth.access_token;
-        if (data) {
-            return angular.toJson(data);
-        }
-    };
 });
-
 */
 
 
 
-app.controller('MainCtrl', function($scope, $rootScope, Facebook, constants) {
+
+
+app.config([  '$stateProvider', '$locationProvider', '$httpProvider', function ( $stateProvider, $locationProvider, $httpProvider) {
+//app.config(['$routeProvider', function($routeProvider) {
+    // application config here, maybe define some routes?
+    //$stateProvider.when('/entity/:id', {templateUrl: 'partials/template.html', controller: 'EntityCtrl'});   
+
+/*
+    $httpProvider.defaults.transformRequest.push(function(data) {
+
+     
+      //This should globally change all $http posts so that they show up in the POST value 
+      //When retireved by PHP.
+      //this doesn't seem to be working so I am doing it manually on each ajax call
+      //I am leaving this code here to fix later.
+      console.log('we need to change this data');
+      console.log(data);
+      return(data);
+      
+      
+      if (data === undefined) {
+                  return data;
+              }
+              return $.param(data);
+      
+      
+    });
+*/
+
+    // This should globally set all post requests to send a post variables as opposed to a post payload
+    $httpProvider.defaults.headers.post = { 'Content-Type': 'application/x-www-form-urlencoded'}; 
+    $httpProvider.defaults.transformRequest.push(function (data, headerGetter) {
+        console.log("transform Request");
+        return data;
+    });
+    $httpProvider.defaults.transformResponse.push(function (data, headerGetter) {
+        console.log("transform Response");
+        return data;
+    });
+
+
+
+
+   
+}])
+
+
+//this happens when the app starts
+app.run(['$rootScope', '$injector', function($rootScope,$injector) {
+  /*
+    $injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+        //if ($rootScope.oauth) headersGetter()['Authorization'] = "Bearer "+$rootScope.oauth.access_token;
+        if (data) {
+            return data;
+        }
+    };
+    */
+}]);
+
+
+
+
+
+app.controller('MainCtrl', function($scope, $rootScope, Facebook, niiuAuthenticator, constants, $http) {
 
 
 /*
@@ -230,8 +281,56 @@ console.log("does db.from work?");
       $scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
       console.log('FB data prepared for niiu Authentication');
       console.log($scope.niiuUser);
-    });
+    
 
+    });
+  }
+
+
+  $scope.niiu_login = function(loginInfo) {
+    console.log('Niiu Login!');
+    //console.log(FB);
+    //console.log(constants);
+
+    console.log(niiuAuthenticator)
+
+    
+    var niiuUser = niiuAuthenticator.login(loginInfo);
+    
+    console.log(niiuUser);
+    /*
+    //console.log(FB.getAuthResponse());
+    //$scope.auth = FB.getAuthResponse();
+    console.log('heres the current auth');
+    console.log($scope.auth);
+
+
+    var loginObject = new Object();
+    niiuUser.then(function(result) {
+
+      console.log('niiu authenticator response');
+      console.log(result);
+      loginObject=result;
+      //$scope.user = result;
+
+    }
+    */
+  
+
+    //var socialObject= new Object();
+
+    //get the faceBook information out of a promise
+    /*
+    socialUser.then(function(result) {
+      socialObject = result;
+      console.log('lets resolve social user');
+      console.log(socialObject);
+
+      $scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
+      console.log('FB data prepared for niiu Authentication');
+      console.log($scope.niiuUser);
+    });
+*/
     
 
     //send FB info to niiu
@@ -257,7 +356,111 @@ console.log("does db.from work?");
 
 }); 
 
+app.factory('niiuAuthenticator', function($q, $rootScope, $http, constants) {
 
+  var apiUrl='http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de';
+
+   // $cookieStore.remove('user');
+
+    function changeUser(user) {
+        angular.extend(currentUser, user);
+    }
+
+  return {
+      authorize: function(accessLevel, role) {
+          if(role === undefined) {
+              role = currentUser.role;
+          }
+
+          return accessLevel.bitMask & role.bitMask;
+      },
+      isLoggedIn: function(user) {
+          if(user === undefined) {
+              user = currentUser;
+          }
+          return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
+      },
+    register: function(user, success, error) {
+                
+                var userReg = new Object();
+                userReg.api="user";
+                userReg.action="register";
+                userReg.appGuid=constants.NIIU_APP_GUID;
+                userReg.data=user;
+
+                $http.post(constants.NIIUAPI_URL + '/users/register', "data="+angular.toJson(userReg)).success(function(regData) {
+                console.log(regData.contents.status);
+                console.log("Yeah youre registered! ");
+                console.log(regData.contents.data);
+
+                    var newUser = regData.contents.data;
+                    var userRole = new Object();
+
+                    newUser.username=newUser.firstName;
+                    newUser.role={"bitMask":2,"title":"user"}
+                    changeUser(newUser);
+                    success();
+                }).error(error);
+            },
+            login: function(user, success, error) {
+                console.log('heres the loginInfo')
+                console.log(user);
+                var loginReq = new Object();
+                loginReq.api="user";
+                loginReq.action="authenticate";
+                loginReq.appGuid="3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c";
+                loginReq.data=user;
+                var loginReqString=angular.toJson(user);
+
+                console.log('heres the login string');
+                console.log(angular.toJson(loginReq));
+
+    /*
+                $http.post(apiUrl+'/users/authenticate', "data="+angular.toJson(loginReq)).success(function(user){
+                    changeUser(user);
+                    success(user);
+                }).error(error);
+    */
+
+
+                $http.post(constants.NIIUAPI_URL+'/users/authenticate', "data="+angular.toJson(loginReq), {
+                  //headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+                  //,
+                  /*
+                  transformRequest: function(data) { 
+                    //this should be done in the $httpProvider so that its a global change but its not working there.
+                    console.log("transforming the request so the data is in the POST variable");
+                    console.log(data);
+                    return data;
+
+                     }
+                     */
+                    
+                }).success(function(userData){
+                    console.log('heres the response from the niiu api')
+                    console.log(userData);
+                    if (userData.contents.status==200) {
+
+                        var newUser=userData.contents.data;
+                        newUser.username=userData.contents.data.firstName+' '+userData.contents.data.lastName;
+                        newUser.role=userRoles.user;
+                        $scope.user=newUser;
+                        
+                        changeUser(newUser);
+                    //changeUser(user);
+                    success(newUser);
+                    } else {
+                            console.log(error);
+                            error(error);
+                    }
+
+                }).error(error);
+
+            }
+
+
+  }
+});
 
 
 

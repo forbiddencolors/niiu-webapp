@@ -2,10 +2,14 @@
 <html ng-app="plunker" >
 <head> 
   <meta charset="utf-8">
-  <title>AngularJS Plunker</title>
+  <title>niuu WebApp</title>
     <script>//document.write('<base href="' + document.location + '" />');
     </script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script>
+      <!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script-->
+      <!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script-->
+
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.js"></script><script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-cookies.min.js"></script><script src="angular-ui-router.js"></script><script src="routingConfig.js"></script>
       <!--script type="text/javascript" src="ydn-db/jsc/ydn.db-dev.js"></script -->
       <script type="text/javascript" src="ydn.db-isw-sql.js"></script>
       <script src="app.js"></script>
@@ -23,7 +27,7 @@
   
   <div class="ng-cloak" ng-hide="user.connected">
     You should Log in...
-    <!--fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button-->
+    <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
       
   </div> 
   
@@ -61,6 +65,35 @@
               <i class="fa fa-twitter">
               |  DbDrop</i></a>
       </div>
+
+  <form class="form-horizontal" ng-submit="niiu_login(user)" name="loginForm" role="form" style="margin-top:50px;">
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="eMail"> Email Address</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" data-ng-model="user.eMail" placeholder="eMail" name="eMail" required autofocus />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="control-label col-sm-2">Password</label>
+        <div class="col-sm-10">
+            <input type="password" data-ng-model="user.password" placeholder="Password" name="password" required="" class="form-control ng-pristine ng-invalid ng-invalid-required">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label for="rememberme" class="checkbox">
+                    <input type="checkbox" data-ng-model="user.rememberme" name="rememberme" class="ng-pristine ng-valid">Remember me
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-default" type="submit" data-ng-disabled="loginForm.$invalid"> Log in
+        </div>
+    </div>
+</form>
 
 </body>
 </html>
