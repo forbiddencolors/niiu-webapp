@@ -9,7 +9,8 @@ app.value('constants', {
                 FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4',
                 NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
                 NIIUAPI_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
-                USER_LOCATOR : 90210
+                USER_LOCATOR : 90210,
+                USER_TABLE_SCHEMA :  { stores:[{ name:'niiu_user', keyPath:"user" }] }
 
 });
 
@@ -23,7 +24,7 @@ app.value('constants', {
 
 
 
-app.config([  '$stateProvider', '$locationProvider', '$httpProvider', function ( $stateProvider, $locationProvider, $httpProvider) {
+app.config([  '$stateProvider', '$locationProvider', '$httpProvider', function (  $stateProvider, $locationProvider, $httpProvider) {
 //app.config(['$routeProvider', function($routeProvider) {
     // application config here, maybe define some routes?
     //$stateProvider.when('/entity/:id', {templateUrl: 'partials/template.html', controller: 'EntityCtrl'});   
@@ -94,7 +95,12 @@ app.controller('MainCtrl', function($scope, $rootScope, Facebook, niiuAuthentica
   $rootScope.FACEBOOK_APP_SECRET = '3698a3cdf3071e66de86ce201a5e2ca4';
   $rootScope.NIIU_APP_GUID = '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c'; 
 */
-
+    var user_table_schema = {
+      stores:[{
+        name:'niiu_user',
+        keyPath:"user"
+      }]
+    };
 
   $scope.fb_logout = function() {
     console.log('trying to logout')
@@ -103,7 +109,7 @@ app.controller('MainCtrl', function($scope, $rootScope, Facebook, niiuAuthentica
    var socialUser = Facebook.dropUser(FB);
    $scope.user = socialUser;
 
-   var db = new ydn.db.Storage('niiu_user_table');
+   var db = new ydn.db.Storage('niiu_user_table', constants.USER_TABLE_SCHEMA);
 
 
    console.log(db);
@@ -137,53 +143,48 @@ app.controller('MainCtrl', function($scope, $rootScope, Facebook, niiuAuthentica
   }
 
   $scope.db_check = function() {
-    //var db = new ydn.db.Storage('niiu_user_table');
-/*
+    console.log(user_table_schema);
 
-    console.log('heres the DB from the rootScope');
-    console.log($rootScope.db);
-    $rootScope.db.values('niiu_user').done(function(records) {
-      console.log(records);
-    });
-//    userObject= db.get('niiu_user',10210);
-db2 = new ydn.db.Storage('db-name');
-              db2.put('store-name', {message: 'Hello world!'}, 10210);
-              db2.get('store-name', 10210).always(function(record) {
-                console.log('heres id1 in db2');
-                console.log(record);
-              });
+    var db = new ydn.db.Storage('niiu_user_table', constants.USER_TABLE_SCHEMA);
 
-console.log('hopefully we still have access to db3');
-console.log($rootScope.db3);
 
-var dupeDb= new ydn.db.Storage('niiu_user_table');
+      db.get('niiu_user', 10210).done(function(dbUser) {
+        console.log('Look at that! I think we got the user from the main db, without using the root scope!');
+        console.log(dbUser);
 
-dupeDb.values('niiu_user',[10210]).done(function(records) {
-  console.log('im getting these records by values with a new DB object');
-  console.log(records);
-
-});
-
-*/
-    var schema = {
-      stores:[{
-        name:'niiu_user',
-        keyPath:"user"
-      }]
-    };
-
-    var db4 = new ydn.db.Storage('db-four', schema);
-
-      db4.get('niiu_user', 10210).done(function(db4User) {
-        console.log('Look at that! I think we got the user from db4, without using the root scope!');
-        console.log(db4User);
-
-        $scope.setRootUser(db4User);
+        $scope.setRootUser(dbUser);
 
       }).fail(function(e) {
         console.log('wtf happened to the user from db4')
         throw e;
       });
+
+
+
+
+    console.log('heres the DB from the rootScope');
+    if ($rootScope.db) {
+      console.log($rootScope.db);
+      $rootScope.db.values('niiu_user').done(function(records) {
+        console.log(records);
+      });
+    } else {
+        console.log('unfortunately the rootScope.db doesnt exist');
+    }
+
+    //userObject= db.get('niiu_user',10210);
+    console.log('hopefully we still have access to rootscope db3');
+if($rootScope.db3) {
+
+    console.log($rootScope.db3);
+  } else {
+    console.log('i guess not rootscope.db3 is empty');
+  }
+
+
+
+
+
 
 
  /*
@@ -202,7 +203,7 @@ $rootScope.db3
     //application at a time we will refer to this as user 0
 
     //db.get('niiu_user', '033231333231').always(function(userObject) {
-    $rootScope.db.get("niiu_user", 10210).always(function(userObject) {
+    db.get("niiu_user", 10210).always(function(userObject) {
       
       //console.log('we got the userinfo');
       //console.log(record);
@@ -214,28 +215,51 @@ $rootScope.db3
     console.log("Heres the token from the object");
     console.log(userObject.userInfo.fbAccessToken);
 
+    $scope.user=userObject.userInfo;
+    console.log($scope);
+    //$scope.apply();
 
       //record
       //console.log(record.userInfo.firstName+"'s user Db");
 
 
-    });
+ 
 
-  $rootScope.db.values('niiu_user',[10210]).done(function(records) {
-  console.log('im getting these records by values with the scope DB object');
-  console.log(records);
 
   });
 
-console.log("does executeSQL work?");
-  $rootScope.db.executeSql("SELECT * FROM niiu_user WHERE 'user' = 10210").then(function(records) {
-  console.log("Im getting these records using SQL on the new DB object");
-  console.log(records);
-}, function(e) {
-  console.log("Getting records via sql didn't work because of ");
-  console.log(e)
-  //throw e;
-});
+
+
+    if ($rootScope.db) {
+      $rootScope.db.values('niiu_user',[10210]).done(function(records) {
+        console.log('im getting these records by values with the scope DB object');
+        console.log(records);
+      });
+
+
+      console.log("does executeSQL work?");
+        $rootScope.db.executeSql("SELECT * FROM niiu_user WHERE 'user' = 10210").then(function(records) {
+        console.log("Im getting these records using SQL on the new DB object");
+        console.log(records);
+      }, function(e) {
+        console.log("Getting records via sql didn't work because of ");
+        console.log(e)
+        //throw e;
+      });
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 console.log("does db.from work?");
@@ -287,10 +311,64 @@ console.log("does db.from work?");
   }
 
 
+$scope.niiu_register = function(regInfo) {
+    console.log('Niiu Registration!');
+    console.log('the registration stuff is');
+    //console.log(regInfo.eMail);
+
+
+
+    //console.log(niiuAuthenticator.register);
+
+    
+   // var niiuReg = niiuAuthenticator.register(regInfo);
+
+
+    niiuAuthenticator.register(regInfo).success(function(result) {
+      niiuRegObject = result;
+      console.log('this is a newly registered user');
+      console.log(result);
+    
+    //console.log(niiuUser);
+    /*
+    //console.log(FB.getAuthResponse());
+    //$scope.auth = FB.getAuthResponse();
+    console.log('heres the current auth');
+    console.log($scope.auth);
+
+
+    var loginObject = new Object();
+    niiuUser.then(function(result) {
+
+      console.log('niiu authenticator response');
+      console.log(result);
+      loginObject=result;
+      //$scope.user = result;
+
+    }
+    */
+  
+
+    //var socialObject= new Object();
+
+    //get the faceBook information out of a promise
+    
+
+
+      //$scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
+      //console.log('FB data prepared for niiu Authentication');
+      //console.log($scope.niiuUser);
+    });
+}
+
+
+
   $scope.niiu_login = function(loginInfo) {
     console.log('Niiu Login!');
-    //console.log(FB);
-    //console.log(constants);
+    console.log('the login stuff is');
+    console.log(loginInfo.eMail);
+
+
 
     console.log(niiuAuthenticator)
 
@@ -320,17 +398,17 @@ console.log("does db.from work?");
     //var socialObject= new Object();
 
     //get the faceBook information out of a promise
-    /*
-    socialUser.then(function(result) {
-      socialObject = result;
-      console.log('lets resolve social user');
-      console.log(socialObject);
+    
+    niiuUser.then(function(result) {
+      niiuObject = result;
+      console.log('lets resolve niiu user');
+      console.log(result);
 
-      $scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
-      console.log('FB data prepared for niiu Authentication');
-      console.log($scope.niiuUser);
+      //$scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
+      //console.log('FB data prepared for niiu Authentication');
+      //console.log($scope.niiuUser);
     });
-*/
+
     
 
     //send FB info to niiu
@@ -345,8 +423,27 @@ console.log("does db.from work?");
 
   }
 
+
+  $scope.niiu_forgot = function(emailInfo) {
+    console.log('Niiu Reset!');
+    console.log('the reset info');
+    console.log(emailInfo.eMail);
+
+    var niiuUser = niiuAuthenticator.forgotPassword(emailInfo.eMail);
+    
+    
+    niiuUser.then(function(result) {
+      niiuObject = result;
+      console.log('We got a response back, I wonder if the password was really reset');
+      console.log(result);
+
+
+    });
+
+  }
+
   $scope.setRootUser = function(userObject) {
-    $scope.userInfo=userObject.userInfo;
+    $scope.user=userObject.userInfo;
   }
 
 
@@ -364,6 +461,10 @@ app.factory('niiuAuthenticator', function($q, $rootScope, $http, constants) {
 
     function changeUser(user) {
         angular.extend(currentUser, user);
+        console.log('change to this user');
+        console.log(user);
+
+        scope.apply();
     }
 
   return {
@@ -380,14 +481,39 @@ app.factory('niiuAuthenticator', function($q, $rootScope, $http, constants) {
           }
           return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
       },
+      forgotPassword: function(email) {
+        
+        var passwordReset = new Object();
+        passwordReset.api="user";
+        passwordReset.action="forgot_password";
+        passwordReset.appGuid=constants.NIIU_APP_GUID;
+
+        var emailReset = {"eMail" : email};
+        passwordReset.data=emailReset;
+        $http.post(constants.NIIUAPI_URL + '/users/forgot_password', "data="+angular.toJson(passwordReset)).success(function(resetResponse) {
+                console.log(resetResponse.contents.status);
+                if (resetResponse.contents.status==200) {
+                    console.log("Yea! check your email, your reset is being sent ");
+                    console.log(resetResponse.contents.data);
+                } else {
+                  console.log("sorry that didn't work at all");
+                  console.log(resetResponse);
+                }
+        });
+          
+
+      },
     register: function(user, success, error) {
-                
+                console.log('trying to register');
+
+                console.log(user);
                 var userReg = new Object();
                 userReg.api="user";
                 userReg.action="register";
                 userReg.appGuid=constants.NIIU_APP_GUID;
                 userReg.data=user;
 
+                console.log('posting')
                 $http.post(constants.NIIUAPI_URL + '/users/register', "data="+angular.toJson(userReg)).success(function(regData) {
                 console.log(regData.contents.status);
                 console.log("Yeah youre registered! ");
@@ -398,6 +524,7 @@ app.factory('niiuAuthenticator', function($q, $rootScope, $http, constants) {
 
                     newUser.username=newUser.firstName;
                     newUser.role={"bitMask":2,"title":"user"}
+                    newUser.connected=true;
                     changeUser(newUser);
                     success();
                 }).error(error);
@@ -408,7 +535,7 @@ app.factory('niiuAuthenticator', function($q, $rootScope, $http, constants) {
                 var loginReq = new Object();
                 loginReq.api="user";
                 loginReq.action="authenticate";
-                loginReq.appGuid="3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c";
+                loginReq.appGuid=constants.NIIU_APP_GUID;
                 loginReq.data=user;
                 var loginReqString=angular.toJson(user);
 
@@ -443,15 +570,18 @@ app.factory('niiuAuthenticator', function($q, $rootScope, $http, constants) {
 
                         var newUser=userData.contents.data;
                         newUser.username=userData.contents.data.firstName+' '+userData.contents.data.lastName;
-                        newUser.role=userRoles.user;
-                        $scope.user=newUser;
+                        //newUser.role=userRoles.user;
+                        if (newUser.contentProfile.isActive=='true') {
+                          newUser.connected=true;
+                        }
+                        
                         
                         changeUser(newUser);
                     //changeUser(user);
                     success(newUser);
                     } else {
                             console.log(error);
-                            error(error);
+                            //error(error);
                     }
 
                 }).error(error);
@@ -599,7 +729,7 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
 
 
 
-          $rootScope.db = new ydn.db.Storage('niiu_user_table',schema);
+          $rootScope.db = new ydn.db.Storage('niiu_user_table',constants.USER_TABLE_SCHEMA);
           var niiu_user_obj=data.contents.data;
           console.log(niiu_user_obj.id);
           // ["id", "firstName", "lastName", "eMail", "birthDate", "fbID", "fbAccessToken", "gender", "apiKey", "lastUpdated", "contentProfile", "subscription", "newRegistration"] 
@@ -613,7 +743,7 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
            $rootScope.db.put('niiu_user', {user: 10210, userInfo: niiu_user_obj});
 
 
-
+      /*
          $rootScope.db3 = new ydn.db.Storage('db-three');
               $rootScope.db3.put('niiu_user', { userInfo: niiu_user_obj}, 10210);
               $rootScope.db3.get('niiu_user', 10210).always(function(record) {
@@ -643,15 +773,15 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
               throw e;
             });
 
-          /*
+          
               $rootScope.db3.put('niiu_user', { userInfo: niiu_user_obj}, 10210);
               $rootScope.db3.get('niiu_user', 10210).always(function(record) {
                 console.log('heres the user in db3');
                 console.log(record);
               });
-          */
+          
 
-          /*db.put({name:'niiu_user', keyPath: 'apiKey'}, {'apiKey': niiu_user_obj.apiKey});
+          db.put({name:'niiu_user', keyPath: 'apiKey'}, {'apiKey': niiu_user_obj.apiKey});
           db.put({name:'niiu_user' , keyPath: 'firstName'}, {'firstName' : niiu_user_obj.firstName });
           db.put({name:'niiu_user', keyPath: 'lastName'}, {'lastName' : niiu_user_obj.lastName});
           db.put({name:'niiu_user' , keyPath: 'eMail'}, {'eMail' : niiu_user_obj.eMail});

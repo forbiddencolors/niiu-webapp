@@ -9,7 +9,7 @@
         roles :[
             'public',
             'registered',
-            'user',
+            'premium',
             'admin'],
 
         /*
@@ -23,8 +23,8 @@
         accessLevels : {
             'public' : "*",
             'anon': ['public'],
-            'freemium': ['registered'],
-            'user' : ['user', 'admin'],
+            'user': ['registered','premium','admin'],
+            'premium' : ['premium', 'admin'],
             'admin': ['admin']
         }
 
