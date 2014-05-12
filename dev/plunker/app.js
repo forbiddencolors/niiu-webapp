@@ -9,7 +9,7 @@ app.value('constants', {
                 FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4',
                 NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
                 NIIUAPI_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
-                USER_LOCATOR : 90210,
+                USER_LOCATOR : 10210,
                 USER_TABLE_SCHEMA :  { stores:[{ name:'niiu_user', keyPath:"user" }] }
 
 });
@@ -101,6 +101,8 @@ app.controller('MainCtrl', function($scope, $rootScope, Facebook, niiuAuthentica
         keyPath:"user"
       }]
     };
+
+  $scope.currentUser = {}
 
   $scope.fb_logout = function() {
     console.log('trying to logout')
@@ -463,8 +465,9 @@ app.factory('niiuAuthenticator', function($q, $rootScope, $http, constants) {
         angular.extend(currentUser, user);
         console.log('change to this user');
         console.log(user);
+        $rootScope.user=user.contents.data;
 
-        scope.apply();
+        $scope.apply();
     }
 
   return {
@@ -732,6 +735,7 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
           $rootScope.db = new ydn.db.Storage('niiu_user_table',constants.USER_TABLE_SCHEMA);
           var niiu_user_obj=data.contents.data;
           console.log(niiu_user_obj.id);
+
           // ["id", "firstName", "lastName", "eMail", "birthDate", "fbID", "fbAccessToken", "gender", "apiKey", "lastUpdated", "contentProfile", "subscription", "newRegistration"] 
           //db.put(array('id','firstName','lastName','eMail','fbID','fbAccessToken','apiKey','lastUpdated','contentProfile','subscription','newRegistration'), 
           //        array(niiu_user_obj.id,niiu_user_obj.firstName,niiu_user_obj.lastName,niiu_user_obj.eMail,niiu_user_obj.fbID,niiu_user_obj.fbAccessToken,niiu_user_obj.apiKey,niiu_user_obj.lastUpdated,niiu_user_obj.contentProfile,niiu_user_obj.subscription,niiu_user_obj.newRegistration));
@@ -741,6 +745,7 @@ app.service('Facebook', function($q, $rootScope, $http, constants) {
 
          // $rootScope.db.put({name:'niiu_user', keyPath:'user'}, {user: 10210, userInfo: niiu_user_obj});
            $rootScope.db.put('niiu_user', {user: 10210, userInfo: niiu_user_obj});
+           $rootScope.user=niiu_user_obj;
 
 
       /*
