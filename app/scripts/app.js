@@ -22,7 +22,15 @@ angular.module('niiuWebappApp', [
         redirectTo: '/'
       });
   }).run(function($rootScope, $route) {
-  $rootScope.layoutPartial = function(partialName) { return $route.current[partialName] };
+  $rootScope.layoutPartial = function(partialName) { 
+    //this works but throws errors before it loads
+    if ($route.current) {
+    return $route.current[partialName] ;
+  }
+
+  };
+
+
 });
 
 
