@@ -139,11 +139,16 @@ angular.module('niiuWebappApp')
                         
                         
                         changeUser(newUser);
+                        $rootScope.error="";
                     //changeUser(user);
                     success(newUser);
                     } else {
-                            console.log(error);
-                            //error(error);
+                            
+                            console.log('that was an error...');
+                            var error_message=userData.contents.message;
+                            console.log(error_message);
+                            //error(error_message);
+                            $rootScope.error=error_message;
                     }
 
                 }).error(error);
