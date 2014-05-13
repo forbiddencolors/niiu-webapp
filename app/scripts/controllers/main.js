@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('MainCtrl', function ($scope, localDB) {
+  .controller('MainCtrl', ['$scope', 'niiuAuthenticator', '$rootScope', 'localDB', 'constants', function ($scope, niiuAuthenticator, $rootScope, localDB, constants ) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -9,12 +9,34 @@ angular.module('niiuWebappApp')
     ];
     
 
-var cartoonMemory=localDB.init('cartoons', { stores:[{ name:'cartoon_list', keyPath:'id' }] });
+
+	//retrieve logged in user
+    var user_table=localDB.init('niiu_user_table', constants.USER_TABLE_SCHEMA );
+
+  	 	user_table.get('niiu_user', constants.USER_LOCATOR).done(function(localUser) {
+              console.log('just checking that we can get the user from db');
+              console.log(localUser);
+              niiuAuthenticator.changeUser(localUser.userInfo);
 
 
-var record = {id: '8', name: 'Mickey Mouse'};
-var req = cartoonMemory.put('cartoon_list', record);
-//cartoonMemory.put(name:'MickeyMouse');
-//console.log(localDB);
+             //console.log(constants);
 
-  });
+	    }).fail(function(e) {
+	      console.log('nobody in the DB')
+	      throw e;
+	    });
+
+
+
+
+
+
+    $scope.logout =function(){
+        niiuAuthenticator.changeUser();
+    }
+
+
+
+
+
+}]);

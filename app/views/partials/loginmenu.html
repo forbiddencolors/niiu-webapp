@@ -1,7 +1,7 @@
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Login</a></li>
-    <li><a ng-href="#/registration">Registration</a></li>
-    <li><a ng-href="#/logout">Logout {{user}}</a></li>
+  <ul class="nav nav-pills pull-right" ng-controller="loginmenuCtrl">
+    <li class="active" ng-show="user==null"><a ng-href="#/emailLogin">Login</a></li>
+    <li><a ng-href="#/registration" ng-show="user==null">Registration</a></li>
+    <li><a href="" ng-show="user!=null" ng-click="logout()">Logout {{user.firstName}}</a></li>
   </ul>
   <h3 class="text-muted">niiu webapp</h3>
 

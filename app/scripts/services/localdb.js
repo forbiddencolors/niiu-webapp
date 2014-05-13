@@ -74,6 +74,20 @@ angular.module('niiuWebappApp')
 
           return last_user;
 
+        },
+
+        deleteLocalUser: function() {
+
+
+          var local_table = init();
+
+          console.log('getting ready to remove the user from '+table_name)
+
+
+          //local_table.remove(table_name, constants.USER_LOCATOR);
+
+          return 1;
+
         }
 
 
