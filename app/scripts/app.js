@@ -25,8 +25,13 @@ angular.module('niiuWebappApp', [
       })
       .when('/userHome', {
         templateUrl: 'views/userhome.html',
-        headerUrl: 'views/partials/loginmenu.html',
+        headerUrl: 'views/partials/usermenu.html',
         controller: 'UserhomeCtrl'
+      })
+      .when('/sectionHome', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -48,14 +53,57 @@ angular.module('niiuWebappApp', [
     */
 
 
-  }).run(function($rootScope, $route) {
+  }).run(function($rootScope, $route, $location, niiuAuthenticator) {
   $rootScope.layoutPartial = function(partialName) { 
     //this works but throws errors before it loads
     if ($route.current) {
     return $route.current[partialName] ;
   }
+  };
+
+
+
+
+  // enumerate routes that don't need authentication
+  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin' ];
+
+  // check if current location matches route  
+  var publicViews = function (route) {
+    console.log('the route is requested is ', route);
+    
+
+    for (var i=0; i<routesThatDontRequireAuth.length; i++) {
+        if (routesThatDontRequireAuth[i].substring(0, route.length) === route) {
+          console.log('this is a public view');
+          return true;
+        }
+    }
+    console.log('that route is not public');
+    return false;
 
   };
+
+  $rootScope.$on('$routeChangeStart', function (event, next, current) {
+   
+   console.log('are you logged in',niiuAuthenticator.isLoggedIn());
+   //console.log();
+   console.log($rootScope.user);
+
+    //publicViews($location.url())
+    // if route requires auth and user is not logged in
+    if (!publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user)) {
+
+      console.log(' we have to go back to the home page because this ',!publicViews($location.url()),!niiuAuthenticator.isLoggedIn());
+
+      // redirect back to login
+      $location.path('/');
+    }
+  });
+
+
+
+
+
 
 
 });

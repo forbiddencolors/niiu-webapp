@@ -31,6 +31,8 @@ describe('Service: localDB', function (localDB) {
     var fetch = cartoonMemory.get('cartoon_list', 5).always(function(record) {
       expect(record.name).toEqual('Mickey Mouse');
     });
+//delete
+//get again make sure null
 
     
 

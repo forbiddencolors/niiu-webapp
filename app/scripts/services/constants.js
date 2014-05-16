@@ -9,7 +9,9 @@ angular.module('niiuWebappApp')
                 NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
                 NIIUAPI_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
                 USER_LOCATOR : 10210,
-                USER_TABLE_SCHEMA :  { stores:[{ name:'niiu_user', keyPath:"user" }] }
+                USER_TABLE_SCHEMA :  { stores:[{ name:'niiu_user', keyPath:"user" }] },
+                USER_DB_NAME : 'niiu_user_table',
+                USER_TABLE_NAME : 'niiu_user'
 
 });
 

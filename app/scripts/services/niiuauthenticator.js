@@ -1,21 +1,14 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .factory('niiuAuthenticator', ['$rootScope', '$http', 'constants', function ($rootScope, $http, constants) {
+  .factory('niiuAuthenticator', ['$rootScope', '$http', '$location', '$q', 'constants', 'localDB', function ($rootScope, $http, $location, $q, constants, localDB) {
     // Service logic
     // ...
-
-    
-
-    // Public API here
-    return {
-
-
-    changeUser: function(user) {
+    function setUser(user) {
         //angular.extend(currentUser, user);
         var newUser = user || null;
         $rootScope.user=newUser;
-        $rootScope.$apply();
+        //$rootScope.$apply();
 
         
               if (newUser=== null) {
@@ -35,7 +28,18 @@ angular.module('niiuWebappApp')
             }
 
         
-    },
+    }
+
+    
+
+    // Public API here
+    return {
+
+      changeUser: function(user) {
+        return setUser(user);
+
+      },
+    
 
       authorize: function(accessLevel, role) {
           if(role === undefined) {
@@ -45,11 +49,28 @@ angular.module('niiuWebappApp')
 
           return accessLevel.bitMask & role.bitMask;
       },
-      isLoggedIn: function(user) {
+      isLoggedIn: function() {
+          /*
           if(user === undefined) {
               user = currentUser;
           }
-          return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
+          */
+          console.log('types ofs');
+          console.log(typeof $rootScope.user );
+         // console.log( user.hasOwnProperty('id'));
+          if ( typeof $rootScope.user == "object")  {
+              console.log('you are logged in!');
+              console.log('typeof user was ',(typeof user));
+              //console.log(typeof user);
+              return true;
+              //return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
+              //return 
+          } else {
+            console.log('we arent logged in. typeof user was ', typeof(user));
+              console.log(typeof user);
+            return false;
+          }
+          
       },
       forgotPassword: function(email) {
         
@@ -82,12 +103,13 @@ angular.module('niiuWebappApp')
                 userReg.action="register";
                 userReg.appGuid=constants.NIIU_APP_GUID;
                 userReg.data=user;
+                var deferred = $q.defer();
 
-                console.log('posting')
+                console.log('posting', userReg)
                 $http.post(constants.NIIUAPI_URL + '/users/register', "data="+angular.toJson(userReg)).success(function(regData) {
                 console.log(regData.contents.status);
-                console.log("Yeah youre registered! ");
-                console.log(regData.contents.data);
+                console.log("Yeah youre registered! ", regData.contents.data);
+                
 
                     var newUser = regData.contents.data;
                     var userRole = new Object();
@@ -95,21 +117,33 @@ angular.module('niiuWebappApp')
                     newUser.username=newUser.firstName;
                     newUser.role={"bitMask":2,"title":"user"}
                     newUser.connected=true;
-                    changeUser(newUser);
-                    success();
-                }).error(error);
+                    setUser(newUser);
+                    //success();
+                    $location.path('/userHome');
+                    deferred.resolve(newUser);
+
+                }).error(function(error){
+                    deferred.reject(error);
+                 });
+                  //hang on we don't have an answer yet
+                return deferred.promise;
             },
             logout: function(user) {
-               changeUser();
+               setUser(null);
                console.log('just logged out');
 
-               db=localDB.init;
-               db.deleteLocalUser();
+               //var db=localDB.init;
+               localDB.deleteLocalUser();
+               // redirect back to login
+               $location.path('/');
 
               //return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
             },
       
             login: function(user, success, error) {
+                //create a promise
+                var deferred = $q.defer();
+
                 console.log('heres the loginInfo')
                 console.log(user);
                 var loginReq = new Object();
@@ -138,10 +172,12 @@ angular.module('niiuWebappApp')
                         }
                         
                         
-                        changeUser(newUser);
+                        setUser(newUser);
                         $rootScope.error="";
-                    //changeUser(user);
-                    success(newUser);
+                    //changeUser(newUser);
+                    //success(newUser);
+                    deferred.resolve(newUser);
+                    
                     } else {
                             
                             console.log('that was an error...');
@@ -149,9 +185,14 @@ angular.module('niiuWebappApp')
                             console.log(error_message);
                             //error(error_message);
                             $rootScope.error=error_message;
+                            deferred.reject(error_message);
                     }
 
-                }).error(error);
+                }).error(function(error){
+                    deferred.reject(error);
+                 });
+                //hang on we don't have an answer yet
+                return deferred.promise;
 
             }
 

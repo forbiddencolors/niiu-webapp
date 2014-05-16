@@ -33,11 +33,21 @@ angular.module('niiuWebappApp')
     }
 
 
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+$scope.niiu_register = function(regInfo) {
+    console.log('Niiu Registration!');
+    console.log('the registration stuff is');
+
+
+
+    niiuAuthenticator.register(regInfo).then(function(result) {
+      niiuRegObject = result;
+      console.log('this is a newly registered user');
+      console.log(result);
+    
+
+    });
+}
+
 
 
 

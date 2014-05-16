@@ -31,7 +31,7 @@
           <div class="container" ng-view="">
 
     </div>
-  </div>
+    <div id="fb-root"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -43,6 +43,16 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script>
+          //Initialize facebook
+        FB.init({
+        appId      : '642106902524261',     
+        status     : true, 
+        cookie     : true, // enable cookies to allow the server to access the session                             
+        xfbml      : true 
+      });
+      </script>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -67,12 +77,14 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/registration.js"></script>
         <script src="scripts/controllers/loginmenu.js"></script>
+        <script src="scripts/controllers/usermenu.js"></script>
         <script src="scripts/services/constants.js"></script>
         <script src="scripts/services/localDB.js"></script>
         <script src="scripts/services/niiuAuthenticator.js"></script>
         <script src="scripts/controllers/emailLogin.js"></script>
         <script src="scripts/controllers/userHome.js"></script>
         <script src="scripts/services/Facebook.js"></script>
+        <script src="scripts/controllers/sectionHome.js"></script>
         <!-- endbuild -->
 </body>
 </html>

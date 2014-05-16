@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('EmailloginCtrl', ['$scope', 'niiuAuthenticator', 'constants', function ($scope, niiuAuthenticator, constants) {
+  .controller('EmailloginCtrl', ['$scope', '$location', 'niiuAuthenticator', 'constants', function ($scope, $location, niiuAuthenticator, constants) {
 
     
   $scope.niiu_login = function(loginInfo) {
@@ -14,9 +14,20 @@ angular.module('niiuWebappApp')
     console.log(niiuAuthenticator)
 
     
-    var niiuUser = niiuAuthenticator.login(loginInfo);
+    var niiuUser = niiuAuthenticator.login(loginInfo).then(function(result) {
+      var niiuObject = result;
+      console.log('lets resolve niiu user');
+      console.log(niiuObject);
+      // redirect back to login
+      $location.path('/userHome');
+
+      //$scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
+      //console.log('FB data prepared for niiu Authentication');
+      //console.log($scope.niiuUser);
+    });
+
     
-    console.log(niiuUser);
+    //console.log(niiuUser);
 
 
     /*
@@ -42,16 +53,7 @@ angular.module('niiuWebappApp')
 
     //get the faceBook information out of a promise
     
-    niiuUser.then(function(result) {
-      niiuObject = result;
-      console.log('lets resolve niiu user');
-      console.log(result);
-
-      //$scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
-      //console.log('FB data prepared for niiu Authentication');
-      //console.log($scope.niiuUser);
-    });
-
+    
 },
 
 $scope.niiu_forgot = function(emailInfo) {
