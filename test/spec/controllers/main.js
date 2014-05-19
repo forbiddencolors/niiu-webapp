@@ -16,7 +16,12 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
-  });
+
+    // basics
+  it('ensure clicking email login goes to email registration', function() {});
+  it('ensure clicking facebook goes to facebook registration', function() {});
+  it('ensure clicking registration goes to registration page', function() { });
+
+
+
 });

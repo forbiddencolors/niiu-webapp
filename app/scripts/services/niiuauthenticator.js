@@ -9,21 +9,30 @@ angular.module('niiuWebappApp')
         var newUser = user || null;
         $rootScope.user=newUser;
         //$rootScope.$apply();
+        
 
         
               if (newUser=== null) {
                   console.log('user has logged out');
+                  delete $rootScope.user;
+
               } else if (newUser.firstName) {
                 console.log('changing to user '+newUser.firstName);
               } else {
-                console.log('changing to user ');
-                console.log(newUser);
+                console.log('changing to user ', newUser);
+                
               }
 
           if ( newUser === null ) {
-              return 0;
+
+              localDB.deleteLocalUser();
+               // redirect back to login
+               $location.path('/');
+              return false;
+
               
             } else {
+              localDB.storeUser(newUser);
               return newUser.contentProfile.id;
             }
 
@@ -133,9 +142,15 @@ angular.module('niiuWebappApp')
                console.log('just logged out');
 
                //var db=localDB.init;
-               localDB.deleteLocalUser();
+               localDB.deleteLocalUser().then(function(deleted_rows) {
+                  console.log('removed user  from db');
+                  $location.path('/');
+
+               }
+
+                );
                // redirect back to login
-               $location.path('/');
+               
 
               //return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
             },

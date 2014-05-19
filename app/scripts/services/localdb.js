@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .factory('localDB', function (constants, $rootScope, $q) {
+  .factory('localDB',  function ( constants, $rootScope, $q) {
     
     // Service logic (these variables are available in the methods below)
 
@@ -79,16 +79,68 @@ angular.module('niiuWebappApp')
         getLastUser: function() {
 
 
-          var local_table = conectDB();
+          console.log('looking for the last user');
+          var local_table = connectDB();
+          console.log('at least we got the table ',local_table);
 
-          var last_user = local_table.get(constants.USER_LOCATOR);
+          var deferred = $q.defer();
+          local_table.get(constants.USER_TABLE_NAME ,constants.USER_LOCATOR).done(function(last_user) {
+              
+              console.log('in the table the last user was ', last_user);
 
-          return last_user;
+              //console.log('just checking that we can get the user from db');
+
+              //niiuAuthenticator.changeUser(last_user.userInfo);
+              
+              if (typeof last_user == "undefined") {
+                
+                console.log('thats right nooone in the DB');
+               deferred.reject('nobody in the DB');
+              } else {
+               //return last_user.userInfo;
+                deferred.resolve(last_user.userInfo);
+             }
+
+
+
+            }).fail(function(e) {
+              console.log('nobody found in the DB')
+              
+              deferred.reject(e);
+            });
+
+           return deferred.promise;
 
         },
 
+
+/*
+.done(function(localUser) {
+              console.log('just checking that we can get the user from db');
+              console.log(localUser);
+              niiuAuthenticator.changeUser(localUser.userInfo);
+
+
+             //console.log(constants);
+
+            }).fail(function(e) {
+              console.log('nobody in the DB')
+              throw e;
+            });
+
+
+
+          console.log('the last user was ', last_user);
+
+          return last_user;
+  */
+
+        
+
+
         deleteLocalUser: function() {
 
+          var deferred = $q.defer();
 
           var local_table = connectDB();
 
@@ -98,10 +150,14 @@ angular.module('niiuWebappApp')
 
           //local_table.remove(default_table_name, constants.USER_LOCATOR);
           //local_table.remove(constants.USER_LOCATOR);
-          local_table.clear();
+          local_table.clear().done(function(cleared_rows) {
+
+            deferred.resolve(cleared_rows);
+          } );
+
           console.log(local_table);
 
-          //return 1;
+          return deferred.promise;
 
         },
 
@@ -127,20 +183,25 @@ angular.module('niiuWebappApp')
          // $rootScope.db.put({name:'niiu_user', keyPath:'user'}, {user: 10210, userInfo: niiu_user_obj});
 
            var niiu_user_obj=userData;
-           new_db_connection.put(constants.USER_TABLE_NAME, {user: constants.USER_LOCATOR, userInfo: niiu_user_obj})
-           .done(function(result) {
+           if (userData === null) {
+            deferred.reject('no currentUser');
 
-                console.log('just stored this user ',userData);
-                deferred.resolve(result);
+           } else {
+               new_db_connection.put(constants.USER_TABLE_NAME, {user: constants.USER_LOCATOR, userInfo: niiu_user_obj})
+               .done(function(result) {
 
-            })
-           .fail(function(reason) {
-                console.log('we couldnt save the user to the db because ',reason);
-                deferred.reject(reason);
-           });
+                    console.log('just stored this user ',userData, 'in this table');
+                    deferred.resolve(result);
 
-           $rootScope.user=niiu_user_obj;
-           return deferred.promise;
+                })
+               .fail(function(reason) {
+                    console.log('we couldnt save the user to the db because ',reason);
+                    deferred.reject(reason);
+               });
+
+               $rootScope.user=niiu_user_obj;
+               return deferred.promise;
+            }
 
 
         }

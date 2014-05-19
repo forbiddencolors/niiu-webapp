@@ -5,26 +5,22 @@ angular.module('niiuWebappApp')
 
     
 
+$scope.retrieveUser = function() {
+  	//retrieve logged in user
+    var  priorUser=localDB.getLastUser().then(function(priorUser) {
 
-	//retrieve logged in user
-    var user_table=localDB.init('niiu_user_table', constants.USER_TABLE_SCHEMA );
+      console.log('we do have a prior user', priorUser);
+      niiuAuthenticator.changeUser(priorUser) ;
+      $location.path('/userHome');
+    }
 
-  	 	user_table.get('niiu_user', constants.USER_LOCATOR).done(function(localUser) {
+    ).catch( function(e) {
+      console.log('we didnt find a user in the db because ',e);
+      $scope.error=e;
+    });
 
-        if(localUser) {
-              console.log('just checking that we can get the user from db');
-              console.log(localUser);
-              niiuAuthenticator.changeUser(localUser.userInfo);
-            } else {
-              console.log('nobody in the DB');
-            }
-
-             //console.log(constants);
-
-	    }).fail(function(e) {
-	      console.log('couldnt get anything from the DB');
-	      throw e;
-	    });
+}
+$scope.retrieveUser();
 
 
 
@@ -116,4 +112,12 @@ angular.module('niiuWebappApp')
 
 
 
-}]);
+}])
+
+.run(['$rootScope', function($rootScope) {
+  
+  //console.log('should run the function here ',  $rootScope);
+    //$rootScope.retrieveUser();
+    //$scope.retrieveUser();
+  }
+]);
