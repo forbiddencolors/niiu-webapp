@@ -16,8 +16,8 @@ describe('Controller: RegistrationCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    //expect(scope.awesomeThings.length).toBe(3);
+  it('should should pass the eMail and password', function () {
+    //expect(scope.niiuUserForm).toBe({eMail:'kirk@niiu.de', password:'k123'});
       var req=5;
       expect(req).toEqual(5);
     });

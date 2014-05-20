@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: niiuAuthenticator', function () {
+describe('Service: niiuAuthenticator logs people in and out ', function () {
 
   // load the service's module
   beforeEach(module('niiuWebappApp'));

@@ -84,6 +84,8 @@ angular.module('niiuWebappApp')
       forgotPassword: function(email) {
         
         var passwordReset = new Object();
+        var deferred = $q.defer();
+
         passwordReset.api="user";
         passwordReset.action="forgot_password";
         passwordReset.appGuid=constants.NIIU_APP_GUID;
@@ -95,12 +97,14 @@ angular.module('niiuWebappApp')
                 if (resetResponse.contents.status==200) {
                     console.log("Yea! check your email, your reset is being sent ");
                     console.log(resetResponse.contents.data);
+                    deferred.resolve(resetResponse);
                 } else {
                   console.log("sorry that didn't work at all");
                   console.log(resetResponse);
+                  deferred.reject(resetResponse.message);
                 }
         });
-          
+          return deferred.promise;
 
       },
     register: function(user, success, error) {

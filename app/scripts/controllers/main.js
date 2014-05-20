@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('MainCtrl', ['$scope', '$location', 'niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants ) {
+  .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants ) {
 
     
 
@@ -22,8 +22,9 @@ $scope.retrieveUser = function() {
 }
 $scope.retrieveUser();
 
-
-
+$scope.showModal = function(url) {
+$dialog.dialog({}).open(url);  
+}
 
 
 

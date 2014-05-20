@@ -33,6 +33,11 @@ angular.module('niiuWebappApp', [
         headerUrl: 'views/partials/usermenu.html',
         controller: 'SectionhomeCtrl'
       })
+      .when('/forgotPass', {
+        templateUrl: 'views/forgotpass.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'ForgotpassCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -65,7 +70,7 @@ angular.module('niiuWebappApp', [
 
 
   // enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin' ];
+  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass' ];
 
   // check if current location matches route  
   var publicViews = function (route) {

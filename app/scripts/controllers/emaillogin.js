@@ -68,7 +68,7 @@ $scope.niiu_forgot = function(emailInfo) {
       niiuObject = result;
       console.log('We got a response back, I wonder if the password was really reset');
       console.log(result);
-
+      return result;
 
     });
 
