@@ -15,6 +15,10 @@ angular.module('niiuWebappApp')
 				console.log('do_3s looks like', do_3s);
 				do_3s.then(function(response3s) {
 					console.log('we did a 3s sync and got the following response', response3s);
+					niiuSyncer.syncArticles().then( function(response) {
+							console.log('this is what the sync said to the controller 2nd time', response);
+
+						});
 
 
 				},

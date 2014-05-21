@@ -8,29 +8,44 @@ angular.module('niiuWebappApp')
     var currentUser = $rootScope.user;
     var last3SSync = {};
 
+
+    var deferred = $q.defer();
+
+    var last_sync_time=localDB.getLastSync().then(function(sync_time) {
+      console.log('the last sync time in the db is',sync_time);
+      return sync_time;
+    },
+    function(sync_error) {
+      console.log('unfortunately we couldnt find a sync time in the db',sync_error);
+      return "0000-00-00 00:00:00";
+    });
+
+/*
     var articleData = {
       "api": "content",
       "action": "get",
       "appGuid": constants.NIIU_APP_GUID,
       "apiKey": currentUser.apiKey,
       "data": {
-          "last3SSync": "0000-00-00 00:00:00",
-          "lastContentSync": "0000-00-00 00:00:00",
+          "last3SSync": last_sync_time,
+          "lastContentSync": last_sync_time,
           "user_id": currentUser.contentProfile.userID,
          "version": 102.5,
          "article_ids": [ ],
          "contentProfile": {
-             "id": currentUser.contentProfile.id,
+             "id": currentUser.ç,
              "localID": 2,
              "isPublic": 1,
              "name": "Default Content Profile",
              "subscribedTo": null,
-            "lastUpdated": "0000-00-00 00:00:00",
+            "lastUpdated": "2014-05-21 22:25:00",
             "items": [  ]
         },
         "forceSync": true
       }
     };
+    */
+
 
         function create3sObject() {
 
@@ -40,6 +55,7 @@ angular.module('niiuWebappApp')
                 console.log('the last sync time in the db is',sync_time);
                 return sync_time;
               },
+
               function(sync_error) {
                 console.log('unfortunately we couldnt find a sync time in the db',sync_error);
                 return "0000-00-00 00:00:00";
@@ -95,6 +111,34 @@ angular.module('niiuWebappApp')
       syncProfile: function () {
         
       },
+
+      createArticleObject: function(guid,apiKey,last_sync_time,userID,profileID) {
+          var articleData = {
+                  "api": "content",
+                  "action": "get",
+                  "appGuid": guid,
+                  "apiKey": apiKey,
+                  "data": {
+                      "last3SSync": last_sync_time,
+                      "lastContentSync": last_sync_time,
+                      "user_id": userID,
+                     "version": 102.5,
+                     "article_ids": [ ],
+                     "contentProfile": {
+                         "id": profileID,
+                         "localID": 2,
+                         "isPublic": 1,
+                         "name": "Default Content Profile",
+                         "subscribedTo": null,
+                        "lastUpdated": last_sync_time,
+                        "items": [  ]
+                    },
+                    "forceSync": true
+                  }
+            };
+            return articleData;
+      },
+
 
       syncArticles: function() {
 

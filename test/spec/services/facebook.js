@@ -11,7 +11,7 @@ describe('Service: Facebook', function () {
     Facebook = _Facebook_;
   }));
 
-  it('should do something', function () {
+  it('should do something Facebooky', function () {
     expect(!!Facebook).toBe(true);
   });
 
