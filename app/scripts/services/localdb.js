@@ -7,7 +7,12 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_table';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" }] }; 
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'article_id'}] }; 
+      var sync_table_name = 'last_3s_sync';
+      //var sync_table_schema =  { stores:[{ name:sync_table_name, keyPath:"sync_id" }] }; 
+
+
+
 
       function connectDB(new_table_name, new_schema) {
 
@@ -19,6 +24,25 @@ angular.module('niiuWebappApp')
           var local_table = new ydn.db.Storage(table_name, schema);
 
           return local_table;
+
+        }
+
+
+        function getCurrentTime() {
+
+          var nowDate = new Date();
+
+
+          var curr_year = nowDate.getFullYear();
+          var curr_month = ( '0'+nowDate.getMonth() ).slice(-2);  //adds a 0 then tkes the last 2 chars leaving a 2 digit month
+          var curr_date = ( '0'+nowDate.getDate() ).slice(-2) ; //adds a 0 then tkes the last 2 chars leaving a 2 digit date
+          var curr_hours = ( '0'+nowDate.getHours() ).slice(-2);
+          var curr_mins = ( '0'+ nowDate.getMinutes() ).slice(-2);
+          var curr_secs = ( '0'+ nowDate.getSeconds() ).slice(-2);
+
+          var curr_sync_time = curr_year+"-"+curr_month+"-"+curr_date+" "+curr_hours+":"+curr_mins+":"+curr_secs; 
+
+          return curr_sync_time;
 
         }
 
@@ -112,6 +136,95 @@ angular.module('niiuWebappApp')
            return deferred.promise;
 
         },
+
+
+        getLastSync: function() {
+
+
+          console.log('looking for the last sync time');
+          //create or open the 3s table in the default db
+          var local_table = connectDB();
+          console.log('at least we got the table ',local_table);
+
+          var deferred = $q.defer();
+          //since we are only going to keep one users data here in the db at a time I think I will
+          //continue using the same integer to refer to the record with the last sync time
+          local_table.get(sync_table_name ,constants.USER_LOCATOR).done(function(last_sync_record) {
+              
+              console.log('in the table the last user was ', last_sync_record);
+
+              //console.log('just checking that we can get the user from db');
+
+              //niiuAuthenticator.changeUser(last_user.userInfo);
+              
+              if (typeof last_sync_record == "undefined") {
+                
+                console.log('thats right no last sync time');
+               deferred.reject('no last sync');
+              } else {
+               //return last_user.userInfo;
+               console.log('yes we do have a last sync time', last_sync_record);
+                deferred.resolve(last_sync_record.last_sync_time);
+             }
+
+
+
+            }).fail(function(e) {
+              console.log('no last sync time')
+              
+              deferred.reject(e);
+            });
+
+           return deferred.promise;
+
+          },
+
+        
+
+        setLastSync: function() {
+
+
+          var current_time=getCurrentTime();
+          
+          console.log(current_time);
+
+          
+
+        
+
+          console.log('setting the last sync time');
+          //create or open the 3s table in the default db
+          var local_table = connectDB();
+          console.log('at least we got the sync table ',local_table);
+
+          var deferred = $q.defer();
+
+          var last_sync_object = {sync_id:constants.USER_LOCATOR, last_sync_time:current_time};
+          
+          //put a new record with the current time into the db
+          local_table.put(sync_table_name ,last_sync_object).done(function(last_sync_record) {
+              
+              console.log('we just set the current sync time ', last_sync_record);
+
+              //console.log('just checking that we can get the user from db');
+
+              
+              
+              deferred.resolve(last_sync_record);
+
+
+            }).fail(function(e) {
+              console.log('hmm couldnt save the current sync time')
+              
+              deferred.reject(e);
+            });
+
+           return deferred.promise;
+
+           
+
+          },
+
 
 
 /*

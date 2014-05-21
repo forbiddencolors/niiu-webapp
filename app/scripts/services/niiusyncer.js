@@ -6,6 +6,7 @@ angular.module('niiuWebappApp')
     // ...
 
     var currentUser = $rootScope.user;
+    var last3SSync = {};
 
     var articleData = {
       "api": "content",
@@ -29,7 +30,34 @@ angular.module('niiuWebappApp')
         },
         "forceSync": true
       }
-    }
+    };
+
+
+
+
+    var threeSData = {
+      "api": "3s",
+      "action": "sync",
+      "appGuid": constants.NIIU_APP_GUID,
+      "apiKey": currentUser.apiKey,
+      "data": {
+          "last3SSync": localDB.getLastSync(),
+          "lastContentSync": "0000-00-00 00:00:00",
+          "user_id": currentUser.contentProfile.userID,
+         "version": 102.5,
+         "article_ids": [ ],
+         "contentProfile": {
+             "id": currentUser.contentProfile.id,
+             "localID": 2,
+             "isPublic": 1,
+             "name": "Default Content Profile",
+             "subscribedTo": null,
+            "lastUpdated": "0000-00-00 00:00:00",
+            "items": [  ]
+        },
+        "forceSync": true
+      }
+    };    
 
 
 
@@ -54,7 +82,7 @@ angular.module('niiuWebappApp')
                     
                     if (articleResponse.contents.status==200) {
 
-                        console.log('The response was good')
+                        console.log('The response was good');
                         
                         
                         
@@ -85,12 +113,12 @@ angular.module('niiuWebappApp')
         //create a promise
         var deferred = $q.defer();
 
-        $http.post(constants.NIIUAPI_URL+"articles/sync_3s", "data="+angular.toJson(3sData), {
+        $http.post(constants.NIIUAPI_URL+"articles/sync_3s", "data="+angular.toJson(threeSData), {
                     
-                }).success(function(3sResponse){
-                    console.log('heres the response from the niiu api', 3sResponse)
+                }).success(function(threeSResponse){
+                    console.log('heres the response from the niiu api', threeSResponse)
                     
-                    if (articleResponse.contents.status==200) {
+                    if (threeSResponse.contents.status==200) {
 
                         console.log('The 3s response was good')
                         
@@ -98,13 +126,13 @@ angular.module('niiuWebappApp')
                         
                     
                     
-                    deferred.resolve(articleResponse);
+                    deferred.resolve(threeSResponse);
                     
                     } else {
                             
-                            console.log('The 3s response wasnt so good...', articleResponse);
+                            console.log('The 3s response wasnt so good...', threeSResponse);
                             
-                            deferred.reject(articleResponse);
+                            deferred.reject(threeSResponse);
                     }
 
                 }).error(function(error){
