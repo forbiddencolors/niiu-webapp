@@ -175,7 +175,7 @@ angular.module('niiuWebappApp')
                               deferred.reject(error);
                            });
                           //hang on we don't have an answer yet
-                          return deferred.promise;
+                          
 
                 }
 
@@ -186,7 +186,7 @@ angular.module('niiuWebappApp')
 
 
         );
-            
+        return deferred.promise;    
       }
 
     
