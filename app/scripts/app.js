@@ -1,92 +1,116 @@
 'use strict';
 
-angular.module('demoWebAppApp', [
-	'ngCookies',
-	'ngResource',
-	'ngSanitize',
-	'ngRoute'
+angular.module('niiuWebappApp', [
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'ngRoute'
 ])
-.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
+  .config(function ($routeProvider, $httpProvider) {
+    $routeProvider
+      .when('/', {   
+        templateUrl: 'views/main.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'MainCtrl'
+      })
+      .when('/registration', {
+        templateUrl: 'views/registration.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'RegistrationCtrl'
+      })
+      .when('/emailLogin', {
+        templateUrl: 'views/emaillogin.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'EmailloginCtrl'
+      })
+      .when('/userHome', {
+        templateUrl: 'views/userhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'UserhomeCtrl'
+      })
+      .when('/sectionHome', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
+      })
+      .when('/forgotPass', {
+        templateUrl: 'views/forgotpass.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'ForgotpassCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
 
-	$routeProvider
-	.when('/', {
-		templateUrl: '/views/login.html',
-		controller: 'LoginCtrl'
-	})
-	.when('/main', {
-		templateUrl: '/views/main.html',
-		controller: 'SectionsCtrl'
-	})
-	.when('/articles', {
-		templateUrl: '/views/articles.html',
-		controller: 'ArticlesCtrl'
-	})
-	.when('/article/:id', {
-		templateUrl: '/views/article.html',
-		controller: 'ArticleCtrl'
-	})
-	.otherwise({
-		redirectTo: '/'
-	});
+
+    // This should globally set all post requests to send a post variables as opposed to a post payload
+    $httpProvider.defaults.headers.post = { 'Content-Type': 'application/x-www-form-urlencoded'}; 
+    $httpProvider.defaults.transformRequest.push(function (data, headerGetter) {
+        console.log("transform Request");
+        return data;
+    });
+    /*
+    I think we only need to transform the post requests.
+    $httpProvider.defaults.transformResponse.push(function (data, headerGetter) {
+        console.log("transform Response");
+        return data;
+    });
+    */
 
 
-	// $routeProvider
-	// .when('/', {
-	// 	templateUrl: 'niiu-demo/views/login.html',
-	// 	controller: 'LoginCtrl'
-	// })
-	// .when('/main', {
-	// 	templateUrl: 'niiu-demo/views/main.html',
-	// 	controller: 'SectionsCtrl'
-	// })
-	// .when('/articles', {
-	// 	templateUrl: 'niiu-demo/views/articles.html',
-	// 	controller: 'ArticlesCtrl'
-	// })
-	// .when('/article/:id', {
-	// 	templateUrl: '../niiu-demo/views/article.html',
-	// 	controller: 'ArticleCtrl'
-	// })
-	// .otherwise({
-	// 	redirectTo: '/'
-	// });
-
-	// $routeProvider
-	// .when('niiu/niiu-webapp/dist/', {
-	// 	templateUrl: 'views/login.html',
-	// 	controller: 'LoginCtrl'
-	// })
-	// .when('niiu/niiu-webapp/dist/main', {
-	// 	templateUrl: 'views/main.html',
-	// 	controller: 'SectionsCtrl'
-	// })
-	// .when('niiu/niiu-webapp/dist/articles', {
-	// 	templateUrl: 'views/articles.html',
-	// 	controller: 'ArticlesCtrl'
-	// })
-	// .when('niiu/niiu-webapp/dist/article/:id', {
-	// 	templateUrl: 'niiu-demo/views/article.html',
-	// 	controller: 'ArticleCtrl'
-	// })
-	// .otherwise({
-	// 	redirectTo: 'niiu/niiu-webapp/dist/'
-	// });
+  }).run(function($rootScope, $route, $location, niiuAuthenticator) {
+  $rootScope.layoutPartial = function(partialName) { 
+    //this works but throws errors before it loads
+    if ($route.current) {
+    return $route.current[partialName] ;
+  }
+  };
 
 
 
 
+  // enumerate routes that don't need authentication
+  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass' ];
 
-	$httpProvider.defaults.transformRequest = function(data){
-        if (data === undefined) {
-            return data;
+  // check if current location matches route  
+  var publicViews = function (route) {
+    console.log('the route is requested is ', route);
+    
+
+    for (var i=0; i<routesThatDontRequireAuth.length; i++) {
+        if (routesThatDontRequireAuth[i].substring(0, route.length) === route) {
+          console.log('this is a public view');
+          return true;
         }
-        return $.param(data);
     }
+    console.log('that route is not public');
+    return false;
 
-    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+  };
+
+  $rootScope.$on('$routeChangeStart', function (event, next, current) {
+   
+   console.log('are you logged in',niiuAuthenticator.isLoggedIn());
+   //console.log();
+   console.log($rootScope.user);
+
+    //publicViews($location.url())
+    // if route requires auth and user is not logged in
+    if (!publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user)) {
+
+      console.log(' we have to go back to the home page because this ',!publicViews($location.url()),!niiuAuthenticator.isLoggedIn());
+
+      // redirect back to login
+      $location.path('/');
+    }
+  });
 
 
-	if(window.history && window.history.pushState){
-		$locationProvider.html5Mode(true);
-	}
-}]);
+
+
+
+
+
+});
+
+

@@ -13,8 +13,6 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 body {
     padding-top: 20px;
     padding-bottom: 20px;
-    background: #F0F0F0;
-    font-family: 'Lato';
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -24,6 +22,11 @@ body {
     padding-left: 15px;
     padding-right: 15px;
 }
+.footer p {
+    text-align:right;
+}
+alert
+
 
 /* Custom page header */
 .header {
@@ -50,65 +53,23 @@ body {
 }
 
 /* Main marketing message and sign up button */
-#loginForm {
+.jumbotron {
     text-align: center;
-    margin-top: 30px;
+    border-bottom: 1px solid #e5e5e5;
 }
-.niiu-login-title {
-    text-align: center;
-    color: #707070;
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
 }
-li {
-    list-style: none;
+
+/* Supporting marketing content */
+.marketing {
+    margin: 40px 0;
 }
-.articles {
-    padding: 0!important;
-}
-.articles .article {
-    height: 295px;
-    overflow: hidden;
-    margin-bottom: 16px;
-}
-.articles h3 {
-    max-height: 100px;
-    overflow: hidden;
-}
-.form-signin label {
-    text-align: left;
-}
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+
+.marketing p + h4 {
+    margin-top: 28px;
 }
 
 /* Responsive: Portrait tablets and up */

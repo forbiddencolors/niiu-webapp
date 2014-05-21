@@ -1,7 +1,17 @@
-<div >
-	<ul class="list-group">
-		<li ng-repeat="section in sections | orderBy: 'name' ">
-			<a href="" ng-click="enterSection()" class="list-group-item" id="{{section.id}}">{{section.name}}</a>
-		</li>
-	</ul>
+
+<div class="jumbotron">
+  <h3>Start your day with customized news</h3>
+  <p class="lead">
+    Take a Tour >
+  </p>
+  <p><a class="btn btn-lg btn-success" data-ng-click="fb_login()">Log In with Facebook</a></p>
+  <p><a class="btn btn-lg btn-success" data-ng-href="#/emailLogin">Log In with Email</a></p>
+</div>
+
+<div class="row marketing">
+
+</div>
+
+<div class="footer">
+<p>By continuing to use you agree with our <a href="" ng-click="showModal('https://www.niiu.de/agb');">Terms</a> and <a href="https://www.niiu.de/datenschutz">Privacy Policy</a></p>
 </div>

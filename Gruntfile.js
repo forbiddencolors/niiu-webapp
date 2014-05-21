@@ -1,4 +1,4 @@
-// Generated on 2014-02-12 using generator-angular 0.7.1
+// Generated on 2014-05-12 using generator-angular 0.7.1
 'use strict';
 
 // # Globbing
@@ -14,10 +14,6 @@ module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
-
-   //MODIFIED: add require for connect-modewrite
-  var modRewrite = require('connect-modrewrite');
- 
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -75,17 +71,7 @@ module.exports = function (grunt) {
           base: [
             '.tmp',
             '<%= yeoman.app %>'
-          ],
-          // MODIFIED: Add this middleware configuration
-          middleware: function(connect, options) {
-            var middlewares = [];
- 
-            middlewares.push(modRewrite(['^[^\\.]*$ /index.html [L]'])); //Matches everything that does not contain a '.' (period)
-            options.base.forEach(function(base) {
-              middlewares.push(connect.static(base));
-            });
-            return middlewares;
-          }
+          ]
         }
       },
       test: {
@@ -398,22 +384,19 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'bower-install',
-    'compass:dist', 
     'useminPrepare',
-    'imagemin',
     'concurrent:dist',
     'autoprefixer',
-    'htmlmin',
     'concat',
     'ngmin',
+    'copy:dist',
     'cdnify',
     'cssmin',
-    'copy:dist',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'htmlmin'
   ]);
-
 
   grunt.registerTask('default', [
     'newer:jshint',

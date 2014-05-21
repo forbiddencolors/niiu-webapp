@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/vendor.css -->
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
@@ -20,13 +19,19 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="demoWebAppApp">
+  <body ng-app="niiuWebappApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="container">
+          <div class="header" ng-include="layoutPartial('headerUrl')"></div>
+          <div class="container" ng-view="">
+
+    </div>
+    <div id="fb-root"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -38,6 +43,18 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script src="bower_components/ydn-db/ydn.db-isw-sql.js"></script>
+
+    <script>
+          //Initialize facebook
+        FB.init({
+        appId      : '642106902524261',     
+        status     : true, 
+        cookie     : true, // enable cookies to allow the server to access the session                             
+        xfbml      : true 
+      });
+      </script>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -57,14 +74,20 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="/scripts/pouchdb-1.1.0.min.js"></script>
-        <script src="/scripts/app.js"></script>
-        <script src="/scripts/controllers/login.js"></script>
-        <script src="/scripts/controllers/article.js"></script>
-        <script src="/scripts/controllers/articles.js"></script>
-        <script src="/scripts/controllers/sections.js"></script>
-        <script src="/scripts/directives/articleID.js"></script>
-        <script src="/scripts/controllers/main.js"></script>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/registration.js"></script>
+        <script src="scripts/controllers/loginmenu.js"></script>
+        <script src="scripts/controllers/usermenu.js"></script>
+        <script src="scripts/services/constants.js"></script>
+        <script src="scripts/services/localDB.js"></script>
+        <script src="scripts/services/niiuAuthenticator.js"></script>
+        <script src="scripts/controllers/emailLogin.js"></script>
+        <script src="scripts/controllers/userHome.js"></script>
+        <script src="scripts/services/Facebook.js"></script>
+        <script src="scripts/controllers/sectionHome.js"></script>
+        <script src="scripts/services/niiuSyncer.js"></script>
+        <script src="scripts/controllers/forgotPass.js"></script>
         <!-- endbuild -->
 </body>
 </html>
