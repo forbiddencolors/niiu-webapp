@@ -33,6 +33,9 @@ angular.module('niiuWebappApp')
     };
 
         function create3sObject() {
+
+              var deferred = $q.defer();
+
               var last_sync_time=localDB.getLastSync().then(function(sync_time) {
                 console.log('the last sync time in the db is',sync_time);
                 return sync_time;
@@ -43,45 +46,46 @@ angular.module('niiuWebappApp')
               });
 
 
+
               var threeSData = {};
               last_sync_time.then(function(sync_time) {
                   console.log('we just got the sync time so now we can use the data to make the request', sync_time);
 
-              var threeSData = {
-                  "api": "3s",
-                  "action": "sync",
-                  "appGuid": constants.NIIU_APP_GUID,
-                  "data": {
-                      "lastSync": sync_time,
-                      "sections":[],
-                      "subsections":[],
-                      "sections_subsections":[],
-                      "sources_sections":[],
-                      "sources_subsections":[],
+                  var threeSData = {
+                                      "api": "3s",
+                                      "action": "sync",
+                                      "appGuid": constants.NIIU_APP_GUID,
+                                      "data": {
+                                          "lastSync": sync_time,
+                                          "sections": [
 
-                      "lastContentSync": "0000-00-00 00:00:00",
-                      "user_id": currentUser.contentProfile.userID,
-                     "version": 102.5,
-                     "article_ids": [ ],
-                     "contentProfile": {
-                         "id": currentUser.contentProfile.id,
-                         "localID": 2,
-                         "isPublic": 1,
-                         "name": "Default Content Profile",
-                         "subscribedTo": null,
-                        "lastUpdated": "0000-00-00 00:00:00",
-                        "items": [  ]
-                    },
-                    "forceSync": true
-                  }
-                };    
+                                          ],
+                                          "sources": [
 
-          }
+                                          ],
+                                           "subsections": [
+
+                                          ],
+                                          "sections_subsections": [
+
+                                          ],
+                                           "sources_sections": [
+
+                                          ],
+                                          "sources_subsections": [
+
+                                          ]
+                                      }
+                                  };  
+
+              deferred.resolve(threeSData);
+              }
+
           );
 
        
 
-          return threeSData;
+          return deferred.promise;
       }
 
 
@@ -140,12 +144,16 @@ angular.module('niiuWebappApp')
 
         threeSRequest.then(function(threeSJSON) {
 
+        //threeSRequest
+            console.log('weve got the 3s json');
+
+              deferred.notify('asking the api');
               $http.post(constants.NIIUAPI_URL+"articles/sync_3s", "data="+angular.toJson(threeSJSON), {
                               
-                          }).success(function(threeSResponse){
+                          }).then(function(threeSResponse){
                               console.log('heres the response from the niiu api', threeSResponse)
                               
-                              if (threeSResponse.contents.status==200) {
+                              if (threeSResponse.status==200) {
 
                                   console.log('The 3s response was good')
                                   
@@ -162,21 +170,25 @@ angular.module('niiuWebappApp')
                                       deferred.reject(threeSResponse);
                               }
 
-                          }).error(function(error){
+                          },function(error){
                               console.log('this was a straight up 3s error',error);
                               deferred.reject(error);
                            });
                           //hang on we don't have an answer yet
                           return deferred.promise;
 
-                });
+                }
 
 
 
 
-        }
+
+
+
+        );
             
-
+      }
 
     
-  }]);
+  }}
+  ]);
