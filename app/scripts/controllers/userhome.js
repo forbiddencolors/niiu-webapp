@@ -8,6 +8,7 @@ angular.module('niiuWebappApp')
 			console.log('this is what the sync said to the controller', response);
 
 		}, function(error) {
+			//we got an error trying to do the article sync
 			console.log('for this reason the article sync failed ',error);
 			if (error.contents.status==409 || error.contents.message == "Perform 3s Sync") {
 				var do_3s = niiuSyncer.sync3s();
@@ -28,7 +29,7 @@ angular.module('niiuWebappApp')
 
 				});
 
-				niiuSyncer.sync3s().success
+				
 
 
 			}

@@ -33,9 +33,11 @@ describe('Service: niiuSyncer', function () {
           //Act
           var articleTest = niiuSyncer.createArticleObject(guid,apiKey,last_sync_time,userID,profileID);
           //Assert
-          //doesnt work
+          
           //expect(articleTest.name).toBe("Default Content Profile");
+              //doesnt work wrong object structure
           expect(articleTest.data.contentProfile.name).toBe("Default Content Profile");
+              //works!!
 
       });
 

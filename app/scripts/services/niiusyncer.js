@@ -11,6 +11,8 @@ angular.module('niiuWebappApp')
 
     var deferred = $q.defer();
 
+    
+
     var last_sync_time=localDB.getLastSync().then(function(sync_time) {
       console.log('the last sync time in the db is',sync_time);
       return sync_time;
@@ -20,7 +22,7 @@ angular.module('niiuWebappApp')
       return "0000-00-00 00:00:00";
     });
 
-/*
+
     var articleData = {
       "api": "content",
       "action": "get",
@@ -33,7 +35,7 @@ angular.module('niiuWebappApp')
          "version": 102.5,
          "article_ids": [ ],
          "contentProfile": {
-             "id": currentUser.ç,
+             "id": currentUser.id,
              "localID": 2,
              "isPublic": 1,
              "name": "Default Content Profile",
@@ -44,7 +46,7 @@ angular.module('niiuWebappApp')
         "forceSync": true
       }
     };
-    */
+    
 
 
         function create3sObject() {
@@ -113,6 +115,66 @@ angular.module('niiuWebappApp')
       },
 
       createArticleObject: function(guid,apiKey,last_sync_time,userID,profileID) {
+          
+        /*
+        a functioning object looks like this
+        {
+      "api": "content",
+      "action": "get",
+      "appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
+      "apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
+      "data": {
+          "last3SSync": "2014-05-21 08:17:50",
+          "lastContentSync": "2014-05-21 08:13:37",
+          "user_id": "1014",
+         "version": 102.5,
+         "article_ids": [
+             {
+                 "id": 354821
+             },
+             {
+                 "id": 354959
+             }
+         ],
+         "contentProfile": {
+             "id": 1627,
+             "localID": 2,
+             "isPublic": 1,
+             "name": "Default Content Profile",
+             "subscribedTo": null,
+            "lastUpdated": "2014-05-21 08:13:26",
+            "items": [
+                {
+                    "section": null,
+                    "source": null,
+                    "subsection": null,
+                    "custom_section": "Bayern München" 
+                },
+                {
+                    "section": 7,
+                    "source": 30,
+                    "subsection": null,
+                    "custom_section": null
+                },
+                {
+                    "section": 7,
+                    "source": 9,
+                    "subsection": null,
+                    "custom_section": null
+                }
+            ]
+        },
+        "forceSync": true
+    }
+}
+
+
+
+
+
+        */
+
+
           var articleData = {
                   "api": "content",
                   "action": "get",
@@ -146,7 +208,7 @@ angular.module('niiuWebappApp')
         //create a promise
         var deferred = $q.defer();
 
-        $http.post(constants.NIIUAPI_URL+"articles/get_articles", "data="+angular.toJson(articleData), {
+        $http.post(constants.NIIUAPI_URL+"articles/get_articles_from_solr", "data="+angular.toJson(articleData), {
                     
                 }).success(function(articleResponse){
                     console.log('heres the response from the niiu api', articleResponse)
