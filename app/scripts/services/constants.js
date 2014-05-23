@@ -7,11 +7,12 @@ angular.module('niiuWebappApp')
                 FACEBOOK_APP_ID: '642106902524261',
                 FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4',
                 NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
-                NIIUAPI_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
+                NIIU_API_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
                 USER_LOCATOR : 10210,
                 USER_TABLE_SCHEMA :  { stores:[{ name:'niiu_user', keyPath:"user" }] },
                 USER_DB_NAME : 'niiu_user_table',
-                USER_TABLE_NAME : 'niiu_user'
+                USER_TABLE_NAME : 'niiu_user',
+                NIIU_API_VERSION : 200.7
 
 });
 

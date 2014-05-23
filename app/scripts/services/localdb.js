@@ -34,7 +34,7 @@ angular.module('niiuWebappApp')
 
 
           var curr_year = nowDate.getFullYear();
-          var curr_month = ( '0'+nowDate.getMonth() ).slice(-2);  //adds a 0 then tkes the last 2 chars leaving a 2 digit month
+          var curr_month = ( '0'+(nowDate.getMonth()+1) ).slice(-2);  //adds a 0 then tkes the last 2 chars leaving a 2 digit month add one because month count starts at 0
           var curr_date = ( '0'+nowDate.getDate() ).slice(-2) ; //adds a 0 then tkes the last 2 chars leaving a 2 digit date
           var curr_hours = ( '0'+nowDate.getHours() ).slice(-2);
           var curr_mins = ( '0'+ nowDate.getMinutes() ).slice(-2);
@@ -139,7 +139,7 @@ angular.module('niiuWebappApp')
 
 
         getLastSync: function() {
-
+          var default_time='0000-00-00 00:00:00';
 
           console.log('looking for the last sync time');
           //create or open the 3s table in the default db
@@ -160,7 +160,7 @@ angular.module('niiuWebappApp')
               if (typeof last_sync_record == "undefined") {
                 
                 console.log('thats right no last sync time');
-               deferred.reject('no last sync');
+               deferred.reject(default_time);
               } else {
                //return last_user.userInfo;
                console.log('yes we do have a last sync time', last_sync_record);
@@ -170,12 +170,12 @@ angular.module('niiuWebappApp')
 
 
             }).fail(function(e) {
-              console.log('no last sync time')
+              console.log('error finding last sync',e)
               
-              deferred.reject(e);
+              deferred.reject(default_time);
             });
 
-           return deferred.promise;
+            return deferred.promise;
 
           },
 
@@ -225,6 +225,18 @@ angular.module('niiuWebappApp')
 
           },
 
+
+          getLastProfileUpdate:  function() {
+            //we will change this in the db if there has been a setting change
+            var default_time='2012-12-12 12:12:12';
+            var deferred = $q.defer();
+
+            deferred.resolve(default_time);
+
+            return deferred.promise;
+
+
+          },
 
 
 /*
