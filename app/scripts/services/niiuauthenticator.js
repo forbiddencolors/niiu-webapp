@@ -92,7 +92,7 @@ angular.module('niiuWebappApp')
 
         var emailReset = {"eMail" : email};
         passwordReset.data=emailReset;
-        $http.post(constants.NIIUAPI_URL + '/users/forgot_password', "data="+angular.toJson(passwordReset)).success(function(resetResponse) {
+        $http.post(constants.NIIU_API_URL + '/users/forgot_password', "data="+angular.toJson(passwordReset)).success(function(resetResponse) {
                 console.log(resetResponse.contents.status);
                 if (resetResponse.contents.status==200) {
                     console.log("Yea! check your email, your reset is being sent ");
@@ -119,7 +119,7 @@ angular.module('niiuWebappApp')
                 var deferred = $q.defer();
 
                 console.log('posting', userReg)
-                $http.post(constants.NIIUAPI_URL + '/users/register', "data="+angular.toJson(userReg)).success(function(regData) {
+                $http.post(constants.NIIU_API_URL + '/users/register', "data="+angular.toJson(userReg)).success(function(regData) {
                 console.log(regData.contents.status);
                 console.log("Yeah youre registered! ", regData.contents.data);
                 
@@ -176,7 +176,7 @@ angular.module('niiuWebappApp')
                 console.log(angular.toJson(loginReq));
 
 
-                $http.post(constants.NIIUAPI_URL+'/users/authenticate', "data="+angular.toJson(loginReq), {
+                $http.post(constants.NIIU_API_URL+'/users/authenticate', "data="+angular.toJson(loginReq), {
                     
                 }).success(function(userData){
                     console.log('heres the response from the niiu api')

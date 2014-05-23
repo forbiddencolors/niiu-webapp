@@ -23,7 +23,7 @@ describe('Service: niiuSyncer', function () {
     expect(niiuSyncer).toBe(true);
   });
 
-  describe('.createArticleObject', function() {
+  describe('.createArticleObjectPass', function() {
       it('should return an articleObject', function() {
           
 

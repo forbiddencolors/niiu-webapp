@@ -11,7 +11,7 @@ angular.module('niiuWebappApp')
 
     var deferred = $q.defer();
 
-    
+
 
     var last_sync_time=localDB.getLastSync().then(function(sync_time) {
       console.log('the last sync time in the db is',sync_time);
@@ -20,10 +20,14 @@ angular.module('niiuWebappApp')
     function(sync_error) {
       console.log('unfortunately we couldnt find a sync time in the db',sync_error);
       return "0000-00-00 00:00:00";
-    });
+    }
+
+    );
 
 
-    var articleData = {
+
+
+    var dontUseArticleData = {
       "api": "content",
       "action": "get",
       "appGuid": constants.NIIU_APP_GUID,
@@ -32,7 +36,7 @@ angular.module('niiuWebappApp')
           "last3SSync": last_sync_time,
           "lastContentSync": last_sync_time,
           "user_id": currentUser.contentProfile.userID,
-         "version": 102.5,
+         "version": 200.7,
          "article_ids": [ ],
          "contentProfile": {
              "id": currentUser.id,
@@ -40,12 +44,42 @@ angular.module('niiuWebappApp')
              "isPublic": 1,
              "name": "Default Content Profile",
              "subscribedTo": null,
-            "lastUpdated": "2014-05-21 22:25:00",
+            "lastUpdated": last_sync_time,
             "items": [  ]
         },
         "forceSync": true
       }
     };
+
+    function createArticleObject(current_user,last_sync_time, last_cp_update_time) {
+
+
+              var articleData = {
+                "api": "content",
+                "action": "get_articles_from_solr",
+                "appGuid": constants.NIIU_APP_GUID,
+                "data": {
+                    "last3SSync": last_sync_time,
+                    "lastContentSync": last_sync_time,
+                    "user_id": currentUser.id,
+                   "version": 200.7,
+                   "article_ids": [ ],
+                   "contentProfile": {
+                       "id": currentUser.contentProfile.id,
+                       "localID": 2,
+                       "isPublic": 1,
+                       "name": "Default Content Profile",
+                       "subscribedTo": null,
+                      "lastUpdated": last_cp_update_time,
+                      "items": [  ]
+                  },
+                  "forceSync": true
+                }
+              };
+
+
+            return articleData;
+      }
     
 
 
@@ -114,7 +148,36 @@ angular.module('niiuWebappApp')
         
       },
 
-      createArticleObject: function(guid,apiKey,last_sync_time,userID,profileID) {
+      createArticleObjectPass: function(guid,apiKey,last_sync_time,userID,profileID) {
+
+          var articleData = {
+                  "api": "content",
+                  "action": "get_articles_from_solr",
+                  "appGuid": guid,
+                  "data": {
+                      "last3SSync": last_sync_time,
+                      "lastContentSync": last_sync_time,
+                      "user_id": userID,
+                     "version": constants.NIIU_API_VERSION,
+                     "article_ids": [ ],
+                     "contentProfile": {
+                         "id": profileID,
+                         "localID": 2,
+                         "isPublic": 1,
+                         "name": "Default Content Profile",
+                         "subscribedTo": null,
+                        "lastUpdated": last_sync_time,
+                        "items": [  ]
+                    },
+                    "forceSync": true
+                  }
+            };
+            return articleData;
+      },
+
+
+
+
           
         /*
         a functioning object looks like this
@@ -171,44 +234,24 @@ angular.module('niiuWebappApp')
 
 
 
-
-        */
-
-
-          var articleData = {
-                  "api": "content",
-                  "action": "get",
-                  "appGuid": guid,
-                  "apiKey": apiKey,
-                  "data": {
-                      "last3SSync": last_sync_time,
-                      "lastContentSync": last_sync_time,
-                      "user_id": userID,
-                     "version": 102.5,
-                     "article_ids": [ ],
-                     "contentProfile": {
-                         "id": profileID,
-                         "localID": 2,
-                         "isPublic": 1,
-                         "name": "Default Content Profile",
-                         "subscribedTo": null,
-                        "lastUpdated": last_sync_time,
-                        "items": [  ]
-                    },
-                    "forceSync": true
-                  }
-            };
-            return articleData;
-      },
+*/
+        
 
 
-      syncArticles: function() {
 
+
+
+      syncArticles: function(current_user,last_sync_time,last_cp_update_time) {
+
+        //if we take the dependency of finding the sync time out of this it should be pretty instant and syncronous
+        var articleData=createArticleObject(current_user, last_sync_time, last_cp_update_time);
+
+        console.log('heres the article object we are sending', articleData);
 
         //create a promise
         var deferred = $q.defer();
 
-        $http.post(constants.NIIUAPI_URL+"articles/get_articles_from_solr", "data="+angular.toJson(articleData), {
+        $http.post(constants.NIIU_API_URL+"articles/get_articles_from_solr", "data="+angular.toJson(articleData), {
                     
                 }).success(function(articleResponse){
                     console.log('heres the response from the niiu api', articleResponse)
@@ -251,10 +294,10 @@ angular.module('niiuWebappApp')
         threeSRequest.then(function(threeSJSON) {
 
         //threeSRequest
-            console.log('weve got the 3s json');
+            console.log('weve got the 3s json', threeSJSON);
 
               deferred.notify('asking the api');
-              $http.post(constants.NIIUAPI_URL+"articles/sync_3s", "data="+angular.toJson(threeSJSON), {
+              $http.post(constants.NIIU_API_URL+"articles/sync_3s", "data="+angular.toJson(threeSJSON), {
                               
                           }).then(function(threeSResponse){
                               console.log('heres the response from the niiu api', threeSResponse)
@@ -262,10 +305,7 @@ angular.module('niiuWebappApp')
                               if (threeSResponse.status==200) {
 
                                   console.log('The 3s response was good')
-                                  
-                                  
-                                  
-                              
+
                               
                               deferred.resolve(threeSResponse);
                               
@@ -273,7 +313,7 @@ angular.module('niiuWebappApp')
                                       
                                       console.log('The 3s response wasnt so good...', threeSResponse);
                                       
-                                      deferred.reject(threeSResponse);
+                              deferred.reject(threeSResponse);
                               }
 
                           },function(error){
