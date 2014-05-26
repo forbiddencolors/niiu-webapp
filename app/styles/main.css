@@ -20069,6 +20069,11 @@ body {
     margin-bottom: 30px;
   }
 
+  /*News Sources on userhome */
+.user_source {
+font-weight:bold;
+}
+
   /* Remove the bottom border on the jumbotron for visual effect */
 
 @media -sass-debug-info {

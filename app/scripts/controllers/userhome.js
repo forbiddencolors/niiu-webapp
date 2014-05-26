@@ -128,6 +128,7 @@ console.log('here is some 3s data',data_3s);
 	localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
 	//add sections to Scope
 	$scope.sections=data_3s.data.contents.data.newSections;
+	$scope.sources=data_3s.data.contents.data.newSources;
 	console.log('section 7 is called', $scope.sections[7].name);
 }, 
 function(no_data_3s) {
