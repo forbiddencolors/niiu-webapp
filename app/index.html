@@ -18,6 +18,7 @@
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <link rel="stylesheet" href="styles/development.css">
   </head>
   <body ng-app="niiuWebappApp">
     <!--[if lt IE 7]>
@@ -26,9 +27,9 @@
 
     
     <!-- Add your site or application content here -->
-    <div class="container">
-          <div class="header" ng-include="layoutPartial('headerUrl')"></div>
-          <div class="container" ng-view="">
+    <div class="container page {{ pageClass }} " ng-view>
+     
+          <!-- <div class="header" ng-include="layoutPartial('headerUrl')"></div> -->
 
     </div>
     <div id="fb-root"></div>
@@ -70,6 +71,7 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-animate.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

@@ -1,0 +1,128 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  /*	background-image: url('../images/login-bg-image.jpg');
+  	background-size: 306%;
+  	background-position: 57% 39%;
+  	background-size: 250%;
+  	background-position: 63% 0%;
+  */
+  color: white;
+  font-size: 14px; }
+  body a, body p a {
+    color: white;
+    text-decoration: underline;
+    font-weight: bold; }
+
+.jumbotron {
+  background-color: transparent;
+  border-radius: 0px;
+  border-width: 0px;
+  font-size: 14px;
+  margin-bottom: 0px;
+  padding-bottom: 0px; }
+  .jumbotron p {
+    font-weight: 200; }
+    .jumbotron p .heavier {
+      font-weight: 700; }
+  .jumbotron p.lead {
+    font-size: 14px; }
+  .jumbotron .butterfly {
+    width: 70px;
+    margin-bottom: 25px; }
+  .jumbotron .btn-wrapper {
+    margin-top: 130px; }
+  .jumbotron .btn {
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    border-radius: 0px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none; }
+  .jumbotron .btn.facebook {
+    background-color: #3b5998;
+    border-width: 0px; }
+  .jumbotron .btn.login {
+    border: 2px solid white; }
+
+.footer {
+  text-align: center;
+  border-top: 0px solid white;
+  color: white;
+  font-size: 8px;
+  padding-top: 5px; }
+
+/* CSS transitions for page animations */
+.container.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-image: url("../images/login-bg-image.jpg");
+  background-size: 306%;
+  background-position: 57% 39%;
+  background-size: 250%;
+  background-position: 63% 0%; }
+
+.internal-page.email-login {
+  background-image: url();
+  background-color: purple; }
+
+.page.ng-enter {
+  -webkit-transition: 0.5s linear all;
+  -moz-transition: 0.5s linear all;
+  -o-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+  opacity: 0;
+  /*    -webkit-animation:slideInRight 0.5s both ease-in;
+      -moz-animation:slideInRight 0.5s both ease-in;
+      animation:slideInRight 0.5s both ease-in; 
+  */ }
+
+.page.ng-leave {
+  -webkit-animation: slideOutLeft 0.5s both ease-in;
+  -moz-animation: slideOutLeft 0.5s both ease-in;
+  animation: slideOutLeft 0.5s both ease-in; }
+
+/*.login-home.ng-enter { animation: scaleUp 1.5s both ease-in; }
+.login-home.ng-leave { transform-origin: 0% 0%; animation: rotateFall 1s both ease-in; }
+*/
+/*.container.page.ng-leave  { z-index:9999; }
+.container.page.ng-enter  { z-index:8888; }*/
+/* slide in from the right */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%); }
+
+  to {
+    transform: translateX(0); } }
+
+@-moz-keyframes slideInRight {
+  from {
+    -moz-transform: translateX(100%); }
+
+  to {
+    -moz-transform: translateX(0); } }
+
+@-webkit-keyframes slideInRight {
+  from {
+    -webkit-transform: translateX(100%); }
+
+  to {
+    -webkit-transform: translateX(0); } }
+
+/* slide in from the bottom */
+@keyframes slideOutLeft {
+  to {
+    transform: translateX(-100%); } }
+
+@-moz-keyframes slideOutLeft {
+  to {
+    -moz-transform: translateX(-100%); } }
+
+@-webkit-keyframes slideOutLeft {
+  to {
+    -webkit-transform: translateX(-100%); } }

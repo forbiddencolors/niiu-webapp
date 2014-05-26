@@ -3,7 +3,10 @@
 angular.module('niiuWebappApp')
   .controller('EmailloginCtrl', ['$scope', '$location', 'niiuAuthenticator', 'constants', function ($scope, $location, niiuAuthenticator, constants) {
 
-    
+
+$scope.pageClass = 'login-home';
+  console.log('what does my scope look like ' , $scope);  
+
   $scope.niiu_login = function(loginInfo) {
     console.log('Niiu Login!');
     console.log('the login stuff is');
@@ -11,7 +14,8 @@ angular.module('niiuWebappApp')
 
     console.log(constants);
 
-    console.log(niiuAuthenticator)
+    console.log(niiuAuthenticator);
+
 
     
     var niiuUser = niiuAuthenticator.login(loginInfo).then(function(result) {
@@ -25,6 +29,7 @@ angular.module('niiuWebappApp')
       //console.log('FB data prepared for niiu Authentication');
       //console.log($scope.niiuUser);
     });
+
 
     
     //console.log(niiuUser);

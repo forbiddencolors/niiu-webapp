@@ -4,7 +4,8 @@ angular.module('niiuWebappApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'ngAnimate'
 ])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
@@ -112,5 +113,9 @@ angular.module('niiuWebappApp', [
 
 
 });
+
+// .controller('EmailloginCtrl', function($scope) {
+//     $scope.pageClass = 'login-home';
+// });
 
 
