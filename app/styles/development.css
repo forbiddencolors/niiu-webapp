@@ -1,12 +1,11 @@
 body {
   margin: 0px;
   padding: 0px;
-  /*	background-image: url('../images/login-bg-image.jpg');
-  	background-size: 306%;
-  	background-position: 57% 39%;
-  	background-size: 250%;
-  	background-position: 63% 0%;
-  */
+  background-image: url("../images/login-bg-image.jpg");
+  background-size: 306%;
+  background-position: 57% 39%;
+  background-size: 250%;
+  background-position: 63% 0%;
   color: white;
   font-size: 14px; }
   body a, body p a {
@@ -61,11 +60,11 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background-image: url("../images/login-bg-image.jpg");
-  background-size: 306%;
-  background-position: 57% 39%;
-  background-size: 250%;
-  background-position: 63% 0%; }
+  /*	background-image: url('../images/login-bg-image.jpg');
+  	background-size: 306%;
+  	background-position: 57% 39%;
+  	background-size: 250%;
+  	background-position: 63% 0%;*/ }
 
 .internal-page.email-login {
   background-image: url();
