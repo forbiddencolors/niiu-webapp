@@ -4,7 +4,8 @@ angular.module('niiuWebappApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'ngAnimate'
 ])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
@@ -23,16 +24,6 @@ angular.module('niiuWebappApp', [
         headerUrl: '',
         controller: 'EmailloginCtrl'
       })
-      .when('/terms', {
-        templateUrl: 'views/terms.html',
-        headerUrl: 'views/partials/loginmenu.html',
-        controller: 'termsCtrl'
-      })
-      .when('/privacy', {
-        templateUrl: 'views/privacy.html',
-        headerUrl: 'views/partials/loginmenu.html',
-        controller: 'privacyCtrl'
-      })
       .when('/userHome', {
         templateUrl: 'views/userhome.html',
         headerUrl: 'views/partials/usermenu.html',
@@ -47,6 +38,16 @@ angular.module('niiuWebappApp', [
         templateUrl: 'views/forgotpass.html',
         headerUrl: 'views/partials/loginmenu.html',
         controller: 'ForgotpassCtrl'
+      })
+      .when('/privacy', {
+        templateUrl: 'views/privacy.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'PrivacyCtrl'
+      })
+      .when('/terms', {
+        templateUrl: 'views/terms.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'TermsCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -80,7 +81,7 @@ angular.module('niiuWebappApp', [
 
 
   // enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass' ];
+  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass', '/privacy', '/terms' ];
 
   // check if current location matches route  
   var publicViews = function (route) {
