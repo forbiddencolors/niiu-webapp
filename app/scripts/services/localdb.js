@@ -311,13 +311,35 @@ angular.module('niiuWebappApp')
 
         loadArticlesFromDB: function() {
 
-
-            db.values('articles').done(function(data) {
+            var local_table = connectDB();
+            local_table.values('articles').done(function(data) {
               console.log('here are all the articles from the DB',data);
               
               return data;
 
             });
+
+          
+
+
+        },
+
+        loadSectionsFromDB: function() {
+
+            var deferred = $q.defer;
+
+            var local_table = connectDB();
+            local_table.values('sections').done(function(data) {
+              console.log('here are all the sections from the DB',data);
+              
+              deferred.resolve(data);
+
+            }).fail(function(failure) {
+              console.log('failed at getting sections from the db', failure);
+              deferred.reject(failure);
+            });
+
+            return deferred.promise;
 
           
 

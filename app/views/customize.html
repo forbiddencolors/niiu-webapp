@@ -1,0 +1,10 @@
+<p>This is the customize view.</p>
+
+
+	<p>Here are all sections</p>
+
+	<ul class="sections row">
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="niiu_section in sections">
+			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}">{{niiu_section.name}}</a>
+		</li>
+	</ul>

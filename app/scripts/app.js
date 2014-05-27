@@ -49,6 +49,11 @@ angular.module('niiuWebappApp', [
         headerUrl: 'views/partials/loginmenu.html',
         controller: 'TermsCtrl'
       })
+      .when('/customize', {
+        templateUrl: 'views/customize.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'CustomizeCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
