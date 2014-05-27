@@ -80,6 +80,13 @@ body {
 	padding-top: 5px;
 }
 
+/* this is holding the user menu but im putting it on the bottom of the page for the time being. */
+.header {
+bottom:0px;
+height:5px;
+font-size:10px;
+position:absolute;
+}
 
 /* CSS transitions for page animations */
 
@@ -100,18 +107,18 @@ body {
 }
 
 .page.ng-enter {
-/*	-webkit-animation:slideInRight 0.5s both ease-in;
-    -moz-animation:slideInRight 0.5s both ease-in;
-    animation:slideInRight 0.5s both ease-in;*/ 
+    -webkit-animation:scaleUp 0.5s both ease-in;
+	-moz-animation:scaleUp 0.5s both ease-in;
+	animation:scaleUp 0.5s both ease-in;  
 }
 
 
 .page.ng-leave { 
-/*    -webkit-animation:slideOutLeft 0.5s both ease-in;
-    -moz-animation:slideOutLeft 0.5s both ease-in;
-    animation:slideOutLeft 0.5s both ease-in; */
+    -webkit-animation:scaleDown 0.5s both ease-in;
+	-moz-animation:scaleDown 0.5s both ease-in;
+	animation:scaleDown 0.5s both ease-in;  
 }
-
+/*
 .login-home.ng-enter {  
     -webkit-animation:scaleUp 0.5s both ease-in;
 	-moz-animation:scaleUp 0.5s both ease-in;
@@ -119,9 +126,9 @@ body {
 }
 
 .login-home.ng-leave {  
-   -webkit-animation:slideOutLeft 0.5s both ease-in;
-    -moz-animation:slideOutLeft 0.5s both ease-in;
-    animation:slideOutLeft 0.5s both ease-in; 
+    -webkit-animation:scaleDown 0.2s both ease-in;
+	-moz-animation:scaleDown 0.2s both ease-in;
+	animation:scaleDown 0.2s both ease-in;  
 }
 
 .login-email.ng-enter {
@@ -135,6 +142,7 @@ body {
     -moz-animation:slideOutRight 0.5s both ease-in;
     animation:slideOutRight 0.5s both ease-in; 
 }
+*/
 
 .page.ng-leave  { z-index:9999; }
 .page.ng-enter  { z-index:8888; }
@@ -149,6 +157,19 @@ body {
 }
 @-webkit-keyframes scaleUp {
 	from 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+
+
+/* scale down */
+@keyframes scaleDown {
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+@-moz-keyframes scaleDown {
+	to 		{ opacity: 0.3; -moz-transform: scale(0.8); }
+}
+@-webkit-keyframes scaleDown {
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
 }
 
 

@@ -25,14 +25,13 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- <div class="header" ng-include="layoutPartial('headerUrl')"></div> -->   
 
     <!-- Add your site or application content here -->
+    
     <div class="container page {{ pageClass }} " ng-view="">
-     
- 
-
+        <!-- templates get loaded here -->
     </div>
+    <div class="header" ng-include="layoutPartial('headerUrl')"></div>   
     <div id="fb-root"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -83,14 +82,14 @@
         <script src="scripts/controllers/loginmenu.js"></script>
         <script src="scripts/controllers/usermenu.js"></script>
         <script src="scripts/services/constants.js"></script>
-        <script src="scripts/services/localDB.js"></script>
-        <script src="scripts/services/niiuAuthenticator.js"></script>
-        <script src="scripts/controllers/emailLogin.js"></script>
-        <script src="scripts/controllers/userHome.js"></script>
-        <script src="scripts/services/Facebook.js"></script>
-        <script src="scripts/controllers/sectionHome.js"></script>
-        <script src="scripts/services/niiuSyncer.js"></script>
-        <script src="scripts/controllers/forgotPass.js"></script>
+        <script src="scripts/services/localdb.js"></script>
+        <script src="scripts/services/niiuauthenticator.js"></script>
+        <script src="scripts/controllers/emaillogin.js"></script>
+        <script src="scripts/controllers/userhome.js"></script>
+        <script src="scripts/services/facebook.js"></script>
+        <script src="scripts/controllers/sectionhome.js"></script>
+        <script src="scripts/services/niiusyncer.js"></script>
+        <script src="scripts/controllers/forgotpass.js"></script>
         <!-- endbuild -->
 </body>
 </html>
