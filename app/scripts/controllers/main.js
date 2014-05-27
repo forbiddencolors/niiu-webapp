@@ -3,7 +3,8 @@
 angular.module('niiuWebappApp')
   .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants ) {
 
-    
+        // Add the page class
+    $scope.pageClass = 'login-home';
 
 $scope.retrieveUser = function() {
   	//retrieve logged in user
@@ -122,3 +123,7 @@ $dialog.dialog({}).open(url);
     //$scope.retrieveUser();
   }
 ]);
+
+
+
+

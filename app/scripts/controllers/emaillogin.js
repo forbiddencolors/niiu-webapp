@@ -3,8 +3,9 @@
 angular.module('niiuWebappApp')
   .controller('EmailloginCtrl', ['$scope', '$location', 'niiuAuthenticator', 'constants', function ($scope, $location, niiuAuthenticator, constants) {
 
+    // add page class
+  $scope.pageClass = 'login-email';
 
-$scope.pageClass = 'login-home';
   console.log('what does my scope look like ' , $scope);  
 
   $scope.niiu_login = function(loginInfo) {

@@ -114,8 +114,25 @@ angular.module('niiuWebappApp', [
 
 });
 
-// .controller('EmailloginCtrl', function($scope) {
+
+
+// niiuWebappApp.controller('MainCtrl', function($scope) {
 //     $scope.pageClass = 'login-home';
 // });
+
+// niiuWebappApp.controller('EmailloginCtrl', function($scope) {
+//     $scope.pageClass = 'login-menu';
+// });
+
+// // niiuWebappApp.controller('contactController', function($scope) {
+// //     $scope.pageClass = 'page-contact';
+// // });
+
+
+
+
+
+
+
 
 
