@@ -1,0 +1,238 @@
+
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-image: url('../images/login-bg-image.jpg');
+	background-size: 306%;
+	background-position: 57% 39%;
+	background-size: 250%;
+	background-position: 63% 0%;
+	color: white;
+	font-size: 14px;
+
+	a, p a {
+		color: white;
+		text-decoration: underline;
+		font-weight: bold;
+	}
+}
+
+
+.jumbotron {
+	background-color: transparent;
+	border-radius: 0px;
+	border-width: 0px;
+	font-size: 14px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+
+	p {
+		font-weight: 200;
+	
+		.heavier {
+			font-weight: 700;
+		}
+
+	}
+
+	p.lead {
+		font-size: 14px;
+	}
+
+	.butterfly {
+		width: 70px;
+		margin-bottom: 25px;
+	}
+
+	.btn-wrapper {
+		margin-top: 130px;
+	}
+
+	.btn {
+		width: 100%;
+		text-align: center;
+		background-color: transparent;
+		border-radius: 0px;
+		font-size: 10px;
+		letter-spacing: 1.5px;
+		text-transform: uppercase;
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.btn.facebook {
+		background-color: #3b5998;
+		border-width: 0px;
+	}
+
+	.btn.login {
+		border: 2px solid white;
+	}
+}
+
+
+.footer {
+	text-align: center;
+	border-top: 0px solid white;
+	color: white;
+	font-size: 8px;
+	padding-top: 5px;
+}
+
+/* this is holding the user menu but im putting it on the bottom of the page for the time being. */
+.header {
+bottom:0px;
+height:5px;
+font-size:10px;
+position:absolute;
+}
+
+/* CSS transitions for page animations */
+
+.container.page {
+	position: absolute; 
+	top:0;
+	left:0;
+	width: 100%;
+/*	background-image: url('../images/login-bg-image.jpg');
+	background-size: 306%;
+	background-position: 57% 39%;
+	background-size: 250%;
+	background-position: 63% 0%;*/
+}
+
+.internal-page.email-login {
+
+}
+
+.page.ng-enter {
+    -webkit-animation:scaleUp 0.5s both ease-in;
+	-moz-animation:scaleUp 0.5s both ease-in;
+	animation:scaleUp 0.5s both ease-in;  
+}
+
+
+.page.ng-leave { 
+    -webkit-animation:scaleDown 0.5s both ease-in;
+	-moz-animation:scaleDown 0.5s both ease-in;
+	animation:scaleDown 0.5s both ease-in;  
+}
+/*
+.login-home.ng-enter {  
+    -webkit-animation:scaleUp 0.5s both ease-in;
+	-moz-animation:scaleUp 0.5s both ease-in;
+	animation:scaleUp 0.5s both ease-in;  
+}
+
+.login-home.ng-leave {  
+    -webkit-animation:scaleDown 0.2s both ease-in;
+	-moz-animation:scaleDown 0.2s both ease-in;
+	animation:scaleDown 0.2s both ease-in;  
+}
+
+.login-email.ng-enter {
+	-webkit-animation:slideInRight 0.5s both ease-in;
+    -moz-animation:slideInRight 0.5s both ease-in;
+    animation:slideInRight 0.5s both ease-in;
+}
+
+.login-email.ng-leave {  
+   -webkit-animation:slideOutRight 0.5s both ease-in;
+    -moz-animation:slideOutRight 0.5s both ease-in;
+    animation:slideOutRight 0.5s both ease-in; 
+}
+*/
+
+.page.ng-leave  { z-index:9999; }
+.page.ng-enter  { z-index:8888; }
+
+
+/* scale up */
+@keyframes scaleUp {
+	from 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+@-moz-keyframes scaleUp {
+	from 		{ opacity: 0.3; -moz-transform: scale(0.8); }
+}
+@-webkit-keyframes scaleUp {
+	from 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+
+
+/* scale down */
+@keyframes scaleDown {
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+@-moz-keyframes scaleDown {
+	to 		{ opacity: 0.3; -moz-transform: scale(0.8); }
+}
+@-webkit-keyframes scaleDown {
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+
+/* slide in from the right */
+@keyframes slideInRight {
+	from 	{ transform:translateX(100%); }
+	to 		{ transform: translateX(0); }
+}
+@-moz-keyframes slideInRight {
+    from    { -moz-transform:translateX(100%); }
+    to      { -moz-transform: translateX(0); }
+}
+@-webkit-keyframes slideInRight {
+    from    { -webkit-transform:translateX(100%); }
+    to      { -webkit-transform: translateX(0); }
+}
+
+
+/* slide out to the right */
+@keyframes slideOutRight {
+	from 	{ transform:translateX(0); }
+	to 		{ transform: translateX(100%); }
+}
+@-moz-keyframes slideOutRight {
+    from    { -moz-transform:translateX(0); }
+    to      { -moz-transform: translateX(100%); }
+}
+@-webkit-keyframes slideOutRight {
+    from    { -webkit-transform:translateX(0); }
+    to      { -webkit-transform: translateX(100%); }
+}
+
+
+
+/* slide out to the left */
+@keyframes slideOutLeft {
+	from 	{ transform:translateX(0); }
+	to 		{ transform: translateX(-100%); }
+}
+@-moz-keyframes slideOutLeft {
+    from    { -moz-transform:translateX(0); }
+    to      { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes slideOutLeft {
+    from    { -webkit-transform:translateX(0); }
+    to      { -webkit-transform: translateX(-100%); }
+}
+
+
+/*@keyframes slideOutLeft {
+    to      { transform: translateX(-100%); }
+}
+@-moz-keyframes slideOutLeft {  
+    to      { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes slideOutLeft {
+    to      { -webkit-transform: translateX(-100%); }
+}*/
+
+
+
+
+
+
+
+

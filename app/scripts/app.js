@@ -10,18 +10,28 @@ angular.module('niiuWebappApp', [
     $routeProvider
       .when('/', {   
         templateUrl: 'views/main.html',
-        headerUrl: 'views/partials/loginmenu.html',
+        headerUrl: '',
         controller: 'MainCtrl'
       })
       .when('/registration', {
         templateUrl: 'views/registration.html',
-        headerUrl: 'views/partials/loginmenu.html',
+        headerUrl: '',
         controller: 'RegistrationCtrl'
       })
       .when('/emailLogin', {
         templateUrl: 'views/emaillogin.html',
-        headerUrl: 'views/partials/loginmenu.html',
+        headerUrl: '',
         controller: 'EmailloginCtrl'
+      })
+      .when('/terms', {
+        templateUrl: 'views/terms.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'termsCtrl'
+      })
+      .when('/privacy', {
+        templateUrl: 'views/privacy.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'privacyCtrl'
       })
       .when('/userHome', {
         templateUrl: 'views/userhome.html',
