@@ -6,6 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google" content="notranslate" />
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
@@ -27,11 +28,12 @@
 
 
     <!-- Add your site or application content here -->
-    
-    <div class="container page {{ pageClass }} " ng-view="">
-        <!-- templates get loaded here -->
-    </div>
-    <div class="header" ng-include="layoutPartial('headerUrl')"></div>   
+    <div class="container">
+      <div class="container page {{ pageClass }} " ng-view="">
+          <!-- templates get loaded here -->
+      </div>
+      <div class="header" ng-include="layoutPartial('headerUrl')"></div> 
+    </div>  
     <div id="fb-root"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -90,6 +92,8 @@
         <script src="scripts/controllers/sectionhome.js"></script>
         <script src="scripts/services/niiusyncer.js"></script>
         <script src="scripts/controllers/forgotpass.js"></script>
+        <script src="scripts/controllers/privacy.js"></script>
+        <script src="scripts/controllers/terms.js"></script>
         <!-- endbuild -->
 </body>
 </html>

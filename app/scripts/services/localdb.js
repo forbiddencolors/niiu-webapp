@@ -7,7 +7,7 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_table';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'article_id'}] }; 
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}] }; 
       var sync_table_name = 'last_3s_sync';
       //var sync_table_schema =  { stores:[{ name:sync_table_name, keyPath:"sync_id" }] }; 
 
@@ -281,6 +281,67 @@ angular.module('niiuWebappApp')
           } );
 
           console.log(local_table);
+
+          return deferred.promise;
+
+        },
+
+        addArticlesToDB: function(article_array) {
+
+          var deferred = $q.defer();
+
+          var local_table = connectDB();
+
+          console.log('getting ready to add articles to DB ', article_array);
+          local_table.add('article',article_array).done(
+              function(entered_stuff) {
+                console.log('We entered articles into the db', entered_stuff);
+                deferred.resolve(entered_stuff);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt enter soome articles into the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
+
+          return deferred.promise;
+
+        },
+
+        loadArticlesFromDB: function() {
+
+
+            db.values('articles').done(function(data) {
+              console.log('here are all the articles from the DB',data);
+              
+              return data;
+
+            });
+
+          
+
+
+        },
+
+        addSectionsToDB: function(section_array) {
+
+          var deferred = $q.defer();
+
+          var local_table = connectDB();
+
+          console.log('getting ready to add sections to DB ', section_array);
+          local_table.add('sections',section_array).done(
+              function(entered_stuff) {
+                console.log('We entered sections into the db', entered_stuff);
+                deferred.resolve(entered_stuff);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt enter any sections into the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
 
           return deferred.promise;
 

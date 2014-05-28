@@ -36,8 +36,18 @@ angular.module('niiuWebappApp', [
       })
       .when('/forgotPass', {
         templateUrl: 'views/forgotpass.html',
-        headerUrl: '',
+        headerUrl: 'views/partials/loginmenu.html',
         controller: 'ForgotpassCtrl'
+      })
+      .when('/privacy', {
+        templateUrl: 'views/privacy.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'PrivacyCtrl'
+      })
+      .when('/terms', {
+        templateUrl: 'views/terms.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'TermsCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -71,7 +81,7 @@ angular.module('niiuWebappApp', [
 
 
   // enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass' ];
+  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass', '/privacy', '/terms' ];
 
   // check if current location matches route  
   var publicViews = function (route) {
@@ -113,26 +123,5 @@ angular.module('niiuWebappApp', [
 
 
 });
-
-
-
-// niiuWebappApp.controller('MainCtrl', function($scope) {
-//     $scope.pageClass = 'login-home';
-// });
-
-// niiuWebappApp.controller('EmailloginCtrl', function($scope) {
-//     $scope.pageClass = 'login-menu';
-// });
-
-// // niiuWebappApp.controller('contactController', function($scope) {
-// //     $scope.pageClass = 'page-contact';
-// // });
-
-
-
-
-
-
-
 
 

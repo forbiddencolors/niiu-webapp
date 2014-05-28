@@ -7,10 +7,12 @@ angular.module('niiuWebappApp')
     $scope.logout = function() {
     	niiuAuthenticator.changeUser();
     	console.log('just logged out');
-    	niiuAuthenticator.logout();    
+    	niiuAuthenticator.logout();
+
+
+ 
+    
 
     };
- 
-
  
   });
