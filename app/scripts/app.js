@@ -16,7 +16,7 @@ angular.module('niiuWebappApp', [
       })
       .when('/registration', {
         templateUrl: 'views/registration.html',
-        headerUrl: '',
+        headerUrl: 'views/partials/loginmenu.html',
         controller: 'RegistrationCtrl'
       })
       .when('/emailLogin', {

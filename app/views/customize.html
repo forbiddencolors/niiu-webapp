@@ -5,6 +5,30 @@
 
 	<ul class="sections row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="niiu_section in sections">
-			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}">{{niiu_section.name}}</a>
+			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}"><img src="{{niiu_section.logo}}" width="10" height="50" > {{niiu_section.name}}</a>
+
+			
+		</li>
+	</ul>
+	<!--
+	{{User}}
+	<div ng-repeat="divsource in sources">
+		<a href="#" >{{divsource.name}}</a>
+	</div>
+
+	<ul >
+				<li ng-repeat"niiu_source in sources">{{niiu_source}}</li>
+	</ul>
+	`-->
+	{{user}}
+<p>Here are your sections</p>
+	<ul class="sections row">
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in User.contentProfile.items">
+			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{user_section.id}}">
+			<span class="user_source">{{sources[user_section.source].name}}</span> <span class="user_section"> {{sections[user_section.section].name}} {{}}
+			<!-- Source: {{user_section.source}} Section {{user_section.section}} --> >></a>
+			<ul>
+				<li>
+			</ul>
 		</li>
 	</ul>

@@ -126,6 +126,7 @@ console.log('here is some 3s data',data_3s);
 	console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
 	//add sections to DB
 	localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
+	localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
 	//add sections to Scope
 	$scope.sections=data_3s.data.contents.data.newSections;
 	$scope.sources=data_3s.data.contents.data.newSources;

@@ -7,7 +7,7 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_table';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}] }; 
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}] }; 
       var sync_table_name = 'last_3s_sync';
       //var sync_table_schema =  { stores:[{ name:sync_table_name, keyPath:"sync_id" }] }; 
 
@@ -310,41 +310,70 @@ angular.module('niiuWebappApp')
         },
 
         loadArticlesFromDB: function() {
-
+            var deferred = $q.defer();
             var local_table = connectDB();
-            local_table.values('articles').done(function(data) {
+            local_table.values('article').done(function(data) {
               console.log('here are all the articles from the DB',data);
               
-              return data;
+              deferred.resolve(data);
 
             });
 
-          
+          return deferred.promise;
 
 
         },
 
         loadSectionsFromDB: function() {
 
-            var deferred = $q.defer;
+            var deferred = $q.defer();
 
             var local_table = connectDB();
+
             local_table.values('sections').done(function(data) {
               console.log('here are all the sections from the DB',data);
               
+             
               deferred.resolve(data);
 
-            }).fail(function(failure) {
-              console.log('failed at getting sections from the db', failure);
-              deferred.reject(failure);
+            })
+            .fail(function(section_error) {
+              console.log('failed to get sections because ',section_error);
+
             });
 
+            
             return deferred.promise;
-
           
 
 
         },
+
+        loadSourcesFromDB: function() {
+
+            var deferred = $q.defer();
+
+            var local_table = connectDB();
+
+            local_table.values('sources').done(function(data) {
+              console.log('here are all the sources from the DB',data);
+              
+             
+              deferred.resolve(data);
+
+            })
+            .fail(function(source_error) {
+              console.log('failed to get sources because ',source_error);
+
+            });
+
+            
+            return deferred.promise;
+          
+
+
+        },
+
 
         addSectionsToDB: function(section_array) {
 
@@ -361,6 +390,29 @@ angular.module('niiuWebappApp')
             ).fail(
               function(failed_stuff) {
                 console.log('We couldnt enter any sections into the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
+
+          return deferred.promise;
+
+        },
+
+        addSourcesToDB: function(sources_array) {
+
+          var deferred = $q.defer();
+
+          var local_table = connectDB();
+
+          console.log('getting ready to add sources to DB ', sources_array);
+          local_table.add('sources',sources_array).done(
+              function(entered_stuff) {
+                console.log('We entered sources into the db', entered_stuff);
+                deferred.resolve(entered_stuff);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt enter any sources into the db because', failed_stuff);
                 deferred.reject(failed_stuff);
               }
               );
