@@ -28,13 +28,35 @@ angular.module('niiuWebappApp')
   	};
 
 
+    function getSourceSections() {
+      var deferred = $q.defer();
+
+
+      localDB.loadSourceSectionsFromDB().then(function(db_sectionSources) {
+        console.log('I got the following sectionsources from the DB', db_sectionSources);
+        deferred.resolve(db_sectionSources);
+      }, function (db_error) {
+        console.log('i got no subsections because ',db_error);
+        deferred.reject(db_error);
+      });
+        //this tells the next function to wait for the answer
+        return deferred.promise;
+
+        
+    };
+
+
+
+
+
     function getSubSections() {
       var deferred = $q.defer();
 
 
-      localDB.loadSubSectionsFromDB().then(function(db_sections) {
-        console.log('I got the following subsections from the DB', db_sections);
-        deferred.resolve(db_sections)
+      localDB.loadSubSectionsFromDB().then(function(db_subsections) {
+        console.log('I got the following subsections from the DB', db_subsections);
+        $scope.subsections=db_subsections;
+        deferred.resolve(db_subsections);
       }, function (db_error) {
         console.log('i got no subsections because ',db_error);
         deferred.reject(db_error);
@@ -70,14 +92,25 @@ angular.module('niiuWebappApp')
   	).then(function() {
   		console.log('chained response');
 
-  		getSubSections().then(function(subsections) {
-  			$scope.sources=subsections;
+  	getSubSections().then(function(subsections) {
+  			$scope.subsections=subsections;
   			console.log('adding subsections to scope',subsections);
 
 	   }
   	);
 
+      getSourceSections().then( function(source_sections) {
+        var deferred = $q.defer();
+        console.log('I got the following sourcesections from the DB', source_sections);
+        $scope.source_sections=source_sections;
+        deferred.resolve(source_sections);
 
+
+      }, function(error_sectionsources) {
+          console.log('we didnt get sourcesections because ',error_sectionsources);
+          deferred.reject(error_sectionsources);
+      }   
+      );
   		
   	});
 
@@ -88,6 +121,8 @@ angular.module('niiuWebappApp')
         //$scope.apply();
 	}
   	);
+
+
 
   $scope.user = User.getUser();
 

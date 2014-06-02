@@ -19,7 +19,7 @@ describe('Service: User', function () {
 
     it('should set a valid user', function () {
       
-      // asseble
+      // assemble
       var user = {
             apiKey: "a183e5de98a7b882b30b484bd65e5824906879ca",
             birthDate: "1974-03-15",

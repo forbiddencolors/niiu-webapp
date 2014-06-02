@@ -4,13 +4,34 @@
 	<p>Here are all sections</p>
 
 	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="niiu_section in sections">
+		<li class="col-xs-12 col-lg-4" ng-repeat="niiu_section in sections">
 			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}"><img src="{{niiu_section.logo}}" width="10" height="50" > {{niiu_section.name}}</a>
+
+				<ol>
+					<li class="source_section" ng-repeat="source_section in source_sections | filter:{ 'section_id': niiu_section.id }:true">
+						<!--
+					sec:{{source_section.section_id}} src_id:{{source_section.source_id}}			{{source_section.section_id}}/{{niiu_section.id}}
+						-->
+					
+					<div ng-repeat="source in sources | getByProperty: 'id' : source_section.source_id  "><i>{{source}}</i></div>
+					<div><u>{{ sources | getByProperty: 'id' : source_section.source_id : sources }}</u></div>
+				
+					<!-- These are the sources for this section -->
+					<ul ng-repeat="source in sources | filter:{'id' : source_section.source_id }:true">
+						<li>{{source.name}}
+						</li>
+					</ul>
+
+
+					</li>
+				</ol>
+
 				<ul>
-					<li class="niiu_source" ng-repeat="niiu_source in sources | filter:{ 'id': niiu_section.source }:true">
-					sec:{{niiu_section.id}} src:{{niiu_source.id}}			{{niiu_source.name}}</li>
+					<li class="niiu_subsection" ng-repeat="niiu_subsection in subsections ">
+					subsec:{{niiu_subsection.id}}		{{niiu_subsection.name}}</li>
 				</ul>
 
+				
 			
 		</li>
 	</ul>

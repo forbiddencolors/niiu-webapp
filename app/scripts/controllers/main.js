@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', 'User', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants, User ) {
+  .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', 'User', 'getByPropertyFilter', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants, User ) {
 
     
 
