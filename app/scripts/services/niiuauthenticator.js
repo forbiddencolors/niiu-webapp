@@ -9,12 +9,14 @@ angular.module('niiuWebappApp')
         var newUser = user || null;
         $rootScope.user=newUser;
         //$rootScope.$apply();
+        User.setUser(newUser);
         
 
         
               if (newUser=== null) {
                   console.log('user has logged out');
                   delete $rootScope.user;
+                  User.deleteUser();
 
               } else if (newUser.firstName) {
                 console.log('changing to user '+newUser.firstName);
@@ -24,7 +26,7 @@ angular.module('niiuWebappApp')
               }
 
           if ( newUser === null ) {
-
+              User.deleteUser();
               localDB.deleteLocalUser();
                // redirect back to login
                $location.path('/');

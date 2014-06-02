@@ -120,7 +120,8 @@ angular.module('niiuWebappApp')
           // Hey the server accepted my post
           console.log('this is the authentication response from the niiu api', data.contents.data);
 
-          $rootScope.user=data.contents.data;
+          //$rootScope.user=data.contents.data;
+          User.setUser(data.contents.data);
 
           console.log('lets save this for later');
 

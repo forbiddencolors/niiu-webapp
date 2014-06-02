@@ -27,6 +27,24 @@ angular.module('niiuWebappApp')
   			
   	};
 
+
+    function getSubSections() {
+      var deferred = $q.defer();
+
+
+      localDB.loadSubSectionsFromDB().then(function(db_sections) {
+        console.log('I got the following subsections from the DB', db_sections);
+        deferred.resolve(db_sections)
+      }, function (db_error) {
+        console.log('i got no subsections because ',db_error);
+        deferred.reject(db_error);
+      });
+        //this tells the next function to wait for the answer
+        return deferred.promise;
+
+        
+    };
+
   	  function getSources() {
         var deferred = $q.defer();
 
@@ -52,13 +70,13 @@ angular.module('niiuWebappApp')
   	).then(function() {
   		console.log('chained response');
 
-  		/*getSources().then(function(sources) {
-  			$scope.sources=sources;
-  			console.log('adding sources to scope',sources);
+  		getSubSections().then(function(subsections) {
+  			$scope.sources=subsections;
+  			console.log('adding subsections to scope',subsections);
 
-	}
+	   }
   	);
-*/
+
 
   		
   	});
@@ -71,7 +89,9 @@ angular.module('niiuWebappApp')
 	}
   	);
 
-  $scope.currentUser = User.getUser();
+  $scope.user = User.getUser();
+
+
 
 
 

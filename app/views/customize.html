@@ -6,6 +6,10 @@
 	<ul class="sections row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="niiu_section in sections">
 			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}"><img src="{{niiu_section.logo}}" width="10" height="50" > {{niiu_section.name}}</a>
+				<ul>
+					<li class="niiu_source" ng-repeat="niiu_source in sources | filter:{ 'id': niiu_section.source }:true">
+					sec:{{niiu_section.id}} src:{{niiu_source.id}}			{{niiu_source.name}}</li>
+				</ul>
 
 			
 		</li>
@@ -20,15 +24,17 @@
 				<li ng-repeat"niiu_source in sources">{{niiu_source}}</li>
 	</ul>
 	`-->
-	{{user}}
+
 <p>Here are your sections</p>
 	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in User.contentProfile.items">
+		<li  ng-repeat="user_section in user.contentProfile.items">
 			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{user_section.id}}">
-			<span class="user_source">{{sources[user_section.source].name}}</span> <span class="user_section"> {{sections[user_section.section].name}} {{}}
-			<!-- Source: {{user_section.source}} Section {{user_section.section}} --> >></a>
-			<ul>
-				<li>
-			</ul>
+			<span class="user_section"> {{sections[user_section.section].name}}</span> - 
+			
+			 <!--Source: {{sources[user_section.source]}} Section {{user_section.section}} >>-->
+				<span class="user_source" ng-repeat="user_source in sources | filter:{ 'id': user_section.source }:true">
+							{{user_source.name}}</span></a>
+				
 		</li>
 	</ul>
+
