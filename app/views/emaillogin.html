@@ -1,37 +1,57 @@
-<h3>Login</h3>
-  <form class="form-horizontal" ng-submit="niiu_login(niiuUserForm)" name="loginForm" role="form" style="margin-top:50px;">
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="eMail"> Email Address</label>
-        <div class="col-sm-10">
-            <input class="form-control" type="text" data-ng-model="niiuUserForm.eMail" placeholder="eMail" name="eMail" required autofocus />
-        </div>
+<div class="login-wrapper">
+
+    <div class="login-header">
+        <img class="butterfly center for-overlay" src="../images/whitelogo-schmetterling-transparent.png" alt="schmetterling">
+        <p style="color: green; text-align: center; font-style: bold; font-size: 14px"> <- </p>
+        <h3 class="white-headline">Log in to niiu</h3>
+        <p class="subheading">Enter your email and password to log in</p>    
     </div>
-    <div class="form-group">
-        <label for="password" class="control-label col-sm-2">Password</label>
-        <div class="col-sm-10">
-            <input type="password" data-ng-model="niiuUserForm.password" placeholder="Password" name="password" required="" class="form-control ng-pristine ng-invalid ng-invalid-required">
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label for="rememberme" class="checkbox">
-                    <input type="checkbox" data-ng-model="niiuUserForm.rememberme" name="rememberme" class="ng-pristine ng-valid">Remember me
-                </label>
+
+      <form class="form-horizontal" ng-submit="niiu_login(niiuUserForm)" name="loginForm" role="form" style="margin-top:20px;">
+        <div class="form-group">
+<!--             <label class="control-label col-sm-2" for="eMail"> Email Address</label>
+ -->            <div class="col-sm-10">
+                <input class="form-control" type="text" data-ng-model="niiuUserForm.eMail" placeholder="someone@mail.com" name="eMail" required autofocus />
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" type="submit" data-ng-disabled="loginForm.$invalid"> Log in
+        <div class="form-group">
+<!--             <label for="password" class="control-label col-sm-2">Password</label>
+ -->            <div class="col-sm-10">
+                <input type="password" data-ng-model="niiuUserForm.password" placeholder="***********" name="password" required="" class="password form-control ng-pristine ng-invalid ng-invalid-required">
+            </div>
         </div>
-    </div>
-</form>
-<div class="footer">
-<p><a ng-href="#/forgotPass">Forgot Password?</a></p>
-</div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <a ng-href="#/registration"><button class="btn btn-default" > Register New Account
+       <!--  <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label for="rememberme" class="checkbox">
+                        <input type="checkbox" data-ng-model="niiuUserForm.rememberme" name="rememberme" class="ng-pristine ng-valid">Remember me
+                    </label>
+                </div>
+            </div>
+        </div> -->
+        <div class="form-group">
+            <div class="col-sm-10">
+                <button class="btn login btn-default btn-lg white-headline btn-success" type="submit" data-ng-disabled="loginForm.$invalid"> Login</button>
+            </div>
         </div>
+    </form>
+
+
+        <p style="text-align: center"><a ng-href="#/forgotPass">Forgot Password?</a></p>
+        <p class="white-headline">--- OR ---</p>
+
+
+    <div class="form-group">
+<!--         <div class="col-sm-offset-2 col-sm-10">
+ -->            <a ng-href="#/registration" class="btn transparent btn-lg white-headline btn-success col-sm-10">Register New Account</a>
+<!--         </div>
+ -->    </div>
+
+    
+    <div class="footer">
+        <p>By continuing you agree to our <a href="" ng-href="#/terms">Terms</a> & <a ng-href="#/privacy">Privacy Policy</a></p>
     </div>
+
+    
+</div>   
+
