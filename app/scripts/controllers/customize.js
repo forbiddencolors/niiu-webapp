@@ -45,9 +45,43 @@ angular.module('niiuWebappApp')
         
     };
 
+function getSectionSubSections() {
+      var deferred = $q.defer();
 
 
+      localDB.loadSectionSubsectionsFromDB().then(function(section_subsections) {
+        console.log('I got the following sectionsubsections from the DB', section_subsections);
+        deferred.resolve(section_subsections);
+      }, function (db_error) {
+        console.log('i got no section_subsections because ',db_error);
+        deferred.reject(db_error);
+      });
+        //this tells the next function to wait for the answer
+        return deferred.promise;
 
+        
+    };
+
+function getSourceSubSections() {
+      var deferred = $q.defer();
+
+
+      localDB.loadSourceSubsectionsFromDB().then(function(source_subsections) {
+        console.log('I got the following source_subsections from the DB', source_subsections);
+        deferred.resolve(source_subsections);
+      }, function (db_error) {
+        console.log('i got no source_subsections because ',db_error);
+        deferred.reject(db_error);
+      });
+        //this tells the next function to wait for the answer
+        return deferred.promise;
+
+        
+    };
+function addSection(section_id) {
+console.log(section_id);
+
+};
 
     function getSubSections() {
       var deferred = $q.defer();
@@ -99,6 +133,13 @@ angular.module('niiuWebappApp')
 	   }
   	);
 
+    getSectionSubSections().then(function(section_subsections) {
+        $scope.section_subsections=section_subsections;
+        console.log('adding section_subsections to scope',section_subsections);
+
+     }
+    );
+
       getSourceSections().then( function(source_sections) {
         var deferred = $q.defer();
         console.log('I got the following sourcesections from the DB', source_sections);
@@ -112,7 +153,22 @@ angular.module('niiuWebappApp')
       }   
       );
   		
-  	});
+  	
+
+      getSourceSubSections().then( function(source_subsections) {
+        var deferred = $q.defer();
+        console.log('I got the following source_subsections from the DB', source_subsections);
+        $scope.source_subsections=source_subsections;
+        deferred.resolve(source_subsections);
+
+
+      }, function(error_source_subsections) {
+          console.log('we didnt get source_subsections because ',error_source_subsections);
+          deferred.reject(error_source_subsections);
+      }   
+      );
+      
+    });
 
 
   	getSources().then(function(sources) {

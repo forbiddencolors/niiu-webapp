@@ -7,28 +7,41 @@
 		<li class="col-xs-12 col-lg-4" ng-repeat="niiu_section in sections">
 			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}"><img src="{{niiu_section.logo}}" width="10" height="50" > {{niiu_section.name}}</a>
 
-				<ol>
-					<li class="source_section" ng-repeat="source_section in source_sections | filter:{ 'section_id': niiu_section.id }:true">
+				<span class="source_section" ng-repeat="source_section in source_sections | filter:{ 'section_id': niiu_section.id }:true">
 						<!--
 					sec:{{source_section.section_id}} src_id:{{source_section.source_id}}			{{source_section.section_id}}/{{niiu_section.id}}
 						-->
-					
-					<div ng-repeat="source in sources | getByProperty: 'id' : source_section.source_id  "><i>{{source}}</i></div>
+					<!--
+					<div ng-repeat="source in sources | getByProperty: 'id' : source_section.source_id : sources "><i>{{source}}</i></div>
 					<div><u>{{ sources | getByProperty: 'id' : source_section.source_id : sources }}</u></div>
-				
+					-->
 					<!-- These are the sources for this section -->
 					<ul ng-repeat="source in sources | filter:{'id' : source_section.source_id }:true">
-						<li>{{source.name}}
+						<li>{{source.name}} (<a ng-click="addSection(source_section.id)" href="">+</a>)
 						</li>
 					</ul>
 
 
-					</li>
-				</ol>
+					</span>
 
 				<ul>
-					<li class="niiu_subsection" ng-repeat="niiu_subsection in subsections ">
-					subsec:{{niiu_subsection.id}}		{{niiu_subsection.name}}</li>
+					<li class="niiu_subsection" ng-repeat="niiu_subsection in subsections | filter:{'section_id' : niiu_section.id}">
+					
+					<h5 ng-repeat="subsection in subsections| filter:{'id' : niiu_subsection.subsection_id }:true">{{subsection.name}}</h5>
+						<span ng-repeat="niiu_source_subsection in source_subsections | filter:{'subsection_id' : niiu_subsection.subsection_id}">
+							
+
+							<ul>
+								<!--<li class="source_subsection" ng-repeat="niiu_source_subsection in source_subsections | filter:{'subsection_id' : niiu_subsection.subsection_id}">source: {{niiu_source_subsection.source_id}} -->
+								
+									<li ng-repeat="source in sources | filter:{'id' : niiu_source_subsection.source_id }:true">{{source.name}} (<a ng-click="addSection(niiu_source_subsection.id)" href="">+</a>)</span>
+								</li>
+
+							</ul>	
+						</span>
+
+
+					</li>
 				</ul>
 
 				

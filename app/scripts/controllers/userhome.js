@@ -128,7 +128,9 @@ console.log('here is some 3s data',data_3s);
 	localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
 	localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
 	localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
-	//localDB.put3s(data_3s.data.contents.data);
+	localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
+	localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
+	localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection);
 	//add sections to Scope
 	$scope.sections=data_3s.data.contents.data.newSections;
 	$scope.sources=data_3s.data.contents.data.newSources;

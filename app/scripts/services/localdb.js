@@ -7,7 +7,10 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_db';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id',indexes:[{keyPath: "section_id"},{keyPath:"subsection_id"}]}] }; 
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}] };  
+      //add additional indexes {name:'sectionSubsections',keyPath:'id',indexes:[{keyPath: "section_id"},{keyPath:"subsection_id"}]}]
+
+
       var sync_table_name = 'last_3s_sync';
       //var sync_table_schema =  { stores:[{ name:sync_table_name, keyPath:"sync_id" }] }; 
 
@@ -330,12 +333,105 @@ angular.module('niiuWebappApp')
               );
             return deferred.promise;
           },
+        addSubSectionsToDB: function(sub_sections)   {
+         
+          console.log('these are the subsections we are trying to save',sub_sections);
+          var deferred = $q.defer();
+
+          var local_table = connectDB();
+          //local_table.clear('sourceSections');
+
+          local_table.put('subSections',sub_sections).done(
+              function(entered_subSections) {
+                console.log('We entered the subSections object into the db', entered_subSections);
+                deferred.resolve(entered_subSections);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt enter the subSections object into the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
+            return deferred.promise;
+          },
+        addSectionSubsectionsToDB: function(section_subsections)   {
+         
+          console.log('these are the section_subsections we are trying to save',section_subsections);
+          var deferred = $q.defer();
+
+          var local_table = connectDB();
+          //local_table.clear('sourceSections');
+
+          local_table.put('sectionSubsections',section_subsections).done(
+              function(entered_sourceSections) {
+                console.log('We entered the section_subsections object into the db', section_subsections);
+                deferred.resolve(section_subsections);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt enter section_subsections object into the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
+            return deferred.promise;
+          },
+        addSourceSubsectionsToDB: function(source_subsections)   {
+         
+          console.log('these are the source_subsections we are trying to save',source_subsections);
+          var deferred = $q.defer();
+
+          var local_table = connectDB();
+          //local_table.clear('sourceSections');
+
+          local_table.put('sourceSubsections',source_subsections).done(
+              function(entered_sourceSubsections) {
+                console.log('We entered the source_subsections object into the db', entered_sourceSubsections);
+                deferred.resolve(entered_sourceSubsections);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt enter source_subsections object into the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
+            return deferred.promise;
+          },
+
+        loadSourceSubsectionsFromDB: function() {
+            var deferred = $q.defer();
+            var local_table = connectDB();
+            local_table.values('sourceSubsections').done(function(data) {
+              console.log('here are all the SourceSubsections from the DB',data);
+              
+              deferred.resolve(data);
+
+            });
+
+          return deferred.promise;
+
+
+        },
 
         loadArticlesFromDB: function() {
             var deferred = $q.defer();
             var local_table = connectDB();
             local_table.values('article').done(function(data) {
               console.log('here are all the articles from the DB',data);
+              
+              deferred.resolve(data);
+
+            });
+
+          return deferred.promise;
+
+
+        },
+
+        loadSectionSubsectionsFromDB: function() {
+            var deferred = $q.defer();
+            var local_table = connectDB();
+            local_table.values('sectionSubsections').done(function(data) {
+              console.log('here are all the section_subsections from the DB',data);
               
               deferred.resolve(data);
 
