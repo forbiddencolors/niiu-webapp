@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .service('Facebook', ['$q', '$location', '$rootScope', '$http', 'constants', 'localDB', 'niiuAuthenticator', function($q, $location, $rootScope, $http, constants, localDB, niiuAuthenticator) {
+  .service('Facebook', ['$q', '$location', '$rootScope', '$http', 'constants', 'localDB', 'niiuAuthenticator', 'User', function($q, $location, $rootScope, $http, constants, localDB, niiuAuthenticator, User) {
   
   // resolving or rejecting a promise from a third-party
   // API such as Facebook must be
@@ -113,7 +113,7 @@ angular.module('niiuWebappApp')
       }
 
 
-      $http.post( constants.NIIUAPI_URL + 'users/social_login' , "data="+angular.toJson(niiuAuthObj), 
+      $http.post( constants.NIIU_API_URL + 'users/social_login' , "data="+angular.toJson(niiuAuthObj), 
                   {headers: { 'Content-Type': 'application/x-www-form-urlencoded'}} 
       ).
         success(function (data, status, headers, config) {

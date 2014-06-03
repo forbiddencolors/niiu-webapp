@@ -54,6 +54,7 @@ $dialog.dialog({}).open(url);
     console.log(Facebook)
     var socialUser = Facebook.getUser(FB)
     $scope.user = socialUser;
+    console.log('is this the facebook user already?',FB);
 
     console.log('fb auth response');
     console.log(FB.getAuthResponse());
