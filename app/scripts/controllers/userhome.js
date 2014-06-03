@@ -5,7 +5,7 @@ angular.module('niiuWebappApp')
 
   	console.log('do we have the scope.user?',$scope.user);
 
-
+  	$scope.pageClass='userHome';
 
 
     var deferred = $q.defer();
@@ -56,6 +56,8 @@ angular.module('niiuWebappApp')
 
 //get the prior articles from the scope
 console.log('just seeing if theres a scope here',$scope);
+
+console.log('are we online?',navigator.onLine);
 
 //replace the scope articles if we have new ones
 getArticleList().then( function(theList){

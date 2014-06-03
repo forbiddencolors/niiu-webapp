@@ -34,6 +34,16 @@ angular.module('niiuWebappApp', [
         headerUrl: 'views/partials/usermenu.html',
         controller: 'SectionhomeCtrl'
       })
+      .when('/sectionHome/:sourceId/:sectionId', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
+      })
+      .when('/sectionHome///:customId', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
+      })
       .when('/forgotPass', {
         templateUrl: 'views/forgotpass.html',
         headerUrl: 'views/partials/loginmenu.html',
@@ -52,7 +62,18 @@ angular.module('niiuWebappApp', [
       .when('/customize', {
         templateUrl: 'views/customize.html',
         headerUrl: 'views/partials/usermenu.html',
-        controller: 'CustomizeCtrl'
+        controller: 'CustomizeCtrl',
+        pageClass: 'menuPage'
+      })
+      .when('/sectionHome', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
+      })
+      .when('/article', {
+        templateUrl: 'views/article.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'ArticleCtrl'
       })
       .otherwise({
         redirectTo: '/'

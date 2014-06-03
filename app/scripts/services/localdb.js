@@ -279,7 +279,7 @@ angular.module('niiuWebappApp')
           //local_table.remove(default_table_name, constants.USER_LOCATOR);
           //local_table.remove(constants.USER_LOCATOR);
           local_table.clear().done(function(cleared_rows) {
-
+            console.log('db now cleared')
             deferred.resolve(cleared_rows);
           } );
 

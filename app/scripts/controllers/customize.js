@@ -181,6 +181,7 @@ console.log(section_id);
 
 
   $scope.user = User.getUser();
+  $scope.pageClass='menuPage';
 
 
 

@@ -4,13 +4,7 @@
 <p>Since you are logged in you can also go to the <a ng-href="#/sectionHome">Section Home</a>
 
 
-	<p>Here are all sections</p>
 
-	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="niiu_section in sections">
-			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}">{{niiu_section.name}}</a>
-		</li>
-	</ul>
 
 
 	<p>Here are your sections</p>
@@ -20,8 +14,8 @@
 
 	<ul class="sections row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in user.contentProfile.items">
-			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{user_section.id}}">
-			<span class="user_source">{{sources[user_section.source].name}}</span> <span class="user_section"> {{sections[user_section.section].name}} {{}}
+			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionHome/{{user_section.source}}/{{user_section.section}}/{{user_section.custom_section}}">
+			<span class="user_source" ng-repeat="source in sources | filter: {'id':user_section.source}">{{source.name}}</span> <span class="user_section" ng-repeat="section in sections | filter:{'id' : user_section.section}">{{section.name}}</span>{{user_section.custom_section}}
 			<!-- Source: {{user_section.source}} Section {{user_section.section}} --> >></a>
 		</li>
 	</ul>
@@ -29,14 +23,35 @@
 
 
 
-
 	<p>Here are some articles for you</p>
 
 	<ul class="articles row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in articles">
-			<h3>{{article.title}}</h3>
-			<div ng-bind-html="article.content" class="article" ></div>
-			<a class="btn btn-default" href="#" role="button" ng-href="/article/{{article.id}}">Read more &raquo;</a>
+		<li class="col-xs-12 col-sm-6 col-6 btn btn-default" ng-repeat="article in articles">
+			<div  class=""> <h4>{{article.title}}</h4>
+				<div ng-bind-html="article.content | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div>
+				<a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></a>
+
+					
+			</div>
+			
+			<div class="col-12" ng-init="isArticleOpen = false" ng-show="isArticleOpen" id="article_{{article.id}}" >
+			<!--a class="btn btn-default" href="#" role="button" ng-href="/article/{{article.id}}">Read more &raquo;</a-->
+
+
+	
+			</div>
+
+
+
 		</li>
 	</ul>
 
+<!--
+	<p>Here are all sections</p>
+
+	<ul class="sections row">
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="niiu_section in sections">
+			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{niiu_section.id}}"><h5>{{niiu_section.name}}</h5></a>
+		</li>
+	</ul>
+-->

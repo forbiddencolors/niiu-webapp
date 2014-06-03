@@ -185,7 +185,7 @@ input.password {
 bottom:0px;
 height:5px;
 font-size:10px;
-position:absolute;
+position:fixed;
 }
 
 /* CSS transitions for page animations */
@@ -209,16 +209,16 @@ position:absolute;
 }
 
 .page.ng-enter {
-    -webkit-animation:scaleUp 0.5s both ease-in;
-	-moz-animation:scaleUp 0.5s both ease-in;
-	animation:scaleUp 0.5s both ease-in;  
+    -webkit-animation:scaleUp 0.2s both ease-in;
+	-moz-animation:scaleUp 0.2s both ease-in;
+	animation:scaleUp 0.2s both ease-in;  
 }
 
 
 .page.ng-leave { 
-    -webkit-animation:scaleDown 0.5s both ease-in;
-	-moz-animation:scaleDown 0.5s both ease-in;
-	animation:scaleDown 0.5s both ease-in;  
+    -webkit-animation:scaleDown 0.2s both ease-in;
+	-moz-animation:scaleDown 0.2s both ease-in;
+	animation:scaleDown 0.2s both ease-in;  
 }
 /*
 .login-home.ng-enter {  
@@ -252,26 +252,26 @@ position:absolute;
 
 /* scale up */
 @keyframes scaleUp {
-	from 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+	from 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
 }
 @-moz-keyframes scaleUp {
-	from 		{ opacity: 0.3; -moz-transform: scale(0.8); }
+	from 		{ opacity: 0.3; -moz-transform: scale(0.9); }
 }
 @-webkit-keyframes scaleUp {
-	from 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+	from 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
 }
 
 
 
 /* scale down */
 @keyframes scaleDown {
-	to 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
 }
 @-moz-keyframes scaleDown {
-	to 		{ opacity: 0.3; -moz-transform: scale(0.8); }
+	to 		{ opacity: 0.3; -moz-transform: scale(0.9); }
 }
 @-webkit-keyframes scaleDown {
-	to 		{ opacity: 0.3; -webkit-transform: scale(0.8); }
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
 }
 
 
