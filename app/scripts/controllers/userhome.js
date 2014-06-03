@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q', function ($scope, niiuSyncer, localDB, $q) {
+  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', function ($scope, niiuSyncer, localDB, $q, Articleservice) {
 
   	console.log('do we have the scope.user?',$scope.user);
 
@@ -63,6 +63,8 @@ console.log('are we online?',navigator.onLine);
 getArticleList().then( function(theList){
 	console.log('article list is finished',theList);
 	$scope.articles=theList.contents.data.articles;
+
+	Articleservice.init(theList.contents.data.articles);
 
 	//put the articles in the db
 	localDB.addArticlesToDB(theList.contents.data.articles);

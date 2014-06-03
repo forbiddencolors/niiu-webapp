@@ -70,7 +70,7 @@ angular.module('niiuWebappApp', [
         headerUrl: 'views/partials/usermenu.html',
         controller: 'SectionhomeCtrl'
       })
-      .when('/article', {
+      .when('/article/:articleId', {
         templateUrl: 'views/article.html',
         headerUrl: 'views/partials/usermenu.html',
         controller: 'ArticleCtrl'
