@@ -27,9 +27,11 @@ angular.module('niiuWebappApp')
 
           if ( newUser === null ) {
               User.deleteUser();
-              localDB.deleteLocalUser();
+              localDB.deleteLocalUser()
+                //$location.path('/');
+                
                // redirect back to login
-               $location.path('/');
+               
               return false;
 
               

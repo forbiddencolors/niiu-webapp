@@ -232,6 +232,11 @@ angular.module('niiuWebappApp')
           getLastProfileUpdate:  function() {
             //we will change this in the db if there has been a setting change
             var default_time='2012-12-12 12:12:12';
+
+            //we could just refer the default time here without a promise, but in case we get it from the db the promise makes sense.
+            //return default_time;
+
+
             var deferred = $q.defer();
 
             deferred.resolve(default_time);

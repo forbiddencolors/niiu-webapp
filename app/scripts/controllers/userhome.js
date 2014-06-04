@@ -64,9 +64,10 @@ getArticleList().then( function(theList){
 	console.log('article list is finished',theList);
 	$scope.articles=theList.contents.data.articles;
 
+	//Put the articles into the service so we can get at them later
 	Articleservice.init(theList.contents.data.articles);
 
-	//put the articles in the db
+	//put the articles in the db so we can get to them if the user is offline or leaves the site
 	localDB.addArticlesToDB(theList.contents.data.articles);
 
 	},  function(noList) {

@@ -1,9 +1,12 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('SectionhomeCtrl', function ($scope,Articleservice) {
+  .controller('SectionhomeCtrl', function ($scope,$routeParams,Articleservice, sectionFilterFilter) {
 
 	$scope.articles=Articleservice.getArticles();
+	$scope.sectionId=$routeParams.sectionId;
+	$scope.sourceId=$routeParams.sourceId;
+	$scope.customId=$routeParams.customId;
 	console.log('getting some articles',$scope.articles);
 
 

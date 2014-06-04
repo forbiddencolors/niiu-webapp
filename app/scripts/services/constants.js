@@ -12,7 +12,8 @@ angular.module('niiuWebappApp')
                 USER_TABLE_SCHEMA :  { stores:[{ name:'niiu_user', keyPath:"user" }] },
                 USER_DB_NAME : 'niiu_user_table',
                 USER_TABLE_NAME : 'niiu_user',
-                NIIU_API_VERSION : 200.7
+                NIIU_API_VERSION : 200.7,
+                ARTICLE_MEDIA_PATH : 'http://dev.niiu.de/img/retrieved_article_media/'
 
 });
 
