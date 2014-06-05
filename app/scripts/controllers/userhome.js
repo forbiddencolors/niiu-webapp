@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', function ($scope, niiuSyncer, localDB, $q, Articleservice) {
+  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants) {
 
   	console.log('do we have the scope.user?',$scope.user);
 
   	$scope.pageClass='userHome';
+  	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 
 
     var deferred = $q.defer();
@@ -164,7 +165,7 @@ function refreshArticles() {
 			
 	}
 
-	if (0) {
+	if (0 || $routeParams.refresh=='refresh') {
 		//currently we are refreshing everytime the page loads, but probably we should do this only 
 		//when last sync is a bit old maybe 10mins
 		//when people first login
@@ -178,23 +179,48 @@ function refreshArticles() {
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
 			Articleservice.init(db_articles);
-
-			//works fine
-			//$scope.articles=[{title:'action jackson',content:'it goes like this'}];
 			$scope.articles=db_articles;
 
-			console.log($scope.articles[1]);
-			
+		});
+
+		localDB.loadSourcesFromDB().then( function(db_sources) {
+			console.log('got the following sources from the db',db_sources);
+			$scope.sources=db_sources;
 
 
 		});
 
+		localDB.loadSectionsFromDB().then( function(db_sections) {
+			console.log('got the following sections from the db',db_sections);
+			$scope.sections=db_sections;
 
 
-		
-		
+		}); 
+
+		localDB.loadSubSectionsFromDB().then( function(db_subsections) {
+			console.log('got the following subsections from the db',db_subsections);
+			$scope.subsections=db_subsections;
+
+
+		}); 
+
+/*		//this is probably how we should get the 3s info here but whatever.
+		localDB.load3s().then( function(array[section_array , subsection_array, source_array ]) {
+
+				$scope.sections=section_array;
+				$scope.sources=source_array;
+
+			}
+		);
+*/
+
+				
 
 	}
+		
+		
+
+	
 
 
 

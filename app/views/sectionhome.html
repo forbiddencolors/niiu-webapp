@@ -5,7 +5,7 @@
 	<p>Here are some articles from this section</p>
 
 	<ul class="articles row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in articles | sectionFilter:sectionId:sourceId:customId">
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in articles | sectionFilter:sectionId:sourceId:customId" style="background-image:url('{{media_path}}{{article.media[0].path}}');">
 			<div class="col-4 col-sm-5"> <h4><a ng-href="#/article/{{article.id}}">{{article.title}}</h4></div>
 			<div class="col-2 col-sm-1"> <a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></div>
 			
@@ -16,7 +16,7 @@
 </div>
 
 
-
+		
 		</li>
 	</ul>
 
