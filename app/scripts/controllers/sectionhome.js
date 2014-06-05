@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('SectionhomeCtrl', function ($scope,$routeParams,Articleservice, sectionFilterFilter) {
+  .controller('SectionhomeCtrl', function ($scope,$routeParams,Articleservice) {
 
 	$scope.articles=Articleservice.getArticles();
 	$scope.sectionId=$routeParams.sectionId;

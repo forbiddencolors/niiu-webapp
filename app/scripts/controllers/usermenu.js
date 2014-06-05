@@ -10,10 +10,14 @@ angular.module('niiuWebappApp')
     	console.log('just deleted the User');
     	//niiuAuthenticator.logout();
 
-
- 
-    
-
     };
+
+    $scope.nextSection = function() {
+        console.log('this pre next page is', $location.path());
+    	console.log('next page is ', User.getNextSectionUrl($location.path()));
+    	
+    	$location.path(User.getNextSectionUrl($location.path()));
+
+    }
  
   });
