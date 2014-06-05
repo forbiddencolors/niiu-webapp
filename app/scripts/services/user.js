@@ -14,10 +14,10 @@ angular.module('niiuWebappApp')
                 var nextSource = user_sections[i].source || "";
                 var nextCustom = user_sections[i].custom_section || "";
 
-                var section_url="/sectionHome/"+nextSection+"/"+nextSource+"/"+nextCustom;
+                var section_url="/sectionHome/"+nextSource+"/"+nextSection+"/"+nextCustom;
                 section_urls.push(section_url);
             }
-
+            console.log('next section urls ', section_urls); 
             return section_urls;
         }
 
@@ -59,7 +59,7 @@ angular.module('niiuWebappApp')
             console.log('the list of urls is',section_list);
             //Get list the next section based on your current section home                
             for (var i=0; i<section_list.length; i++) {
-                if (location==section_list[i] ) {
+                if (location==section_list[i] || location+"/"==section_list[i] ) { //angular drops the last / from urls
                     if ( i<section_list.length-1 ) {
                         return section_list[i+1];
                     } else { //if we are already at the last item in the list return the first item
