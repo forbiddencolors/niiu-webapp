@@ -1,0 +1,340 @@
+
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-image: url('../images/login-bg-image.jpg');
+	background-size: 306%;
+	background-position: 57% 39%;
+	background-size: 250%;
+	background-position: 63% 0%;
+	color: white;
+	font-size: 10px;
+
+	a, p a {
+		color: white;
+		text-decoration: underline;
+		font-weight: bold;
+	}
+
+	p.subheading {
+		color: gray;
+		text-align: center;
+	}
+}
+
+.footer {
+  color:#ffffff;
+}
+
+input.required {
+	background-color:#fffff;
+}
+
+.butterfly {
+	width: 70px;
+	margin-bottom: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.butterfly.for-overlay {
+	opacity: .3;
+}
+
+.white-headline {
+	text-align: center;
+	font-size: 10px;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+input.required {
+	background-color:#ffffff;
+}
+
+
+.jumbotron {
+	background-color: transparent;
+	border-radius: 0px;
+	border-width: 0px;
+	font-size: 14px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+
+	p {
+		font-weight: 200;
+	
+		.heavier {
+			font-weight: 700;
+		}
+
+	}
+
+	p.lead {
+		font-size: 14px;
+	}
+
+	.btn-wrapper {
+		margin-top: 130px;
+	}
+
+	.btn {
+		font-size: 10px;
+	}
+
+
+} /* end jumbotron*/
+
+button, button.btn, a.btn {
+	width: 100%;
+	border-radius: 0px;
+	text-decoration: none;
+}
+
+.btn {
+	width: 100%;
+	text-align: center;
+	font-size: 10px;
+	background-color: transparent;
+	border-radius: 0px;
+	text-decoration: none;
+}
+
+.btn.facebook {
+	background-color: #3b5998;
+	border-width: 0px;
+}
+
+.btn.login {
+	background-color: #47a447;
+	color: white;
+}	
+
+.btn.transparent {
+	background-color: transparent;
+	border: 2px solid white;
+}
+
+.btn.transparent:hover, .btn-success.btn-transparent:hover, .btn-active.btn-transparent:hover {
+	background-color: transparent;	
+}
+
+.login-wrapper {
+
+	padding: 30px;
+	width: 100%;
+
+	.login-header {
+		width: 100%;
+	}
+
+	h3 {
+		text-transform: uppercase;
+
+	}
+}
+
+.form-group {
+	input {
+		border-radius: 0px;
+		background: rgba(255, 255, 255, .2);
+		border: 1px solid white;
+		color: white;
+		text-align: center;
+	}
+}
+ /* white seemed a bit to bright to me
+::-webkit-input-placeholder {
+   color: #fff !important;
+}
+
+:-moz-placeholder { /* Firefox 18- /
+   color: #fff !important;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ /
+   color: #fff !important;  
+}
+
+:-ms-input-placeholder {  
+   color: #fff !important;  
+}
+
+input[placeholder], [placeholder], *[placeholder] {
+color: white;
+}
+/*
+
+input.password {
+	letter-spacing: 6px;
+}
+
+.footer {
+	text-align: center;
+	border-top: 0px solid white;
+	color: white;
+	font-size: 8px;
+	padding-top: 25px;
+}
+
+/* this is holding the user menu but im putting it on the bottom of the page for the time being. */
+.header {
+bottom:0px;
+height:5px;
+font-size:10px;
+position:fixed;
+}
+
+/* CSS transitions for page animations */
+
+.container.page {
+	position: absolute; 
+	top:0;
+	left:0;
+	width: 100%;
+/*	background-image: url('../images/login-bg-image.jpg');
+	background-size: 306%;
+	background-position: 57% 39%;
+	background-size: 250%;
+	background-position: 63% 0%;*/
+}
+
+.page.email-login, .page.registration {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .45);
+}
+
+.page.ng-enter {
+    -webkit-animation:scaleUp 0.2s both ease-in;
+	-moz-animation:scaleUp 0.2s both ease-in;
+	animation:scaleUp 0.2s both ease-in;  
+}
+
+
+.page.ng-leave { 
+    -webkit-animation:scaleDown 0.2s both ease-in;
+	-moz-animation:scaleDown 0.2s both ease-in;
+	animation:scaleDown 0.2s both ease-in;  
+}
+/*
+.login-home.ng-enter {  
+    -webkit-animation:scaleUp 0.5s both ease-in;
+	-moz-animation:scaleUp 0.5s both ease-in;
+	animation:scaleUp 0.5s both ease-in;  
+}
+
+.login-home.ng-leave {  
+    -webkit-animation:scaleDown 0.2s both ease-in;
+	-moz-animation:scaleDown 0.2s both ease-in;
+	animation:scaleDown 0.2s both ease-in;  
+}
+
+.login-email.ng-enter {
+	-webkit-animation:slideInRight 0.5s both ease-in;
+    -moz-animation:slideInRight 0.5s both ease-in;
+    animation:slideInRight 0.5s both ease-in;
+}
+
+.login-email.ng-leave {  
+   -webkit-animation:slideOutRight 0.5s both ease-in;
+    -moz-animation:slideOutRight 0.5s both ease-in;
+    animation:slideOutRight 0.5s both ease-in; 
+}
+*/
+
+.page.ng-leave  { z-index:9999; }
+.page.ng-enter  { z-index:8888; }
+
+
+/* scale up */
+@keyframes scaleUp {
+	from 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
+}
+@-moz-keyframes scaleUp {
+	from 		{ opacity: 0.3; -moz-transform: scale(0.9); }
+}
+@-webkit-keyframes scaleUp {
+	from 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
+}
+
+
+
+/* scale down */
+@keyframes scaleDown {
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
+}
+@-moz-keyframes scaleDown {
+	to 		{ opacity: 0.3; -moz-transform: scale(0.9); }
+}
+@-webkit-keyframes scaleDown {
+	to 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
+}
+
+
+/* slide in from the right */
+@keyframes slideInRight {
+	from 	{ transform:translateX(100%); }
+	to 		{ transform: translateX(0); }
+}
+@-moz-keyframes slideInRight {
+    from    { -moz-transform:translateX(100%); }
+    to      { -moz-transform: translateX(0); }
+}
+@-webkit-keyframes slideInRight {
+    from    { -webkit-transform:translateX(100%); }
+    to      { -webkit-transform: translateX(0); }
+}
+
+
+/* slide out to the right */
+@keyframes slideOutRight {
+	from 	{ transform:translateX(0); }
+	to 		{ transform: translateX(100%); }
+}
+@-moz-keyframes slideOutRight {
+    from    { -moz-transform:translateX(0); }
+    to      { -moz-transform: translateX(100%); }
+}
+@-webkit-keyframes slideOutRight {
+    from    { -webkit-transform:translateX(0); }
+    to      { -webkit-transform: translateX(100%); }
+}
+
+
+
+/* slide out to the left */
+@keyframes slideOutLeft {
+	from 	{ transform:translateX(0); }
+	to 		{ transform: translateX(-100%); }
+}
+@-moz-keyframes slideOutLeft {
+    from    { -moz-transform:translateX(0); }
+    to      { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes slideOutLeft {
+    from    { -webkit-transform:translateX(0); }
+    to      { -webkit-transform: translateX(-100%); }
+}
+
+
+/*@keyframes slideOutLeft {
+    to      { transform: translateX(-100%); }
+}
+@-moz-keyframes slideOutLeft {  
+    to      { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes slideOutLeft {
+    to      { -webkit-transform: translateX(-100%); }
+}*/
+
+
+
+
+
+
+
+

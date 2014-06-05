@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants ) {
+  .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', 'User', 'getByPropertyFilter', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants, User ) {
 
     
 
@@ -54,6 +54,8 @@ $dialog.dialog({}).open(url);
     console.log(Facebook)
     var socialUser = Facebook.getUser(FB)
     $scope.user = socialUser;
+    console.log('is this the facebook user already?',FB);
+
     console.log('fb auth response');
     console.log(FB.getAuthResponse());
     $scope.auth = FB.getAuthResponse();

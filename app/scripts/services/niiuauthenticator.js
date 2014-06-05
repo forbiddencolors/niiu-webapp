@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .factory('niiuAuthenticator', ['$rootScope', '$http', '$location', '$q', 'constants', 'localDB', function ($rootScope, $http, $location, $q, constants, localDB) {
+  .factory('niiuAuthenticator', ['$rootScope', '$http', '$location', '$q', 'constants', 'localDB', 'User', function ($rootScope, $http, $location, $q, constants, localDB, User) {
     // Service logic
     // ...
     function setUser(user) {
@@ -9,12 +9,14 @@ angular.module('niiuWebappApp')
         var newUser = user || null;
         $rootScope.user=newUser;
         //$rootScope.$apply();
+        User.setUser(newUser);
         
 
         
               if (newUser=== null) {
                   console.log('user has logged out');
                   delete $rootScope.user;
+                  User.deleteUser();
 
               } else if (newUser.firstName) {
                 console.log('changing to user '+newUser.firstName);
@@ -24,10 +26,12 @@ angular.module('niiuWebappApp')
               }
 
           if ( newUser === null ) {
-
-              localDB.deleteLocalUser();
+              User.deleteUser();
+              localDB.deleteLocalUser()
+                //$location.path('/');
+                
                // redirect back to login
-               $location.path('/');
+               
               return false;
 
               
@@ -92,7 +96,7 @@ angular.module('niiuWebappApp')
 
         var emailReset = {"eMail" : email};
         passwordReset.data=emailReset;
-        $http.post(constants.NIIU_API_URL + '/users/forgot_password', "data="+angular.toJson(passwordReset)).success(function(resetResponse) {
+        $http.post(constants.NIIU_API_URL + 'users/forgot_password', "data="+angular.toJson(passwordReset)).success(function(resetResponse) {
                 console.log(resetResponse.contents.status);
                 if (resetResponse.contents.status==200) {
                     console.log("Yea! check your email, your reset is being sent ");
@@ -176,7 +180,7 @@ angular.module('niiuWebappApp')
                 console.log(angular.toJson(loginReq));
 
 
-                $http.post(constants.NIIU_API_URL+'/users/authenticate', "data="+angular.toJson(loginReq), {
+                $http.post(constants.NIIU_API_URL+'users/authenticate', "data="+angular.toJson(loginReq), {
                     
                 }).success(function(userData){
                     console.log('heres the response from the niiu api')
@@ -190,8 +194,29 @@ angular.module('niiuWebappApp')
                           newUser.connected=true;
                         }
                         
-                        
+                        // remove this
                         setUser(newUser);
+/*
+this is how we could chain a couple promises together to handle user logic
+
+                        var getUserPromise = User.getUser();
+                        var setUserPromise = User.setUser(newUser);
+                        // Add this
+                        $q.then(setUserPromise)
+                          .then(getUserPromise)
+
+*/
+
+                        User.setUser(newUser).then(function() {
+                          deferred.resolve(User.getUser());
+                        }, function(error) {
+                          // User.deleteUser();
+                          // Redirect to "/"
+                        });
+
+
+
+
                         $rootScope.error="";
                     //changeUser(newUser);
                     //success(newUser);

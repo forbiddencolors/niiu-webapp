@@ -4,13 +4,14 @@ angular.module('niiuWebappApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'ngAnimate'
 ])
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {   
         templateUrl: 'views/main.html',
-        headerUrl: 'views/partials/loginmenu.html',
+        headerUrl: '',
         controller: 'MainCtrl'
       })
       .when('/registration', {
@@ -20,7 +21,7 @@ angular.module('niiuWebappApp', [
       })
       .when('/emailLogin', {
         templateUrl: 'views/emaillogin.html',
-        headerUrl: 'views/partials/loginmenu.html',
+        headerUrl: '',
         controller: 'EmailloginCtrl'
       })
       .when('/userHome', {
@@ -33,10 +34,46 @@ angular.module('niiuWebappApp', [
         headerUrl: 'views/partials/usermenu.html',
         controller: 'SectionhomeCtrl'
       })
+      .when('/sectionHome/:sourceId/:sectionId', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
+      })
+      .when('/sectionHome///:customId', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
+      })
       .when('/forgotPass', {
         templateUrl: 'views/forgotpass.html',
         headerUrl: 'views/partials/loginmenu.html',
         controller: 'ForgotpassCtrl'
+      })
+      .when('/privacy', {
+        templateUrl: 'views/privacy.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'PrivacyCtrl'
+      })
+      .when('/terms', {
+        templateUrl: 'views/terms.html',
+        headerUrl: 'views/partials/loginmenu.html',
+        controller: 'TermsCtrl'
+      })
+      .when('/customize', {
+        templateUrl: 'views/customize.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'CustomizeCtrl',
+        pageClass: 'menuPage'
+      })
+      .when('/sectionHome', {
+        templateUrl: 'views/sectionhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionhomeCtrl'
+      })
+      .when('/article/:articleId', {
+        templateUrl: 'views/article.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'ArticleCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -70,7 +107,7 @@ angular.module('niiuWebappApp', [
 
 
   // enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass' ];
+  var routesThatDontRequireAuth = ['/', '/registration', '/tour', '/emailLogin', '/forgotPass', '/privacy', '/terms' ];
 
   // check if current location matches route  
   var publicViews = function (route) {

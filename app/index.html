@@ -6,6 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google" content="notranslate" />
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
@@ -18,19 +19,21 @@
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <link rel="stylesheet" href="styles/development.css">
   </head>
   <body ng-app="niiuWebappApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    
+
     <!-- Add your site or application content here -->
     <div class="container">
-          <div class="header" ng-include="layoutPartial('headerUrl')"></div>
-          <div class="container" ng-view="">
-
-    </div>
+      <div class="container page {{ pageClass }} " ng-view="">
+          <!-- templates get loaded here -->
+      </div>
+      <div class="header" ng-include="layoutPartial('headerUrl')"></div> 
+    </div>  
     <div id="fb-root"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -70,6 +73,7 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-animate.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -80,14 +84,24 @@
         <script src="scripts/controllers/loginmenu.js"></script>
         <script src="scripts/controllers/usermenu.js"></script>
         <script src="scripts/services/constants.js"></script>
-        <script src="scripts/services/localDB.js"></script>
-        <script src="scripts/services/niiuAuthenticator.js"></script>
-        <script src="scripts/controllers/emailLogin.js"></script>
-        <script src="scripts/controllers/userHome.js"></script>
-        <script src="scripts/services/Facebook.js"></script>
+        <script src="scripts/services/localdb.js"></script>
+        <script src="scripts/services/niiuauthenticator.js"></script>
+        <script src="scripts/controllers/emaillogin.js"></script>
+        <script src="scripts/controllers/userhome.js"></script>
+        <script src="scripts/services/facebook.js"></script>
+        <script src="scripts/controllers/sectionhome.js"></script>
+        <script src="scripts/services/niiusyncer.js"></script>
+        <script src="scripts/controllers/forgotpass.js"></script>
+        <script src="scripts/controllers/privacy.js"></script>
+        <script src="scripts/controllers/terms.js"></script>
+        <script src="scripts/controllers/customize.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/filters/getbyproperty.js"></script>
         <script src="scripts/controllers/sectionHome.js"></script>
-        <script src="scripts/services/niiuSyncer.js"></script>
-        <script src="scripts/controllers/forgotPass.js"></script>
+        <script src="scripts/controllers/article.js"></script>
+        <script src="scripts/filters/truncate.js"></script>
+        <script src="scripts/services/articleService.js"></script>
+        <script src="scripts/filters/sectionFilter.js"></script>
         <!-- endbuild -->
 </body>
 </html>

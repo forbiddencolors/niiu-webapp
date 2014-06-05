@@ -1,0 +1,8 @@
+<h3>{{article.title}}</h3>
+<img src="{{media_path}}{{image.path}}" width="700" ng-repeat="image in article.media" ng-show="$first" />
+<div ng-bind-html="article.content"></div>
+<p>{{article.media.length}} images in this article<p>
+<div class="additional_images" ng-repeat="media in article.media " ng-hide="$first">
+	<img src="{{media_path}}{media.path}}" width="700" />
+</div>
+

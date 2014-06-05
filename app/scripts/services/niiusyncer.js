@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .factory('niiuSyncer',['$rootScope', '$http', '$q', 'constants','localDB', function ($rootScope, $http, $q, constants, localDB) {
+  .factory('niiuSyncer',['$rootScope', '$http', '$q', 'constants','localDB', 'User', function ($rootScope, $http, $q, constants, localDB, User) {
     // Service logic
     // ...
 
+    // Tobias: 
+    //v ar currentUser = User.getUser();
     var currentUser = $rootScope.user;
     var last3SSync = {};
 
