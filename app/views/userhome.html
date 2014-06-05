@@ -26,9 +26,11 @@
 	<p>Here are some articles for you</p>
 
 	<ul class="articles row">
-		<li class="col-xs-12 col-sm-6 col-6 btn btn-default" ng-repeat="article in articles">
-			<div  class=""> <h4>{{article.title}}</h4>
-				<div ng-bind-html="article.content | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div>
+		<li class="col-xs-12 col-sm-6 col-6 btn btn-default" ng-repeat="article in articles track by article.id | orderBy:article.published_date">
+			<div  class="article" style="background-image:url('{{media_path}}{{article.media[0].path}}');"> 
+				<a ng-href="#/article/{{article.id}}">
+				<h4>{{article.title}}</h4>
+				<div ng-bind-html="article.content | truncate:100"  class="article_truncated">{{article.subtitle | truncate:100}}</div></a>
 				<a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></a>
 
 					

@@ -29,6 +29,11 @@ angular.module('niiuWebappApp', [
         headerUrl: 'views/partials/usermenu.html',
         controller: 'UserhomeCtrl'
       })
+      .when('/userHome/:refresh', {
+        templateUrl: 'views/userhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'UserhomeCtrl'
+      })
       .when('/sectionHome', {
         templateUrl: 'views/sectionhome.html',
         headerUrl: 'views/partials/usermenu.html',

@@ -420,6 +420,7 @@ angular.module('niiuWebappApp')
         loadArticlesFromDB: function() {
             var deferred = $q.defer();
             var local_table = connectDB();
+            console.log('getting db articles');
             local_table.values('article').done(function(data) {
               console.log('here are all the articles from the DB',data);
               

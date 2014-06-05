@@ -19,5 +19,15 @@ angular.module('niiuWebappApp')
     	$location.path(User.getNextSectionUrl($location.path()));
 
     }
+
+    $scope.keyPress = function(keyCode){
+       console.log("someone pressed",keyCode);
+       if (keyCode==39) {
+
+        console.log('time to go to the next section');
+        $location.path(User.getNextSectionUrl($location.path()));
+
+       }
+    }
  
   });
