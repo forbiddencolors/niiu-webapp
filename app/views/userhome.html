@@ -21,12 +21,6 @@
 	</ul>
 
 
-	<p>here is a sorting test</p>
-	<div ng:repeat="house in sort_items | orderBy:'date' ">{{house.house }}:{{house.date |date}}</div>
-	<div ng:repeat="article in articles | orderBy:'-published_date' track by article.id ">{{article.title }}:{{article.published_date }}</div>
-	<div>{{articles[0].title}} --- {{articles[0].published_date}}</div>
-
-
 	<p>Here are some articles for you</p>
 
 	<ul class="articles row">

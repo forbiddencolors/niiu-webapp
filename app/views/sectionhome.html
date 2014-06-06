@@ -1,3 +1,6 @@
+<h2 ng-show="{{customId}}">{{customId}}</h2>
+<h2 ng-show="{{sectionId}}!='' && {{subsectionId}}==''">{{sourceId}} Sec {{sectionId}}</h2>
+<h2 ng-show="{{subsectionId}}!=''">{{sourceId}} Sub {{subsectionId}}</h2>
 <p>This is the sectionHome view.</p>
 
 
@@ -5,7 +8,7 @@
 	<p>Here are some articles from this section</p>
 
 	<ul class="articles row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in articles | sectionFilter:sectionId:sourceId:customId" style="background-image:url('{{media_path}}{{article.media[0].path}}');">
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in articles | sectionFilter:sectionId:sourceId:customId |orderBy:'-published_date' track by article.id " style="background-image:url('{{media_path}}{{article.media[0].path}}');">
 			<div class="col-4 col-sm-5"> <h4><a ng-href="#/article/{{article.id}}">{{article.title}}</h4></div>
 			<div class="col-2 col-sm-1"> <a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></div>
 			
@@ -14,6 +17,7 @@
 <div  ng-init="isArticleOpen = false" ng-show="isArticleOpen" id="article_{{article.id}}" >
 	<div ng-bind-html="article.content"></div>
 </div>
+
 
 
 		
