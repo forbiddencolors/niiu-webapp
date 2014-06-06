@@ -3,7 +3,7 @@
 angular.module('niiuWebappApp')
   .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants) {
 
-  	console.log('do we have the scope.user?',$scope.user);
+  	
 
   	$scope.pageClass='userHome';
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
@@ -67,6 +67,7 @@ function refreshArticles() {
 	getArticleList().then( function(theList){
 			console.log('article list is finished',theList);
 			$scope.articles=theList.contents.data.articles;
+
 
 			//Put the articles into the service so we can get at them later
 			Articleservice.init(theList.contents.data.articles);
@@ -180,6 +181,7 @@ function refreshArticles() {
 			console.log('got the following articles from the db',db_articles);
 			Articleservice.init(db_articles);
 			$scope.articles=db_articles;
+			console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
 
 		});
 
@@ -213,6 +215,16 @@ function refreshArticles() {
 			}
 		);
 */
+
+//sorting test
+    $scope.sort_items = [
+       {date: '2019-01-19 00:16:00',house:'red'},
+       {date: '2017-03-19 00:16:00', house:'blue'},
+       
+       {date: '2012-03-11 00:00:00', house:'orange'},
+      {date: '2012-03-19 00:16:00', house:'green'},
+        {date: '2014-03-19 00:00:00', house:'tan'}
+    ];
 
 				
 
