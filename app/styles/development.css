@@ -137,6 +137,15 @@ input.password {
 	font-size: 8px;
 	padding-top: 25px;
 }
+/* userHome */
+.userHome .articles .article {
+
+color:#ffffff;
+background-repeat:no-repeat;
+
+
+}
+
 
 /* this is holding the user menu but im putting it on the bottom of the page for the time being. */
 .header {
