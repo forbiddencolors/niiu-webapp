@@ -7,7 +7,7 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_db';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}] };  
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
       //add additional indexes {name:'sectionSubsections',keyPath:'id',indexes:[{keyPath: "section_id"},{keyPath:"subsection_id"}]}]
 
 
@@ -577,22 +577,24 @@ angular.module('niiuWebappApp')
 
 
         put3s: function(data_3s) {
-           var deferred = $q.defer();
 
+           var deferred = $q.defer();
+           console.log('save the whole 3s', data_3s)
           var local_table = connectDB();
-/*
-          local_table.add('sourceSections',data_3s.newSourceSection).done(
-              function(entered_sourceSections) {
-                console.log('We entered the sourceSections object into the db', entered_sourceSections);
-                deferred.resolve(entered_sourceSections);
+
+          local_table.put('full3s',data_3s).done(
+              function(entered_3s) {
+                console.log('We entered the full3s object into the db', entered_3s);
+                deferred.resolve(entered_3s);
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt enter sourceSections object into the db because', failed_stuff);
+                console.log('We couldnt enter full3s object into the db because', failed_stuff);
                 deferred.reject(failed_stuff);
               }
               );
-*/
+            /*
+
             local_table.add('sectionSubsections',data_3s.newSectionSubsection).done(
               function(entered_SectionSubsection) {
                 console.log('We entered sectionSubsections object into the db', entered_SectionSubsection);
@@ -631,6 +633,7 @@ angular.module('niiuWebappApp')
                 deferred.reject(failed_stuff);
               }
               );
+*/
 /*
             console.log('getting ready to add sources to DB ', sources_array);
           local_table.add('sources',sources_array).done(

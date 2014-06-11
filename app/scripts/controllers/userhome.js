@@ -141,6 +141,7 @@ function refreshArticles() {
 			console.log('here is some 3s data',data_3s);
 				console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
 				//add sections to DB
+				localDB.put3s(data_3s.data);
 				localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
 				localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
 				localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
