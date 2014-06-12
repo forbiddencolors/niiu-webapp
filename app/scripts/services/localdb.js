@@ -13,7 +13,7 @@ angular.module('niiuWebappApp')
 
       var sync_table_name = 'last_3s_sync';
       //var sync_table_schema =  { stores:[{ name:sync_table_name, keyPath:"sync_id" }] }; 
-
+      var syncAge = getCurrentTime();
 
 
 
@@ -100,6 +100,17 @@ angular.module('niiuWebappApp')
           var new_db_connection = connectDB(new_table_name, new_schema);
 
           return new_db_connection;
+
+        },
+
+        getSyncAge: function() {
+          var now = getCurrentTime();
+          var lastSync = '';
+          return syncAge;
+
+
+
+
 
         },
 
@@ -572,6 +583,29 @@ angular.module('niiuWebappApp')
 
 
         },
+
+        get3sFromDB: function() {
+
+           var deferred = $q.defer();
+           console.log('getting the whole 3s from db')
+          var local_table = connectDB();
+
+          local_table.get("full3s","3s").done(
+              function(pulled_3s) {
+                console.log('We got the full3s object from the db', pulled_3s);
+                deferred.resolve(pulled_3s);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
+
+          return deferred.promise;
+
+        },
+
 
 
 

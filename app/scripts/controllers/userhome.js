@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants) {
+  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants, User) {
 
   	
 
   	$scope.pageClass='userHome';
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+  	$scope.contentObject=User.getContentObject();
+  	$scope.db3s=localDB.get3sFromDB();
 
 
     var deferred = $q.defer();
@@ -167,6 +169,8 @@ function refreshArticles() {
 			
 	}
 
+	console.log('the current sync is this old, ',localDB.getSyncAge());
+
 	if (0 || $routeParams.refresh=='refresh') {
 		//currently we are refreshing everytime the page loads, but probably we should do this only 
 		//when last sync is a bit old maybe 10mins
@@ -182,6 +186,8 @@ function refreshArticles() {
 			console.log('got the following articles from the db',db_articles);
 			Articleservice.init(db_articles);
 			$scope.articles=db_articles;
+			console.log('checking for my methods', User);
+			$scope.contentObj = User.getContentObject($scope.db3s,db_articles);
 			console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
 
 		});
@@ -217,6 +223,7 @@ function refreshArticles() {
 		);
 */
 
+/*
 //sorting test
     $scope.sort_items = [
        {date: '2019-01-19 00:16:00',house:'red'},
@@ -226,7 +233,7 @@ function refreshArticles() {
       {date: '2012-03-19 00:16:00', house:'green'},
         {date: '2014-03-19 00:00:00', house:'tan'}
     ];
-
+*/
 				
 
 	}

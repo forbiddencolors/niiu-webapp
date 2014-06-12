@@ -21,73 +21,96 @@ angular.module('niiuWebappApp')
             return section_urls;
         }
 
+     /* ContentObject is array of up to 11 pageObjects */
+    var contentObject = [];
+
     function makeContentObject(data3s,dataArticles) {
+        console.log('did we pass anything for the contentObject?',data3s,dataArticles);
+        if (data3s===undefined) data3s=localDB.get3sFromDB();
+        if (dataArticles==undefined) dataArticles=localDB.loadArticlesFromDB();
+        var user_sections=user.contentProfile.items;
+        var section_urls=[];
+        var userPage=[];
+        console.log('this is the contentObject basis',user_sections);
+        console.log('here we have the following to play with',user_sections);
+        var pageArticles = [];
+        for (var i=0; i<user_sections.length; i++) {
+                var nextSection = user_sections[i].section || "";
+                var nextSource = user_sections[i].source || "";
+                var nextCustom = user_sections[i].custom_section || "";
+                 pageArticles[i] = [];
+                
 
-    }
 
-    /* Object containing an array of Objects */
-    var contentObject = {[
-        
-        0  : {
-            type: "titlepage",
-            section : {
-                id : null,
-                name : null,
-                logo : null 
-            },
-            source : {
-                id : null,
-                name : null,
-                logo : null
-            },
-            subsection : {
-                id : null,
-                name : null,
-                logo : null
-            },
-            custom_section : {
-                id : null,
-                name : null,
-                logo : null
-            },
-            articles : {
-                0 : {                 
-                    subtitle: "Im Weekend schallte Donnerstag nach fünfmonatiger Renovierung wieder Techno aus den Boxen. Auch im Kater Holzig wurde gefeiert, wenn auch nur für eine Nacht.",
-                    language: "de-de",
-                    title: "Schöne Aussichten für Clubgänger",
-                    media: 
-                    [  ],
-                    author: "Philip Barnstorf",
-                    web_link: "http://www.tagesspiegel.de/berlin/weekend-und-kater-holzig-oeffnen-wieder-schoene-aussichten-fuer-clubgaenger/10004676.html",
-                    id: 852250,
-                    content: 
-                    "Perfekte Frisuren, penibel gestutzte Dreitagebärte, sanfte Elektrobässe, Sonnenuntergang über der Skyline, ein Gläschen Sekt – so feierten etwa 300 geladene Gäste am Donnerstagabend die Wiedereröffnung einer der schönsten Dachterrassen der Stadt. Nach mehrmonatiger Renovierung wird im Weekend am Alexanderplatz nun wieder getanzt, am Freitag startete der normale Clubbetrieb. Zur Eröffnung hatte Betreiber Marcus Trojan einige Prominenente ins ehemalige Haus des Reisens nach Mitte geladen, zum Beispiel Marcel Dettmann, der sonst im Berghain auflegt, und Michael Biloune, der hinter einer riesigen Sonnenbrille versteckt die Beats der House-Musik zusammenmixte, zu der vor Mitternacht noch niemand so recht tanzen wollte. "+
 
-                    "Aber das störte den Londoner, der sich als DJ Venus Six nennt, nicht. Er ist froh, dass es diesen Club im 17. Stock nun wieder gibt. „Als House-DJ ist Berlin der beste Ort“, sagte Biloune. In London gehe es nur um Aussehen und Geld, „hier verstehen die Leute viel mehr von der Musik“. Für Michi Beck von den Fantastischen Vier gilt das allemal, er genoss ebenso die Atmosphäre wie Model Eva Padberg und Schauspieler Dominic Raacke. Etwas promilastig sei das Weekend, nörgelte ein anderer Gast. „Aber die Aussicht ist atemberaubend.“ Immer wieder schlängelten sich Gäste zu den Sofas zwischen Bambuspflanzen, um durch die Glaswand zu Blicken, hinter der es mehr als 60 Meter in die Tiefe geht. "+
+                var section_url="/sectionHome/"+nextSource+"/"+nextSection+"/"+nextCustom;
+                section_urls.push(section_url);
 
-                    "Etwas bescheidener ging es am Donnerstagabend im Kater Holzig zu, der überraschend eine Mini-Eröffnung feierte. Ehemalige Mitarbeiter probierten schon mal die Location am neuen, alten Standort an der Holzmarktstraße, wo bis zum Jahr 2010 die Bar25 längst legendäre Partys unterhielt. Auf dem Gelände des sogenannten Holzmarkt in Friedrichshain entstehen direkt an der Spree neben einem kleinen Club auch ein Hotel, Wohnungen und Gewerbeflächen, ein Kindergarten und ein Restaurant. Die Clubgänger müssen sich allerdings noch gedulden: Irgendwann im Sommer soll der Club, der wesentlich kleiner ist als die beiden Vorgänger Bar 25 und Kater Holzig, offiziell wiedereröffnen. Ein genauer Termin ist noch nicht bekannt.",
+                var page_type = i==0 ? "titlepage" : "3s";
+                
+                console.log('article data',dataArticles);
+                
+                //loop through all articles and select the ones that match this section
+                for (var h=0; h<dataArticles.length; h++) {
+                    if (dataArticles[h].sections.section == user_sections[i].section &&
+                        dataArticles[h].sections.subsection_id == user_sections[i].subsection &&
+                        dataArticles[h].source == user_sections[i].source &&
+                        dataArticles[h].sections.custom_section == user_sections[i].custom_section) {
+                                pageArticles[i].push(dataArticles[h]);
+                            console.log('page'+i+' gets these articles, ',dataArticles[h]);
 
-                    type: "article",
-                    tag: 
-                    [  ],
-                    retrieved_date: "2014-06-06 20:25:04",
-                    published_date: "2014-06-06 20:10:09",
-                    source_id: 28,
-                    foreign_id: 10004676,
-                    sections:  { 
-                        subsection_id: 10,
-                        section_id: 10,
-                        content_priority: 23.0804,
-                        custom_section: "Friedrichshain"
-                    },
-                     
-                    clicks: 0,
-                    revision: "ee313e66532be1108f45746bfe9f27b5"
+                    }
+
+
+
                 }
-            } 
+                 console.log('here are the contentObject pageArticles ',pageArticles[i]);
+            
 
-        }
-    ]};
+
+                    userPage[i]=  {
+                                    type: page_type,
+                                    url : section_url,
+                                    section : {
+                                        id : user_sections[i].section,
+                                        name : null,
+                                        logo : null 
+                                    },
+                                    source : {
+                                        id : user_sections[i].source,
+                                        name : null,
+                                        logo : null
+                                    },
+                                    subsection : {
+                                        id : user_sections[i].subsection,
+                                        name : null,
+                                        logo : null
+                                    },
+                                    custom_section : {
+                                        id : user_sections[i].custom_section,
+                                        name : null,
+                                        logo : null
+                                    },
+
+
+                                    articles : pageArticles[i]
+
+                                
+                                } 
+                
+                console.log('pushing to contentObject', userPage[i]);
+                contentObject.push(userPage[i]);
+        } //end for loop
+
+    }  //end makeContentObject
+
+   
+
+
+
+
+
+   // ];
 
     
 
@@ -105,11 +128,20 @@ angular.module('niiuWebappApp')
 
     		//set the main user to the newUser we just got 
     		user=newUser;
+            makeContentObject();
 
     		// Save it to the database and return the promise from the DB service
     		return localDB.storeUser(newUser);
 
     	},
+        getContentObject: function(data3s,dataArticles) {
+                
+                 makeContentObject(data3s, dataArticles);
+                
+
+                return contentObject;
+
+        },
     	getUser: function() {
 			//Give access to the private user elsewhere
 			/*var d = $q.defer();
