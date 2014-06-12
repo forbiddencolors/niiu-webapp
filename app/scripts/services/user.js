@@ -25,41 +25,65 @@ angular.module('niiuWebappApp')
     var contentObject = [];
 
     function makeContentObject(data3s,dataArticles) {
-        console.log('did we pass anything for the contentObject?',data3s,dataArticles);
+        
+        console.log('did we pass anything for the contentObject?',dataArticles);
         if (data3s===undefined) data3s=localDB.get3sFromDB();
-        if (dataArticles==undefined) dataArticles=localDB.loadArticlesFromDB();
+        if (dataArticles==undefined) dataArticles=localDB.loadArticlesFromDB().then(function(done) {
+            console.log('now we have some contentObject articles from the DB',done);
+            }
+            );
         var user_sections=user.contentProfile.items;
-        var section_urls=[];
+        var section_urls=["/sectionHome/"];
         var userPage=[];
         console.log('this is the contentObject basis',user_sections);
         console.log('here we have the following to play with',user_sections);
         var pageArticles = [];
-        for (var i=0; i<user_sections.length; i++) {
-                var nextSection = user_sections[i].section || "";
-                var nextSource = user_sections[i].source || "";
-                var nextCustom = user_sections[i].custom_section || "";
+        for (var i=-1; i<user_sections.length; i++) {
+                console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
+                var thisSection = (user_sections[i]) ? user_sections[i].section : "";
+                var thisSource = (user_sections[i]) ? user_sections[i].source : "";
+                var thisCustom = (user_sections[i]) ? user_sections[i].custom_section : "";
                  pageArticles[i] = [];
                 
 
 
 
-                var section_url="/sectionHome/"+nextSource+"/"+nextSection+"/"+nextCustom;
+                var section_url="/sectionHome/"+thisSource+"/"+thisSection+"/"+thisCustom;
                 section_urls.push(section_url);
 
-                var page_type = i==0 ? "titlepage" : "3s";
+                var page_type = i===-1 ? "titlepage" : "3s";
                 
-                console.log('article data',dataArticles);
+                if (page_type==="titlepage") {
+                    //add the first article
+                    //pageArticles[i].push(dataArticles[0]);
+                    //pageArticles[i].push(dataArticles[1]);
+                    pageArticles[i]=dataArticles.slice( 0, 2)
+                    
+
+                    console.log('added two articles to the contentObject for the title page', pageArticles[i]);
+                } else {
                 
+
                 //loop through all articles and select the ones that match this section
                 for (var h=0; h<dataArticles.length; h++) {
-                    if (dataArticles[h].sections.section == user_sections[i].section &&
-                        dataArticles[h].sections.subsection_id == user_sections[i].subsection &&
-                        dataArticles[h].source == user_sections[i].source &&
-                        dataArticles[h].sections.custom_section == user_sections[i].custom_section) {
+
+                    //console.log('is this a custom contentObject page '+dataArticles[h].sections.custom_section+':', (dataArticles[h].sections.custom_section!=null));
+                    if (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null ||
+                        dataArticles[h].sections.section === user_sections[i].section &&
+                        dataArticles[h].sections.subsection_id === user_sections[i].subsection &&
+                        dataArticles[h].source === user_sections[i].source 
+                        
+                        ) {
+                           
+
                                 pageArticles[i].push(dataArticles[h]);
-                            console.log('page'+i+' gets these articles, ',dataArticles[h]);
+                            console.log('contentObject page'+i+' gets these articles, ',dataArticles[h]);
+                             console.log('passed contentObject filter because data',dataArticles[h].sections.custom_section +" is equal to "+user_sections[i].custom_section, (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null) );
+                             console.log('passed contentObject filter because section',dataArticles[h].sections.section_id +" is equal to "+user_sections[i].section, (dataArticles[h].sections.section === user_sections[i].section));
+    
 
                     }
+                }
 
 
 
@@ -67,27 +91,32 @@ angular.module('niiuWebappApp')
                  console.log('here are the contentObject pageArticles ',pageArticles[i]);
             
 
+                var page_section = (user_sections[i]) ? user_sections[i].section : null;
+                var page_source = (user_sections[i]) ? user_sections[i].source : null;
+                var page_subsection = (user_sections[i]) ? user_sections[i].subsection : null;
+                var page_custom_section = (user_sections[i]) ? user_sections[i].custom_section : null;
+
 
                     userPage[i]=  {
                                     type: page_type,
                                     url : section_url,
                                     section : {
-                                        id : user_sections[i].section,
+                                        id : page_section,
                                         name : null,
                                         logo : null 
                                     },
                                     source : {
-                                        id : user_sections[i].source,
+                                        id : page_source,
                                         name : null,
                                         logo : null
                                     },
                                     subsection : {
-                                        id : user_sections[i].subsection,
+                                        id : page_subsection,
                                         name : null,
                                         logo : null
                                     },
                                     custom_section : {
-                                        id : user_sections[i].custom_section,
+                                        id : page_custom_section,
                                         name : null,
                                         logo : null
                                     },
@@ -101,7 +130,7 @@ angular.module('niiuWebappApp')
                 console.log('pushing to contentObject', userPage[i]);
                 contentObject.push(userPage[i]);
         } //end for loop
-
+        return contentObject;
     }  //end makeContentObject
 
    
@@ -128,7 +157,7 @@ angular.module('niiuWebappApp')
 
     		//set the main user to the newUser we just got 
     		user=newUser;
-            makeContentObject();
+           // makeContentObject();
 
     		// Save it to the database and return the promise from the DB service
     		return localDB.storeUser(newUser);
@@ -138,6 +167,7 @@ angular.module('niiuWebappApp')
                 
                  makeContentObject(data3s, dataArticles);
                 
+                console.log('heres the contentObject we made',contentObject)
 
                 return contentObject;
 

@@ -7,7 +7,17 @@ angular.module('niiuWebappApp')
 
   	$scope.pageClass='userHome';
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
-  	$scope.contentObject=User.getContentObject();
+
+  	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here
+  		User.getContentObject().then(
+  		function(contentObject) {
+  			$scope.contentObject=contentObject; 
+  			console.log('we just set the pages contentObject',contentObject);
+  		},function(error) {
+  			console.log('we couldnt set the scope ContentObject',error);
+  		}
+  		);
+  	*/
   	$scope.db3s=localDB.get3sFromDB();
 
 
@@ -187,9 +197,9 @@ function refreshArticles() {
 			Articleservice.init(db_articles);
 			$scope.articles=db_articles;
 			console.log('checking for my methods', User);
-			$scope.contentObj = User.getContentObject($scope.db3s,db_articles);
+			$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
+			console.log('our $scope.contentObject is',$scope);
 			console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
-
 		});
 
 		localDB.loadSourcesFromDB().then( function(db_sources) {

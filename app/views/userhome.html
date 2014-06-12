@@ -20,13 +20,26 @@
 		</li>
 	</ul>
 
-<!--
-	<p>here is a sorting test</p>
-	<div ng:repeat="house in sort_items | orderBy:'date' ">{{house.house }}:{{house.date |date}}</div>
-	<div ng:repeat="article in articles | orderBy:'-published_date' track by article.id ">{{article.title }}:{{article.published_date }}</div>
-	<div>{{articles[0].title}} --- {{articles[0].published_date}}</div>
 
--->
+	<p>here is a contentObject Test</p>
+	<div ng:repeat="page in contentObject">
+		<strong>{{page.source.id}} -
+		{{page.custom_section.id}} -
+		{{page.section.id}} -
+		{{page.subsection.id}} -
+		{{page.subsection.id}}</strong>
+		<br>
+		{{page.url}}
+		<ul>
+			<li ng:repeat="article in page.articles | orderBy:'-published_date' track by article.id ">
+				<a ng-href="#/article/{{article.id}}">{{article.title}}</a>
+			</li>
+		</ul>
+
+	</div>
+
+
+
 
 
 	<p>Here are some articles for you</p>
