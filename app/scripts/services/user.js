@@ -37,12 +37,15 @@ angular.module('niiuWebappApp')
         var userPage=[];
         console.log('this is the contentObject basis',user_sections);
         console.log('here we have the following to play with',user_sections);
+
         var pageArticles = [];
         for (var i=-1; i<user_sections.length; i++) {
-                console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
+               // console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
                 var thisSection = (user_sections[i]) ? user_sections[i].section : "";
                 var thisSource = (user_sections[i]) ? user_sections[i].source : "";
                 var thisCustom = (user_sections[i]) ? user_sections[i].custom_section : "";
+                var homeArticles = [];
+                var homeArticlesNum = 2; //amount of articles per section on the title page
                  pageArticles[i] = [];
                 
 
@@ -53,41 +56,65 @@ angular.module('niiuWebappApp')
 
                 var page_type = i===-1 ? "titlepage" : "3s";
                 
-                if (page_type==="titlepage") {
-                    //add the first article
-                    //pageArticles[i].push(dataArticles[0]);
-                    //pageArticles[i].push(dataArticles[1]);
-                    pageArticles[i]=dataArticles.slice( 0, 2)
-                    
-
-                    console.log('added two articles to the contentObject for the title page', pageArticles[i]);
-                } else {
-                
 
                 //loop through all articles and select the ones that match this section
                 for (var h=0; h<dataArticles.length; h++) {
 
-                    //console.log('is this a custom contentObject page '+dataArticles[h].sections.custom_section+':', (dataArticles[h].sections.custom_section!=null));
-                    if (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null ||
-                        dataArticles[h].sections.section === user_sections[i].section &&
-                        dataArticles[h].sections.subsection_id === user_sections[i].subsection &&
-                        dataArticles[h].source === user_sections[i].source 
+                    if (user_sections[i] && dataArticles[h].sections) console.log('failing contentObject check because '
+                        +dataArticles[h].sections.section_id+' is not equal to '+user_sections[i].section+
+                        ' or '+ dataArticles[h].sections.subsection_id+' is not equal to '+ user_sections[i].subsection +
+                        ' or '+ dataArticles[h].source_id +' is not equal to '+ user_sections[i].source +
+                        ' check'
+                        , 
+                        (dataArticles[h].sections.section_id == user_sections[i].section &&
+                        dataArticles[h].sections.subsection_id == user_sections[i].subsection &&
+                        dataArticles[h].source_id == user_sections[i].source ));
+                    if (page_type==="titlepage" ) {
+                        
+                        //this page doesn't follow the have any articles associated with it, so im not sending it through the standard article process
+                        //add the first article
+                        /*
+                        if(1) {
+                            console.log('contentObject articles zero again')
+                            pageArticles[i].push(dataArticles[h]);
+                        }
+                        */
+                        
+
+                        //console.log('added two articles to the contentObject for the title page', pageArticles[i]);
+                    } else   
+
+                    
+                     if (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null ||
+                        dataArticles[h].sections.section_id == user_sections[i].section &&
+                        dataArticles[h].sections.subsection_id == user_sections[i].subsection &&
+                        dataArticles[h].source_id == user_sections[i].source 
                         
                         ) {
-                           
+                           console.log('failing contentObject filter because article section '+dataArticles[h].sections.section+'is equal to'+user_sections[i].section,(user_sections[i].source));
+                            console.log('failing',user_sections[i].source );
 
                                 pageArticles[i].push(dataArticles[h]);
                             console.log('contentObject page'+i+' gets these articles, ',dataArticles[h]);
                              console.log('passed contentObject filter because data',dataArticles[h].sections.custom_section +" is equal to "+user_sections[i].custom_section, (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null) );
                              console.log('passed contentObject filter because section',dataArticles[h].sections.section_id +" is equal to "+user_sections[i].section, (dataArticles[h].sections.section === user_sections[i].section));
-    
+                            
+                              if (homeArticles.length < homeArticlesNum ) {
+                                
+                                //add a couple articles to the titlepage
+
+                                pageArticles[-1].push(dataArticles[h]);
+                                homeArticles.push(dataArticles[h])
+
+                              }
 
                     }
-                }
-
-
 
                 }
+
+
+
+                
                  console.log('here are the contentObject pageArticles ',pageArticles[i]);
             
 
