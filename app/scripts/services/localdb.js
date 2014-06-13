@@ -7,13 +7,13 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_db';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}] };  
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
       //add additional indexes {name:'sectionSubsections',keyPath:'id',indexes:[{keyPath: "section_id"},{keyPath:"subsection_id"}]}]
 
 
       var sync_table_name = 'last_3s_sync';
       //var sync_table_schema =  { stores:[{ name:sync_table_name, keyPath:"sync_id" }] }; 
-
+      var syncAge = getCurrentTime();
 
 
 
@@ -100,6 +100,17 @@ angular.module('niiuWebappApp')
           var new_db_connection = connectDB(new_table_name, new_schema);
 
           return new_db_connection;
+
+        },
+
+        getSyncAge: function() {
+          var now = getCurrentTime();
+          var lastSync = '';
+          return syncAge;
+
+
+
+
 
         },
 
@@ -573,26 +584,51 @@ angular.module('niiuWebappApp')
 
         },
 
+        get3sFromDB: function() {
+
+           var deferred = $q.defer();
+           console.log('getting the whole 3s from db')
+          var local_table = connectDB();
+
+          local_table.get("full3s","3s").done(
+              function(pulled_3s) {
+                console.log('We got the full3s object from the db', pulled_3s);
+                deferred.resolve(pulled_3s);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                deferred.reject(failed_stuff);
+              }
+              );
+
+          return deferred.promise;
+
+        },
+
+
 
 
 
         put3s: function(data_3s) {
-           var deferred = $q.defer();
 
+           var deferred = $q.defer();
+           console.log('save the whole 3s', data_3s)
           var local_table = connectDB();
-/*
-          local_table.add('sourceSections',data_3s.newSourceSection).done(
-              function(entered_sourceSections) {
-                console.log('We entered the sourceSections object into the db', entered_sourceSections);
-                deferred.resolve(entered_sourceSections);
+
+          local_table.put('full3s',data_3s).done(
+              function(entered_3s) {
+                console.log('We entered the full3s object into the db', entered_3s);
+                deferred.resolve(entered_3s);
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt enter sourceSections object into the db because', failed_stuff);
+                console.log('We couldnt enter full3s object into the db because', failed_stuff);
                 deferred.reject(failed_stuff);
               }
               );
-*/
+            /*
+
             local_table.add('sectionSubsections',data_3s.newSectionSubsection).done(
               function(entered_SectionSubsection) {
                 console.log('We entered sectionSubsections object into the db', entered_SectionSubsection);
@@ -631,6 +667,7 @@ angular.module('niiuWebappApp')
                 deferred.reject(failed_stuff);
               }
               );
+*/
 /*
             console.log('getting ready to add sources to DB ', sources_array);
           local_table.add('sources',sources_array).done(

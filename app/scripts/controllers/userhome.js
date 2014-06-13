@@ -1,12 +1,24 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants) {
+  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants, User) {
 
   	
 
   	$scope.pageClass='userHome';
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+
+  	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here
+  		User.getContentObject().then(
+  		function(contentObject) {
+  			$scope.contentObject=contentObject; 
+  			console.log('we just set the pages contentObject',contentObject);
+  		},function(error) {
+  			console.log('we couldnt set the scope ContentObject',error);
+  		}
+  		);
+  	*/
+  	$scope.db3s=localDB.get3sFromDB();
 
 
     var deferred = $q.defer();
@@ -141,6 +153,7 @@ function refreshArticles() {
 			console.log('here is some 3s data',data_3s);
 				console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
 				//add sections to DB
+				localDB.put3s(data_3s.data);
 				localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
 				localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
 				localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
@@ -166,6 +179,8 @@ function refreshArticles() {
 			
 	}
 
+	console.log('the current sync is this old, ',localDB.getSyncAge());
+
 	if (0 || $routeParams.refresh=='refresh') {
 		//currently we are refreshing everytime the page loads, but probably we should do this only 
 		//when last sync is a bit old maybe 10mins
@@ -181,8 +196,10 @@ function refreshArticles() {
 			console.log('got the following articles from the db',db_articles);
 			Articleservice.init(db_articles);
 			$scope.articles=db_articles;
+			console.log('checking for my methods', User);
+			$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
+			console.log('our $scope.contentObject is',$scope);
 			console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
-
 		});
 
 		localDB.loadSourcesFromDB().then( function(db_sources) {
@@ -216,6 +233,7 @@ function refreshArticles() {
 		);
 */
 
+/*
 //sorting test
     $scope.sort_items = [
        {date: '2019-01-19 00:16:00',house:'red'},
@@ -225,7 +243,7 @@ function refreshArticles() {
       {date: '2012-03-19 00:16:00', house:'green'},
         {date: '2014-03-19 00:00:00', house:'tan'}
     ];
-
+*/
 				
 
 	}
