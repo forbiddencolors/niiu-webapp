@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .service('User', function User(localDB) {
+  .service('User', function User(localDB, $filter) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var user = {};
     function makeSectionUrls() {
@@ -26,7 +26,7 @@ angular.module('niiuWebappApp')
 
     function makeContentObject(data3s,dataArticles) {
         
-        console.log('did we pass anything for the contentObject?',dataArticles);
+        console.log('did we pass anything for the contentObject?',data3s, dataArticles);
         if (data3s===undefined) data3s=localDB.get3sFromDB();
         if (dataArticles==undefined) dataArticles=localDB.loadArticlesFromDB().then(function(done) {
             console.log('now we have some contentObject articles from the DB',done);
@@ -43,9 +43,18 @@ angular.module('niiuWebappApp')
                // console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
                 var thisSection = (user_sections[i]) ? user_sections[i].section : "";
                 var thisSource = (user_sections[i]) ? user_sections[i].source : "";
+                var thisSubsection = (user_sections[i]) ? user_sections[i].subsection : "";
                 var thisCustom = (user_sections[i]) ? user_sections[i].custom_section : "";
                 var homeArticles = [];
                 var homeArticlesNum = 2; //amount of articles per section on the title page
+                var thisSectionObj = (thisSection && thisSection!="") ? $filter('getByProperty')(data3s.contents.data.newSections, "id", thisSection): "";
+                var thisSourceObj = (thisSource && thisSource!="") ? $filter('getByProperty')(data3s.contents.data.newSources, "id", thisSource): "";
+                var thisSubsectionObj = (thisSubsection && thisSubsection!="") ? $filter('getByProperty')(data3s.contents.data.newSubsections, "id", thisSubsection): "";
+
+
+                console.log('contentObject needs thisSection '+thisSectionObj);
+                console.log('contentObject needs thisSource '+thisSourceObj);
+
                  pageArticles[i] = [];
                 
 
@@ -129,22 +138,22 @@ angular.module('niiuWebappApp')
                                     url : section_url,
                                     section : {
                                         id : page_section,
-                                        name : null,
-                                        logo : null 
+                                        name : thisSectionObj.name,
+                                        logo : thisSectionObj.logo 
                                     },
                                     source : {
                                         id : page_source,
-                                        name : null,
-                                        logo : null
+                                        name : thisSourceObj.name,
+                                        logo : thisSourceObj.logo
                                     },
                                     subsection : {
                                         id : page_subsection,
-                                        name : null,
-                                        logo : null
+                                        name : thisSubsectionObj.name,
+                                        logo : thisSubsectionObj.logo
                                     },
                                     custom_section : {
                                         id : page_custom_section,
-                                        name : null,
+                                        name : page_custom_section,
                                         logo : null
                                     },
 

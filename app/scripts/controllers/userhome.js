@@ -18,7 +18,11 @@ angular.module('niiuWebappApp')
   		}
   		);
   	*/
-  	$scope.db3s=localDB.get3sFromDB();
+  	localDB.get3sFromDB().then(function(data_3s) {
+  		$scope.db3s=data_3s;
+  	}
+
+  	);
 
 
     var deferred = $q.defer();

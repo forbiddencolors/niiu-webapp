@@ -130,22 +130,25 @@ angular.module('niiuWebappApp', [
 
   };
 
+
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
    
    console.log('are you logged in',niiuAuthenticator.isLoggedIn());
-   //console.log();
+   //console.log('requesting page ',next);
    console.log($rootScope.user);
 
     //publicViews($location.url())
     // if route requires auth and user is not logged in
-    if (!publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user)) {
+    //add an && 0 to this check if you want to stop authentication check redirections
+    if (!publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user) ) {
 
       console.log(' we have to go back to the home page because this ',!publicViews($location.url()),!niiuAuthenticator.isLoggedIn());
 
       // redirect back to login
       $location.path('/');
-    }
+    } 
   });
+
 
 
 
