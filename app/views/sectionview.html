@@ -1,7 +1,5 @@
-<h3>{{pageContent.title }} </h3>
+<h3><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span>{{pageContent.title }} </h3>
 
-
-	<p>Here are some articles from this section</p>
 
 	<ul class="articles row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in pageContent.articles" style="background-image:url('{{media_path}}{{article.media[0].path}}');">

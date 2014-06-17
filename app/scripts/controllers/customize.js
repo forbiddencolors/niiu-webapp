@@ -6,15 +6,20 @@ angular.module('niiuWebappApp')
 
   	console.log('the scope at this point is like this', $scope);
   	console.log('the root scope at this point is like', $rootScope);
+    niiuSyncer.createMenuObj().then(function(menuObj) {
+        console.log('The MenuObj looks like this',menuObj);
 
+    }
+   );
 
 
 
   	function getSections() {
       var deferred = $q.defer();
+      console.log('niiuSyncer', niiuSyncer);
 
 
-  		localDB.loadSectionsFromDB().then(function(db_sections) {
+       		localDB.loadSectionsFromDB().then(function(db_sections) {
   			console.log('I got the following sections from the DB', db_sections);
   			deferred.resolve(db_sections)
   		}, function (db_error) {
@@ -182,6 +187,7 @@ console.log(section_id);
 
   $scope.user = User.getUser();
   $scope.pageClass='menuPage';
+
 
 
 

@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('SectionviewCtrl', function ($scope, User, $routeParams) {
+  .controller('SectionviewCtrl', function ($scope, User, $routeParams, constants) {
 
 	$scope.currentSection = User.getCurrentSection();
-
+	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+	$scope.logo_path=constants.SOURCE_LOGO_PATH;
 
 
 	User.getContentObject().then(function(contentObjArray) {
