@@ -1,7 +1,7 @@
-<h3>{{article.title |replaceUmlauts}}</h3>
+<h3 >{{article.title |replaceUmlauts}}</h3>
 <img src="{{media_path}}{{image.path}}"  ng-repeat="image in article.media" ng-show="$first" onError="this.onerror=null;this.src='/images/blank.png';" />
 <div ng-bind-html="article.content | replaceUmlauts"></div>
-<p>{{article.media.length}} images in this article<p>
+<p >{{article.media.length}} images in this article<p>
 <div class="additional_images" ng-repeat="media in article.media " ng-hide="$first">
 	<img src="{{media_path}}{{image.path}}"  onError="this.onerror=null;this.src='/images/blank.png';" />
 </div>

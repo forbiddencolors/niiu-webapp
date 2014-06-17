@@ -24,27 +24,12 @@ angular.module('niiuWebappApp', [
         headerUrl: '',
         controller: 'EmailloginCtrl'
       })
-      .when('/userHome', {
+      .when('/userHome/:refresh?', {
         templateUrl: 'views/userhome.html',
         headerUrl: 'views/partials/usermenu.html',
         controller: 'UserhomeCtrl'
       })
-      .when('/userHome/:refresh', {
-        templateUrl: 'views/userhome.html',
-        headerUrl: 'views/partials/usermenu.html',
-        controller: 'UserhomeCtrl'
-      })
-      .when('/sectionHome', {
-        templateUrl: 'views/sectionhome.html',
-        headerUrl: 'views/partials/usermenu.html',
-        controller: 'SectionhomeCtrl'
-      })
-      .when('/sectionHome/:sourceId/:sectionId', {
-        templateUrl: 'views/sectionhome.html',
-        headerUrl: 'views/partials/usermenu.html',
-        controller: 'SectionhomeCtrl'
-      })
-      .when('/sectionHome///:customId', {
+      .when('/sectionHome/:sourceId?/:sectionId?/:customId?', {
         templateUrl: 'views/sectionhome.html',
         headerUrl: 'views/partials/usermenu.html',
         controller: 'SectionhomeCtrl'
@@ -79,6 +64,11 @@ angular.module('niiuWebappApp', [
         templateUrl: 'views/article.html',
         headerUrl: 'views/partials/usermenu.html',
         controller: 'ArticleCtrl'
+      })
+      .when('/sectionView/:contentObjId?', {
+        templateUrl: 'views/sectionview.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionviewCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -130,22 +120,25 @@ angular.module('niiuWebappApp', [
 
   };
 
+
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
    
    console.log('are you logged in',niiuAuthenticator.isLoggedIn());
-   //console.log();
+   //console.log('requesting page ',next);
    console.log($rootScope.user);
 
     //publicViews($location.url())
     // if route requires auth and user is not logged in
-    if (!publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user)) {
+    //add an && 0 to this check if you want to stop authentication check redirections
+    if (!publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user) ) {
 
       console.log(' we have to go back to the home page because this ',!publicViews($location.url()),!niiuAuthenticator.isLoggedIn());
 
       // redirect back to login
       $location.path('/');
-    }
+    } 
   });
+
 
 
 

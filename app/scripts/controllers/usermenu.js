@@ -14,11 +14,22 @@ angular.module('niiuWebappApp')
 
     $scope.nextSection = function() {
         console.log('this pre next page is', $location.path());
-    	console.log('next page is ', User.getNextSectionUrl($location.path()));
+    	console.log('next pageurl is ', User.getNextSectionUrl($location.path()));
+  
     	
     	$location.path(User.getNextSectionUrl($location.path()));
 
-    }
+
+    };
+
+    $scope.nextPage = function() {
+       // console.log('next contentPage is '+ User.getNextSection());
+        
+        $location.path("/sectionView/" + User.getNextSection());
+
+
+    };
+
 
     $scope.keyPress = function(keyCode){
        console.log("someone pressed",keyCode);
