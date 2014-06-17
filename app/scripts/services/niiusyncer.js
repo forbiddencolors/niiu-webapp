@@ -9,6 +9,9 @@ angular.module('niiuWebappApp')
     //v ar currentUser = User.getUser();
     var currentUser = $rootScope.user;
     var last3SSync = {};
+    var menuObj = [];
+    var sourceObj = [];
+    var SubsectionObj = [];
 
 
     var deferred = $q.defer();
@@ -237,11 +240,53 @@ angular.module('niiuWebappApp')
 
 
 */
-        
+      createMenuObj: function(){
+        //set a promise so we wait for the db on the other end.
+        var deferred=$q.defer();
+        localDB.get3sFromDB().then(function(data_3s) {
+          
+          //create an array of sources by id
+          angular.forEach(data_3s.contents.data.newSources, function(sourceObj, key) {
+                this[sourceObj.id]=sourceObj;
+          }, sourceObj);
+
+          //create an array of subsections by id
+          angular.forEach(data_3s.contents.data.newSubsections, function(subsectionObj, key) {
+             this[subsectionObj.id ]= subsectionObj;
+           }, SubsectionObj);
+
+
+          //create an array of sections by id
+          angular.forEach(data_3s.contents.data.newSections, function(valueObj, key) {
+             this[valueObj.id ]= valueObj;
+             this[valueObj.id ].sources = [];
+           }, menuObj);
+          
+
+          //add sourcebysections to the menuObj
+          angular.forEach(data_3s.contents.data.newSourceSection, function(sourceSecMap, key) {
+             this[sourceSecMap.section_id].sources[sourceSecMap.id]=sourceObj[sourceSecMap.source_id];
+             //this[valueObj.id ]= valueObj;
+           }, menuObj);
+
+          deferred.resolve(menuObj);
+
+
+          
+
+        },function(error_3s) {
+          console.log('no 3s data for the menu',error_3s);
+          deferred.reject(menuObj);
+
+        }
+        );
+
+        return deferred.promise;
 
 
 
 
+      },
 
       syncArticles: function(current_user,last_sync_time,last_cp_update_time) {
 

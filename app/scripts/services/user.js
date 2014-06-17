@@ -235,7 +235,7 @@ angular.module('niiuWebappApp')
         },
         getNextSection:function() {
             console.log('currentSection is currently'+currentSection );
-            if ((currentSection+1)>contentObject.length) {
+            if ((currentSection+1)>=contentObject.length) {
                 currentSection=0;
             }else {
                 currentSection=currentSection+1;
