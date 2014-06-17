@@ -5,6 +5,7 @@
     <li><a ng-href="#/sectionHome" ng-show="user!=null">Sections</a></li>
     <li><a ng-href="#/userHome/refresh" ng-show="user!=null">Refresh</a></li>
     <li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li>
+    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null">Next Page</a></li>
     <li><a href="" ng-show="user!=null" ng-click="logout()">Logout {{user.firstName}}</a></li>
   </ul>
   <p class="errors" ng-show="error">{{error}}</p>

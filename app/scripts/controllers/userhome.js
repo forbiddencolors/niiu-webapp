@@ -195,6 +195,15 @@ function refreshArticles() {
 	} else {
 		//load3s();
 		console.log('lets get some articles!');
+		User.getContentObject().then(function(returned_contentObject) {
+			console.log("does the getContentObject returns a promise all right.",returned_contentObject);
+			$scope.contentObject = returned_contentObject;
+		},function(returned_content_error) {
+			console.log("we didnt get the contentObject at all right?",returned_content_error);
+		}
+
+			);
+		
 		//put the article array into the service
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);

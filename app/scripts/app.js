@@ -24,27 +24,12 @@ angular.module('niiuWebappApp', [
         headerUrl: '',
         controller: 'EmailloginCtrl'
       })
-      .when('/userHome', {
+      .when('/userHome/:refresh?', {
         templateUrl: 'views/userhome.html',
         headerUrl: 'views/partials/usermenu.html',
         controller: 'UserhomeCtrl'
       })
-      .when('/userHome/:refresh', {
-        templateUrl: 'views/userhome.html',
-        headerUrl: 'views/partials/usermenu.html',
-        controller: 'UserhomeCtrl'
-      })
-      .when('/sectionHome', {
-        templateUrl: 'views/sectionhome.html',
-        headerUrl: 'views/partials/usermenu.html',
-        controller: 'SectionhomeCtrl'
-      })
-      .when('/sectionHome/:sourceId/:sectionId', {
-        templateUrl: 'views/sectionhome.html',
-        headerUrl: 'views/partials/usermenu.html',
-        controller: 'SectionhomeCtrl'
-      })
-      .when('/sectionHome///:customId', {
+      .when('/sectionHome/:sourceId?/:sectionId?/:customId?', {
         templateUrl: 'views/sectionhome.html',
         headerUrl: 'views/partials/usermenu.html',
         controller: 'SectionhomeCtrl'
@@ -79,6 +64,11 @@ angular.module('niiuWebappApp', [
         templateUrl: 'views/article.html',
         headerUrl: 'views/partials/usermenu.html',
         controller: 'ArticleCtrl'
+      })
+      .when('/sectionView/:contentObjId?', {
+        templateUrl: 'views/sectionview.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'SectionviewCtrl'
       })
       .otherwise({
         redirectTo: '/'

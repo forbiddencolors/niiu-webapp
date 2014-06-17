@@ -1,32 +1,39 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .service('User', function User(localDB, $filter) {
+  .service('User', function User(localDB, $filter, $q) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var user = {};
+    /* ContentObject is array of up to 11 pageObjects */
+    var contentObject = [];
+    var currentSection = 0;
     function makeSectionUrls() {
             //Get list of section urls to rotate through
-                var user_sections=user.contentProfile.items;
+                var user_sections=contentObject;
+                console.log('heres the ',contentObject);
                 var section_urls=[];
                 
             for (var i=0; i<user_sections.length; i++) {
-                var nextSection = user_sections[i].section || "";
-                var nextSource = user_sections[i].source || "";
-                var nextCustom = user_sections[i].custom_section || "";
 
-                var section_url="/sectionHome/"+nextSource+"/"+nextSection+"/"+nextCustom;
+                var section_url=user_sections[i].url;
                 section_urls.push(section_url);
             }
             console.log('next section urls ', section_urls); 
             return section_urls;
         }
 
-     /* ContentObject is array of up to 11 pageObjects */
-    var contentObject = [];
+
 
     function makeContentObject(data3s,dataArticles) {
         
+        var tempObjArray=[];
         console.log('did we pass anything for the contentObject?',data3s, dataArticles);
+        if (data3s===undefined && dataArticles==undefined && contentObject.length>0)
+        {
+            //if we already have a contentObj
+            return contentObject;
+        }  
+        
         if (data3s===undefined) data3s=localDB.get3sFromDB();
         if (dataArticles==undefined) dataArticles=localDB.loadArticlesFromDB().then(function(done) {
             console.log('now we have some contentObject articles from the DB',done);
@@ -69,15 +76,16 @@ angular.module('niiuWebappApp')
                 //loop through all articles and select the ones that match this section
                 for (var h=0; h<dataArticles.length; h++) {
 
-                    if (user_sections[i] && dataArticles[h].sections) console.log('failing contentObject check because '
+                  /*  if (user_sections[i] && dataArticles[h].sections) console.log('failing contentObject check because '
                         +dataArticles[h].sections.section_id+' is not equal to '+user_sections[i].section+
                         ' or '+ dataArticles[h].sections.subsection_id+' is not equal to '+ user_sections[i].subsection +
                         ' or '+ dataArticles[h].source_id +' is not equal to '+ user_sections[i].source +
                         ' check'
                         , 
-                        (dataArticles[h].sections.section_id == user_sections[i].section &&
-                        dataArticles[h].sections.subsection_id == user_sections[i].subsection &&
-                        dataArticles[h].source_id == user_sections[i].source ));
+                        (dataArticles[h].sections.section_id === user_sections[i].section &&
+                        dataArticles[h].sections.subsection_id === user_sections[i].subsection &&
+                        dataArticles[h].source_id === user_sections[i].source ));
+                    */
                     if (page_type==="titlepage" ) {
                         
                         //this page doesn't follow the have any articles associated with it, so im not sending it through the standard article process
@@ -95,18 +103,18 @@ angular.module('niiuWebappApp')
 
                     
                      if (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null ||
-                        dataArticles[h].sections.section_id == user_sections[i].section &&
-                        dataArticles[h].sections.subsection_id == user_sections[i].subsection &&
-                        dataArticles[h].source_id == user_sections[i].source 
+                        dataArticles[h].sections.section_id === user_sections[i].section &&
+                        dataArticles[h].sections.subsection_id === user_sections[i].subsection &&
+                        dataArticles[h].source_id === user_sections[i].source 
                         
                         ) {
-                           console.log('failing contentObject filter because article section '+dataArticles[h].sections.section+'is equal to'+user_sections[i].section,(user_sections[i].source));
-                            console.log('failing',user_sections[i].source );
+                           //console.log('failing contentObject filter because article section '+dataArticles[h].sections.section+'is equal to'+user_sections[i].section,(user_sections[i].source));
+                            //console.log('failing',user_sections[i].source );
 
                                 pageArticles[i].push(dataArticles[h]);
-                            console.log('contentObject page'+i+' gets these articles, ',dataArticles[h]);
-                             console.log('passed contentObject filter because data',dataArticles[h].sections.custom_section +" is equal to "+user_sections[i].custom_section, (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null) );
-                             console.log('passed contentObject filter because section',dataArticles[h].sections.section_id +" is equal to "+user_sections[i].section, (dataArticles[h].sections.section === user_sections[i].section));
+                            //console.log('contentObject page'+i+' gets these articles, ',dataArticles[h]);
+                             //console.log('passed contentObject filter because data',dataArticles[h].sections.custom_section +" is equal to "+user_sections[i].custom_section, (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null) );
+                             //console.log('passed contentObject filter because section',dataArticles[h].sections.section_id +" is equal to "+user_sections[i].section, (dataArticles[h].sections.section === user_sections[i].section));
                             
                               if (homeArticles.length < homeArticlesNum ) {
                                 
@@ -131,10 +139,28 @@ angular.module('niiuWebappApp')
                 var page_source = (user_sections[i]) ? user_sections[i].source : null;
                 var page_subsection = (user_sections[i]) ? user_sections[i].subsection : null;
                 var page_custom_section = (user_sections[i]) ? user_sections[i].custom_section : null;
+                var page_title =  "Front Page";
+                if (user_sections[i]) {
+                        if (user_sections[i].custom_section!==null) {
+
+                            page_title = user_sections[i].custom_section;
+                        }
+                        if (thisSourceObj.name) {
+                            page_title = thisSourceObj.name + " - ";
+
+                        }
+                        if (thisSubsectionObj.name) {
+                            page_title += thisSubsectionObj.name;
+                        } else if (thisSectionObj.name) {
+                            page_title += thisSectionObj.name;
+                        }
+
+                }
 
 
                     userPage[i]=  {
                                     type: page_type,
+                                    title: page_title,
                                     url : section_url,
                                     section : {
                                         id : page_section,
@@ -163,9 +189,11 @@ angular.module('niiuWebappApp')
                                 
                                 } 
                 
-                console.log('pushing to contentObject', userPage[i]);
-                contentObject.push(userPage[i]);
+                console.log('pushing to contentObject'+i, userPage[i]);
+                
+                tempObjArray.push(userPage[i]);
         } //end for loop
+        contentObject = tempObjArray;
         return contentObject;
     }  //end makeContentObject
 
@@ -199,8 +227,57 @@ angular.module('niiuWebappApp')
     		return localDB.storeUser(newUser);
 
     	},
-        getContentObject: function(data3s,dataArticles) {
+        getCurrentSection:function() {
+            return currentSection;
+        },
+        setCurrentSection:function(secNum) {
+            currentSection = secNum;
+        },
+        getNextSection:function() {
+            console.log('currentSection is currently'+currentSection );
+            if ((currentSection+1)>contentObject.length) {
+                currentSection=0;
+            }else {
+                currentSection=currentSection+1;
+            }
+
+            return currentSection;
+        },
+        getContentObject: function() {
+            var deferred=$q.defer();
+                if (contentObject.length<1) {
+                    localDB.get3sFromDB().then(function(data_3s) {
+                       var local_db3s=data_3s;
+                       localDB.loadArticlesFromDB().then(function(db_data) {
+                        var db_articles = db_data;
+
+                        makeContentObject(local_db3s,db_articles);
+                        console.log('created a new contentObject right',contentObject)
+                        console.log('right:',deferred);
+                        deferred.resolve( contentObject);
+                       },function(error_articles) {
+                            deferred.reject( error_articles);
+                       });
+                    }, function(error_3s) {
+                            deferred.reject( error_3s);
+                    });
+
+
+                    
+                } else {
+                    //we already have a contentObject
+                    deferred.resolve( contentObject);
+
+                } 
+              
                 
+                console.log('heres the contentObject we are getting',contentObject)
+                return deferred.promise;
+                
+
+        },
+        setContentObject: function(data3s,dataArticles) {
+                //makes a new contentObject based on whats been passed
                  makeContentObject(data3s, dataArticles);
                 
                 console.log('heres the contentObject we made',contentObject)
@@ -229,6 +306,7 @@ angular.module('niiuWebappApp')
             for (var i=0; i<section_list.length; i++) {
                 if (location==section_list[i] || location+"/"==section_list[i] ) { //angular drops the last / from urls
                     if ( i<section_list.length-1 ) {
+                        console.log('next Up is PageNum'+i);
                         return section_list[i+1];
                     } else { //if we are already at the last item in the list return the first item
                         return section_list[0];

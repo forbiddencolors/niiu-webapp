@@ -23,7 +23,7 @@
 
 	<p>here is a contentObject Test</p>
 	<div ng:repeat="page in contentObject">
-		<strong>{{page.source.name}} {{page.section.name}}  / {{page.source.id}} -
+		<strong>{{page.source.name}} {{page.section.name}}  {{page.subsection.name}}  / {{page.source.id}} -
 		{{page.custom_section.id}} -
 		{{page.section.id}} -
 		{{page.subsection.id}} -
@@ -48,7 +48,7 @@
 		<li class="col-xs-12 col-sm-6 col-6 btn btn-default" ng-repeat="article in articles | orderBy:'-published_date' track by article.id ">
 			<div  class="article" style="background-image:url('{{media_path}}{{article.media[0].path}}');"> 
 				<a ng-href="#/article/{{article.id}}">
-				<h4>{{article.title}}</h4>  {{article.id}} - {{article.published_date}}
+				<h4 >{{article.title}}</h4>  {{article.id}} - {{article.published_date}}
 				<div ng-bind-html="article.subtitle | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div></a>
 				<a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></a>
 
