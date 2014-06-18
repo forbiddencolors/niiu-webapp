@@ -9,9 +9,9 @@ angular.module('niiuWebappApp')
     //v ar currentUser = User.getUser();
     var currentUser = $rootScope.user;
     var last3SSync = {};
-    var menuObj = [];
-    var sourceObj = [];
-    var SubsectionObj = [];
+    var menuObj = {};
+    var sourceObj = {};
+    var SubsectionObj = {};
 
 
     var deferred = $q.defer();
@@ -247,21 +247,21 @@ angular.module('niiuWebappApp')
           
           //create an array of sources by id
           angular.forEach(data_3s.contents.data.newSources, function(sourceObj, key) {
-                this[sourceObj.id]=sourceObj;
+                this["source_"+sourceObj.id]=sourceObj;
           }, sourceObj);
 
           //create an array of subsections by id
           angular.forEach(data_3s.contents.data.newSubsections, function(subsectionObj, key) {
-             this[subsectionObj.id ]= subsectionObj;
+             this["sub_"+subsectionObj.id ]= subsectionObj;
            }, SubsectionObj);
 
 
           //create an array of sections by id
           angular.forEach(data_3s.contents.data.newSections, function(sectionObj, key) {
 
-               sectionObj.sources = [];
-               sectionObj.subsections = [];
-               this[sectionObj.id]=sectionObj;
+               sectionObj.sources = {};
+               sectionObj.subsections = {};
+               this["sec_"+sectionObj.id]=sectionObj;
                //this[].time = new Date().getTime()+Math.random() * (900000 - 100000) + 100000;
 
                
@@ -272,27 +272,27 @@ angular.module('niiuWebappApp')
 
           //add sourcebysections to the menuObj
           angular.forEach(data_3s.contents.data.newSourceSection, function(sourceSecMap, key) {
-              sourceObj[sourceSecMap.source_id].source_section_id=sourceSecMap.id;
+              sourceObj["source_"+sourceSecMap.source_id].source_section_id=sourceSecMap.id;
              // var sectionNode = $filter('getByProperty')(this, 'id', sourceSecMap.section_id);
               // sectionNode.sources.push(sourceObj[sourceSecMap.source_id]);
-              this[sourceSecMap.section_id].sources.push(sourceObj[sourceSecMap.source_id]);
+              this["sec_"+sourceSecMap.section_id].sources["source_"+sourceSecMap.source_id] = sourceObj["source_"+sourceSecMap.source_id];
 
            }, menuObj);
 
 
           //add subsections to the menuObj
           angular.forEach(data_3s.contents.data.newSectionSubsection, function(SectionSubMap, key) {
-              console.log('does this subsection menuObj exist?',SubsectionObj[SectionSubMap.subsection_id]);
-              SubsectionObj[SectionSubMap.subsection_id].section_subsection_id=SectionSubMap.id;
-             this[SectionSubMap.section_id].subsections[SectionSubMap.subsection_id]=SubsectionObj[SectionSubMap.subsection_id];
-              this[SectionSubMap.section_id].subsections[SectionSubMap.subsection_id].sources=[];
+              //console.log('does this subsection menuObj exist?',SubsectionObj["sub_"+SectionSubMap.subsection_id]);
+              SubsectionObj["sub_"+SectionSubMap.subsection_id].section_subsection_id=SectionSubMap.id;
+             this["sec_"+SectionSubMap.section_id].subsections["sub_"+SectionSubMap.subsection_id]=SubsectionObj["sub_"+SectionSubMap.subsection_id];
+              this["sec_"+SectionSubMap.section_id].subsections["sub_"+SectionSubMap.subsection_id].sources=[];
 
                 //add sourcesbysubsections to the menuObj
                 angular.forEach(data_3s.contents.data.newSourceSubsection, function(SourceSubMap, key) {
                   if (SectionSubMap.subsection_id===SourceSubMap.subsection_id) {
                       //hope this doesn't change the real sourceObj
-                      sourceObj[SourceSubMap.source_id].source_subsection_id=SourceSubMap.id;
-                     this[SectionSubMap.section_id].subsections[SourceSubMap.subsection_id].sources.push(sourceObj[SourceSubMap.source_id]);
+                      sourceObj["source_"+SourceSubMap.source_id].source_subsection_id=SourceSubMap.id;
+                     this["sec_"+SectionSubMap.section_id].subsections["sub_"+SourceSubMap.subsection_id].sources.push(sourceObj["source_"+SourceSubMap.source_id]);
                      //this[sectionId].subsections[subsection_id].sources.push(sourceObj[SourceSubMap.source_id]);
                   }  
                }, menuObj);

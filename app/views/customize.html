@@ -5,21 +5,29 @@
 
 {{menuObj.length}}
 	<ul class="sections row">
-		
 
-		<li class="col-xs-12 col-md-6 col-lg-4" ng-repeat="niiu_section in menuObj track by $index">
+
+		<li class="col-xs-12 col-md-6 col-lg-4" ng-repeat="niiu_section in menuObj">
 		<h4>{{niiu_section.name}}</h4>
 
-				<ul>
-				 <li ng-repeat="niiu_subsection in niiu_section.subsections track by id">
-				 	<strong>{{niiu_subsection.name}}</strong>
+
+				<ul style="list-style-display:square;">
+				 <li ng-repeat="niiu_subsection in niiu_section.subsections">
+				 	<h6>{{niiu_subsection.name}}</h6>
+				 	<ol>
+				 		<li ng-repeat="niiu_sub_source in niiu_subsection.sources">
+				 			{{niiu_sub_source.name}} [+{{niiu_sub_source.source_subsection_id}}]
+				 		</li>
+				 	</ol>
+
+
 				 </li>
 				</ul>
-				<ul style="list-style-display:disk;">
+				<ol >
 					<li ng-repeat="niiu_source in niiu_section.sources">
-						{{niiu_source.name}}
+						{{niiu_source.name}} [+{{niiu_source.source_section_id}}]
 					</li>
-				</ul>
+				</ol>
 
 
 
