@@ -247,7 +247,9 @@ angular.module('niiuWebappApp')
           
           //create an array of sources by id
           angular.forEach(data_3s.contents.data.newSources, function(sourceObj, key) {
+                sourceObj.subsections={};
                 this["source_"+sourceObj.id]=sourceObj;
+
           }, sourceObj);
 
           //create an array of subsections by id
@@ -260,7 +262,7 @@ angular.module('niiuWebappApp')
           angular.forEach(data_3s.contents.data.newSections, function(sectionObj, key) {
 
                sectionObj.sources = {};
-               sectionObj.subsections = {};
+               
                this["sec_"+sectionObj.id]=sectionObj;
                //this[].time = new Date().getTime()+Math.random() * (900000 - 100000) + 100000;
 
@@ -277,9 +279,33 @@ angular.module('niiuWebappApp')
               // sectionNode.sources.push(sourceObj[sourceSecMap.source_id]);
               this["sec_"+sourceSecMap.section_id].sources["source_"+sourceSecMap.source_id] = sourceObj["source_"+sourceSecMap.source_id];
 
+
+                        //add subsectionsbysources to the menuObj
+                        angular.forEach(data_3s.contents.data.newSourceSubsection, function(SourceSubMap, key) {
+                          //sourceObj.["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+subsection_id];
+                          if (sourceSecMap.source_id===SourceSubMap.source_id && sourceSecMap.subsection_id===SubsectionObj.id) {
+
+                            console.log("adding this subsection",SubsectionObj["sub_"+SourceSubMap.id]);
+                            //this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].subsections ={};
+                            //remove the source_section_id from the parent so people can olnly add subsections of this source
+                            this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].source_section_id=null;
+                            SubsectionObj["sub_"+SourceSubMap.subsection_id].source_subsection_id=SourceSubMap.id;
+                            console.log('enough already menuObj', SubsectionObj["sub_"+SourceSubMap.subsection_id]);
+                            this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
+
+                            
+                          }
+
+                        }, menuObj);
+
            }, menuObj);
 
 
+
+
+
+
+/*
           //add subsections to the menuObj
           angular.forEach(data_3s.contents.data.newSectionSubsection, function(SectionSubMap, key) {
               //console.log('does this subsection menuObj exist?',SubsectionObj["sub_"+SectionSubMap.subsection_id]);
@@ -299,7 +325,7 @@ angular.module('niiuWebappApp')
 
 
            }, menuObj);
-
+*/
 
 
           deferred.resolve(menuObj);

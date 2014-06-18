@@ -11,7 +11,7 @@
 		<h4>{{niiu_section.name}}</h4>
 
 
-				<ul style="list-style-display:square;">
+				<!--ul style="list-style-display:square;">
 				 <li ng-repeat="niiu_subsection in niiu_section.subsections">
 				 	<h6>{{niiu_subsection.name}}</h6>
 				 	<ol>
@@ -22,10 +22,19 @@
 
 
 				 </li>
-				</ul>
+				</ul -->
 				<ol >
 					<li ng-repeat="niiu_source in niiu_section.sources">
-						{{niiu_source.name}} [+{{niiu_source.source_section_id}}]
+						{{niiu_source.name}} <span ng-show="niiu_source.source_section_id">[+{{niiu_source.source_section_id}}]</span>
+
+						<ul>
+							<li ng-repeat="niiu_subsection in niiu_source.subsections">
+								{{niiu_subsection.name}} [+{{niiu_subsection.source_subsection_id}}]
+							</li>
+						</ul>
+
+
+
 					</li>
 				</ol>
 
