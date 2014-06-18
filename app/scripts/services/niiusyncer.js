@@ -12,6 +12,7 @@ angular.module('niiuWebappApp')
     var menuObj = {};
     var sourceObj = {};
     var SubsectionObj = {};
+    var SourceSubsectionObj = {};
 
 
     var deferred = $q.defer();
@@ -255,7 +256,10 @@ angular.module('niiuWebappApp')
           //create an array of subsections by id
           angular.forEach(data_3s.contents.data.newSubsections, function(subsectionObj, key) {
              this["sub_"+subsectionObj.id ]= subsectionObj;
+             console.log('these are the subsections',subsectionObj);
            }, SubsectionObj);
+
+
 
 
           //create an array of sections by id
@@ -270,7 +274,8 @@ angular.module('niiuWebappApp')
                //console.log('menuObj--',this[sectionObj.id ].id);
               
            }, menuObj);
-          
+
+
 
           //add sourcebysections to the menuObj
           angular.forEach(data_3s.contents.data.newSourceSection, function(sourceSecMap, key) {
@@ -283,18 +288,50 @@ angular.module('niiuWebappApp')
                         //add subsectionsbysources to the menuObj
                         angular.forEach(data_3s.contents.data.newSourceSubsection, function(SourceSubMap, key) {
                           //sourceObj.["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+subsection_id];
-                          if (sourceSecMap.source_id===SourceSubMap.source_id && sourceSecMap.subsection_id===SubsectionObj.id) {
+                          //sec_src.section_id = subs.section_id
 
-                            console.log("adding this subsection",SubsectionObj["sub_"+SourceSubMap.id]);
+
+
+
+                          
+                          console.log('dealing with this subssection',(SourceSubMap.subsection_id===SubsectionObj["sub_"+SourceSubMap.subsection_id].id));
+                          if (sourceSecMap.source_id===SourceSubMap.source_id  ) {
+                            //&& sourceSecMap.section_id===SubsectionObj["sub_"+SourceSubMap.subsection_id].section_id
+                              //&& SourceSubMap.subsection_id===SubsectionObj.id
+                              //sub.id = sub_src.subsection_id
+/*
+                            console.log("adding this subsection",SubsectionObj["sub_"+SourceSubMap.subsection_id].source_subsection_id);
                             //this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].subsections ={};
                             //remove the source_section_id from the parent so people can olnly add subsections of this source
                             this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].source_section_id=null;
-                            SubsectionObj["sub_"+SourceSubMap.subsection_id].source_subsection_id=SourceSubMap.id;
-                            console.log('enough already menuObj', SubsectionObj["sub_"+SourceSubMap.subsection_id]);
-                            this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
+                            SubsectionObj["sub_"+SourceSubMap.id].source_subsection_id=SourceSubMap.id;
+                            //console.log('enough already menuObj', SubsectionObj["sub_"+SourceSubMap.subsection_id]);
+                            this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.id];
+*/
+
+                              angular.forEach(data_3s.contents.data.newSectionSubsection, function(SectionSubMap, key) {
+                                 //console.log('what I got',SubsectionObj["sub_"+SectionSubMap.subsection_id])
+                                 console.log('not happening', SubsectionObj["sub_"+SectionSubMap.subsection_id].id);
+                                if(sourceSecMap.section_id === SectionSubMap.section_id) {
+                                //if(sourceSecMap.section_id === SubsectionObj["sub_"+SectionSubMap.subsection_id].section_id) {
+                                  console.log('its happening');
+                                  //console.log('does this subsection menuObj exist?',SubsectionObj["sub_"+SectionSubMap.subsection_id]);
+                                  SubsectionObj["sub_"+SectionSubMap.id]=SubsectionObj["sub_"+SectionSubMap.subsection_id];
+                                  SubsectionObj["sub_"+SectionSubMap.id].section_subsection_id=SectionSubMap.id;
+                                  SubsectionObj["sub_"+SectionSubMap.id].section_id=SectionSubMap.section_id;
+                                  //console.log('menuObject sectionSub',SubsectionObj["sub_"+SectionSubMap.id]);
+                                  
+                                 this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SectionSubMap.id]=SubsectionObj["sub_"+SectionSubMap.id];
+                                 console.log('whats this menuObj', SubsectionObj["sub_"+SectionSubMap.id]);
+                               }
+
+                               }, menuObj);
+                              
+
+
 
                             
-                          }
+                         }
 
                         }, menuObj);
 
