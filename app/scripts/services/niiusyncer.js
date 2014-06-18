@@ -258,23 +258,24 @@ angular.module('niiuWebappApp')
 
           //create an array of sections by id
           angular.forEach(data_3s.contents.data.newSections, function(sectionObj, key) {
-             if(sectionObj.id) {
+
                sectionObj.sources = [];
                sectionObj.subsections = [];
-               this.push(sectionObj);
+               this[sectionObj.id]=sectionObj;
                //this[].time = new Date().getTime()+Math.random() * (900000 - 100000) + 100000;
 
                
                //console.log('menuObj--',this[sectionObj.id ].id);
-              }
+              
            }, menuObj);
           
 
           //add sourcebysections to the menuObj
           angular.forEach(data_3s.contents.data.newSourceSection, function(sourceSecMap, key) {
               sourceObj[sourceSecMap.source_id].source_section_id=sourceSecMap.id;
-              var sectionNode = $filter('getByProperty')(this, 'id', sourceSecMap.section_id);
-             sectionNode.sources.push(sourceObj[sourceSecMap.source_id]);
+             // var sectionNode = $filter('getByProperty')(this, 'id', sourceSecMap.section_id);
+              // sectionNode.sources.push(sourceObj[sourceSecMap.source_id]);
+              this[sourceSecMap.section_id].sources.push(sourceObj[sourceSecMap.source_id]);
 
            }, menuObj);
 
