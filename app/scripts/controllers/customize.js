@@ -8,6 +8,7 @@ angular.module('niiuWebappApp')
   	console.log('the root scope at this point is like', $rootScope);
     niiuSyncer.createMenuObj().then(function(menuObj) {
         console.log('The MenuObj looks like this',menuObj);
+        $scope.menuObj=menuObj;
 
     }
    );
@@ -194,60 +195,6 @@ console.log(section_id);
 
 
 
-
-
-/*
-  	var newSections = function() {
-
-  		var deferred = $q.defer();
-  		var promise = deferred.promise;
-
-  		promise.then(function(db_sections) {
-  			console.log('I got the following sections from the DB', db_sections);
-  			deferred.resolve(db_sections)
-  		}, function (db_error) {
-  			console.log('i got nothing because ',db_error);
-  			deferred.reject(db_error);
-  		});
-  		
-  		//return promise;
-
-  		var loadSections = localDB.loadSectionsFromDB();
-  		loadSections.then( function(db_sections) {
-  			console.log('I got the following sections from the DB', db_sections);
-  			deferred.resolve(db_sections)
-  		}, function (db_error) {
-  			console.log('i got nothing because ',db_error);
-  			deferred.reject(db_error);
-  		}
-  		
-  		);	
-
-
-
-  	};
-
-  //	newSections();
-  	//localDB.loadSectionsFromDB().then(function(loaded) {
-  		console.log('loaded!!',localDB.loadSectionsFromDB());
-  	//}
-  	//);
-  
-  	
-
-  	getSections().then(
-  		function(db_sections) {
-  			console.log('I got the following sections from the DB', db_sections);
-  			return db_sections;
-  		}, function (db_error) {
-  			console.log('i got nothing because ',db_error)
-  		}
-
-
-
-  		);
-*/
-  	//console.log(getSections());
 
 
 

@@ -1,7 +1,45 @@
 <p>This is the customize view.</p>
 
 
-	<p>Here are all sections</p>
+	<p>Here are all sections using the MenuObj</p>
+
+{{menuObj.length}}
+	<ul class="sections row">
+		
+
+		<li class="col-xs-12 col-md-6 col-lg-4" ng-repeat="niiu_section in menuObj track by $index">
+		<h4>{{niiu_section.name}}</h4>
+
+				<ul>
+				 <li ng-repeat="niiu_subsection in niiu_section.subsections track by id">
+				 	<strong>{{niiu_subsection.name}}</strong>
+				 </li>
+				</ul>
+				<ul style="list-style-display:disk;">
+					<li ng-repeat="niiu_source in niiu_section.sources">
+						{{niiu_source.name}}
+					</li>
+				</ul>
+
+
+
+
+		</li>
+	</ul>
+
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+	<p>Here are all sections using filters</p>
 
 	<ul class="sections row">
 		<li class="col-xs-12 col-md-6 col-lg-4" ng-repeat="niiu_section in sections">

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .factory('niiuSyncer',['$rootScope', '$http', '$q', 'constants','localDB', 'User', function ($rootScope, $http, $q, constants, localDB, User) {
+  .factory('niiuSyncer',['$rootScope', '$http', '$q', '$filter', 'constants','localDB', 'User',  function ($rootScope, $http, $q, $filter, constants, localDB, User) {
     // Service logic
     // ...
 
@@ -257,17 +257,49 @@ angular.module('niiuWebappApp')
 
 
           //create an array of sections by id
-          angular.forEach(data_3s.contents.data.newSections, function(valueObj, key) {
-             this[valueObj.id ]= valueObj;
-             this[valueObj.id ].sources = [];
+          angular.forEach(data_3s.contents.data.newSections, function(sectionObj, key) {
+             if(sectionObj.id) {
+               sectionObj.sources = [];
+               sectionObj.subsections = [];
+               this.push(sectionObj);
+               //this[].time = new Date().getTime()+Math.random() * (900000 - 100000) + 100000;
+
+               
+               //console.log('menuObj--',this[sectionObj.id ].id);
+              }
            }, menuObj);
           
 
           //add sourcebysections to the menuObj
           angular.forEach(data_3s.contents.data.newSourceSection, function(sourceSecMap, key) {
-             this[sourceSecMap.section_id].sources[sourceSecMap.id]=sourceObj[sourceSecMap.source_id];
-             //this[valueObj.id ]= valueObj;
+              sourceObj[sourceSecMap.source_id].source_section_id=sourceSecMap.id;
+              var sectionNode = $filter('getByProperty')(this, 'id', sourceSecMap.section_id);
+             sectionNode.sources.push(sourceObj[sourceSecMap.source_id]);
+
            }, menuObj);
+
+
+          //add subsections to the menuObj
+          angular.forEach(data_3s.contents.data.newSectionSubsection, function(SectionSubMap, key) {
+              console.log('does this subsection menuObj exist?',SubsectionObj[SectionSubMap.subsection_id]);
+              SubsectionObj[SectionSubMap.subsection_id].section_subsection_id=SectionSubMap.id;
+             this[SectionSubMap.section_id].subsections[SectionSubMap.subsection_id]=SubsectionObj[SectionSubMap.subsection_id];
+              this[SectionSubMap.section_id].subsections[SectionSubMap.subsection_id].sources=[];
+
+                //add sourcesbysubsections to the menuObj
+                angular.forEach(data_3s.contents.data.newSourceSubsection, function(SourceSubMap, key) {
+                  if (SectionSubMap.subsection_id===SourceSubMap.subsection_id) {
+                      //hope this doesn't change the real sourceObj
+                      sourceObj[SourceSubMap.source_id].source_subsection_id=SourceSubMap.id;
+                     this[SectionSubMap.section_id].subsections[SourceSubMap.subsection_id].sources.push(sourceObj[SourceSubMap.source_id]);
+                     //this[sectionId].subsections[subsection_id].sources.push(sourceObj[SourceSubMap.source_id]);
+                  }  
+               }, menuObj);
+
+
+           }, menuObj);
+
+
 
           deferred.resolve(menuObj);
 
