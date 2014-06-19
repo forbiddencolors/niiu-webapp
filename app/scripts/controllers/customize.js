@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, User) {
+  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, User,constants) {
 
 
   	console.log('the scope at this point is like this', $scope);
@@ -9,9 +9,15 @@ angular.module('niiuWebappApp')
     niiuSyncer.createMenuObj().then(function(menuObj) {
         console.log('The MenuObj looks like this',menuObj);
         $scope.menuObj=menuObj;
+        $scope.importUserSections(User.getUser().contentProfile.items);
 
     }
    );
+
+   $scope.sectionsToAdd = [];
+   //console.log("are there user sections?",User.getUser().contentProfile.items);
+
+
 
 
 
@@ -33,11 +39,84 @@ angular.module('niiuWebappApp')
   			
   	};
 
-   $scope.addSection = function(section,src,subsection,custom) {
 
-        console.log('user added section:'+section+' src:'+src+' subsection:'+subsection+' custom:'+custom);
+
+   $scope.addSection = function(section,src,subsection,custom) {
+        section = section || null;
+        src = src || null;
+        subsection = subsection || null;
+        custom = custom || null;
+        console.log('user added section:'+section+' src:'+src+' subsection:'+subsection+' custom:'+custom, $scope.menuObj);
+        var sectionName= section ? $scope.menuObj["sec_"+section].name : "";
+        var sourceName= src ? $scope.menuObj["sec_"+section].sources["source_"+src].name : "";
+        var subsectionName= subsection ? $scope.menuObj["sec_"+section].sources["source_"+src].subsections["sub_"+subsection].name : ""
+        var customName= custom ? custom : "";
+        var handle_string= src +"|"+ section +"|"+  subsection  +"|"+custom;
+        
+        var newSection = {
+            "json" : {
+                        "section": section,
+                        "source": src,
+                        "subsection": subsection,
+                        "custom_section": custom 
+                       },
+            "name" : sourceName +" "+ sectionName +" "+  subsectionName  +" "+customName,
+            "handle" : handle_string
+        }
+
+        console.log('adding sections')
+        var duplicates = $scope.sectionsToAdd.filter(function( obj ) {
+          
+          return obj.handle == handle_string;
+        });
 
         
+        if (duplicates.length) {
+          console.log('this section totally exists',duplicates);
+          $scope.error="This is a duplicate section";
+        } else {
+          console.log('this section seems new',duplicates);
+
+              if($scope.sectionsToAdd.length>=constants.MAXIMUM_SECTIONS) {
+                  $scope.error="You have reached your maximum number of sections. Please remove some if you would like to add new ones";
+              } else {
+                  $scope.sectionsToAdd.push(newSection);
+                  console.log('new Section added', handle_string);
+                }
+
+
+         } 
+
+        
+    };
+
+$scope.importUserSections = function(user_sections) {
+   //Put all existing sections into the sectionsToAdd Array
+   angular.forEach(user_sections, function(user_section, key) {
+    //console.log($scope);
+    $scope.addSection(user_section.section,user_section.source,user_section.subsection,user_section.custom_section);
+
+
+   }, null);
+
+ }
+
+    
+
+    $scope.removeSection = function(section_handle) {
+          
+         if (!section_handle) {
+          } else {
+            //loop through the array and remove the matching items
+            for(var i = $scope.sectionsToAdd.length-1; i--;){
+              if ($scope.sectionsToAdd[i].handle === section_handle) $scope.sectionsToAdd.splice(i, 1);
+              console.log('removing section',section_handle);
+            }
+
+        
+        
+      }
+
     };
 
 

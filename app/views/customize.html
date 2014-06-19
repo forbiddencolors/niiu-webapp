@@ -1,9 +1,9 @@
-<p>This is the customize view.</p>
 
 
-	<p>Here are all sections using the MenuObj</p>
 
-{{menuObj.length}}
+	<h2>Section Menu</h2>
+	<br><br>
+
 	<ul class="sections row">
 
 
@@ -32,120 +32,14 @@
 	</ul>
 
 
-
-
-
-
-
 <hr>
+<h2>Sections to Add</h2>
+<ul class="sections row">
+	<li class="col-6 col-sm-6 col-lg-4" ng-repeat="addSection in sectionsToAdd">
+		<a class="btn btn-default" ng-href="" role="button" ng-click="removeSection(addSection.handle)" >{{addSection.name}} (remove)</a> 
 
+	</li>
 
-
-
-
-	<p>Here are all sections using filters</p>
-
-	<ul class="sections row">
-		<li class="col-xs-12 col-md-6 col-lg-4" ng-repeat="niiu_section in sections">
-			<h4><!--img src="{{niiu_section.logo}}" width="20" height="20" --> {{niiu_section.name}}</h4>
-
-				<span class="source_section" ng-repeat="source_section in source_sections | filter:{ 'section_id': niiu_section.id }:true">
-						<!--
-					sec:{{source_section.section_id}} src_id:{{source_section.source_id}}			{{source_section.section_id}}/{{niiu_section.id}}
-						-->
-					<!--
-					<div ng-repeat="source in sources | getByProperty: 'id' : source_section.source_id : sources "><i>{{source}}</i></div>
-					<div><u>{{ sources | getByProperty: 'id' : source_section.source_id : sources }}</u></div>
-					-->
-					<!-- These are the sources for this section -->
-					<ul ng-repeat="source in sources | filter:{'id' : source_section.source_id }:true">
-						<li>{{source.name}} (<a ng-click="addSection(source_section.id)" href="">+ [{{source_section.id}}]</a>)
-						</li>
-					</ul>
-
-
-					</span>
-
-
-					<ul class="sections_subsections">
-						<li ng-repeat="section_subsection in section_subsections | filter:{'section_id' : niiu_section.id}:true">
-							<!-- inside of here we know the subsections for this section -->
-							<ul>
-								<li ng-repeat="subsection in subsections| filter:{'id' : section_subsection.subsection_id }:true">
-									<h5>{{subsection.name}}</h5>
-									<span ng-repeat="niiu_source_subsection in source_subsections | filter:{'subsection_id' : section_subsection.subsection_id}"><!--the source id here is {{ niiu_source_subsection.source_id}} -->
-									<!-- in here we know the source ids for this section -->
-									<ul>
-										<li ng-repeat="source in sources | filter:{'id' : niiu_source_subsection.source_id }:true">{{source.name}} (<a ng-click="addSection(niiu_source_subsection.id)" href="">+ [{{niiu_source_subsection.id}}]</a>)</span>
-									</ul>
-
-									</span>
-
-								</li>
-							</ul>
-
-
-
-						</li>
-
-					</ul>
-				<!--
-				<ul>
-					<li class="niiu_subsection" ng-repeat="niiu_subsection in subsections | filter:{'section_id' : niiu_section.id}">
-					
-					<h5 ng-repeat="subsection in subsections| filter:{'id' : niiu_subsection.subsection_id }:true">{{subsection.name}}</h5>
-						<span ng-repeat="niiu_source_subsection in source_subsections | filter:{'subsection_id' : niiu_subsection.subsection_id}">
-							
-
-							<ul>
-								<li class="source_subsection" ng-repeat="niiu_source_subsection in source_subsections | filter:{'subsection_id' : niiu_subsection.subsection_id}">source: {{niiu_source_subsection.source_id}}
-								
-									<li ng-repeat="source in sources | filter:{'id' : niiu_source_subsection.source_id }:true">{{source.name}} (<a ng-click="addSection(niiu_source_subsection.id)" href="">+</a>)</span>
-								</li>
-
-							</ul>	
-						</span>
-
-
-					</li>
-				</ul>
-			-->
-
-				
-			
-		</li>
-	</ul>
-	<!--
-	{{User}}
-	<div ng-repeat="divsource in sources">
-		<a href="#" >{{divsource.name}}</a>
-	</div>
-
-	<ul >
-				<li ng-repeat"niiu_source in sources">{{niiu_source}}</li>
-	</ul>
-	`-->
-
-<p>Here are your sections</p>
-	<ul class="sections row">
-		<li  ng-repeat="user_section in user.contentProfile.items">
-			<a class="btn btn-default" href="#" role="button" ng-href="/section/{{user_section.id}}">
-			<span class="user_section"> {{sections[user_section.section].name}}</span> - 
-			
-			 <!--Source: {{sources[user_section.source]}} Section {{user_section.section}} >>-->
-				<span class="user_source" ng-repeat="user_source in sources | filter:{ 'id': user_section.source }:true">
-							{{user_source.name}}</span></a>
-				
-		</li>
-	</ul>
-
-<p>Here are your sections(for real)</p>
-	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in user.contentProfile.items">
-			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionHome/{{user_section.section}}/{{user_section.source}}/{{user_section.custom_section}}">
-			<span class="user_source" ng-repeat="user_source in sources | filter: {'id':user_section.source}">{{user_source.name}}</span> <span class="user_section" ng-repeat="section in sections | filter:{'id' : user_section.section}">{{section.name}}</span>{{user_section.custom_section}}
-			<!-- Source: {{user_section.source}} Section {{user_section.section}} --> >></a>
-		</li>
 	</ul>
 
 

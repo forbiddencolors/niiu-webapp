@@ -14,7 +14,9 @@ angular.module('niiuWebappApp')
                 USER_TABLE_NAME : 'niiu_user',
                 NIIU_API_VERSION : 200.7,
                 ARTICLE_MEDIA_PATH : 'http://dev.niiu.de/img/retrieved_article_media/',
-                SOURCE_LOGO_PATH : 'http://dev.niiu.de/files/sources/images/'
+                SOURCE_LOGO_PATH : 'http://dev.niiu.de/files/sources/images/',
+                MAXIMUM_SECTIONS : 10
+
 
 });
 

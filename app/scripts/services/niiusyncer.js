@@ -286,7 +286,7 @@ angular.module('niiuWebappApp')
               //clone the sourceObj so we don't mess it up
               var clonedSourceObject=JSON.parse(JSON.stringify(sourceObj["source_"+sourceSecMap.source_id]))
 
-              console.log('too late',  sourceObj["source_"+sourceSecMap.source_id]);
+              //console.log('too late',  sourceObj["source_"+sourceSecMap.source_id]);
               this["sec_"+sourceSecMap.section_id].sources["source_"+sourceSecMap.source_id] = clonedSourceObject;
 
 
@@ -365,12 +365,15 @@ angular.module('niiuWebappApp')
 
                           if (menuSection.sources["source_"+SourceSubMap.source_id]
                             && SectionSubMap.subsection_id === SourceSubMap.subsection_id 
-                            && SectionSubMap.section_id === menuSection.id
-                            && SourceSubMap.source_id === menuSection.sources["source_"+SourceSubMap.source_id].id 
+                            && SubsectionObj["sub_"+SourceSubMap.subsection_id].active===true
+                           // && SectionSubMap.section_id === menuSection.id
+                          //  && SourceSubMap.source_id === menuSection.sources["source_"+SourceSubMap.source_id].id 
 
                             ) {
                             console.log('time to do something with '+"sec_"+SectionSubMap.section_id+", source_"+SourceSubMap.source_id+", "+"sub_"+SourceSubMap.subsection_id);
+                          if (!this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections) {
                               this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections={};
+                            }
                             //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
                             this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
                           }
