@@ -33,6 +33,14 @@ angular.module('niiuWebappApp')
   			
   	};
 
+   $scope.addSection = function(section,src,subsection,custom) {
+
+        console.log('user added section:'+section+' src:'+src+' subsection:'+subsection+' custom:'+custom);
+
+        
+    };
+
+
 
     function getSourceSections() {
       var deferred = $q.defer();
