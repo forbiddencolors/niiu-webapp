@@ -114,6 +114,13 @@ angular.module('niiuWebappApp')
 
         },
 
+        getNowTime: function() {
+          var now = getCurrentTime();
+          return now;
+
+        },
+
+
         getLastUser: function() {
 
 

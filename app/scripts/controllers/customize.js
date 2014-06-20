@@ -64,7 +64,8 @@ angular.module('niiuWebappApp')
             "handle" : handle_string
         }
 
-        console.log('adding sections')
+        console.log('adding sections');
+        //check and see if this section is a duplicate
         var duplicates = $scope.sectionsToAdd.filter(function( obj ) {
           
           return obj.handle == handle_string;
@@ -121,8 +122,55 @@ $scope.importUserSections = function(user_sections) {
 
 
     $scope.syncSections = function(section_list_array) {
+      //current_user,last_sync_time,last_cp_update_time
+    localDB.getLastSync().then(function(sync_time) {
+      console.log('the last sync time in the db is',sync_time);
+      var update_time = localDB.getNowTime();
 
-      niiuSyncer.updateSections(section_list_array);
+      
+      var json_section_array=[];
+
+       angular.forEach(section_list_array, function(new_section, key) {
+
+            this.push(new_section.json);
+
+        }, json_section_array);
+
+
+
+      
+
+      console.log('send to niiusyncer',Array($scope.user,sync_time,update_time,json_section_array) );
+      
+      var syncObject=niiuSyncer.createSectionObject($scope.user,sync_time,update_time,json_section_array);
+      console.log('this is the object that should update your sections',syncObject);
+      niiuSyncer.syncNewSections(syncObject).then(function(syncResponse) {
+          console.log('successfully updated sections!!',syncResponse);
+
+
+
+      },
+      function(syncError) {
+        console.log('we didnt get to update your section, we should save the request in the db',syncError);
+        $scope.error=syncError;
+
+      }
+
+
+
+        );
+
+
+
+    },
+
+    function(sync_error) {
+      console.log('unfortunately we couldnt find a sync time in the db, just use a generic time, we should probably rerun',sync_error);
+      //return "2012-12-12 12:12:12";
+    }
+
+    );
+
 
     };
 

@@ -62,7 +62,41 @@ angular.module('niiuWebappApp')
             return articleData;
       }
     
+        function sendSyncObject(syncObject) {
 
+//create a promise
+        var deferred = $q.defer();
+
+        $http.post(constants.NIIU_API_URL+"articles/get_articles_from_solr", "data="+angular.toJson(syncObject), {
+                    
+                }).success(function(articleResponse){
+                    console.log('heres the response from the niiu api', articleResponse)
+                    
+                    if (articleResponse.contents.status==200) {
+
+                        console.log('The response was good');
+                        
+                        
+                        
+                    
+                    
+                    deferred.resolve(articleResponse);
+                    
+                    } else {
+                            
+                            console.log('The response wasnt so good...', articleResponse);
+                            
+                            deferred.reject(articleResponse);
+                    }
+
+                }).error(function(error){
+                    console.log('this was a straight up error',error);
+                    deferred.reject(error);
+                 });
+                //hang on we don't have an answer yet
+                return deferred.promise;
+
+        }
 
         function create3sObject() {
 
@@ -216,13 +250,23 @@ angular.module('niiuWebappApp')
 
 
 */
-      updateSections: function(section_objects) {
-          var deferred=$q.defer();
-          createArticleObject();
+      createSectionObject: function(current_user,last_sync_time, last_cp_update_time, section_array) {
+          
+          console.log('we need to set the following sections for the user',section_array);
+          
+          var articleObj=createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array);
+
+          return articleObj;
+
+         
 
 
+      },
 
+      syncNewSections: function(sectionObj) {
+        var syncPromise= sendSyncObject(sectionObj);
 
+         return syncPromise;
 
       },
 
@@ -345,37 +389,9 @@ angular.module('niiuWebappApp')
 
         console.log('heres the article object we are sending', articleData);
 
-        //create a promise
-        var deferred = $q.defer();
+        var syncPromise = sendSyncObject(articleData);
 
-        $http.post(constants.NIIU_API_URL+"articles/get_articles_from_solr", "data="+angular.toJson(articleData), {
-                    
-                }).success(function(articleResponse){
-                    console.log('heres the response from the niiu api', articleResponse)
-                    
-                    if (articleResponse.contents.status==200) {
-
-                        console.log('The response was good');
-                        
-                        
-                        
-                    
-                    
-                    deferred.resolve(articleResponse);
-                    
-                    } else {
-                            
-                            console.log('The response wasnt so good...', articleResponse);
-                            
-                            deferred.reject(articleResponse);
-                    }
-
-                }).error(function(error){
-                    console.log('this was a straight up error',error);
-                    deferred.reject(error);
-                 });
-                //hang on we don't have an answer yet
-                return deferred.promise;
+        return syncPromise;
 
       },
 
