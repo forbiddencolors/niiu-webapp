@@ -32,34 +32,9 @@ angular.module('niiuWebappApp')
 
 
 
+    function createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array) {
 
-    var dontUseArticleData = {
-      "api": "content",
-      "action": "get",
-      "appGuid": constants.NIIU_APP_GUID,
-      "apiKey": currentUser.apiKey,
-      "data": {
-          "last3SSync": last_sync_time,
-          "lastContentSync": last_sync_time,
-          "user_id": currentUser.contentProfile.userID,
-         "version": 200.7,
-         "article_ids": [ ],
-         "contentProfile": {
-             "id": currentUser.id,
-             "localID": 2,
-             "isPublic": 1,
-             "name": "Default Content Profile",
-             "subscribedTo": null,
-            "lastUpdated": last_sync_time,
-            "items": [  ]
-        },
-        "forceSync": true
-      }
-    };
-
-    function createArticleObject(current_user,last_sync_time, last_cp_update_time) {
-
-
+        section_array = section_array || [];
               var articleData = {
                 "api": "content",
                 "action": "get_articles_from_solr",
@@ -77,7 +52,7 @@ angular.module('niiuWebappApp')
                        "name": "Default Content Profile",
                        "subscribedTo": null,
                       "lastUpdated": last_cp_update_time,
-                      "items": [  ]
+                      "items": section_array
                   },
                   "forceSync": true
                 }
@@ -241,6 +216,16 @@ angular.module('niiuWebappApp')
 
 
 */
+      updateSections: function(section_objects) {
+          var deferred=$q.defer();
+          createArticleObject();
+
+
+
+
+
+      },
+
       createMenuObj: function(){
         //set a promise so we wait for the db on the other end.
         var deferred=$q.defer();
@@ -289,60 +274,6 @@ angular.module('niiuWebappApp')
               //console.log('too late',  sourceObj["source_"+sourceSecMap.source_id]);
               this["sec_"+sourceSecMap.section_id].sources["source_"+sourceSecMap.source_id] = clonedSourceObject;
 
-
-/*
-                        //add subsectionsbysources to the menuObj
-                        angular.forEach(data_3s.contents.data.newSourceSubsection, function(SourceSubMap, key) {
-                          //sourceObj.["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+subsection_id];
-                          //sec_src.section_id = subs.section_id
-
-
-
-
-
-                          console.log('dealing with this subssection',(SourceSubMap.subsection_id===SubsectionObj["sub_"+SourceSubMap.subsection_id].id));
-                          if (sourceSecMap.source_id===SourceSubMap.source_id  ) {
-                            //&& sourceSecMap.section_id===SubsectionObj["sub_"+SourceSubMap.subsection_id].section_id
-                              //&& SourceSubMap.subsection_id===SubsectionObj.id
-                              //sub.id = sub_src.subsection_id
-
-                            console.log("adding this subsection",SubsectionObj["sub_"+SourceSubMap.subsection_id].source_subsection_id);
-                            //this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].subsections ={};
-                            //remove the source_section_id from the parent so people can olnly add subsections of this source
-                            this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].source_section_id=null;
-                            SubsectionObj["sub_"+SourceSubMap.id].source_subsection_id=SourceSubMap.id;
-                            //console.log('enough already menuObj', SubsectionObj["sub_"+SourceSubMap.subsection_id]);
-                            this["sec_"+sourceSecMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.id];
-
-
-                              angular.forEach(data_3s.contents.data.newSectionSubsection, function(SectionSubMap, key) {
-                                 //console.log('what I got',SubsectionObj["sub_"+SectionSubMap.subsection_id])
-                                 console.log('not happening', SubsectionObj["sub_"+SectionSubMap.subsection_id].id);
-                                if(sourceSecMap.section_id === SectionSubMap.section_id) {
-                                //if(sourceSecMap.section_id === SubsectionObj["sub_"+SectionSubMap.subsection_id].section_id) {
-                                  console.log('its happening');
-                                  //console.log('does this subsection menuObj exist?',SubsectionObj["sub_"+SectionSubMap.subsection_id]);
-                                  SubsectionObj["sub_"+SectionSubMap.id]=SubsectionObj["sub_"+SectionSubMap.subsection_id];
-                                  SubsectionObj["sub_"+SectionSubMap.id].section_subsection_id=SectionSubMap.id;
-                                  SubsectionObj["sub_"+SectionSubMap.id].section_id=SectionSubMap.section_id;
-                                  //console.log('menuObject sectionSub',SubsectionObj["sub_"+SectionSubMap.id]);
-                                  
-                                 this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SectionSubMap.id]=SubsectionObj["sub_"+SectionSubMap.id];
-                                 console.log('whats this menuObj', SubsectionObj["sub_"+SectionSubMap.id]);
-                               }
-
-                               }, menuObj);
-                              
-
-
-
-                            
-                         }
-
-                        }, menuObj);
-
-*/
-
            }, menuObj);
 
 
@@ -386,33 +317,6 @@ angular.module('niiuWebappApp')
               }, menuObj);
 
 
-
-
-
-
-
-
-/*
-          //add subsections to the menuObj
-          angular.forEach(data_3s.contents.data.newSectionSubsection, function(SectionSubMap, key) {
-              //console.log('does this subsection menuObj exist?',SubsectionObj["sub_"+SectionSubMap.subsection_id]);
-              SubsectionObj["sub_"+SectionSubMap.subsection_id].section_subsection_id=SectionSubMap.id;
-             this["sec_"+SectionSubMap.section_id].subsections["sub_"+SectionSubMap.subsection_id]=SubsectionObj["sub_"+SectionSubMap.subsection_id];
-              this["sec_"+SectionSubMap.section_id].subsections["sub_"+SectionSubMap.subsection_id].sources=[];
-
-                //add sourcesbysubsections to the menuObj
-                angular.forEach(data_3s.contents.data.newSourceSubsection, function(SourceSubMap, key) {
-                  if (SectionSubMap.subsection_id===SourceSubMap.subsection_id) {
-                      //hope this doesn't change the real sourceObj
-                      sourceObj["source_"+SourceSubMap.source_id].source_subsection_id=SourceSubMap.id;
-                     this["sec_"+SectionSubMap.section_id].subsections["sub_"+SourceSubMap.subsection_id].sources.push(sourceObj["source_"+SourceSubMap.source_id]);
-                     //this[sectionId].subsections[subsection_id].sources.push(sourceObj[SourceSubMap.source_id]);
-                  }  
-               }, menuObj);
-
-
-           }, menuObj);
-*/
 
 
           deferred.resolve(menuObj);

@@ -120,6 +120,13 @@ $scope.importUserSections = function(user_sections) {
     };
 
 
+    $scope.syncSections = function(section_list_array) {
+
+      niiuSyncer.updateSections(section_list_array);
+
+    };
+
+
 
     function getSourceSections() {
       var deferred = $q.defer();

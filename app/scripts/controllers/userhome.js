@@ -192,6 +192,14 @@ function refreshArticles() {
 		//when people trigger a refresh (like dragging down in the ios app)
 		refresh3s();
 		refreshArticles();
+		User.getContentObject().then(function(returned_contentObject) {
+			console.log("does the getContentObject returns a promise all right.",returned_contentObject);
+			$scope.contentObject = returned_contentObject;
+		},function(returned_content_error) {
+			console.log("we didnt get the contentObject at all right?",returned_content_error);
+		}
+
+		);
 	} else {
 		//load3s();
 		console.log('lets get some articles!');
