@@ -49,6 +49,44 @@ angular.module('niiuWebappApp')
 
         }
 
+        function getLast3sSync() {
+
+          var default_time='0000-00-00 00:00:00';
+
+          console.log('looking for the last sync time');
+          //create or open the 3s table in the default db
+          var local_table = connectDB();
+          console.log('at least we got the table ',local_table);
+
+          var deferred = $q.defer();
+          //since we are only going to keep one users data here in the db at a time I think I will
+          //continue using the same integer to refer to the record with the last sync time
+
+          
+           local_table.get("full3s","3s").done(
+              function(pulled_3s) {
+                var last_sync_time =pulled_3s.contents.data.last3SSync;
+
+                console.log('last sync time from the 3s table',last_sync_time);
+                //console.log('We got the full3s object from the db', pulled_3s);
+                
+
+
+                deferred.resolve(last_sync_time);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                deferred.reject(default_time);
+              }
+              );
+
+          return deferred.promise;
+
+
+
+        }
+
        
     
     //return local_table;
@@ -160,16 +198,13 @@ angular.module('niiuWebappApp')
 
 
         getLastSync: function() {
-          var default_time='0000-00-00 00:00:00';
+          var last3sTime = getLast3sSync();
+          return last3sTime;
 
-          console.log('looking for the last sync time');
-          //create or open the 3s table in the default db
-          var local_table = connectDB();
-          console.log('at least we got the table ',local_table);
+        
+          /*
 
-          var deferred = $q.defer();
-          //since we are only going to keep one users data here in the db at a time I think I will
-          //continue using the same integer to refer to the record with the last sync time
+
           local_table.get(sync_table_name ,constants.USER_LOCATOR).done(function(last_sync_record) {
               
               console.log('in the table the last user was ', last_sync_record);
@@ -196,7 +231,10 @@ angular.module('niiuWebappApp')
               deferred.reject(default_time);
             });
 
+            
+
             return deferred.promise;
+            */
 
           },
 

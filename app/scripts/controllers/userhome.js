@@ -20,8 +20,16 @@ angular.module('niiuWebappApp')
   	*/
   	localDB.get3sFromDB().then(function(data_3s) {
   		$scope.db3s=data_3s;
-  	}
+  		console.log('we got some data',data_3s);
+  	},function(no_3s) {
+  		console.log('there is no 3s in the db',no_3s);
+  		niiuSyncer.sync3s().then(function(data_3s) {
+  			console.log('we are doing a real 3s',data_3s);
+  			localDB.put3s(data_3s);
+  		}
 
+  			)
+  	}
   	);
 
 
@@ -98,58 +106,6 @@ function refreshArticles() {
 
 }
 
-
-
-
-/*
- articleList.then(function(article_list) {
- 		console.log('i am going to throw this article list up to the scope',article_list);
- 		$scope.articles=article_list;
- }
-
-
- 	);
-
-*/
-
-
-
-/*
-	niiuSyncer.syncArticles().then( function(response) {
-			console.log('this is what the sync said to the controller', response);
-
-		}, function(error) {
-			//we got an error trying to do the article sync
-			console.log('for this reason the article sync failed ',error);
-			if (error.contents.status==409 || error.contents.message == "Perform 3s Sync") {
-				var do_3s = niiuSyncer.sync3s();
-				console.log('niiuSyncer exists and looks like', niiuSyncer);
-				console.log('do_3s looks like', do_3s);
-				do_3s.then(function(response3s) {
-					console.log('we did a 3s sync and got the following response', response3s);
-					console.log('that means the last 3s sync was at ',response3s.data.contents.data.last3SSync);
-					niiuSyncer.syncArticles().then( function(response) {
-							console.log('this is what the sync said to the controller 2nd time', response);
-
-						});
-
-
-				},
-				function(error3s) {
-						console.log('we couldnt even do a 3s sync because of ',error3s);
-
-
-				});
-
-				
-
-
-			}
-
-		});
-
-
-	*/
 
 	function refresh3s() {
 

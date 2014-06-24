@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, User,constants) {
+  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
 
 
   	console.log('the scope at this point is like this', $scope);
@@ -91,6 +91,13 @@ angular.module('niiuWebappApp')
         
     };
 
+$scope.addCustomSection = function() {
+   
+   $scope.addSection(null,null,null,$scope.custom_section);
+
+ }
+
+
 $scope.importUserSections = function(user_sections) {
    //Put all existing sections into the sectionsToAdd Array
    angular.forEach(user_sections, function(user_section, key) {
@@ -109,10 +116,13 @@ $scope.importUserSections = function(user_sections) {
          if (!section_handle) {
           } else {
             //loop through the array and remove the matching items
+            console.log($scope.sectionsToAdd);
             for(var i = $scope.sectionsToAdd.length-1; i--;){
+              console.log('removing section'+i,($scope.sectionsToAdd[i].handle));
               if ($scope.sectionsToAdd[i].handle === section_handle) $scope.sectionsToAdd.splice(i, 1);
-              console.log('removing section',section_handle);
+              
             }
+            console.log($scope.sectionsToAdd);
 
         
         
@@ -124,7 +134,7 @@ $scope.importUserSections = function(user_sections) {
     $scope.syncSections = function(section_list_array) {
       //current_user,last_sync_time,last_cp_update_time
     localDB.getLastSync().then(function(sync_time) {
-      console.log('the last sync time in the db is',sync_time);
+      console.log('the last 3s sync time in the db is',sync_time);
       var update_time = localDB.getNowTime();
 
       
@@ -146,6 +156,14 @@ $scope.importUserSections = function(user_sections) {
       console.log('this is the object that should update your sections',syncObject);
       niiuSyncer.syncNewSections(syncObject).then(function(syncResponse) {
           console.log('successfully updated sections!!',syncResponse);
+          //syncResponse.contents.data.contentProfile.items;
+          User.setContentProfile(syncResponse.contents.data.contentProfile);
+          User.setContentObject(syncResponse, syncResponse.contents.data.articles);
+          
+          //$scope.user=User.getUser();
+          console.log('the updated user has the following contentProfile',$scope.user);
+
+          //$location.path('/userHome/refresh');
 
 
 

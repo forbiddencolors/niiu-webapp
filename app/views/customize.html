@@ -30,11 +30,16 @@
 
 		</li>
 	</ul>
+<hr>
+<h2>Add Custom Section</h2>
+    <input name="custom_section" ng-model="custom_section" placeholder="Enter a Custom Section">
+    <button ng-click="addCustomSection()">Add Custom Section</button>
+
 
 
 <hr>
 <h2>Chosen Sections</h2>
-{{error}}
+<span class="error">{{error}}</span>
 <ul class="sections row">
 	<li class="col-6 col-sm-6 col-lg-4" ng-repeat="addSection in sectionsToAdd">
 		<a class="btn btn-default" ng-href="" role="button" ng-click="removeSection(addSection.handle)" >{{addSection.name}} (remove)</a> 

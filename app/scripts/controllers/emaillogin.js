@@ -21,7 +21,7 @@ angular.module('niiuWebappApp')
       console.log('lets resolve niiu user');
       console.log(niiuObject);
       // redirect back to login
-      $location.path('/userHome');
+      $location.path('/userHome/refresh');
 
       //$scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
       //console.log('FB data prepared for niiu Authentication');

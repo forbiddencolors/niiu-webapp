@@ -193,63 +193,6 @@ angular.module('niiuWebappApp')
 
 
 
-          
-        /*
-        a functioning object looks like this
-        {
-      "api": "content",
-      "action": "get",
-      "appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
-      "apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
-      "data": {
-          "last3SSync": "2014-05-21 08:17:50",
-          "lastContentSync": "2014-05-21 08:13:37",
-          "user_id": "1014",
-         "version": 102.5,
-         "article_ids": [
-             {
-                 "id": 354821
-             },
-             {
-                 "id": 354959
-             }
-         ],
-         "contentProfile": {
-             "id": 1627,
-             "localID": 2,
-             "isPublic": 1,
-             "name": "Default Content Profile",
-             "subscribedTo": null,
-            "lastUpdated": "2014-05-21 08:13:26",
-            "items": [
-                {
-                    "section": null,
-                    "source": null,
-                    "subsection": null,
-                    "custom_section": "Bayern München" 
-                },
-                {
-                    "section": 7,
-                    "source": 30,
-                    "subsection": null,
-                    "custom_section": null
-                },
-                {
-                    "section": 7,
-                    "source": 9,
-                    "subsection": null,
-                    "custom_section": null
-                }
-            ]
-        },
-        "forceSync": true
-    }
-}
-
-
-
-
-*/
       createSectionObject: function(current_user,last_sync_time, last_cp_update_time, section_array) {
           
           console.log('we need to set the following sections for the user',section_array);
@@ -417,7 +360,8 @@ angular.module('niiuWebappApp')
                               
                               if (threeSResponse.status==200) {
 
-                                  console.log('The 3s response was good')
+                                  console.log('The 3s response was good. new sync time is ', contents.data.last3SSync);
+
 
                               
                               deferred.resolve(threeSResponse);
