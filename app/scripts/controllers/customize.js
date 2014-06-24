@@ -1,16 +1,23 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, User) {
+  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
 
 
   	console.log('the scope at this point is like this', $scope);
   	console.log('the root scope at this point is like', $rootScope);
     niiuSyncer.createMenuObj().then(function(menuObj) {
         console.log('The MenuObj looks like this',menuObj);
+        $scope.menuObj=menuObj;
+        $scope.importUserSections(User.getUser().contentProfile.items);
 
     }
    );
+
+   $scope.sectionsToAdd = [];
+   //console.log("are there user sections?",User.getUser().contentProfile.items);
+
+
 
 
 
@@ -31,6 +38,188 @@ angular.module('niiuWebappApp')
 
   			
   	};
+
+
+
+   $scope.addSection = function(section,src,subsection,custom) {
+
+        //if everything is null dont do anything
+        if(section===null && src===null && subsection===null && custom===null) {
+            var this_error="Please enter a custom section or choose a source and section";
+            console.log(this_error);
+            $scope.error=this_error;
+            return;
+        }
+
+
+        section = section || null;
+        src = src || null;
+        subsection = subsection || null;
+        custom = custom || null;
+        console.log('user added section:'+section+' src:'+src+' subsection:'+subsection+' custom:'+custom, $scope.menuObj);
+        var sectionName= section ? $scope.menuObj["sec_"+section].name : "";
+        var sourceName= src ? $scope.menuObj["sec_"+section].sources["source_"+src].name : "";
+        var subsectionName= subsection ? $scope.menuObj["sec_"+section].sources["source_"+src].subsections["sub_"+subsection].name : ""
+        var customName= custom ? custom : "";
+        var handle_string= src +"|"+ section +"|"+  subsection  +"|"+custom;
+        
+        var newSection = {
+            "json" : {
+                        "section": section,
+                        "source": src,
+                        "subsection": subsection,
+                        "custom_section": custom 
+                       },
+            "name" : sourceName +" "+ sectionName +" "+  subsectionName  +" "+customName,
+            "handle" : handle_string
+        }
+
+        console.log('adding sections');
+        //check and see if this section is a duplicate
+        var duplicates = $scope.sectionsToAdd.filter(function( obj ) {
+          
+          return obj.handle == handle_string;
+        });
+
+        
+        if (duplicates.length) {
+          console.log('this section totally exists',duplicates);
+          $scope.error="This is a duplicate section";
+        } else {
+          console.log('this section seems new',duplicates);
+
+              if($scope.sectionsToAdd.length>=constants.MAXIMUM_SECTIONS) {
+                  $scope.error="You have reached your maximum number of sections. Please remove some if you would like to add new ones";
+              } else {
+                  $scope.sectionsToAdd.push(newSection);
+                  console.log('new Section added', handle_string);
+                }
+
+
+         } 
+
+        
+    };
+
+$scope.addCustomSection = function() {
+   
+   $scope.addSection(null,null,null,$scope.custom_section);
+
+ }
+
+
+$scope.importUserSections = function(user_sections) {
+   //Put all existing sections into the sectionsToAdd Array
+   angular.forEach(user_sections, function(user_section, key) {
+    //console.log($scope);
+    $scope.addSection(user_section.section,user_section.source,user_section.subsection,user_section.custom_section);
+
+
+   }, null);
+
+ }
+
+    
+
+    $scope.removeSection = function(section_handle) {
+          
+         if (!section_handle) {
+          } else {
+            //loop through the array and remove the matching items
+            console.log($scope.sectionsToAdd);
+            for(var i = $scope.sectionsToAdd.length; i--;){
+              if ($scope.sectionsToAdd[i].handle === section_handle) {
+                console.log('removing section'+i,($scope.sectionsToAdd[i].handle));
+                $scope.sectionsToAdd.splice(i, 1);
+              }
+              
+            }
+            console.log($scope.sectionsToAdd);
+
+        
+        
+      }
+
+    };
+
+
+    $scope.syncSections = function(section_list_array) {
+      //current_user,last_sync_time,last_cp_update_time
+    localDB.getLastSync().then(function(sync_time) {
+      console.log('the last 3s sync time in the db is',sync_time);
+      var update_time = localDB.getNowTime();
+
+      
+      var json_section_array=[];
+
+       angular.forEach(section_list_array, function(new_section, key) {
+
+            this.push(new_section.json);
+
+        }, json_section_array);
+
+       $scope.user.contentProfile.items=json_section_array;
+       console.log('i want to change the contentProfile',$scope.user);
+
+
+
+      
+
+      console.log('send to niiusyncer',Array($scope.user,sync_time,update_time,json_section_array) );
+      
+      var syncObject=niiuSyncer.createSectionObject($scope.user,sync_time,update_time,json_section_array);
+      console.log('this is the object that should update your sections',syncObject);
+      niiuSyncer.syncNewSections(syncObject).then(function(syncResponse) {
+          console.log('successfully updated sections!!',syncResponse);
+          //syncResponse.contents.data.contentProfile.items;
+          User.setContentProfile(syncResponse.contents.data.contentProfile);
+          User.setContentObject(syncResponse, syncResponse.contents.data.articles);
+          
+          $scope.user=User.getUser();
+          User.saveCurrentUser().then(function(saved_user) {
+
+                          console.log('the updated user has the following contentProfile',$scope.user);
+
+                          $location.path('/userHome/refresh');
+                    }
+
+                    );
+
+      },
+      function(syncError) {
+        console.log('we didnt get to update your section, we should save the request in the db',syncError);
+        $scope.error=syncError;
+              niiuSyncer.sync3s().then(function(data_3s) {
+              console.log('just did a 3s, now we will try again to sync sections',data_3s.data.contents.data.last3SSync);
+              localDB.put3s(data_3s).then(function(put3s_confirmation) {
+                    $scope.syncSections(section_list_array);
+                  }
+
+
+                );
+              
+            });
+
+      }
+
+
+
+        );
+
+
+
+    },
+
+    function(sync_error) {
+      console.log('unfortunately we couldnt find a sync time in the db, just use a generic time, we should probably rerun',sync_error);
+      //return "2012-12-12 12:12:12";
+    }
+
+    );
+
+
+    };
+
 
 
     function getSourceSections() {
@@ -194,60 +383,6 @@ console.log(section_id);
 
 
 
-
-
-/*
-  	var newSections = function() {
-
-  		var deferred = $q.defer();
-  		var promise = deferred.promise;
-
-  		promise.then(function(db_sections) {
-  			console.log('I got the following sections from the DB', db_sections);
-  			deferred.resolve(db_sections)
-  		}, function (db_error) {
-  			console.log('i got nothing because ',db_error);
-  			deferred.reject(db_error);
-  		});
-  		
-  		//return promise;
-
-  		var loadSections = localDB.loadSectionsFromDB();
-  		loadSections.then( function(db_sections) {
-  			console.log('I got the following sections from the DB', db_sections);
-  			deferred.resolve(db_sections)
-  		}, function (db_error) {
-  			console.log('i got nothing because ',db_error);
-  			deferred.reject(db_error);
-  		}
-  		
-  		);	
-
-
-
-  	};
-
-  //	newSections();
-  	//localDB.loadSectionsFromDB().then(function(loaded) {
-  		console.log('loaded!!',localDB.loadSectionsFromDB());
-  	//}
-  	//);
-  
-  	
-
-  	getSections().then(
-  		function(db_sections) {
-  			console.log('I got the following sections from the DB', db_sections);
-  			return db_sections;
-  		}, function (db_error) {
-  			console.log('i got nothing because ',db_error)
-  		}
-
-
-
-  		);
-*/
-  	//console.log(getSections());
 
 
 

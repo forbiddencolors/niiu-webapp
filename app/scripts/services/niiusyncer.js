@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .factory('niiuSyncer',['$rootScope', '$http', '$q', 'constants','localDB', 'User', function ($rootScope, $http, $q, constants, localDB, User) {
+  .factory('niiuSyncer',['$rootScope', '$http', '$q', '$filter', 'constants','localDB', 'User',  function ($rootScope, $http, $q, $filter, constants, localDB, User) {
     // Service logic
     // ...
 
@@ -9,9 +9,10 @@ angular.module('niiuWebappApp')
     //v ar currentUser = User.getUser();
     var currentUser = $rootScope.user;
     var last3SSync = {};
-    var menuObj = [];
-    var sourceObj = [];
-    var SubsectionObj = [];
+    var menuObj = {};
+    var sourceObj = {};
+    var SubsectionObj = {};
+    var SourceSubsectionObj = {};
 
 
     var deferred = $q.defer();
@@ -31,34 +32,9 @@ angular.module('niiuWebappApp')
 
 
 
+    function createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array) {
 
-    var dontUseArticleData = {
-      "api": "content",
-      "action": "get",
-      "appGuid": constants.NIIU_APP_GUID,
-      "apiKey": currentUser.apiKey,
-      "data": {
-          "last3SSync": last_sync_time,
-          "lastContentSync": last_sync_time,
-          "user_id": currentUser.contentProfile.userID,
-         "version": 200.7,
-         "article_ids": [ ],
-         "contentProfile": {
-             "id": currentUser.id,
-             "localID": 2,
-             "isPublic": 1,
-             "name": "Default Content Profile",
-             "subscribedTo": null,
-            "lastUpdated": last_sync_time,
-            "items": [  ]
-        },
-        "forceSync": true
-      }
-    };
-
-    function createArticleObject(current_user,last_sync_time, last_cp_update_time) {
-
-
+        section_array = section_array || [];
               var articleData = {
                 "api": "content",
                 "action": "get_articles_from_solr",
@@ -76,7 +52,7 @@ angular.module('niiuWebappApp')
                        "name": "Default Content Profile",
                        "subscribedTo": null,
                       "lastUpdated": last_cp_update_time,
-                      "items": [  ]
+                      "items": section_array
                   },
                   "forceSync": true
                 }
@@ -86,7 +62,41 @@ angular.module('niiuWebappApp')
             return articleData;
       }
     
+        function sendSyncObject(syncObject) {
 
+//create a promise
+        var deferred = $q.defer();
+
+        $http.post(constants.NIIU_API_URL+"articles/get_articles_from_solr", "data="+angular.toJson(syncObject), {
+                    
+                }).success(function(articleResponse){
+                    console.log('heres the response from the niiu api', articleResponse);
+                    
+                    if (articleResponse.contents.status==200) {
+
+                        console.log('The response was good');
+                        
+                        
+                        
+                    
+                    
+                    deferred.resolve(articleResponse);
+                    
+                    } else {
+                            
+                            console.log('The response wasnt so good...', articleResponse);
+                            
+                            deferred.reject(articleResponse);
+                    }
+
+                }).error(function(error){
+                    console.log('this was a straight up error',error);
+                    deferred.reject(error);
+                 });
+                //hang on we don't have an answer yet
+                return deferred.promise;
+
+        }
 
         function create3sObject() {
 
@@ -183,63 +193,26 @@ angular.module('niiuWebappApp')
 
 
 
+      createSectionObject: function(current_user,last_sync_time, last_cp_update_time, section_array) {
           
-        /*
-        a functioning object looks like this
-        {
-      "api": "content",
-      "action": "get",
-      "appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
-      "apiKey": "7c087be0fc4e6929c0e6a28183ec0dcf8105053f",
-      "data": {
-          "last3SSync": "2014-05-21 08:17:50",
-          "lastContentSync": "2014-05-21 08:13:37",
-          "user_id": "1014",
-         "version": 102.5,
-         "article_ids": [
-             {
-                 "id": 354821
-             },
-             {
-                 "id": 354959
-             }
-         ],
-         "contentProfile": {
-             "id": 1627,
-             "localID": 2,
-             "isPublic": 1,
-             "name": "Default Content Profile",
-             "subscribedTo": null,
-            "lastUpdated": "2014-05-21 08:13:26",
-            "items": [
-                {
-                    "section": null,
-                    "source": null,
-                    "subsection": null,
-                    "custom_section": "Bayern München" 
-                },
-                {
-                    "section": 7,
-                    "source": 30,
-                    "subsection": null,
-                    "custom_section": null
-                },
-                {
-                    "section": 7,
-                    "source": 9,
-                    "subsection": null,
-                    "custom_section": null
-                }
-            ]
-        },
-        "forceSync": true
-    }
-}
+          console.log('we need to set the following sections for the user',section_array);
+          
+          var articleObj=createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array);
+
+          return articleObj;
+
+         
 
 
+      },
 
+      syncNewSections: function(sectionObj) {
+        var syncPromise= sendSyncObject(sectionObj);
 
-*/
+         return syncPromise;
+
+      },
+
       createMenuObj: function(){
         //set a promise so we wait for the db on the other end.
         var deferred=$q.defer();
@@ -247,27 +220,91 @@ angular.module('niiuWebappApp')
           
           //create an array of sources by id
           angular.forEach(data_3s.contents.data.newSources, function(sourceObj, key) {
-                this[sourceObj.id]=sourceObj;
+                //sourceObj.subsections={};
+                this["source_"+sourceObj.id]=sourceObj;
+
           }, sourceObj);
 
           //create an array of subsections by id
           angular.forEach(data_3s.contents.data.newSubsections, function(subsectionObj, key) {
-             this[subsectionObj.id ]= subsectionObj;
+             this["sub_"+subsectionObj.id ]= subsectionObj;
+             console.log('these are the subsections',subsectionObj);
            }, SubsectionObj);
 
 
+
+
           //create an array of sections by id
-          angular.forEach(data_3s.contents.data.newSections, function(valueObj, key) {
-             this[valueObj.id ]= valueObj;
-             this[valueObj.id ].sources = [];
+          angular.forEach(data_3s.contents.data.newSections, function(sectionObj, key) {
+
+               sectionObj.sources = {};
+               
+               this["sec_"+sectionObj.id]=sectionObj;
+               //this[].time = new Date().getTime()+Math.random() * (900000 - 100000) + 100000;
+
+               
+               //console.log('menuObj--',this[sectionObj.id ].id);
+              
            }, menuObj);
-          
+
+
 
           //add sourcebysections to the menuObj
           angular.forEach(data_3s.contents.data.newSourceSection, function(sourceSecMap, key) {
-             this[sourceSecMap.section_id].sources[sourceSecMap.id]=sourceObj[sourceSecMap.source_id];
-             //this[valueObj.id ]= valueObj;
+             // sourceObj["source_"+sourceSecMap.source_id].source_section_id=sourceSecMap.id;
+             // var sectionNode = $filter('getByProperty')(this, 'id', sourceSecMap.section_id);
+              // sectionNode.sources.push(sourceObj[sourceSecMap.source_id]);
+
+              //clone the sourceObj so we don't mess it up
+              var clonedSourceObject=JSON.parse(JSON.stringify(sourceObj["source_"+sourceSecMap.source_id]))
+
+              //console.log('too late',  sourceObj["source_"+sourceSecMap.source_id]);
+              this["sec_"+sourceSecMap.section_id].sources["source_"+sourceSecMap.source_id] = clonedSourceObject;
+
            }, menuObj);
+
+
+            angular.forEach(menuObj, function(menuSection, key) {
+                //which sections do these subsections go to
+                angular.forEach(data_3s.contents.data.newSectionSubsection, function(SectionSubMap, key) {
+                  var currentSection = SectionSubMap.section_id;  
+                  var currentSubsection = SectionSubMap.subsection_id;
+
+
+
+                        angular.forEach(data_3s.contents.data.newSourceSubsection, function(SourceSubMap, key) {
+
+
+                            //   angular.forEach(data_3s.contents.data.newSourceSection, function(sourceSecMap, key) {
+
+                         // SourceSubMap.source_id;
+                         // SourceSubMap.subsection_id
+                         //console.log('do we have a ',menuSection.sources["source_"+SourceSubMap.source_id]);
+
+                          if (menuSection.sources["source_"+SourceSubMap.source_id]
+                            && SectionSubMap.subsection_id === SourceSubMap.subsection_id 
+                            && SubsectionObj["sub_"+SourceSubMap.subsection_id].active===true
+                           // && SectionSubMap.section_id === menuSection.id
+                          //  && SourceSubMap.source_id === menuSection.sources["source_"+SourceSubMap.source_id].id 
+
+                            ) {
+                            console.log('time to do something with '+"sec_"+SectionSubMap.section_id+", source_"+SourceSubMap.source_id+", "+"sub_"+SourceSubMap.subsection_id);
+                          if (!this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections) {
+                              this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections={};
+                            }
+                            //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
+                            this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
+                          }
+
+
+                        }, menuObj);
+
+                }, menuObj);
+
+              }, menuObj);
+
+
+
 
           deferred.resolve(menuObj);
 
@@ -295,37 +332,9 @@ angular.module('niiuWebappApp')
 
         console.log('heres the article object we are sending', articleData);
 
-        //create a promise
-        var deferred = $q.defer();
+        var syncPromise = sendSyncObject(articleData);
 
-        $http.post(constants.NIIU_API_URL+"articles/get_articles_from_solr", "data="+angular.toJson(articleData), {
-                    
-                }).success(function(articleResponse){
-                    console.log('heres the response from the niiu api', articleResponse)
-                    
-                    if (articleResponse.contents.status==200) {
-
-                        console.log('The response was good');
-                        
-                        
-                        
-                    
-                    
-                    deferred.resolve(articleResponse);
-                    
-                    } else {
-                            
-                            console.log('The response wasnt so good...', articleResponse);
-                            
-                            deferred.reject(articleResponse);
-                    }
-
-                }).error(function(error){
-                    console.log('this was a straight up error',error);
-                    deferred.reject(error);
-                 });
-                //hang on we don't have an answer yet
-                return deferred.promise;
+        return syncPromise;
 
       },
 
@@ -351,7 +360,8 @@ angular.module('niiuWebappApp')
                               
                               if (threeSResponse.status==200) {
 
-                                  console.log('The 3s response was good')
+                                  console.log('The 3s response was good. new sync time is ', threeSResponse);
+
 
                               
                               deferred.resolve(threeSResponse);

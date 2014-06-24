@@ -47,6 +47,7 @@ angular.module('niiuWebappApp')
 
         var pageArticles = [];
         for (var i=-1; i<user_sections.length; i++) {
+                if (i>-1 && user_sections[i]==='undefined') continue;
                // console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
                 var thisSection = (user_sections[i]) ? user_sections[i].section : "";
                 var thisSource = (user_sections[i]) ? user_sections[i].source : "";
@@ -54,13 +55,13 @@ angular.module('niiuWebappApp')
                 var thisCustom = (user_sections[i]) ? user_sections[i].custom_section : "";
                 var homeArticles = [];
                 var homeArticlesNum = 2; //amount of articles per section on the title page
-                var thisSectionObj = (thisSection && thisSection!="") ? $filter('getByProperty')(data3s.contents.data.newSections, "id", thisSection): "";
-                var thisSourceObj = (thisSource && thisSource!="") ? $filter('getByProperty')(data3s.contents.data.newSources, "id", thisSource): "";
-                var thisSubsectionObj = (thisSubsection && thisSubsection!="") ? $filter('getByProperty')(data3s.contents.data.newSubsections, "id", thisSubsection): "";
+                var thisSectionObj = (thisSection && thisSection!="") ? $filter('getByProperty')(data3s.contents.data.newSections, "id", thisSection): {};
+                var thisSourceObj = (thisSource && thisSource!="") ? $filter('getByProperty')(data3s.contents.data.newSources, "id", thisSource): {};
+                var thisSubsectionObj = (thisSubsection && thisSubsection!="") ? $filter('getByProperty')(data3s.contents.data.newSubsections, "id", thisSubsection): {};
 
 
-                console.log('contentObject needs thisSection '+thisSectionObj);
-                console.log('contentObject needs thisSource '+thisSourceObj);
+                console.log('contentObject needs thisSection ',thisSectionObj);
+                console.log('contentObject needs thisSource ',thisSourceObj);
 
                  pageArticles[i] = [];
                 
@@ -102,7 +103,8 @@ angular.module('niiuWebappApp')
                     } else   
 
                     
-                     if (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null ||
+                     if (dataArticles[h].sections.custom_section === user_sections[i].custom_section && 
+                        dataArticles[h].sections.custom_section!== null ||
                         dataArticles[h].sections.section_id === user_sections[i].section &&
                         dataArticles[h].sections.subsection_id === user_sections[i].subsection &&
                         dataArticles[h].source_id === user_sections[i].source 
@@ -140,22 +142,82 @@ angular.module('niiuWebappApp')
                 var page_subsection = (user_sections[i]) ? user_sections[i].subsection : null;
                 var page_custom_section = (user_sections[i]) ? user_sections[i].custom_section : null;
                 var page_title =  "Front Page";
-                if (user_sections[i]) {
+                console.log('what is this user_section'+i,user_sections[i]);
+                /*
+                if(i===-1) {
+                    //clear out these values on the title page
+                    console.log('only for the title page',user_sections[i])
+                    thisSectionObj={};
+                    thisSectionObj.name=null;
+                    thisSectionObj.logo =null;
+
+                    thisSourceObj={};
+                    thisSourceObj.name=null;
+                    thisSourceObj.logo=null;
+
+                    thisSubsectionObj={};
+                    thisSubsectionObj.name=null;
+                    thisSubsectionObj.logo=null;
+
+
+
+                }
+                */
+                
+
+                    if (typeof thisSourceObj==='undefined') { 
+
+                        thisSourceObj={};
+                        thisSourceObj.name=null;
+                        thisSourceObj.logo=null;
+
+                    }
+                    if (typeof thisSubsectionObj==='undefined') {
+                        thisSubsectionObj={};
+                        thisSubsectionObj.name=null;
+                        thisSubsectionObj.logo=null;
+
+                    }
+                    if (typeof thisSectionObj ==='undefined') {
+                        thisSectionObj={};
+                        thisSectionObj.name=null;
+                        thisSectionObj.logo =null;
+
+                    }
+                    
+
+                    if(thisSourceObj) {
+
+                        console.log('blanko!!!',(typeof thisSourceObj.name!=='undefined'));
+
+                        console.log('in this case',thisSubsectionObj);
+                        if ( thisSourceObj.name) {
+                            page_title = thisSourceObj.name+" >> ";
+                        }
+                        if (typeof thisSubsectionObj.name!=='undefined') {
+                            page_title += thisSubsectionObj.name;
+                        } else if (typeof thisSectionObj.name !=='undefined') {
+                            page_title += thisSectionObj.name;
+                        }
+                    }
+                    if(user_sections[i]) {
                         if (user_sections[i].custom_section!==null) {
 
                             page_title = user_sections[i].custom_section;
                         }
-                        if (thisSourceObj.name) {
+                    }
+                        
+
+                        /*if (typeof thisSourceObj!=='undefined') {
                             page_title = thisSourceObj.name + " - ";
 
-                        }
-                        if (thisSubsectionObj.name) {
-                            page_title += thisSubsectionObj.name;
-                        } else if (thisSectionObj.name) {
-                            page_title += thisSectionObj.name;
-                        }
+                        } */
+                        
 
-                }
+
+
+
+                
 
 
                     userPage[i]=  {
@@ -227,6 +289,19 @@ angular.module('niiuWebappApp')
     		return localDB.storeUser(newUser);
 
     	},
+        saveCurrentUser:function() {
+            // Maybe make this function return a promise
+
+            // Save it to the database and return the promise from the DB service
+            return localDB.storeUser(user);
+
+        },
+        setContentProfile: function(content_profile) {
+            if (typeof content_profile==='undefined') return;
+            user.ContentProfile=content_profile;
+            localDB.storeUser(user);
+            return user;
+        },
         getCurrentSection:function() {
             return currentSection;
         },
@@ -265,7 +340,7 @@ angular.module('niiuWebappApp')
 
                     
                 } else {
-                    //we already have a contentObject
+                    console.log('we already have a contentObject');
                     deferred.resolve( contentObject);
 
                 } 

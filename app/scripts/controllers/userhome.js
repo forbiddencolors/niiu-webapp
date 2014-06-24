@@ -7,6 +7,7 @@ angular.module('niiuWebappApp')
 
   	$scope.pageClass='userHome';
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+  	//$scope.user=User.getUser();
 
   	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here
   		User.getContentObject().then(
@@ -20,8 +21,23 @@ angular.module('niiuWebappApp')
   	*/
   	localDB.get3sFromDB().then(function(data_3s) {
   		$scope.db3s=data_3s;
-  	}
+  		console.log('we got some data',data_3s);
+  		getArticleList();
+  	},function(no_3s) {
+  		console.log('there is no 3s in the db',no_3s);
+  		niiuSyncer.sync3s().then(function(data_3s) {
+  			console.log('instead we just did a real 3s',data_3s);
 
+  			localDB.put3s(data_3s.data).then(function(saved) {
+  				getArticleList();
+
+  			}
+
+  				);
+  		}
+
+  			)
+  	}
   	);
 
 
@@ -99,58 +115,6 @@ function refreshArticles() {
 }
 
 
-
-
-/*
- articleList.then(function(article_list) {
- 		console.log('i am going to throw this article list up to the scope',article_list);
- 		$scope.articles=article_list;
- }
-
-
- 	);
-
-*/
-
-
-
-/*
-	niiuSyncer.syncArticles().then( function(response) {
-			console.log('this is what the sync said to the controller', response);
-
-		}, function(error) {
-			//we got an error trying to do the article sync
-			console.log('for this reason the article sync failed ',error);
-			if (error.contents.status==409 || error.contents.message == "Perform 3s Sync") {
-				var do_3s = niiuSyncer.sync3s();
-				console.log('niiuSyncer exists and looks like', niiuSyncer);
-				console.log('do_3s looks like', do_3s);
-				do_3s.then(function(response3s) {
-					console.log('we did a 3s sync and got the following response', response3s);
-					console.log('that means the last 3s sync was at ',response3s.data.contents.data.last3SSync);
-					niiuSyncer.syncArticles().then( function(response) {
-							console.log('this is what the sync said to the controller 2nd time', response);
-
-						});
-
-
-				},
-				function(error3s) {
-						console.log('we couldnt even do a 3s sync because of ',error3s);
-
-
-				});
-
-				
-
-
-			}
-
-		});
-
-
-	*/
-
 	function refresh3s() {
 
 			niiuSyncer.sync3s().then(function(data_3s) {
@@ -192,9 +156,6 @@ function refreshArticles() {
 		//when people trigger a refresh (like dragging down in the ios app)
 		refresh3s();
 		refreshArticles();
-	} else {
-		//load3s();
-		console.log('lets get some articles!');
 		User.getContentObject().then(function(returned_contentObject) {
 			console.log("does the getContentObject returns a promise all right.",returned_contentObject);
 			$scope.contentObject = returned_contentObject;
@@ -202,8 +163,20 @@ function refreshArticles() {
 			console.log("we didnt get the contentObject at all right?",returned_content_error);
 		}
 
+		);
+	} else {
+		//load3s();
+		console.log('lets get some articles!');
+		User.getContentObject().then(function(returned_contentObject) {
+			console.log("retrieved contentObject.",returned_contentObject);
+			$scope.contentObject = returned_contentObject;
+		},function(returned_content_error) {
+			console.log("we didnt get the contentObject at all right?",returned_content_error);
+		}
+
 			);
 		
+		/*
 		//put the article array into the service
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
@@ -235,6 +208,7 @@ function refreshArticles() {
 
 
 		}); 
+*/
 
 /*		//this is probably how we should get the 3s info here but whatever.
 		localDB.load3s().then( function(array[section_array , subsection_array, source_array ]) {

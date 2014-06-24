@@ -8,7 +8,7 @@ angular.module('niiuWebappApp')
     	//niiuAuthenticator.changeUser();
     	User.deleteUser();
     	console.log('just deleted the User');
-    	//niiuAuthenticator.logout();
+    	niiuAuthenticator.logout();
 
     };
 

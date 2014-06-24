@@ -13,10 +13,10 @@
 -->
 
 	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in user.contentProfile.items">
-			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionHome/{{user_section.source}}/{{user_section.section}}/{{user_section.custom_section}}">
-			<span class="user_source" ng-repeat="source in sources | filter: {'id':user_section.source}">{{source.name}}</span> <span class="user_section" ng-repeat="section in sections | filter:{'id' : user_section.section}">{{section.name}}</span>{{user_section.custom_section}}
-			<!-- Source: {{user_section.source}} Section {{user_section.section}} --> >></a>
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">
+			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionView/{{$index}}">
+			{{user_section.title}}
+			</a>
 		</li>
 	</ul>
 

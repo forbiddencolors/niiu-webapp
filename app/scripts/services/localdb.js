@@ -49,48 +49,87 @@ angular.module('niiuWebappApp')
 
         }
 
-       
-    
-    //return local_table;
-      /*
+        function getLast3sSync() {
 
-      var localDB = {
-        init: function(table_name, schema) {
+          var default_time='0000-00-00 00:00:00';
 
-          var table_name =  table_name || 'niiu_user_table';
-          var schema = schema || { stores:[{ name:'niiu_user', keyPath:"user" }] }; 
+          console.log('looking for the last sync time');
+          //create or open the 3s table in the default db
+          var local_table = connectDB();
+          console.log('at least we got the table ',local_table);
 
-          var local_table = new ydn.db.Storage(table_name, schema);
+          var deferred = $q.defer();
+          //since we are only going to keep one users data here in the db at a time I think I will
+          //continue using the same integer to refer to the record with the last sync time
 
-          return local_table;
+          
+           local_table.get("full3s","3s").done(
+              function(pulled_3s) {
+                if(pulled_3s===undefined) {
+                  deferred.reject(default_time);
+                  console.log('we couldnt pull the 3s from the db',pulled_3s);
+                } else {
+                    var last_sync_time =pulled_3s.contents.data.last3SSync;
+
+                    console.log('last sync time from the 3s table',last_sync_time);
+                    //console.log('We got the full3s object from the db', pulled_3s);
+
+                    deferred.resolve(last_sync_time);
+                    }
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                deferred.reject(default_time);
+              }
+              );
+
+          return deferred.promise;
+
+
 
         }
 
-        getLastUser: function() {
 
-          var table_name =  'niiu_user_table';
-          var schema = { stores:[{ name:'niiu_user', keyPath:"user" }] }; 
+        function getLastContentTime() {
+          /*
+          var default_time='0000-00-00 00:00:00';
 
-          var local_table = new ydn.db.Storage(table_name, schema);
+          console.log('looking for the last sync time');
+          //create or open the 3s table in the default db
+          var local_table = connectDB();
+          console.log('at least we got the table ',local_table);
 
-          var last_user = local_table.get(10210);
+          var deferred = $q.defer();
+          //since we are only going to keep one users data here in the db at a time I think I will
+          //continue using the same integer to refer to the record with the last sync time
 
-          return last_user;
+          
+           local_table.get("full3s","3s").done(
+              function(pulled_3s) {
+                var last_sync_time =pulled_3s.contents.data.lastContentSync;
+
+                console.log('last Content Sync time from the 3s table',last_sync_time);
+                //console.log('We got the full3s object from the db', pulled_3s);
+                
+
+
+                deferred.resolve(last_sync_time);
+              }
+            ).fail(
+              function(failed_stuff) {
+                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                deferred.reject(default_time);
+              }
+              );
+
+          return deferred.promise;
+          */
+
+          //this LastContentSync is not always available.
 
         }
 
-       
-
-
-      }
-       */
-      
-
-      //return localDB;
-      
-
-    //Here is where I should make some public methods, but because this is 
-    //just a DB wrapper itself i think i will just deal with its native methods
     
     
     // Public API here
@@ -113,6 +152,13 @@ angular.module('niiuWebappApp')
 
 
         },
+
+        getNowTime: function() {
+          var now = getCurrentTime();
+          return now;
+
+        },
+
 
         getLastUser: function() {
 
@@ -153,52 +199,27 @@ angular.module('niiuWebappApp')
 
 
         getLastSync: function() {
-          var default_time='0000-00-00 00:00:00';
+          var last3sTime = getLast3sSync();
+          return last3sTime;
 
-          console.log('looking for the last sync time');
-          //create or open the 3s table in the default db
-          var local_table = connectDB();
-          console.log('at least we got the table ',local_table);
+          },
+          getLast3sSync: function() {
+          var last3sTime = getLast3sSync();
+          return last3sTime;
 
-          var deferred = $q.defer();
-          //since we are only going to keep one users data here in the db at a time I think I will
-          //continue using the same integer to refer to the record with the last sync time
-          local_table.get(sync_table_name ,constants.USER_LOCATOR).done(function(last_sync_record) {
-              
-              console.log('in the table the last user was ', last_sync_record);
-
-              //console.log('just checking that we can get the user from db');
-
-              //niiuAuthenticator.changeUser(last_user.userInfo);
-              
-              if (typeof last_sync_record == "undefined") {
-                
-                console.log('thats right no last sync time');
-               deferred.reject(default_time);
-              } else {
-               //return last_user.userInfo;
-               console.log('yes we do have a last sync time', last_sync_record);
-                deferred.resolve(last_sync_record.last_sync_time);
-             }
-
-
-
-            }).fail(function(e) {
-              console.log('error finding last sync',e)
-              
-              deferred.reject(default_time);
-            });
-
-            return deferred.promise;
+          },
+          getLastContentSync: function() {
+            var lastContentTime = getLastContentTime();
+            return lastContentTime;
 
           },
 
         
 
-        setLastSync: function() {
+        setLastSync: function(sync_time) {
 
 
-          var current_time=getCurrentTime();
+          var current_time=sync_time || getCurrentTime();
           
           console.log(current_time);
 
@@ -592,8 +613,13 @@ angular.module('niiuWebappApp')
 
           local_table.get("full3s","3s").done(
               function(pulled_3s) {
+                if (pulled_3s===undefined) {
+                  deferred.reject(pulled_3s);
+                  console.log('the full 3s was empty',pulled_3s);
+                } else {
                 console.log('We got the full3s object from the db', pulled_3s);
                 deferred.resolve(pulled_3s);
+              }
               }
             ).fail(
               function(failed_stuff) {
@@ -627,6 +653,7 @@ angular.module('niiuWebappApp')
                 deferred.reject(failed_stuff);
               }
               );
+            return deferred.promise;
             /*
 
             local_table.add('sectionSubsections',data_3s.newSectionSubsection).done(
@@ -694,10 +721,10 @@ angular.module('niiuWebappApp')
                 deferred.reject(failed_stuff);
               }
               );
-    */
+  
 
           return deferred.promise;
-
+  */
         },
 
         addSourcesToDB: function(sources_array) {

@@ -12,7 +12,7 @@ angular.module('niiuWebappApp')
 
 
 
-	$scope.pageContent = contentObjArray[User.getCurrentSection()];
+	$scope.pageContent = contentObjArray[$routeParams.contentObjId];
 	console.log('This page scope is ', $scope.pageContent );
 
 	}
