@@ -7,6 +7,7 @@ angular.module('niiuWebappApp')
 
   	$scope.pageClass='userHome';
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+  	//$scope.user=User.getUser();
 
   	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here
   		User.getContentObject().then(
@@ -21,11 +22,18 @@ angular.module('niiuWebappApp')
   	localDB.get3sFromDB().then(function(data_3s) {
   		$scope.db3s=data_3s;
   		console.log('we got some data',data_3s);
+  		getArticleList();
   	},function(no_3s) {
   		console.log('there is no 3s in the db',no_3s);
   		niiuSyncer.sync3s().then(function(data_3s) {
-  			console.log('we are doing a real 3s',data_3s);
-  			localDB.put3s(data_3s);
+  			console.log('instead we just did a real 3s',data_3s);
+
+  			localDB.put3s(data_3s.data).then(function(saved) {
+  				getArticleList();
+
+  			}
+
+  				);
   		}
 
   			)
@@ -160,7 +168,7 @@ function refreshArticles() {
 		//load3s();
 		console.log('lets get some articles!');
 		User.getContentObject().then(function(returned_contentObject) {
-			console.log("does the getContentObject returns a promise all right.",returned_contentObject);
+			console.log("retrieved contentObject.",returned_contentObject);
 			$scope.contentObject = returned_contentObject;
 		},function(returned_content_error) {
 			console.log("we didnt get the contentObject at all right?",returned_content_error);
@@ -168,6 +176,7 @@ function refreshArticles() {
 
 			);
 		
+		/*
 		//put the article array into the service
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
@@ -199,6 +208,7 @@ function refreshArticles() {
 
 
 		}); 
+*/
 
 /*		//this is probably how we should get the 3s info here but whatever.
 		localDB.load3s().then( function(array[section_array , subsection_array, source_array ]) {

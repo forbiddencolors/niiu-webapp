@@ -42,6 +42,16 @@ angular.module('niiuWebappApp')
 
 
    $scope.addSection = function(section,src,subsection,custom) {
+
+        //if everything is null dont do anything
+        if(section===null && src===null && subsection===null && custom===null) {
+            var this_error="Please enter a custom section or choose a source and section";
+            console.log(this_error);
+            $scope.error=this_error;
+            return;
+        }
+
+
         section = section || null;
         src = src || null;
         subsection = subsection || null;
@@ -117,9 +127,11 @@ $scope.importUserSections = function(user_sections) {
           } else {
             //loop through the array and remove the matching items
             console.log($scope.sectionsToAdd);
-            for(var i = $scope.sectionsToAdd.length-1; i--;){
-              console.log('removing section'+i,($scope.sectionsToAdd[i].handle));
-              if ($scope.sectionsToAdd[i].handle === section_handle) $scope.sectionsToAdd.splice(i, 1);
+            for(var i = $scope.sectionsToAdd.length; i--;){
+              if ($scope.sectionsToAdd[i].handle === section_handle) {
+                console.log('removing section'+i,($scope.sectionsToAdd[i].handle));
+                $scope.sectionsToAdd.splice(i, 1);
+              }
               
             }
             console.log($scope.sectionsToAdd);
@@ -146,6 +158,9 @@ $scope.importUserSections = function(user_sections) {
 
         }, json_section_array);
 
+       $scope.user.contentProfile.items=json_section_array;
+       console.log('i want to change the contentProfile',$scope.user);
+
 
 
       
@@ -160,17 +175,30 @@ $scope.importUserSections = function(user_sections) {
           User.setContentProfile(syncResponse.contents.data.contentProfile);
           User.setContentObject(syncResponse, syncResponse.contents.data.articles);
           
-          //$scope.user=User.getUser();
-          console.log('the updated user has the following contentProfile',$scope.user);
+          $scope.user=User.getUser();
+          User.saveCurrentUser().then(function(saved_user) {
 
-          //$location.path('/userHome/refresh');
+                          console.log('the updated user has the following contentProfile',$scope.user);
 
+                          $location.path('/userHome/refresh');
+                    }
 
+                    );
 
       },
       function(syncError) {
         console.log('we didnt get to update your section, we should save the request in the db',syncError);
         $scope.error=syncError;
+              niiuSyncer.sync3s().then(function(data_3s) {
+              console.log('just did a 3s, now we will try again to sync sections',data_3s.data.contents.data.last3SSync);
+              localDB.put3s(data_3s).then(function(put3s_confirmation) {
+                    $scope.syncSections(section_list_array);
+                  }
+
+
+                );
+              
+            });
 
       }
 

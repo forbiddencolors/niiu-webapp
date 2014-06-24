@@ -70,7 +70,7 @@ angular.module('niiuWebappApp')
         $http.post(constants.NIIU_API_URL+"articles/get_articles_from_solr", "data="+angular.toJson(syncObject), {
                     
                 }).success(function(articleResponse){
-                    console.log('heres the response from the niiu api', articleResponse)
+                    console.log('heres the response from the niiu api', articleResponse);
                     
                     if (articleResponse.contents.status==200) {
 
@@ -360,7 +360,7 @@ angular.module('niiuWebappApp')
                               
                               if (threeSResponse.status==200) {
 
-                                  console.log('The 3s response was good. new sync time is ', contents.data.last3SSync);
+                                  console.log('The 3s response was good. new sync time is ', threeSResponse);
 
 
                               
