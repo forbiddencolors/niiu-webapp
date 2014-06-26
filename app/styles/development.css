@@ -151,8 +151,19 @@ background-repeat:no-repeat;
 .header {
   top: 0px;
   right: 30px;
+  width:200px;
   font-size: 10px;
   position: absolute; }
+
+  .header a .lang {
+    display:inline; 
+    
+
+  }
+
+  .lang_widget {
+margin: 10px 15px
+  }
 
 /* CSS transitions for page animations */
 .container.page {

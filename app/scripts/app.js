@@ -90,30 +90,11 @@ angular.module('niiuWebappApp', [
     });
     */
 
-  $translateProvider.translations('en', {
-    BUTTON_TEXT_EN: 'english',
-    BUTTON_TEXT_DE: 'german',
-    config_add: 'Add Section',
-    welcome: 'Welcome to niiu',
-    menu_titlepage: 'Top Stories',
-    menu_sections: 'Your Sections:',
-    menu_settings: 'Settings',
-    menu_refresh: 'Refresh',
-    menu_next: 'Next Section',
-    menu_logout: 'Logout'
-      })
-  .translations('de', {
-    BUTTON_TEXT_EN: 'englisch',
-    BUTTON_TEXT_DE: 'deutsch',
-    config_add: 'Ressort hinzufügen',
-    welcome: 'Willkommen bei niiu!',
-    menu_titlepage: 'Titelseite',
-    menu_sections: 'Ihre Ressorts:',
-    menu_settings: 'Einstellungen',
-    menu_refresh: 'Aktualisieren',
-    menu_next: 'Nächstes Ressort',
-    menu_logout: 'Abmelden'
-  });
+
+  $translateProvider.useStaticFilesLoader({
+    'prefix': '/lang/locale-',
+    'suffix': '.json'
+});
   $translateProvider.preferredLanguage('de');
    $translateProvider.fallbackLanguage('en');
    $translateProvider.useLocalStorage();
