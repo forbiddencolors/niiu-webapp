@@ -149,10 +149,21 @@ background-repeat:no-repeat;
 
 /* this is holding the user menu but im putting it on the bottom of the page for the time being. */
 .header {
-  bottom: 0px;
-  height: 5px;
+  top: 0px;
+  right: 30px;
+  width:200px;
   font-size: 10px;
   position: absolute; }
+
+  .header a .lang {
+    display:inline; 
+    
+
+  }
+
+  .lang_widget {
+margin: 10px 15px
+  }
 
 /* CSS transitions for page animations */
 .container.page {

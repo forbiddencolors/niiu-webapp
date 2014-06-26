@@ -5,9 +5,10 @@ angular.module('niiuWebappApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ngAnimate'
+  'ngAnimate',
+  'pascalprecht.translate'
 ])
-  .config(function ($routeProvider, $httpProvider) {
+  .config(function ($routeProvider, $httpProvider, $translateProvider) {
     $routeProvider
       .when('/', {   
         templateUrl: 'views/main.html',
@@ -88,6 +89,42 @@ angular.module('niiuWebappApp', [
         return data;
     });
     */
+
+
+  $translateProvider.useStaticFilesLoader({
+    'prefix': '/lang/locale-',
+    'suffix': '.json'
+});
+  $translateProvider.preferredLanguage('de');
+   $translateProvider.fallbackLanguage('en');
+   $translateProvider.useLocalStorage();
+
+
+   //$translateProvider.useLocalStorage();
+   $translateProvider.determinePreferredLanguage(function(anything) {
+        console.log('determinePreferredLanguage returned ',anything);
+        //lets say the default langauge will be german
+        var lang_key="de";
+         var language = window.navigator.userLanguage || window.navigator.language;
+            console.log('this users browser likes',language);
+            if(language.indexOf('en') !== -1) {
+              //however if the user speaks any type of english (en_US, en_UK, use german instead)
+              lang_key="en";
+            } 
+            return lang_key;
+   }
+    );
+
+    //.preferredLanguage('de')
+  //.fallbackLanguage('en')
+  //.determinePreferredLanguage()
+
+  //$translateProvider.determinePreferredLanguage();
+
+        //console.log('this dude prefers speaking',lang);
+
+
+
 
 
   }).run(function($rootScope, $route, $location, niiuAuthenticator) {

@@ -1,7 +1,7 @@
 'use strict';
  
 angular.module('niiuWebappApp')
-.controller('usermenuCtrl', function ($scope, $location, niiuAuthenticator, User) {
+.controller('usermenuCtrl', function ($scope, $location, $translate, niiuAuthenticator, User) {
     console.log($location);
 
     $scope.logout = function() {
@@ -39,6 +39,10 @@ angular.module('niiuWebappApp')
         $location.path(User.getNextSectionUrl($location.path()));
 
        }
-    }
+    };
+
+    $scope.changeLanguage = function (langKey) {
+        $translate.use(langKey);
+      };
  
   });
