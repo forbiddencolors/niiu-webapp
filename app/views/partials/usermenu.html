@@ -1,12 +1,14 @@
   <ul class="nav" ng-controller="usermenuCtrl">
-    <li><a ng-href="#/customize" ng-show="user!=null">Settings</a></li>
-    <li><a ng-href="#/userHome" ng-show="user!=null">Home</a></li>
-    <li><a ng-href="#/customize" ng-show="user!=null">Customize</a></li>
-    <li><a ng-href="#/sectionHome" ng-show="user!=null">Sections</a></li>
-    <li><a ng-href="#/userHome/refresh" ng-show="user!=null">Refresh</a></li>
-    <li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li>
-    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null">Next Page</a></li>
-    <li><a href="" ng-show="user!=null" ng-click="logout()">Logout {{user.firstName}}</a></li>
+    <li><a ng-href="#/customize" ng-show="user!=null">{{ 'menu_settings' | translate}}</a></li>
+    <li><a ng-href="#/userHome" ng-show="user!=null">{{ 'menu_titlepage' | translate}}</a></li>
+    <!--li><a ng-href="#/customize" ng-show="user!=null">Customize</a></li-->
+    <li><a ng-href="#/sectionHome" ng-show="user!=null">{{ 'menu_titlepage' | translate}}</a></li>
+    <li><a ng-href="#/userHome/refresh" ng-show="user!=null">{{ 'menu_refresh' | translate}}</a></li>
+    <!--li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li-->
+    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null">{{ 'menu_next' | translate}}</a></li>
+    <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
+    <li><button ng-click="changeLanguage('de')" translate="BUTTON_TEXT_DE"></button>
+  <button ng-click="changeLanguage('en')" translate="BUTTON_TEXT_EN"></button></li>
   </ul>
   <p class="errors" ng-show="error">{{error}}</p>
 

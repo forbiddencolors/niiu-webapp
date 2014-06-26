@@ -1,16 +1,10 @@
-<h3>You're logged in {{user.firstName}}</h3>
-
-<p>Welcome to the userHome view.</p>
-<p>Since you are logged in you can also go to the <a ng-href="#/sectionHome">Section Home</a>
+<h3>{{ 'welcome' | translate}} {{user.firstName}}</h3>
 
 
 
 
+	<h3>{{'menu_sections' | translate}}</h3>
 
-	<p>Here are your sections</p>
-	<!--
-	<div >{{user.contentProfile.items}}</div>
--->
 
 	<ul class="sections row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">
@@ -21,7 +15,7 @@
 	</ul>
 
 
-	<p>here is a contentObject Test</p>
+	<h3>{{ 'menu_titlepage' | translate}}</h3>
 	<div ng:repeat="page in contentObject">
 		<strong>{{page.source.name}} {{page.section.name}}  {{page.subsection.name}}  / {{page.source.id}} -
 		{{page.custom_section.id}} -

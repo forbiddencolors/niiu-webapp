@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .service('User', function User(localDB, $filter, $q) {
+  .service('User', function User(localDB, $filter, $q, constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var user = {};
     /* ContentObject is array of up to 11 pageObjects */
@@ -46,8 +46,8 @@ angular.module('niiuWebappApp')
         console.log('here we have the following to play with',user_sections);
 
         var pageArticles = [];
-        for (var i=-1; i<user_sections.length; i++) {
-                if (i>-1 && user_sections[i]==='undefined') continue;
+        for (var i=0; i<user_sections.length; i++) {
+                if (i>0 && user_sections[i]==='undefined') continue;
                // console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
                 var thisSection = (user_sections[i]) ? user_sections[i].section : "";
                 var thisSource = (user_sections[i]) ? user_sections[i].source : "";
@@ -71,7 +71,7 @@ angular.module('niiuWebappApp')
                 var section_url="/sectionHome/"+thisSource+"/"+thisSection+"/"+thisCustom;
                 section_urls.push(section_url);
 
-                var page_type = i===-1 ? "titlepage" : "3s";
+                var page_type = i===0 ? "titlepage" : "3s";
                 
 
                 //loop through all articles and select the ones that match this section
@@ -122,7 +122,7 @@ angular.module('niiuWebappApp')
                                 
                                 //add a couple articles to the titlepage
 
-                                pageArticles[-1].push(dataArticles[h]);
+                                pageArticles[0].push(dataArticles[h]);
                                 homeArticles.push(dataArticles[h])
 
                               }
@@ -141,6 +141,7 @@ angular.module('niiuWebappApp')
                 var page_source = (user_sections[i]) ? user_sections[i].source : null;
                 var page_subsection = (user_sections[i]) ? user_sections[i].subsection : null;
                 var page_custom_section = (user_sections[i]) ? user_sections[i].custom_section : null;
+                var page_custom_logo = (user_sections[i]) ? constants.CUSTOM_SECTION_LOGO : null;
                 var page_title =  "Front Page";
                 console.log('what is this user_section'+i,user_sections[i]);
                 /*
@@ -204,6 +205,7 @@ angular.module('niiuWebappApp')
                         if (user_sections[i].custom_section!==null) {
 
                             page_title = user_sections[i].custom_section;
+                            thisSourceObj.logo = page_custom_logo;
                         }
                     }
                         
@@ -242,7 +244,7 @@ angular.module('niiuWebappApp')
                                     custom_section : {
                                         id : page_custom_section,
                                         name : page_custom_section,
-                                        logo : null
+                                        logo : page_custom_logo
                                     },
 
 

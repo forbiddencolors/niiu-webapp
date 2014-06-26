@@ -176,17 +176,18 @@ function refreshArticles() {
 
 			);
 		
-		/*
+		
 		//put the article array into the service
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
 			Articleservice.init(db_articles);
 			$scope.articles=db_articles;
 			console.log('checking for my methods', User);
-			$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
+			//$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
 			console.log('our $scope.contentObject is',$scope);
 			console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
 		});
+		/*
 
 		localDB.loadSourcesFromDB().then( function(db_sources) {
 			console.log('got the following sources from the db',db_sources);
@@ -209,8 +210,8 @@ function refreshArticles() {
 
 		}); 
 */
-
-/*		//this is probably how we should get the 3s info here but whatever.
+/*
+		//this is probably how we should get the 3s info here but whatever.
 		localDB.load3s().then( function(array[section_array , subsection_array, source_array ]) {
 
 				$scope.sections=section_array;
@@ -218,8 +219,8 @@ function refreshArticles() {
 
 			}
 		);
-*/
 
+*/
 /*
 //sorting test
     $scope.sort_items = [
