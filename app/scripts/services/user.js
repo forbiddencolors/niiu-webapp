@@ -48,6 +48,10 @@ angular.module('niiuWebappApp')
         var pageArticles = [];
         for (var i=0; i<user_sections.length; i++) {
                 if (i>0 && user_sections[i]==='undefined') continue;
+
+                if (i===0) {//this is the the titlepage we might set some things here
+
+                }
                // console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
                 var thisSection = (user_sections[i]) ? user_sections[i].section : "";
                 var thisSource = (user_sections[i]) ? user_sections[i].source : "";

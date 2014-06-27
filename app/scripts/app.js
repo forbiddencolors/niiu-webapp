@@ -28,7 +28,8 @@ angular.module('niiuWebappApp', [
       .when('/userHome/:refresh?', {
         templateUrl: 'views/userhome.html',
         headerUrl: 'views/partials/usermenu.html',
-        controller: 'UserhomeCtrl'
+        controller: 'UserhomeCtrl',
+        pageClass: 'userHome'
       })
       .when('/sectionHome/:sourceId?/:sectionId?/:customId?', {
         templateUrl: 'views/sectionhome.html',
@@ -64,12 +65,14 @@ angular.module('niiuWebappApp', [
       .when('/article/:articleId', {
         templateUrl: 'views/article.html',
         headerUrl: 'views/partials/usermenu.html',
-        controller: 'ArticleCtrl'
+        controller: 'ArticleCtrl',
+        pageClass: 'articlePage'
       })
       .when('/sectionView/:contentObjId?', {
         templateUrl: 'views/sectionview.html',
         headerUrl: 'views/partials/usermenu.html',
-        controller: 'SectionviewCtrl'
+        controller: 'SectionviewCtrl',
+        pageClass: 'sectionPage'
       })
       .otherwise({
         redirectTo: '/'
