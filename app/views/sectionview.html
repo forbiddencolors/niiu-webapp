@@ -2,12 +2,9 @@
 
 
 	<ul class="articles row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="article in pageContent.articles" style="background-image:url('{{media_path}}{{article.media[0].path}}');">
-			<div class="col-4 col-sm-5"> <h4><a ng-href="#/article/{{article.id}}">{{article.title}}</h4></div>
-			<div class="col-2 col-sm-1"> <a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></div>
-
-
-
-		
+		<li class="col-12 col-sm-12 col-lg-12" ng-repeat="article in pageContent.articles" style="background-image:url('{{media_path}}{{article.media[0].path}}');">
+			<div class="col-8 col-sm-12"> <h4><a ng-href="#/article/{{article.id}}">{{article.title}}</h4></div>
+			<div class="col-8 col-sm-12" ng-bind-html="article.content"></div>
+			<div class="col-8 col-sm-12"> <a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></div>
 		</li>
 	</ul>
