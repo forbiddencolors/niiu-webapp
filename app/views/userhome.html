@@ -3,12 +3,13 @@
 
 
 
-	<h3>{{'menu_sections' | translate}}</h3>
+	<h3 translate>menu_sections</h3>
+
 
 
 	<ul class="sections row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">
-			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionView/{{$index}}">
+			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionView/{{$index}}" translate>
 			{{user_section.title}}
 			</a>
 		</li>

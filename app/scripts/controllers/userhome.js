@@ -5,7 +5,7 @@ angular.module('niiuWebappApp')
 
   	
 
-  	$scope.pageClass='userHome';
+
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
   	//$scope.user=User.getUser();
 
@@ -57,7 +57,7 @@ angular.module('niiuWebappApp')
 
 			  			    niiuSyncer.syncArticles($scope.user, sync_time, update_time).then(function(articleBlob) {
 
-			  			    	console.log('The api sync response looked like this',articleBlob);
+			  			    	console.log('Good Luck, the api sync response looked like this',articleBlob);
 
 
 			  			    	deferred.resolve(articleBlob);
@@ -65,7 +65,7 @@ angular.module('niiuWebappApp')
 
 
 			  			    }, function(server_error) {
-			  			    		console.log('The api sync response looked like this',server_error);
+			  			    		console.log('Bad Luck, the api sync response looked like this',server_error);
 			  			    		deferred.reject(server_error);
 			  			    }
 
@@ -106,6 +106,7 @@ function refreshArticles() {
 
 			//put the articles in the db so we can get to them if the user is offline or leaves the site
 			localDB.addArticlesToDB(theList.contents.data.articles);
+			User.getContentObject();
 
 		},  function(noList) {
 			console.log('crap our attempt to get a list failed.',noList);
@@ -171,7 +172,7 @@ function refreshArticles() {
 			console.log("retrieved contentObject.",returned_contentObject);
 			$scope.contentObject = returned_contentObject;
 		},function(returned_content_error) {
-			console.log("we didnt get the contentObject at all right?",returned_content_error);
+			console.log("we didnt get the contentObject from the db right?",returned_content_error);
 		}
 
 			);
@@ -180,12 +181,36 @@ function refreshArticles() {
 		//put the article array into the service
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
-			Articleservice.init(db_articles);
-			$scope.articles=db_articles;
-			console.log('checking for my methods', User);
-			//$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
-			console.log('our $scope.contentObject is',$scope);
-			console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
+			if (db_articles.length>0) {
+				Articleservice.init(db_articles);
+				$scope.articles=db_articles;
+				console.log('checking for my methods', User);
+				//$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
+				console.log('our $scope.contentObject is',$scope.contentObject);
+				console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
+			} else {
+				console.log('unfortunately there are no articles in the db lets get some from the api');
+				getArticleList().then(function(new_article_blob) {
+					console.log('fortunately now we do have some articles',new_article_blob);
+					Articleservice.init(new_article_blob.contents.data.articles);
+					$scope.articles=Articleservice.getArticles();
+					console.log('after we strip duplicates there are only ',$scope.articles);
+					localDB.addArticlesToDB(Articleservice.getArticles());
+					User.getContentObject().then(function(returned_contentObject) {
+						console.log("creating a new contentObject I hope",returned_contentObject);
+
+						$scope.contentObject = returned_contentObject;
+					},function(returned_content_error) {
+						console.log("no new content Object",returned_content_error);
+					});
+
+
+
+				}, function(new_article_error) {
+					console.log('getting the new articles we receieved the following error',new_article_error)
+				});
+
+			}
 		});
 		/*
 

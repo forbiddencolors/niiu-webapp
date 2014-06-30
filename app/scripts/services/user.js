@@ -46,6 +46,8 @@ angular.module('niiuWebappApp')
         console.log('here we have the following to play with',user_sections);
 
         var pageArticles = [];
+        var homeArticles = [];
+        var homeArticlesNum = 2; //amount of articles per section on the title page
         for (var i=0; i<user_sections.length; i++) {
                 if (i>0 && user_sections[i]==='undefined') continue;
 
@@ -57,8 +59,7 @@ angular.module('niiuWebappApp')
                 var thisSource = (user_sections[i]) ? user_sections[i].source : "";
                 var thisSubsection = (user_sections[i]) ? user_sections[i].subsection : "";
                 var thisCustom = (user_sections[i]) ? user_sections[i].custom_section : "";
-                var homeArticles = [];
-                var homeArticlesNum = 2; //amount of articles per section on the title page
+
                 var thisSectionObj = (thisSection && thisSection!="") ? $filter('getByProperty')(data3s.contents.data.newSections, "id", thisSection): {};
                 var thisSourceObj = (thisSource && thisSource!="") ? $filter('getByProperty')(data3s.contents.data.newSources, "id", thisSource): {};
                 var thisSubsectionObj = (thisSubsection && thisSubsection!="") ? $filter('getByProperty')(data3s.contents.data.newSubsections, "id", thisSubsection): {};
@@ -121,13 +122,16 @@ angular.module('niiuWebappApp')
                             //console.log('contentObject page'+i+' gets these articles, ',dataArticles[h]);
                              //console.log('passed contentObject filter because data',dataArticles[h].sections.custom_section +" is equal to "+user_sections[i].custom_section, (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null) );
                              //console.log('passed contentObject filter because section',dataArticles[h].sections.section_id +" is equal to "+user_sections[i].section, (dataArticles[h].sections.section === user_sections[i].section));
-                            
-                              if (homeArticles.length < homeArticlesNum ) {
+                                console.log('homeArticles count'+i,homeArticles);
+                                //not a pretty formula but it says for if there are less than 2*the amount of sections we have, add an article to the homepage
+                                //so if there we are making section three and we have less than six articles on the home page add another.
+                              if (homeArticles.length < (i+1)*homeArticlesNum ) {
                                 
                                 //add a couple articles to the titlepage
 
                                 pageArticles[0].push(dataArticles[h]);
                                 homeArticles.push(dataArticles[h])
+                                console.log('homeArticles.push')
 
                               }
 
@@ -146,7 +150,7 @@ angular.module('niiuWebappApp')
                 var page_subsection = (user_sections[i]) ? user_sections[i].subsection : null;
                 var page_custom_section = (user_sections[i]) ? user_sections[i].custom_section : null;
                 var page_custom_logo = (user_sections[i]) ? constants.CUSTOM_SECTION_LOGO : null;
-                var page_title =  "Front Page";
+                var page_title =  "No Title";
                 console.log('what is this user_section'+i,user_sections[i]);
                 /*
                 if(i===-1) {
@@ -261,6 +265,41 @@ angular.module('niiuWebappApp')
                 
                 tempObjArray.push(userPage[i]);
         } //end for loop
+        
+        //add the title page here
+        console.log("homeArticles?",homeArticles)
+        var titlePage = {
+                                    type: "titlepage",
+                                    title: "menu_titlepage",
+                                    url : "/sectionHome/",
+                                    section : {
+                                        id : "",
+                                        name : "",
+                                        logo : "" 
+                                    },
+                                    source : {
+                                        id : "",
+                                        name : "",
+                                        logo : ""
+                                    },
+                                    subsection : {
+                                        id : "",
+                                        name : "",
+                                        logo : ""
+                                    },
+                                    custom_section : {
+                                        id : "",
+                                        name : "",
+                                        logo : ""
+                                    },
+
+
+                                    articles : homeArticles
+
+                                
+                                } 
+        tempObjArray.splice(0,1,titlePage);
+
         contentObject = tempObjArray;
         return contentObject;
     }  //end makeContentObject

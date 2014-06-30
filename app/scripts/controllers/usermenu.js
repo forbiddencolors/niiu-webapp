@@ -29,6 +29,13 @@ angular.module('niiuWebappApp')
 
 
     };
+        $scope.currentPage = function() {
+        console.log('next contentPage is '+ User.getCurrentSection());
+        
+        $location.path("/sectionView/" + User.getCurrentSection());
+
+
+    };
 
 
     $scope.keyPress = function(keyCode){

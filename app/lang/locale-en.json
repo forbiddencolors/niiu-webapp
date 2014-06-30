@@ -3,10 +3,12 @@
     "menu_lang_de": "DE",
     "config_add": "Add Section",
     "welcome": "Welcome to niiu",
-    "menu_titlepage": "Top Stories",
+    "menu_titlepage": "Front Page",
+    "menu_homepage": "Home Page",
     "menu_sections": "Your Sections:",
     "menu_settings": "Settings",
     "menu_refresh": "Refresh",
-    "menu_next": "Next Section",
+    "menu_next_section": "Next Section",
+    "menu_current_section": "Current Section",
     "menu_logout": "Logout"
 }

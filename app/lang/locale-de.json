@@ -4,9 +4,11 @@
     "config_add": "Ressort hinzufügen",
     "welcome": "Willkommen bei niiu!",
     "menu_titlepage": "Titelseite",
+    "menu_homepage": "Startseite",
     "menu_sections": "Ihre Ressorts:",
     "menu_settings": "Einstellungen",
     "menu_refresh": "Aktualisieren",
-    "menu_next": "Nächstes Ressort",
+    "menu_next_section": "Nächstes Ressort",
+    "menu_current_section": "Dieses Ressort",
     "menu_logout": "Abmelden"
 }
