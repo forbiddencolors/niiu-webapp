@@ -1,12 +1,10 @@
 <h3><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span><span translate>{{pageContent.title }}</span></h3>
 
-<div style="font-size:12px;height:20px;width:200px;" data-ellipsis data-ng-bind=""></div>
-
 
 	<ul class="articles row">
 		<li ng-class="{'single col-12':!($index%3),'double col-xs-6 col-lg-4':($index%3)}" ng-repeat="article in pageContent.articles" style="background-image:url('{{media_path}}{{article.media[0].path}}');">
 			<div class="col-8 col-sm-12"> <h4><a ng-href="#/article/{{article.id}}">{{article.title}}</a></h4></div>
-			<div class="intro col-8 col-sm-12" ng-bind-html="article.content" data-ellipsis></div>
+			<div class="intro col-8 col-sm-12" data-ng-bind="article.content" data-truncateBySize></div>
 			<div class="col-8 col-sm-12"> <a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></div>
 		</li>
 	</ul>

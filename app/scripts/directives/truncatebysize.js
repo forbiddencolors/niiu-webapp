@@ -1,25 +1,23 @@
-/**
- *	Angular directive to truncate multi-line text to visible height
- *
- *	@param bind (angular bound value to append) REQUIRED
- *	@param ellipsisAppend (string) string to append at end of truncated text after ellipsis, can be HTML OPTIONAL
- *	@param ellipsisSymbol (string) string to use as ellipsis, replaces default '...' OPTIONAL
- *	@param ellipsisAppendClick (function) function to call if ellipsisAppend is clicked (ellipsisAppend must be clicked) OPTIONAL
- *
- *	@example <p data-ellipsis data-ng-bind="boundData"></p>
- *	@example <p data-ellipsis data-ng-bind="boundData" data-ellipsis-symbol="---"></p>
- *	@example <p data-ellipsis data-ng-bind="boundData" data-ellipsis-append="read more"></p>
- *	@example <p data-ellipsis data-ng-bind="boundData" data-ellipsis-append="read more" data-ellipsis-append-click="displayFull()"></p>
- *
- */
-(function(ng, app){
+'use strict';
 
-	"use strict";
+angular.module('niiuWebappApp')
+/*
+  .directive('truncatebysize', function () {
+    return {
 
-	app.directive('ellipsis', function($timeout, $window) {
+      template: '<div></div>',
+      restrict: 'A',
+      link: function postLink(scope, element, attrs) {
+        element.text('this is the truncateBySize directive');
+      }
+    };
+  });
+*/
+
+.directive('truncatebysize', function($timeout, $window) {
 
 		return {
-			restrict	: 'E',
+			restrict	: 'A',
 			scope		: {
 				ngBind				: '=',
 				ellipsisAppend		: '@',
@@ -36,6 +34,7 @@
 						attributes.lastWindowTimeoutEvent = null;
 					/* State Variables */
 						attributes.isTruncated = false;
+						//console.log('building ellipsis');
 
 
 					function buildEllipsis() {
@@ -130,4 +129,3 @@
 		};
 	});
 
-})(angular, exampleApp);
