@@ -27,12 +27,17 @@ angular.module('niiuWebappApp')
     function makeContentObject(data3s,dataArticles) {
         
         var tempObjArray=[];
-        console.log('did we pass anything for the contentObject?',data3s, dataArticles);
-        if (data3s===undefined && dataArticles==undefined && contentObject.length>0)
+        console.log('passed contentObject 3s',data3s);
+        console.log('passed contentObject articles', dataArticles);
+        /*
+        //apparently we don't have access to the contentobject here
+        if (data3s===undefined && dataArticles===undefined && contentObject)
         {
+            console.log('you get passed the old contentObj',contentObj);
             //if we already have a contentObj
-            return contentObject;
+            //return contentObject;
         }  
+        */
         
         if (data3s===undefined) data3s=localDB.get3sFromDB();
         if (dataArticles==undefined) dataArticles=localDB.loadArticlesFromDB().then(function(done) {
@@ -40,7 +45,7 @@ angular.module('niiuWebappApp')
             }
             );
         var user_sections=user.contentProfile.items;
-        var section_urls=["/sectionHome/"];
+        var section_urls=[];
         var userPage=[];
         console.log('this is the contentObject basis',user_sections);
         console.log('here we have the following to play with',user_sections);
@@ -49,24 +54,26 @@ angular.module('niiuWebappApp')
         var homeArticles = [];
         var homeArticlesNum = 2; //amount of articles per section on the title page
         for (var i=0; i<user_sections.length; i++) {
-                if (i>0 && user_sections[i]==='undefined') continue;
+                //if (i>0 && user_sections[i]==='undefined') continue;
 
-                if (i===0) {//this is the the titlepage we might set some things here
-
-                }
+                
                // console.log('for some reason we cant define this contentObject section',(user_sections[i+1]))
                 var thisSection = (user_sections[i]) ? user_sections[i].section : "";
                 var thisSource = (user_sections[i]) ? user_sections[i].source : "";
                 var thisSubsection = (user_sections[i]) ? user_sections[i].subsection : "";
                 var thisCustom = (user_sections[i]) ? user_sections[i].custom_section : "";
 
+                console.log('data3s #'+i+' looks like',data3s);
+                var testFilter=(thisSection && thisSection!="") ? $filter('getByProperty')(data3s.contents.data.newSections, "id", thisSection) : "filters broken";
+                console.log('does my filter work?',testFilter);
+
                 var thisSectionObj = (thisSection && thisSection!="") ? $filter('getByProperty')(data3s.contents.data.newSections, "id", thisSection): {};
                 var thisSourceObj = (thisSource && thisSource!="") ? $filter('getByProperty')(data3s.contents.data.newSources, "id", thisSource): {};
                 var thisSubsectionObj = (thisSubsection && thisSubsection!="") ? $filter('getByProperty')(data3s.contents.data.newSubsections, "id", thisSubsection): {};
 
 
-                console.log('contentObject needs thisSection ',thisSectionObj);
-                console.log('contentObject needs thisSource ',thisSourceObj);
+                console.log('contentObject'+i+' needs thisSection ',thisSectionObj);
+                console.log('contentObject'+i+' needs thisSource ',thisSourceObj);
 
                  pageArticles[i] = [];
                 
@@ -173,21 +180,24 @@ angular.module('niiuWebappApp')
                 }
                 */
                 
-
-                    if (typeof thisSourceObj==='undefined') { 
+                    console.log('do I still have a sourceObj?',thisSourceObj);
+                    console.log('Do we have a source?'+i,(thisSourceObj));
+                    console.log('Do we have a source with a name',(!thisSourceObj.hasOwnProperty('name')));
+                    //when we are dealing with a custom section fill in the other contentObject properties 
+                    if (!thisSourceObj.hasOwnProperty('name')) { 
 
                         thisSourceObj={};
                         thisSourceObj.name=null;
                         thisSourceObj.logo=null;
 
                     }
-                    if (typeof thisSubsectionObj==='undefined') {
+                    if (!thisSubsectionObj.hasOwnProperty('name')) {
                         thisSubsectionObj={};
                         thisSubsectionObj.name=null;
                         thisSubsectionObj.logo=null;
 
                     }
-                    if (typeof thisSectionObj ==='undefined') {
+                    if (!thisSectionObj.hasOwnProperty('name')) {
                         thisSectionObj={};
                         thisSectionObj.name=null;
                         thisSectionObj.logo =null;
@@ -202,11 +212,14 @@ angular.module('niiuWebappApp')
                         console.log('in this case',thisSubsectionObj);
                         if ( thisSourceObj.name) {
                             page_title = thisSourceObj.name+" >> ";
+                            console.log('blanko source',thisSourceObj.name);
                         }
-                        if (typeof thisSubsectionObj.name!=='undefined') {
+                        if (thisSubsectionObj.name) {
                             page_title += thisSubsectionObj.name;
-                        } else if (typeof thisSectionObj.name !=='undefined') {
+                            console.log('blanko subsection',thisSubsectionObj.name);
+                        } else if (thisSectionObj.name) {
                             page_title += thisSectionObj.name;
+                            console.log('blanko section',thisSectionObj.name);
                         }
                     }
                     if(user_sections[i]) {
@@ -343,6 +356,7 @@ angular.module('niiuWebappApp')
         },
         setContentProfile: function(content_profile) {
             if (typeof content_profile==='undefined') return;
+            console.log('just updated the content_profile for ',content_profile);
             user.ContentProfile=content_profile;
             localDB.storeUser(user);
             return user;
@@ -370,7 +384,7 @@ angular.module('niiuWebappApp')
                        var local_db3s=data_3s;
                        localDB.loadArticlesFromDB().then(function(db_data) {
                         var db_articles = db_data;
-
+                        console.log('3s data we are about to pass', local_db3s);
                         makeContentObject(local_db3s,db_articles);
                         console.log('created a new contentObject right',contentObject)
                         console.log('right:',deferred);
@@ -397,6 +411,8 @@ angular.module('niiuWebappApp')
 
         },
         setContentObject: function(data3s,dataArticles) {
+
+                console.log('did we get some new articles here?',dataArticles);
                 //makes a new contentObject based on whats been passed
                  makeContentObject(data3s, dataArticles);
                 

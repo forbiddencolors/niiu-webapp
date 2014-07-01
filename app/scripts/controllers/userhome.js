@@ -94,46 +94,56 @@ console.log('are we online?',navigator.onLine);
 
 
 function refreshArticles() {
-
+	var deferred=$q.defer();
 	//replace the scope articles if we have new ones
 	getArticleList().then( function(theList){
 			console.log('article list is finished',theList);
-			$scope.articles=theList.contents.data.articles;
+			
 
 
 			//Put the articles into the service so we can get at them later
 			Articleservice.init(theList.contents.data.articles);
 
+			var cleaned_articles=Articleservice.getArticles();
+			$scope.articles=cleaned_articles;
+
 			//put the articles in the db so we can get to them if the user is offline or leaves the site
-			localDB.addArticlesToDB(theList.contents.data.articles);
+			localDB.addArticlesToDB(cleaned_articles);
 			User.getContentObject();
+			deferred.resolve(theList);
 
 		},  function(noList) {
 			console.log('crap our attempt to get a list failed.',noList);
+			deferred.reject(noList);
 		}
-	);
 
+	);
+	return deferred.promise;
 }
 
 
 	function refresh3s() {
-
+			var deferred=$q.defer();
 			niiuSyncer.sync3s().then(function(data_3s) {
 			console.log('here is some 3s data',data_3s);
 				console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
 				//add sections to DB
-				localDB.put3s(data_3s.data);
-				localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
-				localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
-				localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
-				localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
-				localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
-				localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection);
-				localDB.setLastSync();
-				//add sections to Scope
-				$scope.sections=data_3s.data.contents.data.newSections;
-				$scope.sources=data_3s.data.contents.data.newSources;
-				console.log('section 7 is called', $scope.sections[7].name);
+					localDB.put3s(data_3s.data).then( function() {
+						localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
+						localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
+						localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
+						localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
+						localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
+						localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection);
+						localDB.setLastSync();
+						//add sections to Scope
+						$scope.sections=data_3s.data.contents.data.newSections;
+						$scope.sources=data_3s.data.contents.data.newSources;
+						console.log('section 7 is called', $scope.sections[7].name);
+						deferred.resolve(data_3s.data);
+					});
+
+				
 
 				//at this point we have all the 3s info and it should be saved so lets run
 
@@ -142,8 +152,10 @@ function refreshArticles() {
 			}, 
 			function(no_data_3s) {
 				console.log('for some reason we couldnt get any 3s data',no_data_3s);
+				deferred.reject(no_data_3s);
 			}
 			);
+			return deferred.promise;
 
 			
 	}
@@ -155,14 +167,32 @@ function refreshArticles() {
 		//when last sync is a bit old maybe 10mins
 		//when people first login
 		//when people trigger a refresh (like dragging down in the ios app)
-		refresh3s();
-		refreshArticles();
-		User.getContentObject().then(function(returned_contentObject) {
-			console.log("does the getContentObject returns a promise all right.",returned_contentObject);
-			$scope.contentObject = returned_contentObject;
-		},function(returned_content_error) {
-			console.log("we didnt get the contentObject at all right?",returned_content_error);
-		}
+		refresh3s().then(function(new3s) {
+			refreshArticles().then(function(new_article_blob) {
+
+			//Put the articles into the service so we can get at them later
+			Articleservice.init(new_article_blob.contents.data.articles);
+			var cleaned_articles = Articleservice.getArticles();
+			var newContentObject = User.setContentObject(new3s,cleaned_articles);
+			$scope.contentObject = newContentObject;
+			$scope.articles = cleaned_articles;
+			$scope.user = User.getUser();
+			console.log('The new contentObject is like',$scope.contentObject);
+
+				/*
+				User.setContentObject(new3s,new_articles).then(function(returned_contentObject) {
+						console.log("does the getContentObject returns a promise all right.",returned_contentObject);
+						$scope.contentObject = returned_contentObject;
+					},function(returned_content_error) {
+						console.log("we didnt get the contentObject at all right?",returned_content_error);
+					}
+				)
+				*/
+			
+			}//end refreshArticles
+			)
+		}//end refresh3s
+
 
 		);
 	} else {

@@ -173,17 +173,23 @@ $scope.importUserSections = function(user_sections) {
           console.log('successfully updated sections!!',syncResponse);
           //syncResponse.contents.data.contentProfile.items;
           User.setContentProfile(syncResponse.contents.data.contentProfile);
-          User.setContentObject(syncResponse, syncResponse.contents.data.articles);
+
+          //instead of syncResponse we need 3s
+          localDB.get3sFromDB().then(function(current3s){
+          User.setContentObject(current3s, syncResponse.contents.data.articles);
           
-          $scope.user=User.getUser();
-          User.saveCurrentUser().then(function(saved_user) {
+            $scope.user=User.getUser();
+            User.saveCurrentUser().then(function(saved_user) {
 
                           console.log('the updated user has the following contentProfile',$scope.user);
 
-                          $location.path('/userHome/refresh');
+                          $location.path('/userHome/');
                     }
 
                     );
+          },function(error3s) {
+            console.log('there was no 3s to create this new contentObject with');
+          })
 
       },
       function(syncError) {
