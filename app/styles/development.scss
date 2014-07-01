@@ -3,13 +3,14 @@
 body {
 	margin: 0px;
 	padding: 0px;
-	background-image: url('../images/login-bg-image.jpg');
+	
 	background-size: 306%;
 	background-position: 57% 39%;
 	background-size: 250%;
 	background-position: 63% 0%;
 	color: white;
 	font-size: 10px;
+	background-color:#3d3e40;
 
 	a, p a {
 		color: white;
@@ -23,12 +24,61 @@ body {
 	}
 }
 
-.footer {
-  color:#ffffff;
+/*login background */
+
+div.container.page.loginHome {
+	background-image: url('../images/login-bg-image.jpg');
+	width:100vw;
+	height:100vh;
 }
 
-input.required {
-	background-color:#fffff;
+/*UserPages style*/
+.titlePage, .sectionPage, .articlePage {
+background-image:url();
+
+}
+
+
+
+/* titlePage */
+.titlePage {
+ 
+color:#ffffff;
+background-repeat:no-repeat;
+ 
+ 
+}
+
+
+/*User Menu*/
+.header {
+	  top: 0px;
+	  right: 30px;
+	  width:200px;
+	  bottom: 0px;
+	  height: 5px;
+	  font-size: 10px;
+	  position: absolute; 
+  }
+
+ 
+  .header a .lang {
+    display:inline; 
+  }
+ 
+  .lang_widget {
+		margin: 10px 15px
+  }
+
+
+
+
+
+
+
+
+.footer {
+  color:#ffffff;
 }
 
 .butterfly {
@@ -180,13 +230,6 @@ input.password {
 	padding-top: 25px;
 }
 
-/* this is holding the user menu but im putting it on the bottom of the page for the time being. */
-.header {
-bottom:0px;
-height:5px;
-font-size:10px;
-position:fixed;
-}
 
 /* CSS transitions for page animations */
 
@@ -203,8 +246,8 @@ position:fixed;
 }
 
 .page.email-login, .page.registration {
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
 	background: rgba(0, 0, 0, .45);
 }
 
@@ -330,6 +373,9 @@ position:fixed;
 @-webkit-keyframes slideOutLeft {
     to      { -webkit-transform: translateX(-100%); }
 }*/
+
+
+ 
 
 
 

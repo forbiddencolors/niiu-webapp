@@ -7,6 +7,7 @@ angular.module('niiuWebappApp')
 
 
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+  	$scope.pageClass="titlePage";
   	//$scope.user=User.getUser();
 
   	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here
