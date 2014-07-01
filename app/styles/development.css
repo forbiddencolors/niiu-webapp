@@ -24,12 +24,25 @@ div.container.page.loginHome {
 
 /*UserPages style*/
 .titlePage, .sectionPage, .articlePage {
-  background-image: url(); }
+  background-image: url();
+  color: #ffffff; }
+
+.sectionPage ul.articles.row li .double {
+  height: 420px; }
+.sectionPage ul.articles.row li .single {
+  height: 300px; }
+.sectionPage ul.articles.row li .intro {
+  height: 85px;
+  /*overflow:hidden;*/ }
 
 /* titlePage */
 .titlePage {
   color: #ffffff;
   background-repeat: no-repeat; }
+  .titlePage h3 {
+    font-size: 30px; }
+  .titlePage a.btn.btn-default {
+    color: #cccccc; }
 
 /*User Menu*/
 .header {
