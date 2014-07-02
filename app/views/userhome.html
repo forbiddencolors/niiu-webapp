@@ -2,45 +2,12 @@
 
 
 
-
-	<h3 translate>menu_sections</h3>
-
-
-
-	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">
-			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionView/{{$index}}" translate>
-			{{user_section.title}}
-			</a>
-		</li>
-	</ul>
-
-
 	<h3>{{ 'menu_titlepage' | translate}}</h3>
-	<div ng:repeat="page in contentObject">
-		<strong>{{page.source.name}} {{page.section.name}}  {{page.subsection.name}}  / {{page.source.id}} -
-		{{page.custom_section.id}} -
-		{{page.section.id}} -
-		{{page.subsection.id}} -
-		{{page.subsection.id}}</strong>
-		<br>
-		{{page.url}}
-		<ul>
-			<li ng:repeat="article in page.articles | orderBy:'-published_date' track by article.id ">
-				<a ng-href="#/article/{{article.id}}">{{article.title}}</a>
-			</li>
-		</ul>
-
-	</div>
-
-
-
-
 
 	<p>Here are some articles for you</p>
 
 	<ul class="articles row">
-		<li class="col-xs-12 col-sm-6 col-6 btn btn-default" ng-repeat="article in articles | orderBy:'-published_date' track by article.id ">
+		<li class="col-xs-12 col-sm-6 col-6 btn btn-default" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id ">
 			<div  class="article" style="background-image:url('{{media_path}}{{article.media[0].path}}');"> 
 				<a ng-href="#/article/{{article.id}}">
 				<h4 >{{article.title}}</h4>  {{article.id}} - {{article.published_date}}
@@ -61,6 +28,38 @@
 
 		</li>
 	</ul>
+
+
+
+	<h3 translate>menu_sections</h3>
+
+	<ul class="sections row">
+		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">
+			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionView/{{$index}}" translate>
+			{{user_section.title}}
+			</a>
+		</li>
+	</ul>
+
+
+
+
+	
+	<div ng:repeat="page in contentObject">
+		<strong>{{page.source.name}} {{page.section.name}}  {{page.subsection.name}}  / {{page.source.id}} -
+		{{page.custom_section.id}} -
+		{{page.section.id}} -
+		{{page.subsection.id}} -
+		{{page.subsection.id}}</strong>
+		<br>
+		{{page.url}}
+		<ul>
+			<li ng:repeat="article in page.articles | orderBy:'-published_date' track by article.id ">
+				<a ng-href="#/article/{{article.id}}">{{article.title}}</a>
+			</li>
+		</ul>
+
+	</div>
 
 <!--
 	<p>Here are all sections</p>

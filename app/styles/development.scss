@@ -52,6 +52,10 @@ color:#ffffff;
 		/*overflow:hidden;*/
 	}
 
+	ul.articles.row li a:hover {
+		color:#fefefef;
+	}
+
 
 }
 
@@ -67,9 +71,14 @@ background-repeat:no-repeat;
 
 	}
 
+	ul.articles li div.article {
+		overflow:hidden;
+	} 
+
 	a.btn.btn-default {
 		color:#cccccc;
 		}
+
 
  
  
