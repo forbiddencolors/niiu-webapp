@@ -7,7 +7,20 @@ angular.module('niiuWebappApp')
 
 
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+
+
   	$scope.pageClass="titlePage";
+
+  	$scope.getLogoPath = function(source_id) {
+  		console.log('this source_id is',(Math.floor(source_id*1)>0));
+  		if(source_id) {
+  			return constants.SOURCE_LOGO_PATH;
+  			//return ('yes '+Math.floor(source_id));
+  		} else {
+  			return "";
+  			//return ('no '+Math.floor(source_id));
+  		}
+  	}
   	//$scope.user=User.getUser();
 
   	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here

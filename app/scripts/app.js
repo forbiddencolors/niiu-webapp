@@ -68,6 +68,12 @@ angular.module('niiuWebappApp', [
         controller: 'ArticleCtrl',
         pageClass: 'articlePage'
       })
+      .when('/sectionView/0', {
+        templateUrl: 'views/userhome.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'UserhomeCtrl',
+        pageClass: 'userHome'
+      })
       .when('/sectionView/:contentObjId?', {
         templateUrl: 'views/sectionview.html',
         headerUrl: 'views/partials/usermenu.html',

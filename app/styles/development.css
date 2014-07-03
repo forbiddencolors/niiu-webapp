@@ -27,6 +27,8 @@ div.container.page.loginHome {
   background-image: url();
   color: #ffffff; }
 
+.sectionPage ul.articles.row li {
+  overflow: hidden; }
 .sectionPage ul.articles.row li .double {
   height: 420px; }
 .sectionPage ul.articles.row li .single {
@@ -45,6 +47,8 @@ div.container.page.loginHome {
     font-size: 30px; }
   .titlePage ul.articles li div.article {
     overflow: hidden; }
+  .titlePage ul.articles li {
+    background-color: #3d3e40; }
   .titlePage a.btn.btn-default {
     color: #cccccc; }
 

@@ -40,6 +40,10 @@ color:#ffffff;
 }
 
 .sectionPage {
+	ul.articles.row li    {
+		overflow: hidden;
+	}
+
 	ul.articles.row li .double {
 	height: 420px;
 
@@ -74,6 +78,10 @@ background-repeat:no-repeat;
 	ul.articles li div.article {
 		overflow:hidden;
 	} 
+
+	ul.articles li {
+		background-color:#3d3e40
+	}
 
 	a.btn.btn-default {
 		color:#cccccc;

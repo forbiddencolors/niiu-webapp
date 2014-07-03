@@ -52,7 +52,7 @@ angular.module('niiuWebappApp')
 
         var pageArticles = [];
         var homeArticles = [];
-        var homeArticlesNum = 2; //amount of articles per section on the title page
+        var homeArticlesNum = 1; //amount of articles per section on the title page
         for (var i=0; i<user_sections.length; i++) {
                 //if (i>0 && user_sections[i]==='undefined') continue;
 
