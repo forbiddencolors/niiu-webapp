@@ -4,7 +4,7 @@
 
 	<h3>{{ 'menu_titlepage' | translate}}</h3>
 
-	<p>Here are some articles for you</p>
+	<p class="btn btn-info" ng-hide="contentObject[0]">Please wait while we load your articles...</p>
 
 	<ul class="articles row">
 		<li class="col-xs-12 col-sm-8 col-8 btn btn-default" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " ng-hide="$first">
@@ -34,7 +34,7 @@
 
 
 
-	<h3 translate>menu_sections</h3>
+	<h3 ng-show="contentObject[0]">menu_sections</h3>
 
 	<ul class="sections row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">

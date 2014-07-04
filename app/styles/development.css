@@ -38,6 +38,21 @@ div.container.page.loginHome {
   /*overflow:hidden;*/ }
 .sectionPage ul.articles.row li a:hover {
   color: #fefefef; }
+.sectionPage div.topbar {
+  height: 100px;
+  border-bottom: 1px solid #000000; }
+.sectionPage div.topbar a.home_btn {
+  text-indent: -9999px;
+  background: url("/images/sprite.png") no-repeat -80px 0px;
+  width: 60px;
+  height: 60px;
+  display: block; }
+.sectionPage div.topbar a.menu_btn {
+  text-indent: -9999px;
+  background: url("/images/sprite.png") no-repeat 0px 0px;
+  width: 60px;
+  height: 60px;
+  display: block; }
 
 /* titlePage */
 .titlePage {
