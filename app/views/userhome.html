@@ -1,8 +1,5 @@
-<h3>{{ 'welcome' | translate}} {{user.firstName}}</h3>
 
 
-
-	<h3>{{ 'menu_titlepage' | translate}}</h3>
 
 
 	<div ng-controller="CarouselCtrl">
@@ -10,34 +7,30 @@
 	    <carousel interval="slide_interval" style="height:305px;"  id="myCarousel">
 	      <slide ng-repeat="slide in slides" active="slide.active">
 	        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
-	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;" ng-swipe-right="showPrev()" ng-swipe-left="showNext()">
+	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
 	        <div class="carousel-caption">
 	        	
-	        	<!--
+	        	
 	        	<a href="{{slide.imgLink}}">	
 	          		<h4>{{slide.imgTitle}}</h4>
 	          	</a>
-	          -->
+	          
 
 	        </div>
 	      </slide>
 	    </carousel>
-
-	    <carousel interval="6000">
-		  <slide ng-repeat="slide in slides" active="slide.active">
-		    <div class="card list-unstyled text-center">
-		      <ul class='header list-inline list-unstyled'
-		      hm-swipe-left="swipe('next')"
-		      hm-swipe-right="swipe('prev')">   
-		        <li><i class="icon {{card.icon}} fa-3x"></i></li>
-		        <li class="title">{{card.title}}</li>
-		      </ul>
-		    </div>
-		  </slide>
-		</carousel>
-	  </div>
-	  <button ng-click="setActive(4)">Make second active</button>
+	    <div>
+	  <button ng-click="send('wtf')">Make second active</button>
 	</div>
+
+	<div class="topbar col-xs-12">
+	<a href="" class="menu_btn col-xs-1" data-toggle="collapse" data-target=".navbar-collapse"   translate>menu_show</a> 
+	<div class="col-xs-10 center-block"></div>
+	<a href="#/userHome/" class="home_btn col-xs-1" translate>menu_homepage</a>
+</div>
+
+	<h3>{{ 'welcome' | translate}} {{user.firstName}}</h3>
+	<h3>{{ 'menu_titlepage' | translate}}</h3>
 
 
 	<p class="btn btn-info" ng-hide="contentObject[0]">Please wait while we load your articles...</p>

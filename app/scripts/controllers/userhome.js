@@ -15,6 +15,17 @@ angular.module('niiuWebappApp')
 
     $scope.slide_interval="10000";
 
+	$scope.showNext = function(){
+	    var index = ($('#myCarousel .active').index()+1)%(slides.length);
+	    var modIndex = (((index)%(slides.length))+(slides.length))%(slides.length);
+	    $scope.slides[modIndex].active=true;
+	}
+	$scope.showPrev = function(){
+	    var index = ($('#myCarousel .active').index()-1)%(slides.length);
+	    var modIndex = (((index)%(slides.length))+(slides.length))%(slides.length);
+	    $scope.slides[modIndex].active=true;
+	}
+
 
 
   	$scope.makeSlides = function(titlePageContentObject) {
