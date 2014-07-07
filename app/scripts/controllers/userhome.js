@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants, User) {
+  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB', '$q','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants, User) {
 
   	
 
@@ -9,10 +9,41 @@ angular.module('niiuWebappApp')
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 
 
+
   	$scope.pageClass="titlePage";
 
+
+    $scope.slide_interval="10000";
+
+
+
+  	$scope.makeSlides = function(titlePageContentObject) {
+  		var articleSlides=[];
+  		for (var i=0;i<titlePageContentObject.articles.length;i++) {
+  			if (titlePageContentObject.articles[i].media.length) {
+  				articleSlides[articleSlides.length]={ 
+  						imgTitle: titlePageContentObject.articles[i].title,
+  						imgUrl: $scope.media_path+titlePageContentObject.articles[i].media[0].path,
+  						imgLink:"#/article/"+titlePageContentObject.articles[i].id
+  						}
+  			}
+  		}
+  		console.log('articleSlides looks like',articleSlides);
+
+  		return articleSlides;
+
+  	}
+
+  	$scope.getCarouselScope = function() {
+
+  		console.log('heres this scope, ',$scope); 
+  	}
+
+
+
   	$scope.getLogoPath = function(source_id) {
-  		console.log('this source_id is',(Math.floor(source_id*1)>0));
+  		//console.log('this source_id is',(Math.floor(source_id*1)>0));
+  		//console.log('why are we calling this',$scope.slides)
   		if(source_id) {
   			return constants.SOURCE_LOGO_PATH;
   			//return ('yes '+Math.floor(source_id));
@@ -21,6 +52,8 @@ angular.module('niiuWebappApp')
   			//return ('no '+Math.floor(source_id));
   		}
   	}
+
+
   	//$scope.user=User.getUser();
 
   	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here
@@ -74,6 +107,7 @@ angular.module('niiuWebappApp')
 			  			    	console.log('Good Luck, the api sync response looked like this',articleBlob);
 
 
+			  			    	Articleservice.init(articleBlob.contents.data.articles);
 			  			    	deferred.resolve(articleBlob);
 			  			    	
 
@@ -189,6 +223,8 @@ function refreshArticles() {
 			var cleaned_articles = Articleservice.getArticles();
 			var newContentObject = User.setContentObject(new3s,cleaned_articles);
 			$scope.contentObject = newContentObject;
+			$scope.slides = $scope.makeSlides(newContentObject[0]);
+			console.log('the slides are',$scope.slides);
 			$scope.articles = cleaned_articles;
 			$scope.user = User.getUser();
 			console.log('The new contentObject is like',$scope.contentObject);
@@ -215,6 +251,7 @@ function refreshArticles() {
 		User.getContentObject().then(function(returned_contentObject) {
 			console.log("retrieved contentObject.",returned_contentObject);
 			$scope.contentObject = returned_contentObject;
+			$scope.slides = $scope.makeSlides(returned_contentObject[0]);
 		},function(returned_content_error) {
 			console.log("we didnt get the contentObject from the db right?",returned_content_error);
 		}
@@ -229,8 +266,17 @@ function refreshArticles() {
 				Articleservice.init(db_articles);
 				$scope.articles=db_articles;
 				console.log('checking for my methods', User);
-				//$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
-				console.log('our $scope.contentObject is',$scope.contentObject);
+				User.getContentObject($scope.db3s,db_articles).then(function(returned_contentObject) {
+					
+					$scope.contentObject = returned_contentObject;
+					console.log('our $scope.contentObject is',$scope.contentObject);
+					//$scope.slides = $scope.makeSlides($scope.contentObject[0]);
+				},function(error_contentObject) {
+					console.log("couldnt make a contentObject from the DB",error_contentObject);
+				}
+					);
+				
+				
 				console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
 			} else {
 				console.log('unfortunately there are no articles in the db lets get some from the api');
@@ -244,6 +290,7 @@ function refreshArticles() {
 						console.log("creating a new contentObject I hope",returned_contentObject);
 
 						$scope.contentObject = returned_contentObject;
+						$scope.slides = $scope.makeSlides(returned_contentObject[0]);
 					},function(returned_content_error) {
 						console.log("no new content Object",returned_content_error);
 					});

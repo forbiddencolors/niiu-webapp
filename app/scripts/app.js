@@ -5,7 +5,9 @@ angular.module('niiuWebappApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ngAnimate',
+ // 'ngAnimate',
+  'ngTouch',
+  'ui.bootstrap',
   'pascalprecht.translate'
 ])
   .config(function ($routeProvider, $httpProvider, $translateProvider) {

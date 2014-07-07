@@ -22,6 +22,8 @@ body {
 		color: gray;
 		text-align: center;
 	}
+
+	.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 }
 
 /*login background */

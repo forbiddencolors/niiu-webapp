@@ -4,12 +4,48 @@
 
 	<h3>{{ 'menu_titlepage' | translate}}</h3>
 
+
+	<div ng-controller="CarouselCtrl">
+	  <div style="height: 305px">
+	    <carousel interval="slide_interval" style="height:305px;"  id="myCarousel">
+	      <slide ng-repeat="slide in slides" active="slide.active">
+	        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
+	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;" ng-swipe-right="showPrev()" ng-swipe-left="showNext()">
+	        <div class="carousel-caption">
+	        	
+	        	<!--
+	        	<a href="{{slide.imgLink}}">	
+	          		<h4>{{slide.imgTitle}}</h4>
+	          	</a>
+	          -->
+
+	        </div>
+	      </slide>
+	    </carousel>
+
+	    <carousel interval="6000">
+		  <slide ng-repeat="slide in slides" active="slide.active">
+		    <div class="card list-unstyled text-center">
+		      <ul class='header list-inline list-unstyled'
+		      hm-swipe-left="swipe('next')"
+		      hm-swipe-right="swipe('prev')">   
+		        <li><i class="icon {{card.icon}} fa-3x"></i></li>
+		        <li class="title">{{card.title}}</li>
+		      </ul>
+		    </div>
+		  </slide>
+		</carousel>
+	  </div>
+	  <button ng-click="setActive(4)">Make second active</button>
+	</div>
+
+
 	<p class="btn btn-info" ng-hide="contentObject[0]">Please wait while we load your articles...</p>
 
 	<ul class="articles row">
 		<li class="col-xs-12 col-sm-8 col-8 btn btn-default" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " ng-hide="$first">
 			<div class="col-xs-2">
-				<img src="{{getLogoPath(contentObject[$index].source.id)}}{{contentObject[$index].source.logo}}" width="46" height="46" />{{article}}</div>
+				<img src="{{getLogoPath(contentObject[$index].source.id)}}{{contentObject[$index].source.logo}}" width="46" height="46" /></div>
 			<div  class="col-xs-10 article" style="background-image:url('{{media_path}}{{article.media[0].path}}');"> 
 				<a ng-href="#/article/{{article.id}}">
 				<div class="section_title">{{contentObject[$index].title }}</div>
@@ -34,7 +70,7 @@
 
 
 
-	<h3 ng-show="contentObject[0]">menu_sections</h3>
+	<h3 ng-show="contentObject[0]" translate>menu_sections</h3>
 
 	<ul class="sections row">
 		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">

@@ -6,6 +6,7 @@ angular.module('niiuWebappApp')
 	$scope.currentSection = User.getCurrentSection();
 	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 
+
 	//$scope.logo_path=constants.SOURCE_LOGO_PATH;
 
 
@@ -19,6 +20,9 @@ angular.module('niiuWebappApp')
 	console.log('the pageClass is ',$scope.pageClass);
 	
 	console.log('This page scope is ', $scope.pageContent );
+
+	
+
 
 	}
 	);
