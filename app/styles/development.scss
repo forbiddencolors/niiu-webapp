@@ -11,6 +11,7 @@ body {
 	color: white;
 	font-size: 10px;
 	background-color:#3d3e40;
+	height:100%;
 
 	a, p a {
 		color: white;
@@ -26,12 +27,40 @@ body {
 	.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 	div.section_view, div.front_view {
-		position:absolute;
-		top:0;
+		min-height: 80vh;
 		bottom:0;
 		left:0;
 		right:0;
 	}
+
+	div.topbar {
+		height:100px;
+		width:100%;
+		border-bottom: 1px solid #000000;
+
+	}
+
+	div.topbar a.home_btn {
+		 text-indent:-9999px;
+		 background: url("/images/sprite.png") no-repeat -80px 0px;
+		 width:60px;
+		 height:60px;
+		 display:block;
+		 padding:3px;
+
+	}
+
+	div.topbar a.menu_btn {
+		 text-indent:-9999px;
+		 background: url("/images/sprite.png") no-repeat 0px 0px;
+		 width:60px;
+		 height:60px;
+		 display:block;
+		 padding:3px;
+
+	}
+
+
 }
 
 /*login background */
@@ -49,7 +78,13 @@ color:#ffffff;
 
 }
 
+div.front_view, div.section_view {
+min-height: 300px;
+	}
+
 .sectionPage {
+
+
 	ul.articles.row li    {
 		overflow: hidden;
 	}
@@ -71,29 +106,7 @@ color:#ffffff;
 	}
 
 
-	div.topbar {
-		height:100px;
-		border-bottom: 1px solid #000000;
 
-	}
-
-	div.topbar a.home_btn {
-		 text-indent:-9999px;
-		 background: url("/images/sprite.png") no-repeat -80px 0px;
-		 width:60px;
-		 height:60px;
-		 display:block;
-
-	}
-
-	div.topbar a.menu_btn {
-		 text-indent:-9999px;
-		 background: url("/images/sprite.png") no-repeat 0px 0px;
-		 width:60px;
-		 height:60px;
-		 display:block;
-
-	}
 
 
 }
@@ -104,6 +117,7 @@ color:#ffffff;
 .titlePage {
 color:#ffffff;
 background-repeat:no-repeat;
+
 
 	h3 {
 	font-size:30px;
@@ -127,28 +141,15 @@ background-repeat:no-repeat;
 		height:100px;
 		position:absolute;
 		top:0px;
+		border-bottom: none;
+		border-bottom-width: 0px;
 
 
 	}
 
-	div.topbar a.home_btn {
-		 text-indent:-9999px;
-		 background: url("/images/sprite.png") no-repeat -80px 0px;
-		 width:60px;
-		 height:60px;
-		 display:block;
 
-	}
-
-	div.topbar a.menu_btn {
-		 text-indent:-9999px;
-		 background: url("/images/sprite.png") no-repeat 0px 0px;
-		 width:60px;
-		 height:60px;
-		 display:block;
-		 padding:auto;
-
-	}
+	
+	
  
  
 }

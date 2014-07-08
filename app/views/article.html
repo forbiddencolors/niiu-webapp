@@ -1,31 +1,52 @@
-<div class="article_view" ng-swipe-right="backSwipe()">
-	<h3 >{{article.title}}</h3>
-	<img src="{{media_path}}{{image.path}}"  ng-repeat="image in article.media" class="img-responsive" ng-show="$first" onError="this.onerror=null;this.src='/images/blank.png';" />
-<!--
-	<div ng-controller="CarouselCtrl">
-	  <div style="height: 305px">
-	    <carousel interval="slide_interval" style="height:450px;"  id="myCarousel">
-	      <slide ng-repeat="slide in slides" active="slide.active">
-	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" >
-	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;height:450px;" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
-	        <div class="carousel-caption">
-	        	
-	        	
-	        		
-	          		<h4>{{slide.imgTitle}}</h4>
-	          	
-	          
+<div class="topbar row">
+	<div class="col-xs-2"><a ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="btn btn-navbar col-xs-1 menu_btn">Menu</a></div>
+	<div class="col-xs-8 center-block"><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span><span translate>{{pageContent.title }}</span></div>
+	<div class="col-xs-2"><a href="#/userHome/" class="home_btn  pull-right" translate>menu_homepage</a></div>
+</div>
+<!--nav bar -->
+<div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
+  <ul class="nav" ng-controller="usermenuCtrl">
+    <li><a ng-href="#/customize" ng-show="user!=null">{{ 'menu_settings' | translate}}</a></li>
+    <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
+    <!--li><a ng-href="#/customize" ng-show="user!=null">Customize</a></li-->
+    <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
+    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
 
-	        </div>
-	      </slide>
-	    </carousel>
-	    <div>
-	</div>
--->
+    <li><a ng-href="#/userHome/refresh" ng-show="user!=null">{{ 'menu_refresh' | translate}}</a></li>
+    <!--li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li-->
+    
+    <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
+    <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
+  <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+  </ul>
+</div>
+
+<div class="article_view col-xs-12" ng-swipe-right="backSwipe()">
+
+
+
+	<h3 >{{article.title}}</h3>
+	<h4>{{article.subtitle}}</h4>
+	<img src="{{media_path}}{{image.path}}"  ng-repeat="image in article.media" class="img-responsive" ng-show="$first" onError="this.onerror=null;this.src='/images/blank.png';" />
+
 
 	<div ng-bind-html="article.content"></div>
 	<p >{{article.media.length}} images in this article<p>
-	<div class="additional_images" >
-		<img src="{{media_path}}{{image.path}}" ng-repeat="image in article.media" class="img-responsive" ng-hide="$first" onError="this.onerror=null;this.src='/images/blank.png';" />
-	</div>
+
 </div>
+
+	<div ng-controller="CarouselCtrl" ng-show="{{slides.length>1}}">
+	  <div>
+	    <carousel interval="slide_interval" style="height:450px;"  id="myCarousel">
+	      <slide ng-repeat="slide in slides" active="slide.active">
+	        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
+	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;height:450px;" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
+	        <div class="carousel-caption">  	
+	        		
+	          		<div ng-bind-html="slide.imgText" />
+   
+	        </div>
+	      </slide>
+	    </carousel>
+	    </div>
+	</div>

@@ -1,7 +1,8 @@
-<div class="topbar col-xs-12">
-	<a ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="btn btn-navbar col-xs-1 menu_btn">Menu</a>
-	<div class="col-xs-9 center-block"><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span><span translate>{{pageContent.title }}</span></div>
-	<a href="#/userHome/" class="home_btn col-xs-1" translate>menu_homepage</a>
+
+<div class="topbar row">
+	<div class="col-xs-2"><a ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="btn btn-navbar col-xs-1 menu_btn">Menu</a></div>
+	<div class="col-xs-8 center-block"><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span><span translate>{{pageContent.title }}</span></div>
+	<div class="col-xs-2"><a href="#/userHome/" class="home_btn  pull-right" translate>menu_homepage</a></div>
 </div>
 <!--nav bar -->
 <div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
@@ -20,8 +21,8 @@
   <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
   </ul>
 </div>
-                 
-<div class="section_view" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()">
+ <div class="section_view" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" style="min-height:400px;">                
+
 				
 
 

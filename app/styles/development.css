@@ -7,7 +7,8 @@ body {
   background-position: 63% 0%;
   color: white;
   font-size: 10px;
-  background-color: #3d3e40; }
+  background-color: #3d3e40;
+  height: 100%; }
   body a, body p a {
     color: white;
     text-decoration: underline;
@@ -17,6 +18,29 @@ body {
     text-align: center; }
   body .nav, body .pagination, body .carousel, body .panel-title a {
     cursor: pointer; }
+  body div.section_view, body div.front_view {
+    min-height: 80vh;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+  body div.topbar {
+    height: 100px;
+    width: 100%;
+    border-bottom: 1px solid #000000; }
+  body div.topbar a.home_btn {
+    text-indent: -9999px;
+    background: url("/images/sprite.png") no-repeat -80px 0px;
+    width: 60px;
+    height: 60px;
+    display: block;
+    padding: 3px; }
+  body div.topbar a.menu_btn {
+    text-indent: -9999px;
+    background: url("/images/sprite.png") no-repeat 0px 0px;
+    width: 60px;
+    height: 60px;
+    display: block;
+    padding: 3px; }
 
 /*login background */
 div.container.page.loginHome {
@@ -29,6 +53,9 @@ div.container.page.loginHome {
   background-image: url();
   color: #ffffff; }
 
+div.front_view, div.section_view {
+  min-height: 300px; }
+
 .sectionPage ul.articles.row li {
   overflow: hidden; }
 .sectionPage ul.articles.row li .double {
@@ -40,24 +67,6 @@ div.container.page.loginHome {
   /*overflow:hidden;*/ }
 .sectionPage ul.articles.row li a:hover {
   color: #fefefef; }
-.sectionPage div.topbar {
-  height: 100px;
-  border-bottom: 1px solid #000000; }
-.sectionPage div.topbar a.home_btn {
-  text-indent: -9999px;
-  background: url("/images/sprite.png") no-repeat -80px 0px;
-  width: 60px;
-  height: 60px;
-  display: block; }
-.sectionPage div.topbar a.menu_btn {
-  text-indent: -9999px;
-  background: url("/images/sprite.png") no-repeat 0px 0px;
-  width: 60px;
-  height: 60px;
-  display: block; }
-.sectionPage div.section_view {
-  min-height: 300px;
-  min-height: 60vh; }
 
 /* titlePage */
 .titlePage {
@@ -74,20 +83,9 @@ div.container.page.loginHome {
   .titlePage div.topbar {
     height: 100px;
     position: absolute;
-    top: 0px; }
-  .titlePage div.topbar a.home_btn {
-    text-indent: -9999px;
-    background: url("/images/sprite.png") no-repeat -80px 0px;
-    width: 60px;
-    height: 60px;
-    display: block; }
-  .titlePage div.topbar a.menu_btn {
-    text-indent: -9999px;
-    background: url("/images/sprite.png") no-repeat 0px 0px;
-    width: 60px;
-    height: 60px;
-    display: block;
-    padding: auto; }
+    top: 0px;
+    border-bottom: none;
+    border-bottom-width: 0px; }
 
 /*User Menu*/
 .header {
