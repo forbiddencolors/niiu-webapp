@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB', '$q','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants, User) {
+  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
 
   	
 
@@ -38,6 +38,21 @@ angular.module('niiuWebappApp')
 
   		console.log('heres this scope, ',$scope); 
   	}
+
+  	$scope.sendThat = function(msg) {
+  		console.log(msg);
+
+  	}
+
+  	$scope.sectionSwipe = function() {
+  
+    	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
+  
+    	
+    	$location.path("/sectionView/"+User.getNextSection());
+
+
+    };
 
 
 

@@ -1,13 +1,23 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('SectionviewCtrl', function ($scope, User, $routeParams, constants) {
+  .controller('SectionviewCtrl', function ($scope, User, $routeParams, $location, constants) {
 
 	$scope.currentSection = User.getCurrentSection();
 	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 
 
 	//$scope.logo_path=constants.SOURCE_LOGO_PATH;
+
+	$scope.sectionSwipe = function() {
+  
+    	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
+  
+    	
+    	$location.path("/sectionView/"+User.getNextSection());
+
+
+    };
 
 
 	User.getContentObject().then(function(contentObjArray) {

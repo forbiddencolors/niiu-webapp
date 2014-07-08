@@ -87,6 +87,11 @@ color:#ffffff;
 
 	}
 
+	div.section_view {
+		height: 300px;
+		height: 60vh;
+	}
+
 
 }
 
@@ -168,7 +173,11 @@ background-repeat:no-repeat;
 
 
 
+/*menu */
+.nav-collapse ul {
+width:200px
 
+}
 
 
 
@@ -244,7 +253,7 @@ button, button.btn, a.btn {
 	width: 100%;
 	text-align: center;
 	font-size: 10px;
-	background-color: transparent;
+	/*background-color: transparent;*/
 	border-radius: 0px;
 	text-decoration: none;
 }

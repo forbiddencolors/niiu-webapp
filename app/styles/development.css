@@ -55,6 +55,9 @@ div.container.page.loginHome {
   width: 60px;
   height: 60px;
   display: block; }
+.sectionPage div.section_view {
+  min-height: 300px;
+  min-height: 60vh; }
 
 /* titlePage */
 .titlePage {
@@ -101,6 +104,10 @@ div.container.page.loginHome {
 
 .lang_widget {
   margin: 10px 15px; }
+
+/*menu */
+.nav-collapse ul {
+  width: 200px; }
 
 .footer {
   color: #ffffff; }
@@ -153,7 +160,7 @@ button, button.btn, a.btn {
   width: 100%;
   text-align: center;
   font-size: 10px;
-  background-color: transparent;
+  /*background-color: transparent;*/
   border-radius: 0px;
   text-decoration: none; }
 
