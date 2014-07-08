@@ -368,11 +368,25 @@ angular.module('niiuWebappApp')
             currentSection = secNum;
         },
         getNextSection:function() {
-            console.log('currentSection is currently'+currentSection );
+            console.log(' go forward currentSection is currently'+currentSection );
             if ((currentSection+1)>=contentObject.length) {
                 currentSection=0;
             }else {
                 currentSection=currentSection+1;
+            }
+
+            return currentSection;
+        },
+        getPreviousSection:function() {
+            console.log('go back currentSection is currently'+currentSection );
+            if (currentSection===0) {
+                console.log('on CurrentSection 0');
+                currentSection=contentObject.length-1;
+
+            }else {
+
+                currentSection=currentSection-1;
+                console.log('going to currentSection '+currentSection);
             }
 
             return currentSection;

@@ -1,9 +1,30 @@
-<h3 >{{article.title}}</h3>
-<img src="{{media_path}}{{image.path}}"  ng-repeat="image in article.media" class="img-responsive" ng-show="$first" onError="this.onerror=null;this.src='/images/blank.png';" />
 
-<div ng-bind-html="article.content"></div>
-<p >{{article.media.length}} images in this article<p>
-<div class="additional_images" >
-	<img src="{{media_path}}{{image.path}}" ng-repeat="image in article.media" class="img-responsive" ng-hide="$first" onError="this.onerror=null;this.src='/images/blank.png';" />
+	<h3 >{{article.title}}</h3>
+	<!--img src="{{media_path}}{{image.path}}"  ng-repeat="image in article.media" class="img-responsive" ng-show="$first" onError="this.onerror=null;this.src='/images/blank.png';" /-->
+
+	<div ng-controller="CarouselCtrl">
+	  <div style="height: 305px">
+	    <carousel interval="slide_interval" style="height:450px;"  id="myCarousel">
+	      <slide ng-repeat="slide in slides" active="slide.active">
+	        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
+	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;height:450px;" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
+	        <div class="carousel-caption">
+	        	
+	        	
+	        		
+	          		<h4>{{slide.imgTitle}}</h4>
+	          	
+	          
+
+	        </div>
+	      </slide>
+	    </carousel>
+	    <div>
+	</div>
+<div class="article_view" ng-swipe-right="backSwipe()">
+	<div ng-bind-html="article.content"></div>
+	<p >{{article.media.length}} images in this article<p>
+	<div class="additional_images" >
+		<img src="{{media_path}}{{image.path}}" ng-repeat="image in article.media" class="img-responsive" ng-hide="$first" onError="this.onerror=null;this.src='/images/blank.png';" />
+	</div>
 </div>
-

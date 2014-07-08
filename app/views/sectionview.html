@@ -21,14 +21,14 @@
   </ul>
 </div>
                  
-<div class="section_view" ng-swipe-left="sectionSwipe()">
+<div class="section_view" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()">
 				
 
 
 	<ul class="articles row">
 		<li ng-class="{'single col-xs-12':($index%3===0),'double col-xs-6':!($index%3===0)}" ng-repeat="article in pageContent.articles" style="background-image:url('{{media_path}}{{article.media[0].path}}');">
 			<a ng-href="#/article/{{article.id}}">
-			<div class="col-8 col-sm-12"> <h4>{{article.title}} <span ng-bind="!{{($index%3===0)}}" ></h4></div>
+			<div class="col-8 col-sm-12"> <h4>{{article.title}}</h4></div>
 			<div class="intro col-8 col-sm-12" ng-bind-html="article.content | truncate:150 | htmlToPlaintext"></div>
 			<div class="col-8 col-sm-12">Read More &raquo;</div></a>
 		</li>

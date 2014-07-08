@@ -44,12 +44,23 @@ angular.module('niiuWebappApp')
 
   	}
 
-  	$scope.sectionSwipe = function() {
+  	$scope.nextSectionSwipe = function() {
   
     	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
   
     	
     	$location.path("/sectionView/"+User.getNextSection());
+
+
+    };
+
+    $scope.previousSectionSwipe = function() {
+  		
+  		var previousSection=User.getPreviousSection();
+    	console.log('user swiped back to section',previousSection );
+  
+    	
+    	$location.path("/sectionView/"+previousSection);
 
 
     };
