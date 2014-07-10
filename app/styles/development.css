@@ -42,6 +42,18 @@ body {
     display: block;
     padding: 3px; }
 
+#niiuCarousel .imgSlide {
+  margin: 0 auto;
+  width: 100%;
+  min-height: 100%;
+  position: absolute; }
+
+#niiuCarousel .slider {
+  width: 100%;
+  height: 35vh;
+  max-height: 500px;
+  overflow: hidden; }
+
 /*login background */
 div.container.page.loginHome {
   background-image: url("../images/login-bg-image.jpg");

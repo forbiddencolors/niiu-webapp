@@ -1,11 +1,11 @@
 
 
-	<div ng-controller="CarouselCtrl" style="margin:0;height:305px;">
-	  <div style="height: 305px">
-	    <carousel interval="slide_interval" style="height:305px;"  id="myCarousel">
-	      <slide ng-repeat="slide in slides" active="slide.active">
+	<div ng-controller="CarouselCtrl">
+	  <div>
+	    <carousel interval="slide_interval"  id="niiuCarousel" >
+	      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
 	        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
-	        <img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
+	        <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
 	        <div class="carousel-caption">
 	        	
 	        	
@@ -44,14 +44,13 @@
 	  </ul>
 	</div>
 
-	<div class="front_view" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" style="position:relative;">
-	<h3>{{ 'welcome' | translate}} {{user.firstName}}</h3>
-	<h3>{{ 'menu_titlepage' | translate}}</h3>
+	<div class="front_view" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >
+	<!-- h3>{{ 'menu_titlepage' | translate}}</h3 -->
 
 
 	<p class="btn btn-info" ng-hide="contentObject[0]">Please wait while we load your articles...</p>
 
-	<ul class="articles row">
+	<ul class="articles">
 		<li class="col-xs-12 col-sm-8 col-8 btn btn-default" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " ng-hide="$first">
 			<div class="col-xs-2">
 				<img src="{{getLogoPath(contentObject[$index].source.id)}}{{contentObject[$index].source.logo}}" width="46" height="46" /></div>
