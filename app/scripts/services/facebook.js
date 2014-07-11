@@ -20,6 +20,12 @@ angular.module('niiuWebappApp')
     });
   }
 
+  function facebookShare(url, title, descr, image, winWidth, winHeight) {
+        var winTop = (screen.height / 2) - (winHeight / 2);
+        var winLeft = (screen.width / 2) - (winWidth / 2);
+        window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+    }
+
 
 
     
@@ -77,6 +83,16 @@ angular.module('niiuWebappApp')
 
     }
     ,
+
+    fbShare: function(shareUrl, shareTitle, shareDescription, shareImage) {
+      if (!shareUrl) {
+        console.log('sorry you didnt pass a url to share');
+        return;
+      }
+      
+      facebookShare(shareUrl, shareTitle, shareDescription, shareImage, 520, 350);
+
+    },
     niiuAuth: function(scopeUser,scopeAuth) {
     console.log('weve got some userscope');
     console.log(scopeUser.birthday);

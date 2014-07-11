@@ -182,9 +182,12 @@ function refreshArticles() {
 			$scope.articles=cleaned_articles;
 
 			//put the articles in the db so we can get to them if the user is offline or leaves the site
-			localDB.addArticlesToDB(cleaned_articles);
-			User.getContentObject();
-			deferred.resolve(theList);
+			localDB.addArticlesToDB(cleaned_articles).then(function(added_articles) {
+				console.log('articles added',added_articles);
+				User.getContentObject();
+				deferred.resolve(cleaned_articles);
+			});
+			
 
 		},  function(noList) {
 			console.log('crap our attempt to get a list failed.',noList);

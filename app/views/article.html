@@ -29,7 +29,7 @@
 	<h4 ng-bind="article.subtitle | htmlToPlaintext" />
 </div>
 
-	<div ng-controller="CarouselCtrl" ng-show="{{slides.length>0}}" class="row" style="height:400px;">
+	<div ng-controller="CarouselCtrl" ng-show="{{slides.length>0}}" class="row" >
 	  <div>
 	    <carousel interval="slide_interval"  id="niiuCarousel">
 	      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
@@ -48,7 +48,8 @@
 
 <div class="article_view row" style="" ng-swipe-right="backSwipe()">
 	<div ng-bind-html="article.content"></div>
-	<p >{{article.media.length}} images in this article<p>
+	<div class="col-xs-12 pull-right" ng-controller="ShareCtrl" ><a ng-click="fbShare(article.id,'{{article.title}}','{{article.subtitle|truncate : 100}}', 'http://core5.staticworld.net/images/article/2014/07/amazon_app_store-100355678-large.jpg')">share</a><p>
 
 </div>
+
 

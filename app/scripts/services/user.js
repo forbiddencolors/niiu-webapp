@@ -40,10 +40,14 @@ angular.module('niiuWebappApp')
         */
         
         if (data3s===undefined) data3s=localDB.get3sFromDB();
-        if (dataArticles==undefined) dataArticles=localDB.loadArticlesFromDB().then(function(done) {
+        if (dataArticles==undefined) { 
+            dataArticles=localDB.loadArticlesFromDB().then(function(done) {
             console.log('now we have some contentObject articles from the DB',done);
+            });
+        } else {
+                localDB.addArticlesToDB(dataArticles);
+
             }
-            );
         var user_sections=user.contentProfile.items;
         var section_urls=[];
         var userPage=[];
@@ -401,7 +405,7 @@ angular.module('niiuWebappApp')
                         console.log('3s data we are about to pass', local_db3s);
                         makeContentObject(local_db3s,db_articles);
                         console.log('created a new contentObject right',contentObject)
-                        console.log('right:',deferred);
+                        //console.log('right',deferred.promise);
                         deferred.resolve( contentObject);
                        },function(error_articles) {
                             deferred.reject( error_articles);

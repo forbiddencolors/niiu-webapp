@@ -1,0 +1,26 @@
+<div ng-controller="TopbarCtrl">
+	<!--top bar -->
+	<div class="topbar row" style="z-index:100;">
+		<div class="col-xs-2"><a ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="btn btn-navbar menu_btn">Menu</a></div>
+		<div class="col-xs-8 center-block">&nbsp;</div>
+		<div class="col-xs-2"><a href="#/userHome/" class="home_btn col-xs-1 pull-right" translate>menu_homepage</a></div>
+	</div>
+	<!--nav bar -->
+	<div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
+	  <ul class="nav" ng-controller="usermenuCtrl">
+	    <li><a ng-href="#/customize" ng-show="user!=null">{{ 'menu_settings' | translate}}</a></li>
+	    <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
+	    <!--li><a ng-href="#/customize" ng-show="user!=null">Customize</a></li-->
+	    <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
+	    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
+
+	    <li><a ng-href="#/userHome/refresh" ng-show="user!=null">{{ 'menu_refresh' | translate}}</a></li>
+	    <!--li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li-->
+	    
+	    <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
+	    <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
+	  <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+	  </ul>
+	</div>
+
+</div>

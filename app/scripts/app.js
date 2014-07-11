@@ -139,7 +139,10 @@ angular.module('niiuWebappApp', [
 
 
   }).run(function($rootScope, $route, $location, niiuAuthenticator) {
-  $rootScope.layoutPartial = function(partialName) { 
+  $rootScope.layoutPartial = function(partialName) {
+    if(partialName=="topBar") {
+      return 'views/partials/topbar.html';
+    } else 
     //this works but throws errors before it loads
     if ($route.current) {
     return $route.current[partialName] ;

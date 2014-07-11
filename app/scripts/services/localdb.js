@@ -340,7 +340,7 @@ angular.module('niiuWebappApp')
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt enter soome articles into the db because', failed_stuff);
+                console.log('We couldnt enter some articles into the db because', failed_stuff);
                 deferred.reject(failed_stuff);
               }
               );

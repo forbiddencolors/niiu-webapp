@@ -16,7 +16,8 @@ angular.module('niiuWebappApp')
                 ARTICLE_MEDIA_PATH : 'http://dev.niiu.de/img/retrieved_article_media/',
                 SOURCE_LOGO_PATH : 'http://dev.niiu.de/files/sources/images/',
                 MAXIMUM_SECTIONS : 10,
-                CUSTOM_SECTION_LOGO : '/images/icon_custom_section.png'
+                CUSTOM_SECTION_LOGO : '/images/icon_custom_section.png',
+                ENVIRONMENT : 'dev'
 
 
 });
