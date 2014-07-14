@@ -12,6 +12,7 @@
  *	@example <p data-ellipsis data-ng-bind="boundData" data-ellipsis-append="read more" data-ellipsis-append-click="displayFull()"></p>
  *
  */
+
 (function(ng, app){
 
 	"use strict";
@@ -19,7 +20,7 @@
 	app.directive('ellipsis', function($timeout, $window) {
 
 		return {
-			restrict	: 'E',
+			restrict	: 'A',
 			scope		: {
 				ngBind				: '=',
 				ellipsisAppend		: '@',
@@ -37,9 +38,7 @@
 					/* State Variables */
 						attributes.isTruncated = false;
 
-
 					function buildEllipsis() {
-
 						if (typeof(scope.ngBind) !== 'undefined') {
 							var bindArray = scope.ngBind.split(" "),
 								i = 0,
@@ -97,7 +96,6 @@
 						*	Execute ellipsis truncate on ngBind update
 						*/
 						scope.$watch('ngBind', function () {
-							console.log('building ellipsis');
 							buildEllipsis();
 						});
 
@@ -130,4 +128,4 @@
 		};
 	});
 
-})(angular, exampleApp);
+})(angular, angular.module('niiuWebappApp'));

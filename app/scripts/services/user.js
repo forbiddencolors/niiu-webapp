@@ -87,7 +87,7 @@ angular.module('niiuWebappApp')
                 var section_url="/sectionHome/"+thisSource+"/"+thisSection+"/"+thisCustom;
                 section_urls.push(section_url);
 
-                var page_type = i===0 ? "titlepage" : "3s";
+                var page_type = "3s";
                 
 
                 //loop through all articles and select the ones that match this section
@@ -103,7 +103,7 @@ angular.module('niiuWebappApp')
                         dataArticles[h].sections.subsection_id === user_sections[i].subsection &&
                         dataArticles[h].source_id === user_sections[i].source ));
                     */
-                    if (page_type==="titlepage" ) {
+                  //  if (page_type==="titlepage" ) {
                         
                         //this page doesn't follow the have any articles associated with it, so im not sending it through the standard article process
                         //add the first article
@@ -116,7 +116,7 @@ angular.module('niiuWebappApp')
                         
 
                         //console.log('added two articles to the contentObject for the title page', pageArticles[i]);
-                    } else   
+                  //  } else   
 
                     
                      if (dataArticles[h].sections.custom_section === user_sections[i].custom_section && 
@@ -315,7 +315,7 @@ angular.module('niiuWebappApp')
 
                                 
                                 } 
-        tempObjArray.splice(0,1,titlePage);
+        tempObjArray.unshift(titlePage);
 
         contentObject = tempObjArray;
         return contentObject;
