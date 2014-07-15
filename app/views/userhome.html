@@ -1,7 +1,7 @@
 
 
 	<div ng-controller="CarouselCtrl">
-	  <div clss="row">
+	  <div class="row">
 	    <carousel interval="slide_interval"  id="niiuCarousel" class="news-slider" >
 	      <slide ng-repeat="slide in slides" active="slide.active" class="col-xs-12 slider" >
 	      	<article>
@@ -36,38 +36,37 @@
 	<div ng-include="layoutPartial('topBar')" ></div>
 
 
-	<div class="front_view" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >
+	<div class="col-xs-12" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >
 	<!-- h3>{{ 'menu_titlepage' | translate}}</h3 -->
 
 	<p class="btn btn-info" ng-hide="contentObject[0]">Please wait while we load your articles...</p>
 
-	<ul class="articles">
-		<li class="col-xs-12 col-sm-8 col-8 btn btn-default" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " >
-			<div class="col-xs-2">{{article.id}}
-				<img src="{{getLogoPath(contentObject[article.sectionIndex].source.id)}}{{contentObject[article.sectionIndex].source.logo}}" width="46" height="46" /></div>
-			<div  class="col-xs-10 article" style="background-image:url('{{media_path}}{{article.media[0].path}}');"> 
-				<a ng-href="#/article/{{article.id}}">
-				<div class="section_title">{{contentObject[article.sectionIndex].title }}</div>
-				<h4 >{{article.title}}</h4>  {{article.id}} - {{article.published_date}}
-				<div ng-bind-html="article.subtitle | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div></a>
-				<a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></a>
+	<ul class="list-unstyled">
+		<li class="col-xs-12" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " >
+			<div class="row">
+				<a ng-href="#/article/{{article.id}}" class="list-group-item clearfix" style="background:url('{{media_path}}{{article.media[0].path}}') 80px 15% no-repeat; background-size:cover;">
+				<figure class="pull-left newsSource">
+					<img src="{{getLogoPath(contentObject[article.sectionIndex].source.id)}}{{contentObject[article.sectionIndex].source.logo}}" width="46" height="46" />
+				</figure>
+				<div  class="newsTitle" >
+						<span class="label label-default label-source">{{contentObject[article.sectionIndex].title }}</span> 
+						<h4 class="list-group-item-heading">{{article.title}}</h4>
+					<!--div ng-bind-html="article.subtitle | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div-->
 
-					
+						
+				</div>
+				</a>
 			</div>
-			
-			<div class="col-12" ng-init="isArticleOpen = false" ng-show="isArticleOpen" id="article_{{article.id}}" >
-			<!--a class="btn btn-default" href="#" role="button" ng-href="/article/{{article.id}}">Read more &raquo;</a-->
-
-
-	
-			</div>
-
-
 
 		</li>
 	</ul>
 
 
+
+
+
+</div>
+<div class="col-xs-12" style="margin-top:120px;" >
 
 	<h3 ng-show="contentObject[0]" translate>menu_sections</h3>
 
