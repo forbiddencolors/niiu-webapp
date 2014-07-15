@@ -9,6 +9,10 @@
     "menu_sections": "Your Sections:",
     "menu_settings": "Settings",
     "menu_refresh": "Refresh",
+    "menu_help" : "Help",
+    "menu_favorites" : "Favorites",
+    "menu_feedback" : "Feedback",
+    "menu_search" : "Article Search",
     "menu_next_section": "Next Section",
     "menu_current_section": "Current Section",
     "menu_logout": "Logout"

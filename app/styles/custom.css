@@ -191,6 +191,10 @@ div.newsTitle {
     	
     }
 
+    a.list-group-item {
+      text-decoration: none;
+    }
+
     a.list-group-item .list-group-item-heading {
     	color:#fff;
     }

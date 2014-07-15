@@ -1,17 +1,18 @@
 
-
 	<div ng-controller="CarouselCtrl">
 	  <div class="row">
 	    <carousel interval="slide_interval"  id="niiuCarousel" class="news-slider" >
 	      <slide ng-repeat="slide in slides" active="slide.active" class="col-xs-12 slider" >
+	      	<a href="{{slide.imgLink}}">
 	      	<article>
-	      		<div class="image-content"> <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ></div>
-                <div class="text-content">
-                  <label>{{slide.imgSection}}</label>
-                  <h2>{{slide.imgTitle | truncate : 90}}</h2>
-                </div>
-                
-              </article>
+		      		<div class="image-content"> <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ></div>
+	                <div class="text-content">
+	                  <label>{{slide.imgSection}}</label>
+	                  <h2>{{slide.imgTitle | truncate : 90}}</h2>
+	                </div>
+	                
+	              </article>
+	          </a>
 
 
 <!--
@@ -44,7 +45,7 @@
 	<ul class="list-unstyled">
 		<li class="col-xs-12" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " >
 			<div class="row">
-				<a ng-href="#/article/{{article.id}}" class="list-group-item clearfix" style="background:url('{{media_path}}{{article.media[0].path}}') 80px 15% no-repeat; background-size:cover;">
+				<a ng-href="#/article/{{article.id}}" class="list-group-item clearfix">
 				<figure class="pull-left newsSource">
 					<img src="{{getLogoPath(contentObject[article.sectionIndex].source.id)}}{{contentObject[article.sectionIndex].source.logo}}" width="46" height="46" />
 				</figure>
@@ -66,20 +67,23 @@
 
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
 <div class="col-xs-12" style="margin-top:120px;" >
 
-	<h3 ng-show="contentObject[0]" translate>menu_sections</h3>
-
-	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">
-			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionView/{{$index}}" translate>
-			{{user_section.title}}
-			</a>
-		</li>
-	</ul>
+	
 
 
-
+<!--
 
 	
 	<div ng:repeat="page in contentObject">
@@ -108,3 +112,6 @@
 	</ul>
 -->
 </div>
+
+
+

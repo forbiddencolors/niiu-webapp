@@ -2,10 +2,13 @@
 
 angular.module('niiuWebappApp')
   .controller('TopbarCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    
+    $scope.slideMenu = function() {
+    	//not working
+    	console.log('slide menu');
+    	$("#niiuAppmenu").mmenu();
+    	
+    }
+
     $scope.navCollapsed = true;
   });

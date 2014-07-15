@@ -26,13 +26,28 @@
 				
 
 
-	<ul class="articles row">
+	<ul class="list-unstyled articles row">
 		<li ng-class="{'single col-xs-12':($index%3===0),'double col-xs-6':!($index%3===0)}" ng-repeat="article in pageContent.articles" style="background-image:url('{{media_path}}{{article.media[0].path}}');">
 			<a ng-href="#/article/{{article.id}}">
-			<div class="col-8 col-sm-12"> <h4>{{article.title}}</h4></div>
+			<div class="col-8 col-sm-12"> <h4 class="articleTitle">{{article.title}}</h4></div>
 			<div class="intro col-8 col-sm-12" ng-bind-html="article.content | truncate:150 | htmlToPlaintext"></div>
-			<div class="col-8 col-sm-12">Read More &raquo;</div></a>
+
 		</li>
 	</ul>
+
+<!--
+        <span  ng-class="{'row fullBox':($index%3===0),'row halfBox':!($index%3===0)}"  ng-repeat="article in pageContent.articles"  >
+            <div ng-class="{'col-xs-12':($index%3===0),'col-xs-6':!($index%3===0)}">
+              <a ng-href="#/article/{{article.id}}">
+                <div class="sourceTitle">
+                  <h4 class="list-group-item-heading">{{article.title}}</h4>
+                  <p ng-bind-html="article.content | truncate:150 | htmlToPlaintext"></p>
+                </div>
+              </a>
+            </div>
+        </span>
+-->
+
+
 
 </div>

@@ -9,6 +9,10 @@
     "menu_sections": "Ihre Ressorts:",
     "menu_settings": "Einstellungen",
     "menu_refresh": "Aktualisieren",
+    "menu_help" : "Hilfe",
+    "menu_favorites" : "Favoriten",
+    "menu_feedback" : "Feedback",
+    "menu_search" : "Suche nach Artikeln",
     "menu_next_section": "Nächstes Ressort",
     "menu_current_section": "Dieses Ressort",
     "menu_logout": "Abmelden"

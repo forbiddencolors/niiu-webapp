@@ -82,6 +82,10 @@ div.front_view, div.section_view {
   /*overflow:hidden;*/ }
 .sectionPage ul.articles.row li a:hover {
   color: #fefefef; }
+.sectionPage .articleTitle {
+  font-family: alright_sansbold;
+  font-size: 27px;
+  margin-top: 5px; }
 
 /* titlePage */
 .titlePage {
@@ -120,7 +124,7 @@ div.front_view, div.section_view {
 
 /*menu */
 .nav-collapse ul {
-  width: 200px; }
+  /*width:200px;*/ }
 
 .footer {
   color: #ffffff; }
