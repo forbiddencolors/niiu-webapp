@@ -1,35 +1,14 @@
-<div class="topbar row">
-	<div class="col-xs-2"><a ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="btn btn-navbar col-xs-1 menu_btn">Menu</a></div>
-	<div class="col-xs-8 center-block"><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span><span translate>{{pageContent.title }}</span></div>
-	<div class="col-xs-2"><a href="#/userHome/" class="home_btn  pull-right" translate>menu_homepage</a></div>
-</div>
-<!--nav bar -->
-<div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
-  <ul class="nav" ng-controller="usermenuCtrl">
-    <li><a ng-href="#/customize" ng-show="user!=null">{{ 'menu_settings' | translate}}</a></li>
-    <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
-    <!--li><a ng-href="#/customize" ng-show="user!=null">Customize</a></li-->
-    <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
-    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
-
-    <li><a ng-href="#/userHome/refresh" ng-show="user!=null">{{ 'menu_refresh' | translate}}</a></li>
-    <!--li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li-->
-    
-    <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
-    <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
-  <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
-  </ul>
-</div>
+<div ng-include="layoutPartial('topBar')" ></div>
 
 
 
 
 <div class="article_view row" ng-swipe-right="backSwipe()">
 	<h3 >{{article.title}}</h3>
-	<h4 ng-bind="article.subtitle | htmlToPlaintext" />
+	<h4 ng-bind="article.subtitle | htmlToPlaintext" ng-show="article.subtitle!=null" />
 </div>
 
-	<div ng-controller="CarouselCtrl" ng-show="{{slides.length>0}}" class="row" >
+	<div ng-controller="CarouselCtrl" class="row" >
 	  <div>
 	    <carousel interval="slide_interval"  id="niiuCarousel">
 	      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
@@ -50,6 +29,7 @@
 	<div ng-bind-html="article.content"></div>
 	<div class="col-xs-12 pull-right" ng-controller="ShareCtrl" ><a ng-click="fbShare(article.id,'{{article.title}}','{{article.subtitle|truncate : 100}}', 'http://core5.staticworld.net/images/article/2014/07/amazon_app_store-100355678-large.jpg')">share</a><p>
 
-</div>
+</div> khkjhmjbjbjkukhuhlkjh 
+{{article.media.length}} images
 
 

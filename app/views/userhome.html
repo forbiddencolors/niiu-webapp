@@ -1,10 +1,21 @@
 
 
 	<div ng-controller="CarouselCtrl">
-	  <div>
-	    <carousel interval="slide_interval"  id="niiuCarousel" >
-	      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
-	        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
+	  <div clss="row">
+	    <carousel interval="slide_interval"  id="niiuCarousel" class="news-slider" >
+	      <slide ng-repeat="slide in slides" active="slide.active" class="col-xs-12 slider" >
+	      	<article>
+	      		<div class="image-content"> <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ></div>
+                <div class="text-content">
+                  <label>{{slide.imgSection}}</label>
+                  <h2>{{slide.imgTitle | truncate : 90}}</h2>
+                </div>
+                
+              </article>
+
+
+<!--
+	        
 	        <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
 	        <div class="carousel-caption">
 	        	
@@ -15,6 +26,7 @@
 	          
 
 	        </div>
+-->
 	      </slide>
 	    </carousel>
 	    </div>
@@ -30,12 +42,12 @@
 	<p class="btn btn-info" ng-hide="contentObject[0]">Please wait while we load your articles...</p>
 
 	<ul class="articles">
-		<li class="col-xs-12 col-sm-8 col-8 btn btn-default" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " ng-hide="$first">
-			<div class="col-xs-2">
-				<img src="{{getLogoPath(contentObject[$index].source.id)}}{{contentObject[$index].source.logo}}" width="46" height="46" /></div>
+		<li class="col-xs-12 col-sm-8 col-8 btn btn-default" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " >
+			<div class="col-xs-2">{{article.id}}
+				<img src="{{getLogoPath(contentObject[article.sectionIndex].source.id)}}{{contentObject[article.sectionIndex].source.logo}}" width="46" height="46" /></div>
 			<div  class="col-xs-10 article" style="background-image:url('{{media_path}}{{article.media[0].path}}');"> 
 				<a ng-href="#/article/{{article.id}}">
-				<div class="section_title">{{contentObject[$index].title }}</div>
+				<div class="section_title">{{contentObject[article.sectionIndex].title }}</div>
 				<h4 >{{article.title}}</h4>  {{article.id}} - {{article.published_date}}
 				<div ng-bind-html="article.subtitle | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div></a>
 				<a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></a>

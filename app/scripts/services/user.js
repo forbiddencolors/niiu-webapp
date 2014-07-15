@@ -128,8 +128,13 @@ angular.module('niiuWebappApp')
                         ) {
                            //console.log('failing contentObject filter because article section '+dataArticles[h].sections.section+'is equal to'+user_sections[i].section,(user_sections[i].source));
                             //console.log('failing',user_sections[i].source );
+                                
+                                //when need to know the section title we can just look up the title for contentObject[i].sectionIndex;
+                                dataArticles[h].sectionIndex=i+1;
+
 
                                 pageArticles[i].push(dataArticles[h]);
+
                             //console.log('contentObject page'+i+' gets these articles, ',dataArticles[h]);
                              //console.log('passed contentObject filter because data',dataArticles[h].sections.custom_section +" is equal to "+user_sections[i].custom_section, (dataArticles[h].sections.custom_section === user_sections[i].custom_section && dataArticles[h].sections.custom_section!= null) );
                              //console.log('passed contentObject filter because section',dataArticles[h].sections.section_id +" is equal to "+user_sections[i].section, (dataArticles[h].sections.section === user_sections[i].section));
@@ -141,6 +146,8 @@ angular.module('niiuWebappApp')
                                 //add a couple articles to the titlepage
 
                                 pageArticles[0].push(dataArticles[h]);
+                                
+
                                 homeArticles.push(dataArticles[h])
                                 console.log('homeArticles.push')
 
@@ -289,6 +296,7 @@ angular.module('niiuWebappApp')
                                     type: "titlepage",
                                     title: "menu_titlepage",
                                     url : "/sectionHome/",
+                                    sectionIndex : 0,
                                     section : {
                                         id : "",
                                         name : "",

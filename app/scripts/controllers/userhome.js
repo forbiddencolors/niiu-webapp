@@ -23,6 +23,7 @@ angular.module('niiuWebappApp')
   			if (titlePageContentObject.articles[i].media.length) {
   				articleSlides[articleSlides.length]={ 
   						imgTitle: titlePageContentObject.articles[i].title,
+  						imgSection: $scope.contentObject[titlePageContentObject.articles[i].sectionIndex].title,
   						imgUrl: $scope.media_path+titlePageContentObject.articles[i].media[0].path,
   						imgLink:"#/article/"+titlePageContentObject.articles[i].id
   						}

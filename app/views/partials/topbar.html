@@ -1,9 +1,15 @@
 <div ng-controller="TopbarCtrl">
 	<!--top bar -->
-	<div class="topbar row" style="z-index:100;">
+	<!-- <div class="topbar row" style="z-index:100;">
 		<div class="col-xs-2"><a ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="btn btn-navbar menu_btn">Menu</a></div>
 		<div class="col-xs-8 center-block">&nbsp;</div>
 		<div class="col-xs-2"><a href="#/userHome/" class="home_btn col-xs-1 pull-right" translate>menu_homepage</a></div>
+	</div> -->
+	<div class="navbar navbar-default navbar-fixed-top row" role="navigation">
+		<div id="menu" class="col-xs-4 pull-left">
+			<a href="" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" ><img src="images/menu-icon.png" alt="Menu" /></a></div>
+			<div class="center-block col-xs-8 col-centered"><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span><span translate>{{pageContent.title }}</span></div>
+		<div id="logo" class="col-xs-2 pull-right"><a href="#/userHome/"  ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" ><img src="images/niiu-logo.png" alt="Logo" /></a></div>
 	</div>
 	<!--nav bar -->
 	<div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
