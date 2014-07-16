@@ -9,7 +9,7 @@ body {
 	background-size: 250%;
 	background-position: 63% 0%;
 	color: white;
-	background-color:#3d3e40;
+	background-color:#3e3e40;
 	height:100%;
 
 	a, p a {
@@ -106,7 +106,6 @@ div.navbar {
 
 
 #niiuCarousel .slider {
-	width:100%;
 	height:40vh;
 	max-height:500px;
 	overflow:hidden;
@@ -149,10 +148,14 @@ min-height: 300px;
 
 	ul.articles.row li .double {
 	height: 420px;
+	height: 40vh;
+	overflow:hidden;
 
 	}
 	ul.articles.row li .single {
 	height:300px;
+	height:30vh;
+	overflow:hidden;
 	}
 	ul.articles.row li .intro {
 		height:85px;
@@ -191,6 +194,15 @@ min-height: 300px;
       font-family: 'Andada', serif;
     }
 
+    #niiuCarousel .slider img{
+    	margin:5px auto;
+
+    }
+
+    #niiuCarousel .slider {
+    		max-width:90%;
+    }
+
 
 
 
@@ -214,7 +226,7 @@ background-repeat:no-repeat;
 	} 
 
 	ul.articles li {
-		background-color:#3d3e40
+		background-color:#3e3e40;
 	}
 
 	a.btn.btn-default {
@@ -235,7 +247,9 @@ background-repeat:no-repeat;
 
 	#niiuCarousel .imgSlide {
     margin: 0 auto;
-    height:40vh;
+    min-height:300px;
+    min-height:40vh;
+    min-width:60%;
     position:absolute;
     left:0px;
 	}
@@ -265,6 +279,14 @@ background-repeat:no-repeat;
         }
 
 
+	#niiuCarousel .slider {
+		width:100%;
+		height:auto;
+		max-height:500px;
+		overflow:visible;
+		text-align: center;
+
+	}
 
 
 

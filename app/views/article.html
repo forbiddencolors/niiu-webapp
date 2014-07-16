@@ -3,7 +3,7 @@
         <!-- Article Controls -->
         <div class="row articleControls" ng-controller="ShareCtrl" >
             <div class="col-xs-12">
-              <div class="pull-right articleDate">{{published_dateObj | date:'yyyy-MM-dd'}}</div>
+              <div class="pull-right articleDate" ng-if="published_dateObj>0">{{published_dateObj | date:'yyyy-MM-dd'}}</div>
               <ul class="nav nav-pills">
                   <li><a href="" class="fav_btn"><span>Favourite</span></a></li>
                   <li><a href=""  ng-click="fbShare(article.id,'{{article.title}}','{{article.subtitle|truncate : 100}}', 'http://core5.staticworld.net/images/article/2014/07/amazon_app_store-100355678-large.jpg')" class="share_btn"><span>Share</span></a></li>
@@ -21,7 +21,7 @@
 
 
 					<div ng-controller="CarouselCtrl" class="row" >
-					  <div>
+					  <div class="col-xs-12">
 					    <carousel interval="slide_interval"  id="niiuCarousel">
 					      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
 					        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->

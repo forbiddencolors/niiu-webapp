@@ -7,9 +7,9 @@
 
      <!--top bar -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div id="menu" class="col-xs-1 pull-left">
+		<div id="menu" class="col-xs-1 pull-left" style="text-align:left">
 			<a href="" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" ><img src="images/menu-icon.png" alt="Menu" /></a></div>
-			<div class="col-xs-5 col-xs-offset-3"><div style="float:left; padding-right:5px;" ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </div>
+			<div class="col-xs-7 col-xs-offset-1"><div style="float:left; padding-right:5px;" ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="45"> </div>
         <div class="section-label"><span class="label-subject" translate>{{pageContent.subject }}</span><br>
         <span class="label-source" translate>{{pageContent.source.name }}</span></div>
       </div>
@@ -56,7 +56,7 @@
 
         </li>
         <li><a class="mFavorite" href="/contact/" translate>menu_favorites</a></li>
-        <li><a class="mSettings" href="/" translate>menu_settings</a></li>
+        <li><a class="mSettings" href="#/customize" translate>menu_settings</a></li>
         <li><a class="mHelp" href="/about/" translate>menu_help</a></li>
         <li><a class="mFeedback" href="/contact/" translate>menu_feedback</a></li>
         <li><a class="mFeedback" href="/contact/" translate>menu_logout</a></li>
