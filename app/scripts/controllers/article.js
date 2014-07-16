@@ -11,6 +11,7 @@ angular.module('niiuWebappApp')
   	Articleservice.getArticle($routeParams.articleId).then(function(article) {
           //get article
           $scope.article=article;
+          $scope.published_dateObj = Date.parse(article.published_date);
 
 
           console.log('try slides');

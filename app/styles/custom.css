@@ -118,7 +118,7 @@ niiu-webappv1 Slider
     }
 
     .news-slider .image-content img {
-      max-width: 100%;
+    /*  max-width: 100%; */
     }
 
     .news-slider .news-pager {
@@ -343,7 +343,7 @@ div.sourceTitle span.label-source {
   font-size: 18px;
 }
 
-#sectionPage, #articlePage {
+.sectionPage, .articlePage {
   padding-top: 85px;
 }
 
@@ -351,32 +351,40 @@ div.sourceTitle span.label-source {
       background: #5c5d5f;
     }
 
-    #sectionPage a.sourceArticle, #articlePage a.mainArticle  {
+    .sectionPage a.sourceArticle, .articlePage a.mainArticle  {
       color: #fff;
     }
 
-    #sectionPage a.sourceArticle:hover, #articlePage a.mainArticle:hover {
+    .sectionPage a.sourceArticle:hover, .articlePage a.mainArticle:hover {
       text-decoration: none;
     }
 
-    #sectionPage div.sourceTitle, #articlePage div.sourceTitle {
+    .sectionPage div.sourceTitle, .articlePage div.sourceTitle {
       padding: 20px;  
     } 
 
-    #sectionPage div.sourceTitle p {
+    .sectionPage div.sourceTitle p {
       font-family: 'Andada', serif;
     }
 
-    #sectionPage div.fullBox, #sectionPage div.halfBox  {
+    .sectionPage div.fullBox, .sectionPage div.halfBox  {
       border-bottom: 1px solid #000;
     }
 
-    #sectionPage div.fullBox, #sectionPage div.halfBox  {
+    .sectionPage div.fullBox, .sectionPage div.halfBox  {
       border-top: 1px solid #707070;
     }
 
-    #sectionPage div.fullBox:last-child, #sectionPage div.halfBox:last-child  {
+    .sectionPage div.fullBox:last-child, .sectionPage div.halfBox:last-child  {
       border-bottom: 0;
+    }
+
+    .sectionPage  a.articleLink {
+      color:#ffffff;
+    } 
+
+    .sectionPage .articleText {
+      font-family: 'Andada', serif;
     }
 
 
@@ -386,11 +394,11 @@ niiu-webappv1 Sctionpage
 =================================
 */
 
-#articlePage .articleBody {
+.articlePage .articleBody {
   color: #fff;
 }
 
-    #sectionPage div.articleTitle {
+    .sectionPage div.articleTitle {
       padding: 20px;  
     }
 

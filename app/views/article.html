@@ -1,35 +1,45 @@
 <div ng-include="layoutPartial('topBar')" ></div>
 
+        <!-- Article Controls -->
+        <div class="row articleControls" ng-controller="ShareCtrl" >
+            <div class="col-xs-12">
+              <div class="pull-right articleDate">{{published_dateObj | date:'yyyy-MM-dd'}}</div>
+              <ul class="nav nav-pills">
+                  <li><a href="" class="fav_btn"><span>Favourite</span></a></li>
+                  <li><a href=""  ng-click="fbShare(article.id,'{{article.title}}','{{article.subtitle|truncate : 100}}', 'http://core5.staticworld.net/images/article/2014/07/amazon_app_store-100355678-large.jpg')" class="share_btn"><span>Share</span></a></li>
+              </ul>
+            </div>
+        </div>
+
+        <!-- Article Content -->
+        <div class="row articleBody" ng-swipe-right="backSwipe()">
+            <div class="col-xs-12">
+                <div class="sourceTitle">
+                  <h4 class="list-group-item-heading">{{article.title}}</h4>
+					<p class="subheading" ng-bind="article.subtitle | htmlToPlaintext" ng-show="article.subtitle!=null" />
+				</div>
 
 
-
-<div class="article_view row" ng-swipe-right="backSwipe()">
-	<h3 >{{article.title}}</h3>
-	<h4 ng-bind="article.subtitle | htmlToPlaintext" ng-show="article.subtitle!=null" />
-</div>
-
-	<div ng-controller="CarouselCtrl" class="row" >
-	  <div>
-	    <carousel interval="slide_interval"  id="niiuCarousel">
-	      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
-	        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
-	        <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" style="max-height:400px;" >
-	        <div class="carousel-caption">  	
-	        		
-	          		<div ng-bind-html="slide.imgText" />
-   
-	        </div>
-	      </slide>
-	    </carousel>
-	    </div>
-	</div>
+					<div ng-controller="CarouselCtrl" class="row" >
+					  <div>
+					    <carousel interval="slide_interval"  id="niiuCarousel">
+					      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
+					        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
+					        <img ng-src="{{slide.imgUrl}}" class="img-responsive dark-shadow" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
+					        <div class="carousel-caption">  	
+					        		
+					          		<!--div ng-bind-html="slide.imgText" / -->
+				   
+					        </div>
+					      </slide>
+					    </carousel>
+					    </div>
+					</div>
 	<!--img src="{{media_path}}{{image.path}}"  ng-repeat="image in article.media" class="img-responsive" ng-show="$first" onError="this.onerror=null;this.src='/images/blank.png';" /-->
 
-<div class="article_view row" style="" ng-swipe-right="backSwipe()">
-	<div ng-bind-html="article.content"></div>
-	<div class="col-xs-12 pull-right" ng-controller="ShareCtrl" ><a ng-click="fbShare(article.id,'{{article.title}}','{{article.subtitle|truncate : 100}}', 'http://core5.staticworld.net/images/article/2014/07/amazon_app_store-100355678-large.jpg')">share</a><p>
+<div class="article_view articleBody" ng-swipe-right="backSwipe()">
+	<div class="articletext" ng-bind-html="article.content"></div>
+	<p><a ng-click="backSwipe()">back</a><p>
 
-</div> khkjhmjbjbjkukhuhlkjh 
-{{article.media.length}} images
-
+</div>
 

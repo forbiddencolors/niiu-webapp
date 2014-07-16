@@ -1,13 +1,18 @@
+<!-- Loader Bar -->
+<div class="loader-bar"></div>
+
 <div ng-controller="TopbarCtrl">
 
 	
-	<!-- Loader Bar -->
-        <div class="loader-bar"></div>
+
      <!--top bar -->
-	<div class="navbar navbar-default navbar-fixed-top row" role="navigation">
-		<div id="menu" class="col-xs-4 pull-left">
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div id="menu" class="col-xs-1 pull-left">
 			<a href="" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" ><img src="images/menu-icon.png" alt="Menu" /></a></div>
-			<div class="center-block col-xs-8 col-centered"><span ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </span><span translate>{{pageContent.title }}</span></div>
+			<div class="col-xs-5 col-xs-offset-3"><div style="float:left; padding-right:5px;" ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="55"> </div>
+        <div class="section-label"><span class="label-subject" translate>{{pageContent.subject }}</span><br>
+        <span class="label-source" translate>{{pageContent.source.name }}</span></div>
+      </div>
 		<div id="logo" class="col-xs-2 pull-right"><a href="#/userHome/"  ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" ><img src="images/niiu-logo.png" alt="Logo" /></a></div>
 	</div>
 	<!--nav bar -->

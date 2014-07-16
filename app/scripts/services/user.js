@@ -169,6 +169,7 @@ angular.module('niiuWebappApp')
                 var page_custom_section = (user_sections[i]) ? user_sections[i].custom_section : null;
                 var page_custom_logo = (user_sections[i]) ? constants.CUSTOM_SECTION_LOGO : null;
                 var page_title =  "No Title";
+                var page_subject = "No Subject";
                 console.log('what is this user_section'+i,user_sections[i]);
                 /*
                 if(i===-1) {
@@ -227,9 +228,11 @@ angular.module('niiuWebappApp')
                         }
                         if (thisSubsectionObj.name) {
                             page_title += thisSubsectionObj.name;
+                            page_subject = thisSubsectionObj.name;
                             console.log('blanko subsection',thisSubsectionObj.name);
                         } else if (thisSectionObj.name) {
                             page_title += thisSectionObj.name;
+                            page_subject = thisSectionObj.name;
                             console.log('blanko section',thisSectionObj.name);
                         }
                     }
@@ -237,6 +240,7 @@ angular.module('niiuWebappApp')
                         if (user_sections[i].custom_section!==null) {
 
                             page_title = user_sections[i].custom_section;
+                            page_subject = user_sections[i].custom_section;
                             thisSourceObj.logo = page_custom_logo;
                         }
                     }
@@ -257,6 +261,7 @@ angular.module('niiuWebappApp')
                     userPage[i]=  {
                                     type: page_type,
                                     title: page_title,
+                                    subject: page_subject,
                                     url : section_url,
                                     section : {
                                         id : page_section,
@@ -295,6 +300,7 @@ angular.module('niiuWebappApp')
         var titlePage = {
                                     type: "titlepage",
                                     title: "menu_titlepage",
+                                    subject: page_subject,
                                     url : "/sectionHome/",
                                     sectionIndex : 0,
                                     section : {
