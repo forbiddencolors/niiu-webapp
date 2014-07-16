@@ -39,6 +39,29 @@ body {
 
 	}
 
+	.label-source,.label-subject {
+    	background: none;
+    	font-weight: normal;
+    	font-size: 14px;
+    	font-family: 'alright_sansregular';
+    	color:#ffffff;
+    	padding-left: 0;
+    	white-space:nowrap;
+    }
+
+    .label-subject {
+    	color: #00a651;
+    }
+
+
+	.col-centered{
+	    float: none;
+	    margin: 0 auto;
+	}
+
+
+}
+
 div.navbar {
 	 a.home_btn {
 		 text-indent:-9999px;
@@ -60,25 +83,16 @@ div.navbar {
 
 	}
 
-	.label-source,.label-subject {
-    	background: none;
-    	font-weight: normal;
-    	font-size: 14px;
-    	font-family: 'alright_sansregular';
-    	padding-left: 0;
-    }
-
-    .label-source {
-    	color: #00a651;
-    }
 
     .section-label {
-    	padding-top:10px;
+    	padding-top:5px;
 		  height:55px;
 		  top: 50%;
+		  margin-left:-20px;
 		  
 
     }
+
 
     #logo {
     	text-align:right;
@@ -88,13 +102,6 @@ div.navbar {
 
 }
 
-	.col-centered{
-	    float: none;
-	    margin: 0 auto;
-	}
-
-
-}
 
 #niiuCarousel .imgSlide {
     margin: 0 auto;
@@ -146,15 +153,15 @@ min-height: 300px;
   
 	}
 
-	ul.articles.row li .double {
-	height: 420px;
-	height: 40vh;
+	li.double {
+	max-height: 200px;
+	height: 35vh;
 	overflow:hidden;
 
 	}
-	ul.articles.row li .single {
-	height:300px;
-	height:30vh;
+	li.single {
+	max-height:250px;
+	height:25vh;
 	overflow:hidden;
 	}
 	ul.articles.row li .intro {
@@ -180,7 +187,7 @@ min-height: 300px;
 	 background-size:cover;
 	 border-bottom: 1px solid #000;
 	  border-top: 1px solid #707070;
-	  height:30vh;
+	  /*height:30vh;*/
 	}
 	li.double {
 		background-position: 50% 30%;
@@ -288,6 +295,10 @@ background-repeat:no-repeat;
 
 	}
 
+	#niiuCarousel .slider img{
+    	margin:auto;
+
+    }
 
 
 

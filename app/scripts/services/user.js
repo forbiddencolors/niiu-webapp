@@ -145,7 +145,7 @@ angular.module('niiuWebappApp')
                                 
                                 //add a couple articles to the titlepage
 
-                                pageArticles[0].push(dataArticles[h]);
+                             //   pageArticles[0].push(dataArticles[h]);
                                 
 
                                 homeArticles.push(dataArticles[h])

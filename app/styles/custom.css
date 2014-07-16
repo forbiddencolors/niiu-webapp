@@ -53,7 +53,7 @@ body {
 .navbar {
   background: none;
   border:0;
-  padding:20px;
+  padding:20px 10px;
 }
 
 #logo img {
@@ -62,7 +62,7 @@ body {
 
 #menu {
   margin-top:8px;
-  margin-left: 5px;
+  /*margin-left: 5px;*/
 }
 
 /* Shadow classes */
@@ -205,6 +205,7 @@ div.newsTitle {
     	background: #4f4f50;
     }
 
+   /* 
     .label-source {
     	background: none;
     	color: #00a651;
@@ -213,6 +214,8 @@ div.newsTitle {
     	font-family: 'alright_sansregular';
     	padding-left: 0;
     }
+    */
+
 
     .navbar-fixed-top, .navbar-fixed-bottom {
     	position: absolute;
