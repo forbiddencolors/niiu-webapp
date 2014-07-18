@@ -48,7 +48,7 @@
         </li>
         <li><a class="mHome" href="/" translate>menu_homepage</a></li>
         <li><a class="mSources" translate>menu_sections</a>
-              <ul>
+              
                 <li ng-repeat="user_section in contentObject">
                       <!-- Add Sources here -->
                       <a ng-href="#/sectionView/{{$index}}"  class="selectedSource">
@@ -58,15 +58,21 @@
                         </div>
                       </a>
                 </li>
-              </ul>
+              
 
 
         </li>
         <li><a class="mFavorite" href="/contact/" translate>menu_favorites</a></li>
-        <li><a class="mSettings" href="#/customize" translate>menu_settings</a></li>
+        <li><a class="mSettings" href="#/customize" translate>menu_settings</a>
+          <ul>
+            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_logout</a></li>
+            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_profile</a></li>
+          </ul>
+
+        </li>
         <li><a class="mHelp" href="/about/" translate>menu_help</a></li>
         <li><a class="mFeedback" href="/contact/" translate>menu_feedback</a></li>
-        <li><a class="mFeedback" href="/contact/" translate>menu_logout</a></li>
+        
       </ul>
     </nav>
 
