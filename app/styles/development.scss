@@ -85,11 +85,15 @@ div.navbar {
 
 
     .section-label {
-    	padding-top:5px;
-		  height:55px;
+    	padding-top:auto;
+		  /*height:55px;
+		  top: 50%;*/
+		  margin:auto auto auto -20px;
+		  /*margin-left:-20px;
+		  position: relative;
 		  top: 50%;
-		  margin-left:-20px;
-		  
+		  transform: translateY(-50%);*/
+				  
 
     }
 
@@ -113,7 +117,7 @@ div.navbar {
 
 
 #niiuCarousel .slider {
-	height:40vh;
+	height:55vh;
 	max-height:500px;
 	overflow:hidden;
 

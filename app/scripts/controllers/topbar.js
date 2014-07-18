@@ -6,9 +6,12 @@ angular.module('niiuWebappApp')
     $scope.slideMenu = function() {
     	//not working
     	console.log('slide menu');
-    	$("#niiuAppmenu").mmenu();
+    	
+    	$("#niiuAppmenu").trigger("open.mm");
     	
     }
-
+    $scope.onMenu  = function() {
+	    $("#niiuAppmenu").mmenu();
+	}
     $scope.navCollapsed = true;
   });

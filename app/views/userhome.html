@@ -1,10 +1,10 @@
 
-	<div ng-controller="CarouselCtrl">
-	  <div class="row">
+	<div class="row">
+	<div ng-controller="CarouselCtrl" class="col-xs-12" >  
 	    <carousel interval="slide_interval"  id="niiuCarousel" class="news-slider" >
-	      <slide ng-repeat="slide in slides" active="slide.active" class="col-xs-12 slider" >
+	      <slide ng-repeat="slide in slides" active="slide.active" class="slider" >
 	      	<a href="{{slide.imgLink}}">
-	      	<article>
+	      		<article>
 		      		<div class="image-content"> <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ></div>
 	                <div class="text-content">
 	                  <label>{{slide.imgSection}}</label>
@@ -37,7 +37,7 @@
 	<div ng-include="layoutPartial('topBar')" ></div>
 
 
-	<div class="col-xs-12" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >
+	<div class="col-xs-12 mmenu" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >
 	<!-- h3>{{ 'menu_titlepage' | translate}}</h3 -->
 
 	<p class="btn btn-info" ng-hide="contentObject[0]">Please wait while we load your articles...</p>
