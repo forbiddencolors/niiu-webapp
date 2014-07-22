@@ -10,6 +10,17 @@ angular.module('niiuWebappApp')
         console.log('The MenuObj looks like this',menuObj);
         $scope.menuObj=menuObj;
         $scope.importUserSections(User.getUser().contentProfile.items);
+        $scope.treeArray=[];
+
+
+        for (var i in menuObj) {
+          console.log('making treeObj');
+         console.log( 'menuObj['+i+'] is in the house', menuObj[i]);
+          $scope.treeArray.push(menuObj[i]);
+
+        }
+
+        console.log('The treeArray looks like this',$scope.treeArray);
 
     }
    );

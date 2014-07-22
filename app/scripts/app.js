@@ -8,7 +8,8 @@ angular.module('niiuWebappApp', [
  // 'ngAnimate',
   'ngTouch',
   'ui.bootstrap',
-  'pascalprecht.translate'
+  'pascalprecht.translate',
+  'ui.tree'
 ])
   .config(function ($routeProvider, $httpProvider, $translateProvider) {
     $routeProvider
