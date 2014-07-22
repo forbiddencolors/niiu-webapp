@@ -8,50 +8,36 @@
 
 <hr>
 
-<h2> Section Menu (<a ng-click=" $scope.collapseAll()">tree</a> <a ng-click=" $scope.expandAll()">view</a>)</h2> 
-
-<script type="text/ng-template" id="items_renderer.html">
-    <div ui-tree-handle>
-      <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
-      {{item.title}}
-      <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-      <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
-    </div>
-    <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
-      <li ng-repeat="item in item.items" ui-tree-node ng-include="'items_renderer.html'">
-      </li>
-    </ol>
-  </script>
-<div ui-tree>
-  <ol ui-tree-nodes ng-model="treeArray" class="angular-ui-tree-nodes" >
-    <li ng-repeat="niiu_section in treeArray" ui-tree-node >
-      <div ui-tree-handle >
-        {{niiu_section.name}}
+<h2>Collapse Menu</h2>
+  <ol >
+    <li ng-repeat="niiu_section in menuObj">
+      <div >
+        <a ng-click="isCollapsed = !isCollapsed">{{niiu_section.name}}</a>
       </div>
-      <ul ui-tree-nodes="sources" ng-model="niiu_section" ng-class="{hidden: collapsed}">
-      	
-        <li ng-repeat="niiu_source in niiu_section.sources" ui-tree-node collapsed="true">
-          <div ui-tree-handle class="angular-ui-tree-handle">
-            {{niiu_source.name}} <span ng-hide="niiu_source.subsections"><a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,null,null)">[ + ]</a></span>
+      <ul collapse="isCollapsed" >
+        
+        <li ng-repeat="niiu_source in niiu_section.sources" >
+          <div >
+            <a ng-click="isSubCollapsed = !isSubCollapsed">{{niiu_source.name}}</a> <span ng-hide="niiu_source.subsections"><a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,null,null)">[ + ]</a></span>
           </div>
           
-          <ol ui-tree-nodes="options" ng-model="niiu_source">
-	        <li ng-repeat="niiu_subsection in niiu_source.subsections" ui-tree-node  collapsed="true">
-	          <div ui-tree-handle>
-	            {{niiu_subsection.name}} <a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,niiu_subsection.id,null)">[ + ]</a>
-	          </div>
+          <ol collapse="isSubCollapsed" >
+          <li ng-repeat="niiu_subsection in niiu_source.subsections" >
+            <div >
+              {{niiu_subsection.name}} <a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,niiu_subsection.id,null)">[ + ]</a>
+            </div>
           
-       	 </li>
-       	
+         </li>
+        
       </ul>
 
         </li>
       </ul>
     </li>
   </ol>
-</div>
 
-<hr>
+
+
 
 
 

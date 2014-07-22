@@ -28,7 +28,8 @@ angular.module('niiuWebappApp')
    $scope.sectionsToAdd = [];
    //console.log("are there user sections?",User.getUser().contentProfile.items);
 
-
+   $scope.isCollapsed = true;
+   $scope.isSubCollapsed = true;
 
 
 
