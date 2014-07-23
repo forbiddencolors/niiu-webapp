@@ -7,6 +7,7 @@ angular.module('niiuWebappApp')
     /* ContentObject is array of up to 11 pageObjects */
     var contentObject = [];
     var currentSection = 0;
+    var hideMenu = true;
     function makeSectionUrls() {
             //Get list of section urls to rotate through
                 var user_sections=contentObject;
@@ -483,6 +484,23 @@ angular.module('niiuWebappApp')
             }
             //or if they didn't pass in a location go to the first section
             return section_list[0];
+
+        },
+        toggleMenu: function() {
+
+            if(hideMenu == false) {
+                console.log('hide menu');
+
+                angular.element('.row-offcanvas-left').removeClass('active');
+                hideMenu=true;
+             } else {
+                console.log('show menu');
+
+                 angular.element('.row-offcanvas-left').addClass('active');
+                 hideMenu=false;
+
+             }  
+
 
         },
     	isValid: function() {

@@ -4,6 +4,16 @@ angular.module('niiuWebappApp')
 .controller('usermenuCtrl', function ($scope, $location, $translate, niiuAuthenticator, User) {
     console.log($location);
 
+    User.getContentObject().then(function(contentObject) {
+        $scope.contentObject=contentObject;
+        console.log('the menu got a contentObject',contentObject);
+
+    },function(error_contentObject) {
+        $scope.error=error_contentObject;
+        console.log('the couldnt get a contentObject',error_contentObject);
+
+    });
+
     $scope.logout = function() {
     	//niiuAuthenticator.changeUser();
     	User.deleteUser();
@@ -11,6 +21,10 @@ angular.module('niiuWebappApp')
     	niiuAuthenticator.logout();
 
     };
+
+    $scope.toggleMenu = function() {
+        User.toggleMenu();      
+    }
 
     $scope.nextSection = function() {
         console.log('this pre next page is', $location.path());

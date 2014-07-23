@@ -1,5 +1,5 @@
             <!-- offcanvas menu -->
-    <nav id="niiuAppmenu" class="col-xs-6 col-sm-3 sidebar-offcanvas">
+    <nav id="niiuAppmenu" ng-controller="usermenuCtrl">
       <ul class="mm-list mm-panel mm-opened mm-current">
         <li id="searchBar">
           <form>
@@ -10,7 +10,7 @@
         <li><a class="mSources" translate>menu_sections</a>
 
                       <!-- Add Sources here -->
-                      <a ng-href="#/sectionView/{{$index}}" ng-repeat="user_section in contentObject" class="selectedSource" >
+                      <a ng-href="#/sectionView/{{$index}}" ng-click="toggleMenu()" ng-repeat="user_section in contentObject" class="selectedSource" >
                         <div class="sourceTitle">
                           <span class="label label-default label-subject"  ng-if="user_section.source.name" translate>{{user_section.source.name}}</span>
                           <h4 class="list-group-item-heading label-source">{{user_section.subject}}</h4>
@@ -21,8 +21,8 @@
 
 
         </li>
-        <li><a class="mFavorite" href="/contact/" translate>menu_favorites</a></li>
-        <li><a class="mSettings" href="#/customize" translate>menu_settings</a>
+        <li><a class="mFavorite" href="#" ng-click="toggleMenu()" translate>menu_favorites</a></li>
+        <li><a class="mSettings" href="#/customize" ng-click="toggleMenu()" translate>menu_settings</a>
           <ul>
             <li><a class="mSettings" ng-click="logout()" href="" translate>menu_logout</a></li>
             <li><a class="mSettings" ng-click="logout()" href="" translate>menu_profile</a></li>
