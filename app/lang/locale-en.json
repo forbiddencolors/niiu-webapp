@@ -16,5 +16,6 @@
      "menu_profile" : "Update Profile",
     "menu_next_section": "Next Section",
     "menu_current_section": "Current Section",
-    "menu_logout": "Logout"
+    "menu_logout": "Logout",
+    "icon_back" : "Back"
 }

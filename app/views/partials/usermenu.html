@@ -2,12 +2,27 @@
     <nav id="niiuAppmenu" ng-controller="usermenuCtrl">
       <ul class="mm-list mm-panel mm-opened mm-current">
         <li id="searchBar">
+<script type="text/ng-template" id="customTemplate.html">
+  <a >
+      <span bind-html="match.label | typeaheadHighlight:query"></span>
+  </a>
+</script>
+
+
+    <h4>Static arrays</h4>
+    <pre>Model: {{selected | json}}</pre>
+    <form >
+      <input type="text" ng-model="selected" typeahead="state.title for state in contentArticles | filter:$viewValue | limitTo:8" class="form-control" placeholder="{{'menu_search' | translate}}..." typeahead-on-select="captureSelection($item, $model, $label)">
+    </form>
+
+
+
           <form>
-            <input class="form-control" type="text" placeholder="{{'menu_search' | translate}}...">
+            <input class="form-control" type="text" placeholder="{{'menu_search' | translate}}..." >
           </form>
         </li>
-        <li><a class="mHome" href="/" translate>menu_homepage</a></li>
-        <li><a class="mSources" translate>menu_sections</a>
+        <li><a class="mHome" ng-href="#/userHome" ng-click="toggleMenu()" translate>menu_homepage</a></li>
+        <li><a href="" ng-click="getContentObject()" class="mSources" translate>menu_sections</a>
 
                       <!-- Add Sources here -->
                       <a ng-href="#/sectionView/{{$index}}" ng-click="toggleMenu()" ng-repeat="user_section in contentObject" class="selectedSource" >
@@ -24,8 +39,9 @@
         <li><a class="mFavorite" href="#" ng-click="toggleMenu()" translate>menu_favorites</a></li>
         <li><a class="mSettings" href="#/customize" ng-click="toggleMenu()" translate>menu_settings</a>
           <ul>
-            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_logout</a></li>
-            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_profile</a></li>
+            <li><a ng-click="logout();toggleMenu()" href="" translate>menu_logout</a></li>
+            <li><a href="" ng-click="toggleMenu()" translate>menu_profile</a></li>
+            <li><a ng-href="#/userHome/refresh" ng-click="toggleMenu()" translate>menu_refresh</a></li>
           </ul>
 
         </li>
@@ -33,7 +49,10 @@
         <li><a class="mFeedback" href="/contact/" translate>menu_feedback</a></li>
         
       </ul>
+
     </nav>
+
+    
 
     
   <!--nav bar -->

@@ -16,5 +16,6 @@
     "menu_profile" : "Profil actualizieren",
     "menu_next_section": "Nächstes Ressort",
     "menu_current_section": "Dieses Ressort",
-    "menu_logout": "Abmelden"
+    "menu_logout": "Abmelden",
+    "icon_back" : "Züruck"
 }

@@ -30,6 +30,10 @@ angular.module('niiuWebappApp')
 
     };
 
+    $scope.toggleMenu = function(onOff) {
+    	User.toggleMenu(onOff);
+
+    };
 
 	User.getContentObject().then(function(contentObjArray) {
 

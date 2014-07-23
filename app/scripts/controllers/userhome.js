@@ -40,6 +40,10 @@ angular.module('niiuWebappApp')
   		console.log('heres this scope, ',$scope); 
   	}
 
+  	$scope.toggleMenu = function(onOff) {
+  		User.toggleMenu(onOff);
+  	}
+
   	$scope.sendThat = function(msg) {
   		console.log(msg);
 

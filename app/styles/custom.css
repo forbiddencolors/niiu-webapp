@@ -318,6 +318,9 @@ li#searchBar {
     .mm-list > li > a, .mm-list > li > span {
     	padding: 20px 10px 20px 20px;
     }
+    .mm-list {
+      padding-top:20px;
+    }
 
 #niiuAppmenu li a.selectedSource{
   	background: #4b4c4d;
@@ -435,6 +438,14 @@ niiu-webappv1 Sctionpage
 
         div.articleControls ul li a span{
           display: none;
+        }
+
+        div.articleControls ul li a.back_btn:before{
+          content:'';
+          background: url(../images/icons/arrow-back-green.png);
+          width: 54px;
+          height: 54px;
+          display: inline-block;
         }
 
         div.articleControls ul li a.fav_btn:before{

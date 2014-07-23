@@ -443,6 +443,33 @@ angular.module('niiuWebappApp')
                 
 
         },
+        getContentArticles: function() {
+            console.log('pulling articles from contentObject',contentObject);
+           // var deferred=$q.defer();
+            var contentArticles=[];
+            if(contentObject.length>0) {
+                for (var i=0;i<contentObject.length;i++) {
+                    contentArticles=contentArticles.concat(contentObject[i].articles);
+                    console.log('adding to contentObject',contentArticles);
+                }
+                console.log('here are your contentArticles ', contentArticles);
+                return contentArticles;
+            } else {
+                console.log('no contentObject for contentArticles ');
+                makeContentObject().then(function(newContentObj) {
+                    /*
+                    for (var i=0;i<contentObject.length;i++) {
+                        contentArticles.concat(contentObject[i].articles);
+                    }
+                    */
+                    console.log('made new contentObject for contentArticles',newContentObj);
+                    getContentArticles();
+
+                }); 
+            }
+
+
+        },
         setContentObject: function(data3s,dataArticles) {
 
                 console.log('did we get some new articles here?',dataArticles);
@@ -486,7 +513,15 @@ angular.module('niiuWebappApp')
             return section_list[0];
 
         },
-        toggleMenu: function() {
+        toggleMenu: function(onOff) {
+            console.log('toggleMenu onOff is ',onOff);
+            if(onOff===false || onOff===true) {
+                hideMenu=onOff;
+                 console.log('toggleMenu handled so now hideMenu is ',hideMenu);
+
+            }
+
+            console.log('toggleMenu so now hideMenu is ',hideMenu);
 
             if(hideMenu == false) {
                 console.log('hide menu');

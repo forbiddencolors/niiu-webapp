@@ -10,7 +10,7 @@
 	<div ng-controller="CarouselCtrl" class="col-xs-12" >  
 	    <carousel interval="slide_interval"  id="niiuCarousel" class="news-slider" >
 	      <slide ng-repeat="slide in slides" active="slide.active" class="slider" >
-	      	<a href="{{slide.imgLink}}">
+	      	<a href="{{slide.imgLink}}" ng-click="toggleMenu(false)">
 	      		<article>
 		      		<div class="image-content"> <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ></div>
 	                <div class="text-content">
@@ -51,7 +51,7 @@
 	<ul class="list-unstyled">
 		<li class="col-xs-12" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " >
 			<div class="row">
-				<a ng-href="#/article/{{article.id}}" class="list-group-item clearfix">
+				<a ng-href="#/article/{{article.id}}" ng-click="toggleMenu(false)" class="list-group-item clearfix">
 				<figure class="pull-left newsSource">
 					<img src="{{getLogoPath(contentObject[article.sectionIndex].source.id)}}{{contentObject[article.sectionIndex].source.logo}}" width="46" height="46" />
 				</figure>

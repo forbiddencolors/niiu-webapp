@@ -5,7 +5,7 @@ angular.module('niiuWebappApp')
  
     $scope.media_path=constants.ARTICLE_MEDIA_PATH;
     $scope.pageClass = "articlePage";
-    $scope.slide_interval = 0;
+    $scope.slide_interval = -10;
 
 
   	Articleservice.getArticle($routeParams.articleId).then(function(article) {
