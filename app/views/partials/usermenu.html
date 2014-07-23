@@ -1,20 +1,62 @@
-  <!--a ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="btn btn-navbar">xnav</a -->
- <!--
-  <div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
-  <ul class="nav" ng-controller="usermenuCtrl">
-    <li><a ng-href="#/customize" ng-show="user!=null">{{ 'menu_settings' | translate}}</a></li>
-    <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
-    <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
-    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
+            <!-- offcanvas menu -->
+    <nav id="niiuAppmenu" class="col-xs-6 col-sm-3 sidebar-offcanvas">
+      <ul class="mm-list mm-panel mm-opened mm-current">
+        <li id="searchBar">
+          <form>
+            <input class="form-control" type="text" placeholder="{{'menu_search' | translate}}...">
+          </form>
+        </li>
+        <li><a class="mHome" href="/" translate>menu_homepage</a></li>
+        <li><a class="mSources" translate>menu_sections</a>
 
-    <li><a ng-href="#/userHome/refresh" ng-show="user!=null">{{ 'menu_refresh' | translate}}</a></li>
+                      <!-- Add Sources here -->
+                      <a ng-href="#/sectionView/{{$index}}" ng-repeat="user_section in contentObject" class="selectedSource" >
+                        <div class="sourceTitle">
+                          <span class="label label-default label-subject"  ng-if="user_section.source.name" translate>{{user_section.source.name}}</span>
+                          <h4 class="list-group-item-heading label-source">{{user_section.subject}}</h4>
+                        </div>
+                      </a>
+
+              
+
+
+        </li>
+        <li><a class="mFavorite" href="/contact/" translate>menu_favorites</a></li>
+        <li><a class="mSettings" href="#/customize" translate>menu_settings</a>
+          <ul>
+            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_logout</a></li>
+            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_profile</a></li>
+          </ul>
+
+        </li>
+        <li><a class="mHelp" href="/about/" translate>menu_help</a></li>
+        <li><a class="mFeedback" href="/contact/" translate>menu_feedback</a></li>
+        
+      </ul>
+    </nav>
+
     
-    <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
-    <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
-  <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
-  </ul>
-</div>
- -->
+  <!--nav bar -->
+<!--  
+  <div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
+    <ul class="nav" ng-controller="usermenuCtrl">
+      <li><a ng-href="#/customize" ng-show="user!=null" translate>menu_settings</a></li>
+      <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
+
+      <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
+      <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
+
+      <li><a ng-href="#/userHome/refresh" ng-show="user!=null" translate>menu_refresh</a></li>
+
+      
+      <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
+      <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
+    <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+    </ul>
+
+
+    </div> -->
+
   <p class="errors" ng-show="error">{{error}}</p>
 
 

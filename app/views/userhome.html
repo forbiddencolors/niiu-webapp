@@ -1,5 +1,12 @@
 
-	<div class="row">
+	<div class="row row-offcanvas row-offcanvas-left">
+		<!--top bar -->
+	
+	<!-- <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" ng-include="partials/usermenu.html"></div> -->
+
+	<div ng-include="layoutPartial('topBar')"></div>
+
+
 	<div ng-controller="CarouselCtrl" class="col-xs-12" >  
 	    <carousel interval="slide_interval"  id="niiuCarousel" class="news-slider" >
 	      <slide ng-repeat="slide in slides" active="slide.active" class="slider" >
@@ -33,8 +40,7 @@
 	    </div>
 	</div>
 
-	<!--top bar -->
-	<div ng-include="layoutPartial('topBar')" ></div>
+
 
 
 	<div class="col-xs-12 mmenu" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >

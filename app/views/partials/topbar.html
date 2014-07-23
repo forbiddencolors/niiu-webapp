@@ -1,6 +1,8 @@
 <!-- Loader Bar -->
 <div class="loader-bar"></div>
 
+
+
 <div ng-controller="TopbarCtrl">
 
 	
@@ -8,7 +10,7 @@
      <!--top bar -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div id="menu" class="col-xs-1 pull-left" style="text-align:left">
-			<a href="" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" ><img src="images/menu-icon.png" alt="Menu" /></a></div>
+			<a href="" ng-click="toggleMenu()" ><img src="images/menu-icon.png" alt="Menu" /></a></div>
   			<div class="col-xs-8">
           <div class="col-xs-6" style="text-align:right;" ng-show="pageContent.source.logo!=null"><img src="{{logo_path}}{{pageContent.source.logo}}"  width="45"></div>
         
@@ -18,71 +20,13 @@
       </div>
 		<div id="logo" class="col-xs-2 pull-right"><a href="#/userHome/"  ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" ><img src="images/niiu-logo.png" alt="Logo" /></a></div>
 	</div>
-	<!--nav bar -->
-	<div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
-	  <ul class="nav" ng-controller="usermenuCtrl">
-	    <li><a ng-href="#/customize" ng-show="user!=null" translate>menu_settings</a></li>
-	    <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
-	    <!--li><a ng-href="#/customize" ng-show="user!=null">Customize</a></li-->
-	    <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
-	    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
-
-	    <li><a ng-href="#/userHome/refresh" ng-show="user!=null" translate>menu_refresh</a></li>
-	    <!--li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li-->
-	    
-	    <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
-	    <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
-	  <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
-	  </ul>
 
 
 
-
-        <!-- offcanvas menu -->
-    <nav id="niiuAppmenu" >
-      <ul>
-        <li id="searchBar">
-          <form>
-            <input class="form-control" type="text" placeholder="{{'menu_search' | translate}}...">
-          </form>
-        </li>
-        <li><a class="mHome" href="/" translate>menu_homepage</a></li>
-        <li><a class="mSources" translate>menu_sections</a>
-              
-                <li ng-repeat="user_section in contentObject">
-                      <!-- Add Sources here -->
-                      <a ng-href="#/sectionView/{{$index}}"  class="selectedSource">
-                        <div class="sourceTitle">
-                          <span class="label label-default label-source">{{user_section.title}}</span>
-                          <h4 class="list-group-item-heading">{{user_section.source.name}}</h4>
-                        </div>
-                      </a>
-                </li>
-              
-
-
-        </li>
-        <li><a class="mFavorite" href="/contact/" translate>menu_favorites</a></li>
-        <li><a class="mSettings" href="#/customize" translate>menu_settings</a>
-          <ul>
-            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_logout</a></li>
-            <li><a class="mSettings" ng-click="logout()" href="" translate>menu_profile</a></li>
-          </ul>
-
-        </li>
-        <li><a class="mHelp" href="/about/" translate>menu_help</a></li>
-        <li><a class="mFeedback" href="/contact/" translate>menu_feedback</a></li>
-        
-      </ul>
-    </nav>
-
-
-
-
-    </div>
 
 
 
 </div>
+
 
 

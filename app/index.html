@@ -14,6 +14,7 @@
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
     
 
     <!-- endbower -->
@@ -25,12 +26,13 @@
 
     <!--Sam CSS-->
  <!--   <link  rel="stylesheet" href="styles/slippry.css">
+ -->
     <link rel="stylesheet" href="styles/jquery.mmenu.all.css" >
--->
+
 
     <link rel="stylesheet" href="styles/custom.css" >
 
-    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+    
 
   </head>
   <body ng-app="niiuWebappApp"  ng-keyup="keyPress($event)">
@@ -41,11 +43,17 @@
 
     <!-- Add your site or application content here -->
     <!--div class="container" -->
-      <div class="container-fluid page {{ pageClass }} col-xs-12 col-lg-8" ng-view="">
-          <!-- templates get loaded here -->
+      <div class="container-fluid page {{ pageClass }} col-xs-12 col-lg-8">
+        <div id="canvasrow" class="row row-offcanvas row-offcanvas-left">
+            <div id="canvasnav" class="col-xs-6 col-sm-3 sidebar-offcanvas" ng-include="layoutPartial('headerUrl')"></div> 
+            <div ng-view="" class="col-xs-12">
+                <!-- templates get loaded here -->
+            </div>
+          
             
+        </div>
       </div>
-      <div ng-include="layoutPartial('headerUrl')"></div> 
+      
     <!--/div -->  
     <div id="fb-root"></div>
 

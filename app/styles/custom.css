@@ -255,6 +255,11 @@ li#searchBar {
 	color: #fff;
 }
 
+#niiuAppmenu {
+  background: #5c5d5f;
+  color: #fff;
+}
+
 #niiuAppmenu li a {
 	font-size: 24px;
 	font-family: 'alright_sansregular'
