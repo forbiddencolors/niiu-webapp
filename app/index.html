@@ -43,7 +43,7 @@
 
     <!-- Add your site or application content here -->
     <!--div class="container" -->
-      <div class="container-fluid page {{ pageClass }} col-xs-12 col-lg-8">
+      <div class="container-fluid page {{ pageClass }} col-xs-12 col-lg-8" style="overflow-x: hidden;">
         <div id="canvasrow" class="row row-offcanvas row-offcanvas-left">
             <div id="canvasnav" class="col-xs-9 sidebar-offcanvas" ng-include="layoutPartial('headerUrl')"></div> 
             <div ng-view="" class="col-xs-12 {{ pageClass }}">

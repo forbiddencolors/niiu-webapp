@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('ArticleCtrl', function ($scope, $routeParams, $location, Articleservice, User, constants) {
- 
+  .controller('ArticleCtrl', function ($scope, $window, $routeParams, $location, Articleservice, User, constants) {
+    $window.scrollTo(0,0);
     $scope.media_path=constants.ARTICLE_MEDIA_PATH;
     $scope.pageClass = "articlePage";
     $scope.slide_interval = -10;

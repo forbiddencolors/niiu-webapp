@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
+  .controller('UserhomeCtrl', ['$scope', '$window', 'niiuSyncer', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, $window, niiuSyncer, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
 
   	
 
-
+  	$window.scrollTo(0,0);
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 
 

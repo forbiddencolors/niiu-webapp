@@ -17,5 +17,6 @@
     "menu_next_section": "Next Section",
     "menu_current_section": "Current Section",
     "menu_logout": "Logout",
-    "icon_back" : "Back"
+    "icon_back" : "Back",
+    "msg_wait" : "Please wait while we load your articles..."
 }

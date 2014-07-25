@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('SectionviewCtrl', function ($scope, User, $routeParams, $location, constants) {
+  .controller('SectionviewCtrl', function ($scope, User, $routeParams, $location, $window, constants) {
 
+	$window.scrollTo(0,0);
 	$scope.currentSection = User.getCurrentSection();
 	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 
@@ -13,8 +14,8 @@ angular.module('niiuWebappApp')
   
     	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
   
-    	
     	$location.path("/sectionView/"+User.getNextSection());
+    	
 
 
     };
@@ -23,9 +24,9 @@ angular.module('niiuWebappApp')
   		
   		var previousSection=User.getPreviousSection();
     	console.log('user swiped back to section',previousSection );
-  
-    	
+  		
     	$location.path("/sectionView/"+previousSection);
+    	
 
 
     };

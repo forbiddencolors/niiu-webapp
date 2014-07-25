@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
-
+  .controller('CustomizeCtrl', function ($rootScope, $window, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
+    $window.scrollTo(0,0);
 
   	console.log('the scope at this point is like this', $scope);
   	console.log('the root scope at this point is like', $rootScope);
