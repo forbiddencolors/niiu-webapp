@@ -7,23 +7,15 @@
               <ul class="nav nav-pills">
               	  <li><a href="" class="back_btn" ng-click="backSwipe()" ><span translate>icon_back</span></a></li>
                   <li><a href="" class="fav_btn"><span>Favourite</span></a></li>
-                  <li>
-                  	 <span class="dropdown" on-toggle="toggled(open)">
-				      <a href class="dropdown-toggle share_btn">
-				        Share
-				      </a>
-				      <ul class="dropdown-menu">
-				        <li>
-				          <a href=""  ng-click="fbShare(article.id,article.title,article.content, slides[0].imgUrl)" >Facebook Share</a>
-				          <a href=""  ng-click="twitterShare(article.id,article.title,article.content)">Twitter Share</a>
-				        </li>
-				      </ul>
-				    </span>
-                  </li>
-
+                  <li><a href=""  ng-click="fbShare(article.id,'{{article.title}}','{{article.subtitle|truncate : 100}}', 'http://core5.staticworld.net/images/article/2014/07/amazon_app_store-100355678-large.jpg')" class="share_btn"><span>Share</span></a></li>
               </ul>
             </div>
         </div>
+
+        <!-- Facebook Tags -->
+        <meta property="og:title" content="{{article.title}}" />
+		<meta property="og:image" content="{{slides[0].imgUrl}}" ng-if="slides[0]" />
+		<meta property="og:description" content="{{article.subtitle | htmlToPlaintext | truncate : 100}}" ng-if="slides[0]" />
 
         <!-- Article Content -->
         <div class="row articleBody" ng-swipe-right="backSwipe()">

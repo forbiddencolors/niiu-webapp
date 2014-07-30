@@ -9,6 +9,8 @@ angular.module('niiuWebappApp')
                 NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
                 NIIU_API_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
                 USER_LOCATOR : 10210,
+                GUEST_ID : 1451,
+                GUEST_API_KEY : "e8719e4cb4082f33fe25c240a250342950920ff4",
                 USER_TABLE_SCHEMA :  { stores:[{ name:'niiu_user', keyPath:"user" }] },
                 USER_DB_NAME : 'niiu_user_table',
                 USER_TABLE_NAME : 'niiu_user',
@@ -16,7 +18,7 @@ angular.module('niiuWebappApp')
                 ARTICLE_MEDIA_PATH : 'http://dev.niiu.de/img/retrieved_article_media/',
                 SOURCE_LOGO_PATH : 'http://dev.niiu.de/files/sources/images/',
                 MAXIMUM_SECTIONS : 10,
-                CUSTOM_SECTION_LOGO : '/images/icon_custom_section.png',
+                CUSTOM_SECTION_LOGO : '/images/icon_custom_section_blank.png',
                 ENVIRONMENT : 'dev'
 
 

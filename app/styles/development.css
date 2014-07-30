@@ -1,4 +1,3 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\000033}}
 body {
   margin: 0px;
   padding: 0px;
@@ -8,81 +7,74 @@ body {
   background-position: 63% 0%;
   color: white;
   background-color: #3e3e40;
-  height: 100%;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000315}}
-body a, body p a {
-  color: white;
-  text-decoration: underline;
-  font-weight: bold;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000321}}
-body p.subheading {
-  color: gray;
-  text-align: center;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000326}}
-body .nav, body .pagination, body .carousel, body .panel-title a {
-  cursor: pointer;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000328}}
-body div.section_view, body div.front_view {
-  /**/
-  min-height: 80vh;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000335}}
-body div.topbar {
-  height: 100px;
-  width: 100%;
-  border-bottom: 1px solid #000000;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000342}}
-body .label-source, body .label-subject {
-  background: none;
-  font-weight: normal;
-  font-size: 14px;
-  font-family: 'alright_sansregular';
-  color: #ffffff;
-  padding-left: 0;
-  white-space: nowrap;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000352}}
-body .label-subject {
-  color: #00a651;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000356}}
-body .sourceTitle .label-subject {
-  font-family: alright_sansbold;
-  font-size: 18px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000361}}
-body .col-centered {
-  float: none;
-  margin: 0 auto;
-}
+  height: 100%; }
+  body a, body p a {
+    color: white;
+    text-decoration: underline;
+    font-weight: bold; }
+  body p.subheading {
+    color: gray;
+    text-align: center; }
+  body .nav, body .pagination, body .carousel, body .panel-title a {
+    cursor: pointer; }
+  body div.section_view, body div.front_view {
+    /**/
+    min-height: 80vh;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+  body div.topbar {
+    height: 100px;
+    width: 100%;
+    border-bottom: 1px solid #000000; }
+  body .label-source, body .label-subject {
+    background: none;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: 'alright_sansregular';
+    color: #ffffff;
+    padding-left: 0;
+    white-space: nowrap; }
+  body .label-subject {
+    color: #00a651; }
+  body .sourceTitle .label-subject {
+    font-family: alright_sansbold;
+    font-size: 18px; }
+  body .col-centered {
+    float: none;
+    margin: 0 auto; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000370}}
+#topnav.affix, #topnav {
+  position: fixed;
+  top: 0px;
+  z-index: 100;
+  width: 100%; }
+
+#topnav.affix navbar {
+  background-color: #3e3e40; }
+
+.navbar {
+  background-color: #3e3e40;
+  padding: 0px 2px;
+  border: 0px; }
+
+.row-offcanvas-left.active #topnav, row-offcanvas-left.active#topnav.affix {
+  position: relative; }
+
 div.navbar a.home_btn {
   text-indent: -9999px;
   background: url("/images/sprite.png") no-repeat -80px 0px;
   width: 60px;
   height: 60px;
   display: block;
-  padding: 3px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000380}}
+  padding: 3px; }
 div.navbar a.menu_btn {
   text-indent: -9999px;
   background: url("/images/sprite.png") no-repeat 0px 0px;
   width: 60px;
   height: 60px;
   display: block;
-  padding: 3px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000391}}
+  padding: 3px; }
 div.navbar .section-label {
   padding-top: auto;
   /*height:55px;
@@ -91,18 +83,14 @@ div.navbar .section-label {
   /*margin-left:-20px;
   position: relative;
   top: 50%;
-  transform: translateY(-50%);*/
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003105}}
+  transform: translateY(-50%);*/ }
 div.navbar #logo {
-  text-align: right;
-}
+  text-align: right; }
 
 /*
  * Off Canvas
  * --------------------------------------------------
  */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003119}}
 .row-offcanvas {
   position: relative;
  /*
@@ -115,65 +103,47 @@ transition: all 0.1s ease-out;
   -moz-transition: left 0.4s ease;
   -ms-transition: left 0.4s ease;
   -o-transition: left 0.4s ease;
-  transition: left 0.4s ease;
-}
+  transition: left 0.4s ease; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003137}}
 .row-offcanvas-left
 .sidebar-offcanvas {
-  left: -75%;
-}
+  left: -75%; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003141}}
 .row-offcanvas-left.active {
-  left: 75%;
-}
+  left: 75%; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003145}}
 .sidebar-offcanvas {
   position: absolute;
   top: 0;
   width: 75%;
-  margin-left: 12px;
-}
+  margin-left: 12px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003154}}
 #niiuCarousel .imgSlide {
   margin: 0 auto;
   /*width:100%;
   min-height:100%;
-  position:absolute;*/
-}
+  position:absolute;*/ }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003163}}
 #niiuCarousel .slider {
   /*height:55vh;
   max-height:500px;*/
   overflow: hidden;
-  height: 350px;
-}
+  height: 350px; }
 
 /*login background */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003174}}
 div.container.page.loginHome {
   background-image: url("../images/login-bg-image.jpg");
   width: 100vw;
-  height: 100vh;
-}
+  height: 100vh; }
 
 /*UserPages style*/
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003181}}
 .titlePage, .sectionPage, .articlePage {
   background-image: url();
-  color: #ffffff;
-}
+  color: #ffffff; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003187}}
 div.front_view, div.section_view {
-  min-height: 300px;
-}
+  min-height: 300px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003191}}
 .sectionPage {
     /* no slider on sectionPage
 
@@ -185,135 +155,95 @@ div.front_view, div.section_view {
     #niiuCarousel .slider {
     		max-width:90%;
     }
-	*/
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003194}}
-.sectionPage ul.articles.row li {
-  overflow: hidden;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.1)));
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003206}}
-.sectionPage li.double {
-  max-height: 200px;
-  height: 35vh;
-  overflow: hidden;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003212}}
-.sectionPage li.single {
-  max-height: 250px;
-  height: 25vh;
-  overflow: hidden;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003217}}
-.sectionPage ul.articles.row li .intro {
-  height: 85px;
-  /*overflow:hidden;*/
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003222}}
-.sectionPage a:hover, .sectionPage a.articleLink {
-  color: #ffffff;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003226}}
-.sectionPage h4.articleTitle {
-  font-family: alright_sansbold;
-  font-size: 27px;
-  margin-top: 5px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003232}}
-.sectionPage li.single, .sectionPage li.double {
-  /* min-height: 200px;
-   max-height: 200px;*/
-  padding: 20px;
-  background-position: 50% 5%;
-  background-size: cover;
-  border-bottom: 1px solid #000;
-  border-top: 1px solid #707070;
-  /*height:30vh;*/
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003242}}
-.sectionPage li.double {
-  background-position: 50% 30%;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003245}}
-.sectionPage li.single:last-child, .sectionPage li.double:last-child {
-  border-bottom: 0;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003250}}
-.sectionPage .articleText {
-  font-family: 'Andada', serif;
-}
+	*/ }
+  .sectionPage ul.articles.row li {
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.1)));
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)); }
+  .sectionPage li.double {
+    max-height: 200px;
+    height: 35vh;
+    overflow: hidden; }
+  .sectionPage li.single {
+    max-height: 250px;
+    height: 25vh;
+    overflow: hidden; }
+  .sectionPage ul.articles.row li .intro {
+    height: 85px;
+    /*overflow:hidden;*/ }
+  .sectionPage a:hover, .sectionPage a.articleLink {
+    color: #ffffff; }
+  .sectionPage h4.articleTitle {
+    font-family: alright_sansbold;
+    font-size: 27px;
+    margin-top: 5px; }
+  .sectionPage li.single, .sectionPage li.double {
+    /* min-height: 200px;
+     max-height: 200px;*/
+    padding: 20px;
+    background-position: 50% 5%;
+    background-size: cover;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #707070;
+    /*height:30vh;*/ }
+  .sectionPage li.double {
+    background-position: 50% 30%; }
+  .sectionPage li.single:last-child, .sectionPage li.double:last-child {
+    border-bottom: 0; }
+  .sectionPage .articleText {
+    font-family: 'Andada', serif; }
 
 /* titlePage */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003273}}
 .titlePage {
   color: #ffffff;
-  background-repeat: no-repeat;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003278}}
-.titlePage h3 {
-  font-size: 30px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003283}}
-.titlePage ul.articles li div.article {
-  overflow: hidden;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003287}}
-.titlePage ul.articles li {
-  background-color: #3e3e40;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003291}}
-.titlePage a.btn.btn-default {
-  color: #cccccc;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003296}}
-.titlePage div.topbar {
-  height: 100px;
-  position: absolute;
-  top: 0px;
-  border-bottom: none;
-  border-bottom-width: 0px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003306}}
-.titlePage #niiuCarousel .slider {
-  /*height:55vh;
-  max-height:500px;*/
-  overflow: hidden;
-  height: 350px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003315}}
-.titlePage #niiuCarousel .imgSlide {
-  margin: 0 auto;
-  /*min-height:300px;*/
-  /* min-height:40vh; */
-  min-width: 60%;
-  position: absolute;
-  left: 0px;
-  height: 350px;
-}
+  background-repeat: no-repeat; }
+  .titlePage .affix-top .navbar {
+    background-color: transparent; }
+  .titlePage .affix .navbar {
+    background-color: #3e3e40; }
+  .titlePage h3 {
+    font-size: 30px; }
+  .titlePage ul.articles li div.article {
+    overflow: hidden; }
+  .titlePage ul.articles li {
+    background-color: #3e3e40; }
+  .titlePage a.btn.btn-default {
+    color: #cccccc; }
+  .titlePage div.topbar {
+    height: 100px;
+    position: absolute;
+    top: 0px;
+    border-bottom: none;
+    border-bottom-width: 0px; }
+  .titlePage #niiuCarousel .slider {
+    /*height:55vh;
+    max-height:500px;*/
+    overflow: hidden;
+    height: 350px; }
+  .titlePage #niiuCarousel .imgSlide {
+    margin: 0 auto;
+    /*min-height:300px;*/
+    /* min-height:40vh; */
+    min-width: 45%;
+    position: absolute;
+    left: 0px;
+    height: 350px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003332}}
 .articlePage h4.list-group-item-heading {
-  font-size: 36px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003336}}
+  font-size: 36px; }
 .articlePage .subheading {
   font-family: 'Andada', serif;
   font-size: 21px;
   font-weight: bold;
-  padding: 20px 0 10px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003343}}
+  padding: 20px 0 10px; }
 .articlePage .articletext {
   font-family: 'Andada', serif;
   font-size: 21px;
-  padding: 20px 20px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003350}}
+  padding: 20px 20px; }
 .articlePage #niiuCarousel .slider {
   /*width:100%;
   
@@ -321,15 +251,11 @@ div.front_view, div.section_view {
   overflow:visible;*/
   height: auto;
   text-align: center;
-  max-height: 100vh;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003361}}
+  max-height: 100vh; }
 .articlePage #niiuCarousel .slider img {
-  margin: auto;
-}
+  margin: auto; }
 
 /*User Menu*/
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003376}}
 .header {
   top: 0px;
   right: 30px;
@@ -337,151 +263,109 @@ div.front_view, div.section_view {
   bottom: 0px;
   height: 5px;
   font-size: 10px;
-  position: absolute;
-}
+  position: absolute; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003387}}
 .header a .lang {
-  display: inline;
-}
+  display: inline; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003391}}
 .lang_widget {
-  margin: 10px 15px;
-}
+  margin: 10px 15px; }
 
 /*menu */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003398}}
 .nav-collapse ul {
-  /*width:200px;*/
-}
+  /*width:200px;*/ }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003406}}
 .footer {
   color: #ffffff;
-}
+  padding: 2px;
+  bottom: 0px;
+  text-align: center;
+  border-top: 1px solid white;
+  color: white;
+  font-size: 9px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003410}}
 .butterfly {
   width: 70px;
   margin-bottom: 25px;
   margin-left: auto;
   margin-right: auto;
-  display: block;
-}
+  display: block; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003418}}
 .butterfly.for-overlay {
-  opacity: .3;
-}
+  opacity: .3; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003422}}
 .white-headline {
   text-align: center;
   font-size: 10px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  font-weight: 500;
-}
+  font-weight: 500; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003430}}
 input.required {
-  background-color: #ffffff;
-}
+  background-color: #ffffff; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003435}}
 .jumbotron {
   background-color: transparent;
   border-radius: 0px;
   border-width: 0px;
   font-size: 14px;
   margin-bottom: 0px;
-  padding-bottom: 0px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003443}}
-.jumbotron p {
-  font-weight: 200;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003446}}
-.jumbotron p .heavier {
-  font-weight: 700;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003452}}
-.jumbotron p.lead {
-  font-size: 14px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003456}}
-.jumbotron .btn-wrapper {
-  margin-top: 130px;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003460}}
-.jumbotron .btn {
-  font-size: 10px;
-}
+  padding-bottom: 0px; }
+  .jumbotron p {
+    font-weight: 200; }
+    .jumbotron p .heavier {
+      font-weight: 700; }
+  .jumbotron p.lead {
+    font-size: 14px; }
+  .jumbotron .btn-wrapper {
+    margin-top: 40px;
+    margin-bottom: 40px; }
+  .jumbotron .btn {
+    font-size: 10px; }
 
 /* end jumbotron*/
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003467}}
 button, button.btn, a.btn {
   width: 100%;
   border-radius: 0px;
-  text-decoration: none;
-}
+  text-decoration: none; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003473}}
 .btn {
   width: 100%;
   text-align: center;
   font-size: 10px;
   /*background-color: transparent;*/
   border-radius: 0px;
-  text-decoration: none;
-}
+  text-decoration: none; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003482}}
 .btn.facebook {
   background-color: #3b5998;
-  border-width: 0px;
-}
+  border-width: 0px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003487}}
 .btn.login {
   background-color: #47a447;
-  color: white;
-}
+  color: white; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003492}}
 .btn.transparent {
   background-color: transparent;
-  border: 2px solid white;
-}
+  border: 2px solid white; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003497}}
 .btn.transparent:hover, .btn-success.btn-transparent:hover, .btn-active.btn-transparent:hover {
-  background-color: transparent;
-}
+  background-color: transparent; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003501}}
 .login-wrapper {
   padding: 30px;
-  width: 100%;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003506}}
-.login-wrapper .login-header {
-  width: 100%;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003510}}
-.login-wrapper h3 {
-  text-transform: uppercase;
-}
+  width: 100%; }
+  .login-wrapper .login-header {
+    width: 100%; }
+  .login-wrapper h3 {
+    text-transform: uppercase; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003517}}
 .form-group input {
   border-radius: 0px;
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid white;
   color: white;
-  text-align: center;
-}
+  text-align: center; }
 
 /* white seemed a bit to bright to me
 ::-webkit-input-placeholder {
@@ -515,11 +399,11 @@ input.password {
 	color: white;
 	font-size: 8px;
 	padding-top: 25px;
+
 }
 
 
 /* CSS transitions for page animations */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003562}}
 .container.page {
   position: absolute;
   top: 0;
@@ -529,29 +413,20 @@ input.password {
   	background-size: 306%;
   	background-position: 57% 39%;
   	background-size: 250%;
-  	background-position: 63% 0%;*/
-}
+  	background-position: 63% 0%;*/ }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003574}}
 .page.email-login, .page.registration {
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
-}
+  background: rgba(0, 0, 0, 0.45); }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003580}}
 .page.ng-enter {
-  -webkit-animation: scaleUp 0.2s both ease-in;
-  -moz-animation: scaleUp 0.2s both ease-in;
-  animation: scaleUp 0.2s both ease-in;
-}
+  -webkit-animation: scaleUp 0.3s both ease-in;
+  -moz-animation: scaleUp 0.3s both ease-in;
+  animation: scaleUp 0.3s both ease-in; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003587}}
 .page.ng-leave {
-  -webkit-animation: scaleDown 0.2s both ease-in;
-  -moz-animation: scaleDown 0.2s both ease-in;
-  animation: scaleDown 0.2s both ease-in;
-}
+  -webkit-animation: scaleDown 0.3s both ease-in;
+  -moz-animation: scaleDown 0.3s both ease-in;
+  animation: scaleDown 0.3s both ease-in; }
 
 /*
 .login-home.ng-enter {  
@@ -578,176 +453,109 @@ input.password {
     animation:slideOutRight 0.5s both ease-in; 
 }
 */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003618}}
 .page.ng-leave {
-  z-index: 9999;
-}
+  z-index: 9999; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003619}}
 .page.ng-enter {
-  z-index: 8888;
-}
+  z-index: 8888; }
 
 /* scale up */
 @keyframes scaleUp {
-  /* line 624, development.scss */
   from {
-    opacity: 0.3;
-    -webkit-transform: scale(0.9);
-  }
-}
+    opacity: 0.5;
+    -webkit-transform: scale(0.1); } }
 
 @-moz-keyframes scaleUp {
-  /* line 627, development.scss */
   from {
-    opacity: 0.3;
-    -moz-transform: scale(0.9);
-  }
-}
+    opacity: 0.5;
+    -moz-transform: scale(0.1); } }
 
 @-webkit-keyframes scaleUp {
-  /* line 630, development.scss */
   from {
-    opacity: 0.3;
-    -webkit-transform: scale(0.9);
-  }
-}
+    opacity: 0.5;
+    -webkit-transform: scale(0.1); } }
 
 /* scale down */
 @keyframes scaleDown {
-  /* line 637, development.scss */
   to {
     opacity: 0.3;
-    -webkit-transform: scale(0.9);
-  }
-}
+    -webkit-transform: scale(0.9); } }
 
 @-moz-keyframes scaleDown {
-  /* line 640, development.scss */
   to {
     opacity: 0.3;
-    -moz-transform: scale(0.9);
-  }
-}
+    -moz-transform: scale(0.9); } }
 
 @-webkit-keyframes scaleDown {
-  /* line 643, development.scss */
   to {
     opacity: 0.3;
-    -webkit-transform: scale(0.9);
-  }
-}
+    -webkit-transform: scale(0.9); } }
 
 /* slide in from the right */
 @keyframes slideInRight {
-  /* line 649, development.scss */
   from {
-    transform: translateX(100%);
-  }
+    transform: translateX(100%); }
 
-  /* line 650, development.scss */
   to {
-    transform: translateX(0);
-  }
-}
+    transform: translateX(0); } }
 
 @-moz-keyframes slideInRight {
-  /* line 653, development.scss */
   from {
-    -moz-transform: translateX(100%);
-  }
+    -moz-transform: translateX(100%); }
 
-  /* line 654, development.scss */
   to {
-    -moz-transform: translateX(0);
-  }
-}
+    -moz-transform: translateX(0); } }
 
 @-webkit-keyframes slideInRight {
-  /* line 657, development.scss */
   from {
-    -webkit-transform: translateX(100%);
-  }
+    -webkit-transform: translateX(100%); }
 
-  /* line 658, development.scss */
   to {
-    -webkit-transform: translateX(0);
-  }
-}
+    -webkit-transform: translateX(0); } }
 
 /* slide out to the right */
 @keyframes slideOutRight {
-  /* line 664, development.scss */
   from {
-    transform: translateX(0);
-  }
+    transform: translateX(0); }
 
-  /* line 665, development.scss */
   to {
-    transform: translateX(100%);
-  }
-}
+    transform: translateX(100%); } }
 
 @-moz-keyframes slideOutRight {
-  /* line 668, development.scss */
   from {
-    -moz-transform: translateX(0);
-  }
+    -moz-transform: translateX(0); }
 
-  /* line 669, development.scss */
   to {
-    -moz-transform: translateX(100%);
-  }
-}
+    -moz-transform: translateX(100%); } }
 
 @-webkit-keyframes slideOutRight {
-  /* line 672, development.scss */
   from {
-    -webkit-transform: translateX(0);
-  }
+    -webkit-transform: translateX(0); }
 
-  /* line 673, development.scss */
   to {
-    -webkit-transform: translateX(100%);
-  }
-}
+    -webkit-transform: translateX(100%); } }
 
 /* slide out to the left */
 @keyframes slideOutLeft {
-  /* line 680, development.scss */
   from {
-    transform: translateX(0);
-  }
+    transform: translateX(0); }
 
-  /* line 681, development.scss */
   to {
-    transform: translateX(-100%);
-  }
-}
+    transform: translateX(-100%); } }
 
 @-moz-keyframes slideOutLeft {
-  /* line 684, development.scss */
   from {
-    -moz-transform: translateX(0);
-  }
+    -moz-transform: translateX(0); }
 
-  /* line 685, development.scss */
   to {
-    -moz-transform: translateX(-100%);
-  }
-}
+    -moz-transform: translateX(-100%); } }
 
 @-webkit-keyframes slideOutLeft {
-  /* line 688, development.scss */
   from {
-    -webkit-transform: translateX(0);
-  }
+    -webkit-transform: translateX(0); }
 
-  /* line 689, development.scss */
   to {
-    -webkit-transform: translateX(-100%);
-  }
-}
+    -webkit-transform: translateX(-100%); } }
 
 /*@keyframes slideOutLeft {
     to      { transform: translateX(-100%); }

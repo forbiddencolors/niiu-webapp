@@ -1,23 +1,21 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('ArticleCtrl', function ($scope, $window, $routeParams, $location, Articleservice, User, constants) {
+  .controller('ArticleshareCtrl', function ($scope, $window, $routeParams, $location, Articleservice, User, constants, niiuSyncer) {
+
+
     $window.scrollTo(0,0);
     $scope.media_path=constants.ARTICLE_MEDIA_PATH;
     $scope.pageClass = "articlePage";
     $scope.slide_interval = -10;
 
-    $scope.youShare = function(id) {
-      //,'{{article.title}}','{{article.subtitle|truncate : 100}}', '{{slides[0].imgUrl}}')
-      console.log('you shared'+id);
 
-    };
+  	niiuSyncer.getSharedArticle($routeParams.articleId).then(function(articleObj) {
+          console.log('hey we got an article!', articleObj);
 
-
-  	Articleservice.getArticle($routeParams.articleId).then(function(article) {
           //get article
-          $scope.article=article;
-          $scope.published_dateObj = Date.parse(article.published_date);
+          $scope.article=articleObj.contents.data.articles[0];
+          $scope.published_dateObj = Date.parse($scope.article.published_date);
 
 
           console.log('try slides');
@@ -49,16 +47,10 @@ angular.module('niiuWebappApp')
 
 
 
-  	$scope.backSwipe = function() {
-  
-    	console.log('user swiped back to current section');
-  
-    	
-    	$location.path("/sectionView/"+User.getCurrentSection());
-
-
-    };
-
 
 
   });
+
+
+
+

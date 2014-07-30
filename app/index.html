@@ -43,10 +43,10 @@
 
     <!-- Add your site or application content here -->
     <!--div class="container" -->
-      <div class="container-fluid page {{ pageClass }} col-xs-12 col-lg-8" style="overflow-x: hidden;">
+      <div class="container-fluid col-xs-12 col-lg-8" style="overflow-x: hidden;">
         <div id="canvasrow" class="row row-offcanvas row-offcanvas-left">
             <div id="canvasnav" class="col-xs-9 sidebar-offcanvas" ng-include="layoutPartial('headerUrl')"></div> 
-            <div ng-view="" class="col-xs-12 {{ pageClass }}">
+            <div ng-view="" class="col-xs-12 page {{ pageClass }}">
                 <!-- templates get loaded here -->
             </div>
           
@@ -98,7 +98,7 @@
     <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
     <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-animate.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -150,6 +150,9 @@
         <script src="scripts/filters/encodebase62.js"></script>
         <script src="scripts/controllers/share.js"></script>
         <script src="scripts/controllers/topbar.js"></script>
+        <script src="scripts/directives/disableanimation.js"></script>
+        <script src="scripts/controllers/articleshare.js"></script>
+        <script src="scripts/controllers/shareThanks.js"></script>
         <!-- endbuild -->
 </body>
 </html>

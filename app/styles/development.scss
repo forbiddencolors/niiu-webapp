@@ -66,6 +66,30 @@ body {
 
 }
 
+#topnav.affix, #topnav {
+    position: fixed;
+    top: 0px;
+    z-index:100;
+    width:100%;
+}
+
+#topnav.affix navbar {
+    background-color:#3e3e40;
+}
+
+.navbar {
+	background-color:#3e3e40;
+	padding: 0px 2px;
+	border:0px;
+
+}
+
+
+.row-offcanvas-left.active #topnav, row-offcanvas-left.active#topnav.affix {
+	position:relative;
+}
+
+
 div.navbar {
 	 a.home_btn {
 		 text-indent:-9999px;
@@ -274,6 +298,13 @@ min-height: 300px;
 color:#ffffff;
 background-repeat:no-repeat;
 
+	.affix-top .navbar {
+		background-color:transparent;
+
+	} 
+	.affix .navbar {
+	background-color:#3e3e40;
+	}
 
 	h3 {
 	font-size:30px;
@@ -316,10 +347,11 @@ background-repeat:no-repeat;
     margin: 0 auto;
     /*min-height:300px;*/
    /* min-height:40vh; */
-    min-width:60%;
+    min-width:45%;
     position:absolute;
     left:0px;
     height:350px
+
 	}
 	
  
@@ -405,6 +437,12 @@ background-repeat:no-repeat;
 
 .footer {
   color:#ffffff;
+  padding:2px;
+	bottom:0px;
+	text-align: center;
+	border-top: 1px solid white;
+	color: white;
+	font-size: 9px;
 }
 
 .butterfly {
@@ -454,7 +492,8 @@ input.required {
 	}
 
 	.btn-wrapper {
-		margin-top: 130px;
+		margin-top: 40px;
+		margin-bottom: 40px;
 	}
 
 	.btn {
@@ -554,6 +593,7 @@ input.password {
 	color: white;
 	font-size: 8px;
 	padding-top: 25px;
+
 }
 
 
@@ -572,22 +612,22 @@ input.password {
 }
 
 .page.email-login, .page.registration {
-	width: 100vw;
-	height: 100vh;
+	
+	
 	background: rgba(0, 0, 0, .45);
 }
 
 .page.ng-enter {
-    -webkit-animation:scaleUp 0.2s both ease-in;
-	-moz-animation:scaleUp 0.2s both ease-in;
-	animation:scaleUp 0.2s both ease-in;  
+    -webkit-animation:scaleUp 0.3s both ease-in;
+	-moz-animation:scaleUp 0.3s both ease-in;
+	animation:scaleUp 0.3s both ease-in;  
 }
 
 
 .page.ng-leave { 
-    -webkit-animation:scaleDown 0.2s both ease-in;
-	-moz-animation:scaleDown 0.2s both ease-in;
-	animation:scaleDown 0.2s both ease-in;  
+    -webkit-animation:scaleDown 0.3s both ease-in;
+	-moz-animation:scaleDown 0.3s both ease-in;
+	animation:scaleDown 0.3s both ease-in;  
 }
 /*
 .login-home.ng-enter {  
@@ -615,19 +655,19 @@ input.password {
 }
 */
 
-.page.ng-leave  { z-index:9999; }
-.page.ng-enter  { z-index:8888; }
+.page.ng-leave  { z-index:9999;}
+.page.ng-enter  { z-index:8888;}
 
 
 /* scale up */
 @keyframes scaleUp {
-	from 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
+	from 		{ opacity: 0.5; -webkit-transform: scale(0.1); }
 }
 @-moz-keyframes scaleUp {
-	from 		{ opacity: 0.3; -moz-transform: scale(0.9); }
+	from 		{ opacity: 0.5; -moz-transform: scale(0.1); }
 }
 @-webkit-keyframes scaleUp {
-	from 		{ opacity: 0.3; -webkit-transform: scale(0.9); }
+	from 		{ opacity: 0.5; -webkit-transform: scale(0.1); }
 }
 
 

@@ -5,7 +5,7 @@ angular.module('niiuWebappApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
- // 'ngAnimate',
+  'ngAnimate',
   'ngTouch',
   'ui.bootstrap',
   'pascalprecht.translate',
@@ -83,6 +83,16 @@ angular.module('niiuWebappApp', [
         controller: 'SectionviewCtrl',
         pageClass: 'sectionPage'
       })
+      .when('/articleShare/:articleId?/:userId?', {
+        templateUrl: 'views/articleshare.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'ArticleshareCtrl',
+        pageClass: 'articlePage'
+      })
+      .when('/shareThanks', {
+        templateUrl: 'views/sharethanks.html',
+        controller: 'SharethanksCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -154,20 +164,20 @@ angular.module('niiuWebappApp', [
 
 
   // enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/', '/registration', '/article/id?', '/tour', '/emailLogin', '/forgotPass', '/privacy', '/terms' ];
+  var routesThatDontRequireAuth = ['/', '/registration', '/articleShare' , '/tour', '/emailLogin', '/forgotPass', '/privacy', '/terms', '/shareThanks' ];
 
   // check if current location matches route  
   var publicViews = function (route) {
     console.log('the route is requested is ', route);
-    
 
     for (var i=0; i<routesThatDontRequireAuth.length; i++) {
-        if (routesThatDontRequireAuth[i].substring(0, route.length) === route) {
-          console.log('this is a public view');
+        //the root directory matches every path unless we exclude it here.
+        if (route==='/'  || routesThatDontRequireAuth[i]!=='/' && route.substring(0, routesThatDontRequireAuth[i].length) === routesThatDontRequireAuth[i]) {
+          console.log('this is a public view', route.substring(0, routesThatDontRequireAuth[i].length));
           return true;
         }
     }
-    console.log('that route is not public');
+    console.log('I guess that route is not public');
     return false;
 
   };
@@ -182,7 +192,7 @@ angular.module('niiuWebappApp', [
     //publicViews($location.url())
     // if route requires auth and user is not logged in
     //add an && 0 to this check if you want to stop authentication check redirections
-    if (!publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user) ) {
+    if ( !publicViews($location.url()) && !niiuAuthenticator.isLoggedIn($rootScope.user) ) {
 
       console.log(' we have to go back to the home page because this ',!publicViews($location.url()),!niiuAuthenticator.isLoggedIn());
 

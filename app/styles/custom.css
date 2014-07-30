@@ -49,12 +49,13 @@ body {
 .container-fluid {
   padding:0;
 }
-
+/*
 .navbar {
   background: none;
   border:0;
   padding:20px 10px;
 }
+*/
 
 #logo img {
   max-width: 76px;
@@ -102,6 +103,9 @@ niiu-webappv1 Slider
           .news-slider .text-content h2 {
             margin-left:10px;
             margin-top: 0;
+          }
+          .news-slider .text-content a {
+            text-decoration:none;
           }
           .news-slider .text-content label {
             margin-top: 80px;
@@ -184,13 +188,13 @@ niiu-webappv1 HomePage
   		border-bottom: 1px solid #515153;
     }
 
-div.newsTitle {
-	font-family: 'alright_sansbold';
+div.newsTitle  {
+	
 	margin-left: 75px;
 }
 
     h4.list-group-item-heading {
-    	
+    	font-family: 'alright_sansbold';
     }
 
     a.list-group-item {
@@ -218,7 +222,7 @@ div.newsTitle {
 
 
     .navbar-fixed-top, .navbar-fixed-bottom {
-    	position: absolute;
+    	/*position: absolute;*/
     }
 
 /* 

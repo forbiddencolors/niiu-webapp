@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('SectionviewCtrl', function ($scope, User, $routeParams, $location, $window, constants) {
+  .controller('SectionviewCtrl', function ($scope, $animate, User, $routeParams, $location, $window, constants) {
 
 	$window.scrollTo(0,0);
+	
 	$scope.currentSection = User.getCurrentSection();
 	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .service('Articleservice', function Articleservice($q, localDB) {
+  .service('Articleservice', function Articleservice($q, localDB, constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var articles = [];
 
@@ -63,7 +63,7 @@ angular.module('niiuWebappApp')
 	  				
 	  				localDB.loadArticlesFromDB().then(function(db_articles) {
 	  					articles=db_articles;
-	  					defered.resolve(articles[i]);
+	  					deferred.resolve(articles[i]);
 	  					
 	  				}
 

@@ -18,5 +18,7 @@
     "menu_current_section": "Dieses Ressort",
     "menu_logout": "Abmelden",
     "icon_back" : "Züruck",
-    "msg_wait" : "Ihre Inhalte werden geladen..."
+    "msg_wait" : "Ihre Inhalte werden geladen...",
+    "header_thanks" : "Danke",
+    "msg_thanks" : "Ihre article wurde gepostet."
 }

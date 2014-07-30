@@ -23,7 +23,16 @@ angular.module('niiuWebappApp')
   function facebookShare(url, title, descr, image, winWidth, winHeight) {
         var winTop = (screen.height / 2) - (winHeight / 2);
         var winLeft = (screen.width / 2) - (winWidth / 2);
-        window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + escape(title) + '&p[summary]=' + escape(descr) + '&p[url]=' + escape(url) + '&p[images][0]='+escape(image) +',sharer,'+'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+        var addPicture= (image!==undefined) ? '&picture=' + escape(image)  : "";
+        var facebookUrl='https://www.facebook.com/dialog/feed?app_id='+constants.FACEBOOK_APP_ID+
+        '&redirect_uri=' + escape("http://niiuapp.com/#/shareThanks") + 
+        '&link=' + escape(url) + 
+        '&caption=' + encodeURI(title) +
+        '&description=' + encodeURI(descr) +
+        addPicture ;
+        window.open(facebookUrl,'sharer','top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+
+
     }
 
 

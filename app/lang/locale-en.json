@@ -18,5 +18,7 @@
     "menu_current_section": "Current Section",
     "menu_logout": "Logout",
     "icon_back" : "Back",
-    "msg_wait" : "Please wait while we load your articles..."
+    "msg_wait" : "Please wait while we load your articles...",
+    "header_thanks" : "Thanks",
+    "msg_thanks" : "Your article has been shared."
 }

@@ -132,6 +132,8 @@ angular.module('niiuWebappApp')
                                 
                                 //when need to know the section title we can just look up the title for contentObject[i].sectionIndex;
                                 dataArticles[h].sectionIndex=i+1;
+                                dataArticles[h].source_logo=thisSourceObj.logo;
+                                dataArticles[h].source_logo=$filter('getByProperty')(data3s.contents.data.newSources, "id", dataArticles[h].source_id).logo
 
 
                                 pageArticles[i].push(dataArticles[h]);
