@@ -16,7 +16,7 @@ body {
     color: gray;
     text-align: center; }
   body .page {
-    width: 100vw; }
+    /*width:100vw;*/ }
   body .nav, body .pagination, body .carousel, body .panel-title a {
     cursor: pointer; }
   body div.section_view, body div.front_view {
@@ -161,7 +161,7 @@ transition: all 0.1s ease-out;
 /*login background */
 div.container.page.loginHome {
   background-image: url("../images/login-bg-image.jpg");
-  width: 100vw;
+  /*width:100vw;*/
   height: 100vh; }
 
 /*UserPages style*/

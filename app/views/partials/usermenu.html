@@ -22,7 +22,7 @@
                       <!-- Add Sources here -->
                       <a ng-href="#/sectionView/{{$index}}" ng-click="toggleMenu()" ng-repeat="user_section in contentObject" class="selectedSource" >
                         <div class="sourceTitle">
-                          <span class="label label-default label-subject"  ng-if="user_section.source.name" translate>{{user_section.source.name}}</span>
+                          <span class="label label-default label-subject"  ng-if="user_section.subject" translate>{{user_section.source.name}}</span>
                           <h4 class="list-group-item-heading label-source">{{user_section.subject}}</h4>
                         </div>
                       </a>
