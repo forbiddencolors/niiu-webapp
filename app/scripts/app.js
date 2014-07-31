@@ -85,7 +85,7 @@ angular.module('niiuWebappApp', [
       })
       .when('/articleShare/:articleId?/:userId?', {
         templateUrl: 'views/articleshare.html',
-        headerUrl: 'views/partials/usermenu.html',
+        headerUrl: 'views/partials/guestmenu.html',
         controller: 'ArticleshareCtrl',
         pageClass: 'articlePage'
       })

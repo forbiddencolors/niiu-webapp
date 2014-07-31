@@ -25,7 +25,7 @@ angular.module('niiuWebappApp')
   		
   		var previousSection=User.getPreviousSection();
     	console.log('user swiped back to section',previousSection );
-  		
+  		angular.element('.page').addClass('backswipe');
     	$location.path("/sectionView/"+previousSection);
     	
 

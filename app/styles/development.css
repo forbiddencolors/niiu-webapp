@@ -15,6 +15,8 @@ body {
   body p.subheading {
     color: gray;
     text-align: center; }
+  body .page {
+    width: 100vw; }
   body .nav, body .pagination, body .carousel, body .panel-title a {
     cursor: pointer; }
   body div.section_view, body div.front_view {
@@ -38,11 +40,14 @@ body {
   body .label-subject {
     color: #00a651; }
   body .sourceTitle .label-subject {
-    font-family: alright_sansbold;
+    font-family: 'alright_sansbold';
     font-size: 18px; }
   body .col-centered {
     float: none;
     margin: 0 auto; }
+
+.active .navbar, .active .navbar-fixed-top {
+  left: 75%; }
 
 #topnav.affix, #topnav {
   position: fixed;
@@ -55,11 +60,29 @@ body {
 
 .navbar {
   background-color: #3e3e40;
-  padding: 0px 2px;
-  border: 0px; }
+  padding: 2px 5px 2px 2px;
+  /*padding: 0px 2px;*/
+  border: 0px;
+  height: 50px; }
 
-.row-offcanvas-left.active #topnav, row-offcanvas-left.active#topnav.affix {
-  position: relative; }
+.share_btn .hideme {
+  display: none;
+  background-color: transparent; }
+
+.dropdown-toggle {
+  background-color: transparent;
+  display: none;
+  margin: 0px;
+  padding: 0px; }
+
+.dropdown-menu a, .dropdown-menu {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #5c5d5f; }
+
+.row-offcanvas-left.active #topnav, .row-offcanvas-left.active#topnav.affix {
+  position: relative;
+  left: 75%; }
 
 div.navbar a.home_btn {
   text-indent: -9999px;
@@ -85,7 +108,10 @@ div.navbar .section-label {
   top: 50%;
   transform: translateY(-50%);*/ }
 div.navbar #logo {
-  text-align: right; }
+  text-align: right;
+  top: 0px;
+  padding-top: 0px;
+  padding-right: 5px; }
 
 /*
  * Off Canvas
@@ -125,10 +151,10 @@ transition: all 0.1s ease-out;
   position:absolute;*/ }
 
 #niiuCarousel .slider {
-  /*height:55vh;
-  max-height:500px;*/
-  overflow: hidden;
-  height: 350px; }
+  height: 55vh;
+  max-height: 500px;
+  /*overflow:hidden;
+  height:350px;*/ }
 
 /*login background */
 div.container.page.loginHome {
@@ -179,7 +205,7 @@ div.front_view, div.section_view {
     color: #ffffff; }
   .sectionPage h4.articleTitle {
     font-family: alright_sansbold;
-    font-size: 27px;
+    font-size: 23px;
     margin-top: 5px; }
   .sectionPage li.single, .sectionPage li.double {
     /* min-height: 200px;
@@ -201,10 +227,8 @@ div.front_view, div.section_view {
 .titlePage {
   color: #ffffff;
   background-repeat: no-repeat; }
-  .titlePage .affix-top .navbar {
-    background-color: transparent; }
   .titlePage .affix .navbar {
-    background-color: #3e3e40; }
+    background-color: transparent; }
   .titlePage h3 {
     font-size: 30px; }
   .titlePage ul.articles li div.article {
@@ -220,18 +244,13 @@ div.front_view, div.section_view {
     border-bottom: none;
     border-bottom-width: 0px; }
   .titlePage #niiuCarousel .slider {
-    /*height:55vh;
-    max-height:500px;*/
-    overflow: hidden;
-    height: 350px; }
+    max-height: 500px; }
   .titlePage #niiuCarousel .imgSlide {
     margin: 0 auto;
-    /*min-height:300px;*/
-    /* min-height:40vh; */
     min-width: 45%;
     position: absolute;
     left: 0px;
-    height: 350px; }
+    height: 55vh; }
 
 .articlePage h4.list-group-item-heading {
   font-size: 36px; }
@@ -255,6 +274,11 @@ div.front_view, div.section_view {
 .articlePage #niiuCarousel .slider img {
   margin: auto; }
 
+.menuPage .sections li .btn {
+  background-color: transparent; }
+.menuPage .add_custom_section {
+  margin-bottom: 20px; }
+
 /*User Menu*/
 .header {
   top: 0px;
@@ -274,6 +298,101 @@ div.front_view, div.section_view {
 /*menu */
 .nav-collapse ul {
   /*width:200px;*/ }
+
+/* 
+=================================
+niiu-webappv1 Navbar
+=================================
+*/
+li#searchBar {
+  padding: 0 60px;
+  margin-bottom: 30px; }
+
+li#searchBar input::-moz-placeholder {
+  color: #8a8a8a; }
+
+li#searchBar:after {
+  border: 0; }
+
+li#searchBar input {
+  background: none;
+  border: 1px solid #8a8a8a;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  height: 46px;
+  color: #fff; }
+
+.mm-ismenu {
+  background: #5c5d5f;
+  color: #fff; }
+
+#niiuAppmenu {
+  padding-top: 50px;
+  background: #5c5d5f;
+  color: #fff; }
+
+#niiuAppmenu li a {
+  font-size: 20px;
+  font-family: "alright_sansregular"; }
+
+#niiuAppmenu li a:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  margin-right: 15px;
+  vertical-align: middle; }
+
+#niiuAppmenu li a.mHome:before {
+  background: url("../images/icons/home.png") no-repeat top center;
+  height: 32px;
+  width: 32px; }
+
+#niiuAppmenu li a.mSources:before {
+  background: url("../images/icons/sources.png") no-repeat top center;
+  height: 32px;
+  top: 4px;
+  width: 32px; }
+
+#niiuAppmenu li a.mFavorite:before {
+  background: url("../images/icons/favs.png") no-repeat top center;
+  height: 32px;
+  width: 32px; }
+
+#niiuAppmenu li a.mSettings:before {
+  background: url("../images/icons/settings.png") no-repeat top center;
+  height: 32px;
+  width: 32px; }
+
+#niiuAppmenu li a.mHelp:before {
+  background: url("../images/icons/help.png") no-repeat top center;
+  height: 32px;
+  width: 32px; }
+
+#niiuAppmenu li a.mFeedback:before {
+  background: url("../images/icons/feedback.png") no-repeat top center;
+  height: 32px;
+  width: 32px; }
+
+.mm-menu .mm-list > li:after {
+  border-color: #707070; }
+
+.mm-list > li > a, .mm-list > li > span {
+  padding: 20px 10px 20px 20px; }
+
+.mm-list {
+  padding-top: 20px; }
+
+#niiuAppmenu li a.selectedSource {
+  background: #4b4c4d;
+  border-bottom: 1px solid #636363;
+  padding: 15px 10px 15px 20px; }
+
+#niiuAppmenu li a.selectedSource:before {
+  display: flex; }
+
+#niiuAppmenu li a.selectedSource:last-child {
+  border-bottom: none; }
 
 .footer {
   color: #ffffff;
@@ -419,14 +538,32 @@ input.password {
   background: rgba(0, 0, 0, 0.45); }
 
 .page.ng-enter {
-  -webkit-animation: scaleUp 0.3s both ease-in;
-  -moz-animation: scaleUp 0.3s both ease-in;
-  animation: scaleUp 0.3s both ease-in; }
+   /* -webkit-animation:slideInRight 0.7s both ease-in;
+	-moz-animation:slideInRight 0.7s both ease-in;
+	animation:slideInRight 0.7s both ease-in;  */
+  opacity: 0;
+  /* make things invisible upon start */
+  -webkit-animation: fadeIn ease-in 0.5s;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: fadeIn ease-in 0.5s;
+  animation: fadeIn ease-in 0.5s;
+  -webkit-animation-fill-mode: forwards;
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  animation-duration: 0.5s; }
 
 .page.ng-leave {
-  -webkit-animation: scaleDown 0.3s both ease-in;
-  -moz-animation: scaleDown 0.3s both ease-in;
-  animation: scaleDown 0.3s both ease-in; }
+  -webkit-animation: slideOutLeft 0.3s both ease-in;
+  -moz-animation: slideOutLeft 0.3s both ease-in;
+  animation: slideOutLeft 0.3s both ease-in; }
+
+.page.backswipe.ng-leave, .page.articlePage.ng-leave {
+  -webkit-animation: slideOutRight 0.3s both ease-in;
+  -moz-animation: slideOutRight 0.3s both ease-in;
+  animation: slideOutRight 0.3s both ease-in; }
 
 /*
 .login-home.ng-enter {  
@@ -458,6 +595,42 @@ input.password {
 
 .page.ng-enter {
   z-index: 8888; }
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+.fade-in {
+  opacity: 0;
+  /* make things invisible upon start */
+  -webkit-animation: fadeIn ease-in 1;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
+  -webkit-animation-fill-mode: forwards;
+  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s; }
 
 /* scale up */
 @keyframes scaleUp {

@@ -7,6 +7,8 @@ angular.module('niiuWebappApp')
     $scope.pageClass = "articlePage";
     $scope.slide_interval = -10;
 
+
+
     $scope.youShare = function(id) {
       //,'{{article.title}}','{{article.subtitle|truncate : 100}}', '{{slides[0].imgUrl}}')
       console.log('you shared'+id);
@@ -55,6 +57,8 @@ angular.module('niiuWebappApp')
   
     	
     	$location.path("/sectionView/"+User.getCurrentSection());
+      //anytime you leave an article paage it should look like a backswipe. So we can init it here
+      angular.element('.page').addClass('backswipe');
 
 
     };

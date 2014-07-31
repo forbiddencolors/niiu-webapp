@@ -1,8 +1,22 @@
 	<!--top bar -->
 	<div ng-include="layoutPartial('topBar')" ></div>
 
+<div class="col-xs-12">
 
-	<h2>Section Menu</h2>
+
+
+<h3>Your Current Sections</h3>
+<span class="error">{{error}}</span>
+<ul class="sections list-unstyled">
+  <li class="col-xs-12 col-md-6" ng-repeat="addSection in sectionsToAdd">
+    <span class="btn transparent"><a ng-href="#/sectionView/{{$index+1}}">{{addSection.name}}</a> (<a  ng-href="" role="button" ng-click="removeSection(addSection.handle)" >- remove</a>) </span>
+
+  </li>
+
+</ul>
+
+<p>&nbsp</p>
+	<h3>Choose a Topic Below to add a new section</h3>
 	
   <ul >
     <li ng-repeat="niiu_section in menuObj">
@@ -29,7 +43,7 @@
         </li>
       </ul>
     </li>
-  </ol>
+  </ul>
 
 
 
@@ -38,24 +52,17 @@
 
 
 
-<h2>Personal Sections</h2>
-    <input name="custom_section" ng-model="custom_section" placeholder="Enter a Personal Section">
-    <button ng-click="addCustomSection()">Add Personal Section</button>
+<h3>Add Personal Sections</h3>
+<div class="add_custom_section">
+    <input name="custom_section" ng-model="custom_section" placeholder="Enter a Personal Section" class="col-xs-5"><button class="col-xs-5" ng-click="addCustomSection()">Add Personal Section</button>
+</div>
+    
 
 
 
-<hr>
-<h2>Your Sections</h2>
-<span class="error">{{error}}</span>
-<ul class="sections row">
-	<li class="col-6 col-sm-6 col-lg-4" ng-repeat="addSection in sectionsToAdd">
-		<a class="btn btn-default" ng-href="" role="button" ng-click="removeSection(addSection.handle)" >{{addSection.name}} (remove)</a> 
-
-	</li>
-
-</ul>
-<div>
-	<button class="btn btn-lg white-headline transparent btn-success login" ng-click="syncSections(sectionsToAdd)"> Update Sections
+<div class="col-xs-10">
+	<button class="btn btn-default white-headline transparent btn-success login" ng-click="syncSections(sectionsToAdd)"> Update Sections</button>
+</div>
 
 </div>
 

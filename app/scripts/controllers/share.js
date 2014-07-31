@@ -1,11 +1,22 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('ShareCtrl', function ($scope, $filter, constants, User, Facebook, $sanitize) {
+  .controller('ShareCtrl', function ($scope, $filter, constants, User, Facebook, $window) {
 
 var shareUser=User.getUser();
-var generateUrl = function(id, type) {
-        if (!id || !shareUser.id) {
+
+
+
+
+$scope.generateUrl = function(articleId, type) {
+    if (!shareUser.id) {
+    
+     shareUser.id= "guest";
+    }
+
+    var sharingUrl="http://"+(constants.ENVIRONMENT == 'dev' ? 'niiuapp.com/' : 'niiu.de/') +"#/articleShare/"+articleId+"/"+shareUser.id;
+    return sharingUrl;
+       /* if (!id || !shareUser.id) {
                 $scope.error='unkown article or user';
         }
         var base62_id=$filter('encodeBase62')(id);
@@ -13,6 +24,7 @@ var generateUrl = function(id, type) {
         var shareUrl = (constants.ENVIRONMENT == 'dev' ? 'niiuapp.com/' : 'niiu.de/') + type + '/' +   $filter('encodeBase62')(id) + '/' + $filter('encodeBase62')(shareUser.id);
         console.log('we generated the url '+shareUrl+' id or '+id+' encodes to '+base62_id+'& User id '+shareUser.id+' encodes to '+ base62_user);
         return shareUrl;
+        */
 };
 
 $scope.fbShare =  function(articleId,shareTitle,shareDescription,shareImage) {

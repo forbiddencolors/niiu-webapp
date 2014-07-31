@@ -103,12 +103,13 @@ niiu-webappv1 Slider
           .news-slider .text-content h2 {
             margin-left:10px;
             margin-top: 0;
+            font-size: 24px;
           }
           .news-slider .text-content a {
             text-decoration:none;
           }
           .news-slider .text-content label {
-            margin-top: 80px;
+            margin-top: 70px;
             margin-left:10px;
             color: #00a453;
           }
@@ -225,120 +226,13 @@ div.newsTitle  {
     	/*position: absolute;*/
     }
 
-/* 
-=================================
-niiu-webappv1 Navbar
-=================================
-*/
+.menuPage {
+  ul .sections {
+    
 
-li#searchBar {
-	padding:0 60px;
-	margin-bottom: 30px;
-}
-
-    li#searchBar input::-moz-placeholder {
-    	color: #8a8a8a;
-    }
-
-    li#searchBar:after {
-    	border:0;
-    }
-
-    li#searchBar input {
-    	background: none;
-    	border:1px solid #8a8a8a;
-			-webkit-border-radius: 0px;
-    	-moz-border-radius: 0px;
-    	border-radius: 0px;
-    	height: 46px;
-    	color: #fff;
-    }
-
-.mm-ismenu {
-	background: #5c5d5f;
-	color: #fff;
-}
-
-#niiuAppmenu {
-  background: #5c5d5f;
-  color: #fff;
-}
-
-#niiuAppmenu li a {
-	font-size: 24px;
-	font-family: 'alright_sansregular'
+  }
 
 }
-
-    #niiuAppmenu li a:before {
-    	content: "";
-      display: inline-block;
-      position: relative;
-      margin-right: 15px;
-      vertical-align: middle;
-    }
-
-    #niiuAppmenu li a.mHome:before {
-    	background: url("../images/icons/home.png") no-repeat top center;
-      height: 32px;
-      width: 32px;
-    }
-
-    #niiuAppmenu li a.mSources:before {
-    	background: url("../images/icons/sources.png") no-repeat top center;
-      height: 32px; 
-      top: 4px;
-      width: 32px;
-    }
-
-    #niiuAppmenu li a.mFavorite:before {
-    	background: url("../images/icons/favs.png") no-repeat top center;
-      height: 32px;
-      width: 32px;
-    }
-
-    #niiuAppmenu li a.mSettings:before {
-    	background: url("../images/icons/settings.png") no-repeat top center;
-      height: 32px;
-      width: 32px;
-    }
-
-    #niiuAppmenu li a.mHelp:before {
-    	background: url("../images/icons/help.png") no-repeat top center;
-      height: 32px;
-      width: 32px;
-    }
-
-    #niiuAppmenu li a.mFeedback:before {
-    	background: url("../images/icons/feedback.png") no-repeat top center;
-      height: 32px;
-      width: 32px;
-    }
-
-.mm-menu .mm-list > li:after {
-	border-color: #707070;
-}
-
-    .mm-list > li > a, .mm-list > li > span {
-    	padding: 20px 10px 20px 20px;
-    }
-    .mm-list {
-      padding-top:20px;
-    }
-
-#niiuAppmenu li a.selectedSource{
-  	background: #4b4c4d;
-  	border-bottom: 1px solid #636363;
-  	padding:15px 10px 15px 20px;
-	}
-
-    #niiuAppmenu li a.selectedSource:before {
-    	display: flex;
-    }
-
-    #niiuAppmenu li a.selectedSource:last-child {
-    	border-bottom: none;
-    }
 
 /* 
 =================================
@@ -351,13 +245,13 @@ div.fullBox, div.halfBox {
 }
 div.sourceTitle h4.list-group-item-heading {
   font-family: alright_sansbold;
-  font-size: 27px;
+  font-size: 22px;
   margin-top: 5px;
 }
 
 div.sourceTitle span.label-source {
   font-family: alright_sansbold;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .sectionPage, .articlePage, .menuPage {

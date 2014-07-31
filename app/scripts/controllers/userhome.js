@@ -7,6 +7,7 @@ angular.module('niiuWebappApp')
 
   	$window.scrollTo(0,0);
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+  	$scope.nav_top=angular.element('#topnav').css('top');
 
 
 
@@ -64,7 +65,8 @@ angular.module('niiuWebappApp')
   		var previousSection=User.getPreviousSection();
     	console.log('user swiped back to section',previousSection );
   
-    	
+
+   		angular.element('.page').addClass('backswipe');
     	$location.path("/sectionView/"+previousSection);
 
 
