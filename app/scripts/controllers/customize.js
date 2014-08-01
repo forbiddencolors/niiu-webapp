@@ -238,7 +238,48 @@ $scope.importUserSections = function(user_sections) {
 
     };
 
+$scope.refresh3s = function()  {
+      var deferred=$q.defer();
+      niiuSyncer.sync3s().then(function(data_3s) {
+      console.log('here is some 3s data',data_3s);
+        console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
+        //add sections to DB
+          localDB.put3s(data_3s.data).then( function() {
+         /*   localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
+            localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
+            localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
+            localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
+            localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
+            localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection); */
+            
+            //add sections to Scope
+            $scope.sections=data_3s.data.contents.data.newSections;
+            $scope.sources=data_3s.data.contents.data.newSources;
+            console.log('section 7 is called', $scope.sections[7].name);
+                  localDB.setLastSync().then( function() {
+                      deferred.resolve(data_3s.data);
+                  }
 
+              );
+            
+          });
+
+        
+
+        //at this point we have all the 3s info and it should be saved so lets run
+
+
+
+      }, 
+      function(no_data_3s) {
+        console.log('for some reason we couldnt get any 3s data',no_data_3s);
+        deferred.reject(no_data_3s);
+      }
+      );
+      return deferred.promise;
+
+      
+  };
 
     function getSourceSections() {
       var deferred = $q.defer();
@@ -391,10 +432,16 @@ console.log(section_id);
   	);
 
 
+$scope.init=function() {
 
   $scope.user = User.getUser();
   $scope.pageClass='menuPage';
+  $scope.refresh3s().then(  
 
+     ); 
+
+}
+$scope.init();
 
 
 

@@ -16,14 +16,14 @@
 
 
         </li>
-        <li><a class="mHome" ng-href="#/userHome" ng-click="toggleMenu()" translate>menu_homepage</a></li>
+        <li><a class="mHome" ng-href="#/userHome" ng-click="toggleMenu()" translate>menu_titlepage</a></li>
         <li><a href="" ng-click="getContentObject()" class="mSources" translate>menu_sections</a>
 
                       <!-- Add Sources here -->
-                      <a ng-href="#/sectionView/{{$index}}" ng-click="toggleMenu()" ng-repeat="user_section in contentObject" class="selectedSource" >
+                      <a ng-href="#/sectionView/{{$index}}" ng-click="toggleMenu()" ng-repeat="user_section in contentObject" ng-show="!$first" class="selectedSource" >
                         <div class="sourceTitle">
-                          <span class="label label-default label-subject"  ng-if="user_section.subject" translate>{{user_section.source.name}}</span>
-                          <h4 class="list-group-item-heading label-source">{{user_section.subject}}</h4>
+                          <span class="label label-default label-subject"  ng-if="user_section.subject" >{{user_section.source.name}}</span>
+                          <h4 class="list-group-item-heading label-source" >{{user_section.subject}}</h4>
                         </div>
                       </a>
 
@@ -31,17 +31,20 @@
 
 
         </li>
-        <li><a class="mFavorite" href="#" ng-click="toggleMenu()" translate>menu_favorites</a></li>
+        <li><a class="mFavorite" href=""  translate>menu_favorites</a></li>
         <li><a class="mSettings" href="#/customize" ng-click="toggleMenu()" translate>menu_settings</a>
           <ul>
-            <li><a ng-click="logout();toggleMenu()" href="" translate>menu_logout</a></li>
-            <li><a href="" ng-click="toggleMenu()" translate>menu_profile</a></li>
+            
+            <!--li><a href="" translate>menu_profile</a></li -->
             <li><a ng-href="#/userHome/refresh" ng-click="toggleMenu()" translate>menu_refresh</a></li>
+            <li><a ng-href="#/customize" ng-click="toggleMenu()" translate>menu_editsections</a></li>
+            <li><div ><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> /<a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+            <li><a ng-click="logout();" href="" translate>menu_logout</a></li>
           </ul>
 
         </li>
-        <li><a class="mHelp" href="/about/" translate>menu_help</a></li>
-        <li><a class="mFeedback" ng-href="https://docs.google.com/forms/d/1RtuQyTzNAfQ3qfITBLl0ZdapHplZanxjF60fKfRInvU/viewform?entry.331930778&entry.1900651166={{user.eMail}}&entry.1585641298&entry.383221606&entry.488870576&entry.75199030={{browser}}" target="_blank" translate>menu_feedback</a></li>
+        <li><a class="mHelp" href="" translate>menu_help</a></li>
+        <li><a class="mFeedback" ng-click="toggleMenu()" ng-href="https://docs.google.com/forms/d/1RtuQyTzNAfQ3qfITBLl0ZdapHplZanxjF60fKfRInvU/viewform?entry.331930778&entry.1900651166={{user.eMail}}&entry.1585641298&entry.383221606&entry.488870576&entry.75199030={{browser}}" target="_blank" translate>menu_feedback</a></li>
         
       </ul>
 
@@ -71,6 +74,6 @@
 
     </div> -->
 
-  <p class="errors" ng-show="error">{{error}}</p>
+  <alert ng-show="error" type="info" >{{error}}</alert>
 
 

@@ -33,6 +33,8 @@ angular.module('niiuWebappApp')
          return deferred.promise;
 
     }
+
+
     
     $scope.logout = function() {
     	//niiuAuthenticator.changeUser();
@@ -107,13 +109,22 @@ angular.module('niiuWebappApp')
 
     $scope.init = function() {
         console.log('at least init ran');
-        //set the contentObject and populate the articles from it
-         $scope.getContentObject().then(function(contentObject) {
-           // console.log('init is still running!',contentArticles);
-                //$scope.contentArticles=contentArticles;
-                console.log('now we have contentArticles',$scope.contentArticles);
-            }
+                 
+            $scope.getContentObject().then(
+                //set the contentObject and populate the articles from it
+                function(contentObject) {
+               // console.log('init is still running!',contentArticles);
+                    //$scope.contentArticles=contentArticles;
+                    console.log('now we have contentArticles',$scope.contentArticles);
+
+                }
             );
+   
+
+
+
+        
+
          
         
 

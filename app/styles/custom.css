@@ -243,16 +243,19 @@ niiu-webappv1 Sctionpage
 div.fullBox, div.halfBox {
   min-height: 200px;
 }
+/*
 div.sourceTitle h4.list-group-item-heading {
   font-family: alright_sansbold;
   font-size: 22px;
   margin-top: 5px;
 }
 
+
 div.sourceTitle span.label-source {
   font-family: alright_sansbold;
   font-size: 15px;
 }
+*/
 
 .sectionPage, .articlePage, .menuPage {
   padding-top: 85px;

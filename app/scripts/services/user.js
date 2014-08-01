@@ -303,7 +303,7 @@ angular.module('niiuWebappApp')
         var titlePage = {
                                     type: "titlepage",
                                     title: "menu_titlepage",
-                                    subject: page_subject,
+                                    subject: "menu_titlepage",
                                     url : "/sectionHome/",
                                     sectionIndex : 0,
                                     section : {

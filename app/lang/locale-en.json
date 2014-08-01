@@ -17,6 +17,7 @@
     "menu_next_section": "Next Section",
     "menu_current_section": "Current Section",
     "menu_logout": "Logout",
+    "menu_editsections": "Edit Sections",
     "menu_login_register": "Login or Register",
     "icon_back" : "Back",
     "msg_wait" : "Please wait while we load your articles...",
