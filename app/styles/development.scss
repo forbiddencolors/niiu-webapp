@@ -65,6 +65,7 @@ body {
 		font-size: 18px; 
 	}
 
+
 	.col-centered{
 	    float: none;
 	    margin: 0 auto;
@@ -91,13 +92,12 @@ body {
 
 .navbar {
 	background-color:#3e3e40;
-	padding:2px 5px 2px 2px;
+	/*:2px 5px 2px 2px;*/
+	padding:7px 2px;
 
 	/*padding: 0px 2px;*/
 	border:0px;
-	height:40px;
-	min-height:40px;
-	max-height:40px;
+	height:60px;
 
 }
 
@@ -128,6 +128,39 @@ background-color:#5c5d5f;
 	left:75%;
 }
 
+#canvasnav {
+
+
+	.sourceTitle .label-source {
+	  font-family: alright_sansregular;
+	  font-size: 14px;
+	}
+
+		.label-source,.label-subject {
+    	background: none;
+    	font-weight: normal;
+    	font-size: 14px;
+    	font-family: 'alright_sansregular';
+    	color:#ffffff;
+    	padding-left: 0;
+    	white-space:nowrap;
+    }
+
+    .label-subject {
+    	color: #00a651;
+    }
+
+   	.sourceTitle h4.list-group-item-heading {
+		font-family: alright_sansbold;
+		font-size: 18px;
+		margin-top: 3px;
+	}
+
+
+
+
+}
+
 
 div.navbar {
 	 a.home_btn {
@@ -150,9 +183,14 @@ div.navbar {
 
 	}
 
+	.source-holder {
+		padding-top: 10px;
+
+	}
+
 
     .section-label {
-    	padding-top:auto;
+    	/*padding-top:auto;*/
 		  /*height:55px;
 		  top: 50%;*/
 		  margin:auto auto auto -20px;
@@ -527,7 +565,7 @@ background-repeat:no-repeat;
 
 	#niiuAppmenu li a {
 		font-size: 20px;
-		font-family: 'alright_sansregular'
+		font-family: alright_sansregular
 
 	}
 
@@ -590,7 +628,7 @@ background-repeat:no-repeat;
 	#niiuAppmenu li a.selectedSource{
 	  	background: #4b4c4d;
 	  	border-bottom: 1px solid #636363;
-	  	padding:15px 10px 15px 20px;
+	  	padding:10px 5px 10px 20px;
 		}
 
 	    #niiuAppmenu li a.selectedSource:before {

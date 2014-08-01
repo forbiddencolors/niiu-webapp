@@ -60,12 +60,11 @@ body {
 
 .navbar {
   background-color: #3e3e40;
-  padding: 2px 5px 2px 2px;
+  /*:2px 5px 2px 2px;*/
+  padding: 7px 2px;
   /*padding: 0px 2px;*/
   border: 0px;
-  height: 40px;
-  min-height: 40px;
-  max-height: 40px; }
+  height: 60px; }
 
 .share_btn .hideme {
   display: none;
@@ -86,6 +85,24 @@ body {
   position: relative;
   left: 75%; }
 
+#canvasnav .sourceTitle .label-source {
+  font-family: alright_sansregular;
+  font-size: 14px; }
+#canvasnav .label-source, #canvasnav .label-subject {
+  background: none;
+  font-weight: normal;
+  font-size: 14px;
+  font-family: 'alright_sansregular';
+  color: #ffffff;
+  padding-left: 0;
+  white-space: nowrap; }
+#canvasnav .label-subject {
+  color: #00a651; }
+#canvasnav .sourceTitle h4.list-group-item-heading {
+  font-family: alright_sansbold;
+  font-size: 18px;
+  margin-top: 3px; }
+
 div.navbar a.home_btn {
   text-indent: -9999px;
   background: url("/images/sprite.png") no-repeat -80px 0px;
@@ -100,8 +117,10 @@ div.navbar a.menu_btn {
   height: 60px;
   display: block;
   padding: 3px; }
+div.navbar .source-holder {
+  padding-top: 10px; }
 div.navbar .section-label {
-  padding-top: auto;
+  /*padding-top:auto;*/
   /*height:55px;
   top: 50%;*/
   margin: auto auto auto -20px;
@@ -336,7 +355,7 @@ li#searchBar input {
 
 #niiuAppmenu li a {
   font-size: 20px;
-  font-family: "alright_sansregular"; }
+  font-family: alright_sansregular; }
 
 #niiuAppmenu li a:before {
   content: "";
@@ -388,7 +407,7 @@ li#searchBar input {
 #niiuAppmenu li a.selectedSource {
   background: #4b4c4d;
   border-bottom: 1px solid #636363;
-  padding: 15px 10px 15px 20px; }
+  padding: 10px 5px 10px 20px; }
 
 #niiuAppmenu li a.selectedSource:before {
   display: flex; }
