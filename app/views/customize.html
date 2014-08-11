@@ -1,54 +1,68 @@
+	<!--top bar -->
+	<div ng-include="layoutPartial('topBar')" ></div>
+
+<div class="col-xs-12">
 
 
 
-	<h2>Section Menu</h2>
-	<br><br>
-
-	<ul class="sections row">
-
-
-		<li class="col-xs-12 col-md-6 col-lg-4" ng-repeat="niiu_section in menuObj">
-		<h4>{{niiu_section.name}}</h4>
-
-				<ol >
-					<li ng-repeat="niiu_source in niiu_section.sources">
-						{{niiu_source.name}} <span ng-hide="niiu_source.subsections"><a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,null,null)">[ + ]</a></span>
-
-						<ul>
-							<li ng-repeat="niiu_subsection in niiu_source.subsections">
-								{{niiu_subsection.name}} <a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,niiu_subsection.id,null)">[ + ]</a>
-							</li>
-						</ul>
-
-
-
-					</li>
-				</ol>
-
-
-
-
-		</li>
-	</ul>
-<hr>
-<h2>Add Custom Section</h2>
-    <input name="custom_section" ng-model="custom_section" placeholder="Enter a Custom Section">
-    <button ng-click="addCustomSection()">Add Custom Section</button>
-
-
-
-<hr>
-<h2>Chosen Sections</h2>
+<h3>Your Current Sections</h3>
 <span class="error">{{error}}</span>
-<ul class="sections row">
-	<li class="col-6 col-sm-6 col-lg-4" ng-repeat="addSection in sectionsToAdd">
-		<a class="btn btn-default" ng-href="" role="button" ng-click="removeSection(addSection.handle)" >{{addSection.name}} (remove)</a> 
+<ul class="sections list-unstyled">
+  <li class="col-xs-12 col-md-6" ng-repeat="addSection in sectionsToAdd">
+    <span class="btn transparent"><a ng-href="#/sectionView/{{$index+1}}">{{addSection.name}}</a> (<a  ng-href="" role="button" ng-click="removeSection(addSection.handle)" >- remove</a>) </span>
 
-	</li>
+  </li>
 
 </ul>
-<div>
-	<button class="btn btn-lg white-headline transparent btn-success login" ng-click="syncSections(sectionsToAdd)"> Update Sections
+
+<p>&nbsp</p>
+	<h3>Choose a Topic Below to add a new section</h3>
+	
+  <ul >
+    <li ng-repeat="niiu_section in menuObj">
+      <div >
+        <a ng-click="isCollapsed = !isCollapsed">{{niiu_section.name}}</a>
+      </div>
+      <ul collapse="isCollapsed" >
+        
+        <li ng-repeat="niiu_source in niiu_section.sources" >
+          <div >
+            <a ng-click="isSubCollapsed = !isSubCollapsed">{{niiu_source.name}}</a> <span ng-hide="niiu_source.subsections"><a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,null,null)">[ + ]</a></span>
+          </div>
+          
+          <ul collapse="isSubCollapsed" >
+          <li ng-repeat="niiu_subsection in niiu_source.subsections" >
+            <div >
+              {{niiu_subsection.name}} <a ng-href="" ng-click="addSection(niiu_section.id,niiu_source.id,niiu_subsection.id,null)">[ + ]</a>
+            </div>
+          
+         </li>
+        
+      </ul>
+
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
+
+
+
+
+
+
+<h3>Add Personal Sections</h3>
+<div class="add_custom_section">
+    <input name="custom_section" ng-model="custom_section" placeholder="Enter a Personal Section" class="col-xs-5"><button class="col-xs-5" ng-click="addCustomSection()">Add Personal Section</button>
+</div>
+    
+
+
+
+<div class="col-xs-10">
+	<button class="btn btn-default white-headline transparent btn-success login" ng-click="syncSections(sectionsToAdd)"> Update Sections</button>
+</div>
 
 </div>
 

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('CustomizeCtrl', function ($rootScope, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
-
+  .controller('CustomizeCtrl', function ($rootScope, $window, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
+    $window.scrollTo(0,0);
 
   	console.log('the scope at this point is like this', $scope);
   	console.log('the root scope at this point is like', $rootScope);
@@ -10,6 +10,17 @@ angular.module('niiuWebappApp')
         console.log('The MenuObj looks like this',menuObj);
         $scope.menuObj=menuObj;
         $scope.importUserSections(User.getUser().contentProfile.items);
+        $scope.treeArray=[];
+
+
+        for (var i in menuObj) {
+          console.log('making treeObj');
+         console.log( 'menuObj['+i+'] is in the house', menuObj[i]);
+          $scope.treeArray.push(menuObj[i]);
+
+        }
+
+        console.log('The treeArray looks like this',$scope.treeArray);
 
     }
    );
@@ -17,7 +28,8 @@ angular.module('niiuWebappApp')
    $scope.sectionsToAdd = [];
    //console.log("are there user sections?",User.getUser().contentProfile.items);
 
-
+   $scope.isCollapsed = true;
+   $scope.isSubCollapsed = true;
 
 
 
@@ -173,17 +185,23 @@ $scope.importUserSections = function(user_sections) {
           console.log('successfully updated sections!!',syncResponse);
           //syncResponse.contents.data.contentProfile.items;
           User.setContentProfile(syncResponse.contents.data.contentProfile);
-          User.setContentObject(syncResponse, syncResponse.contents.data.articles);
+
+          //instead of syncResponse we need 3s
+          localDB.get3sFromDB().then(function(current3s){
+          User.setContentObject(current3s, syncResponse.contents.data.articles);
           
-          $scope.user=User.getUser();
-          User.saveCurrentUser().then(function(saved_user) {
+            $scope.user=User.getUser();
+            User.saveCurrentUser().then(function(saved_user) {
 
                           console.log('the updated user has the following contentProfile',$scope.user);
 
-                          $location.path('/userHome/refresh');
+                          $location.path('/userHome/');
                     }
 
                     );
+          },function(error3s) {
+            console.log('there was no 3s to create this new contentObject with');
+          })
 
       },
       function(syncError) {
@@ -220,7 +238,48 @@ $scope.importUserSections = function(user_sections) {
 
     };
 
+$scope.refresh3s = function()  {
+      var deferred=$q.defer();
+      niiuSyncer.sync3s().then(function(data_3s) {
+      console.log('here is some 3s data',data_3s);
+        console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
+        //add sections to DB
+          localDB.put3s(data_3s.data).then( function() {
+         /*   localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
+            localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
+            localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
+            localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
+            localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
+            localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection); */
+            
+            //add sections to Scope
+            $scope.sections=data_3s.data.contents.data.newSections;
+            $scope.sources=data_3s.data.contents.data.newSources;
+            console.log('section 7 is called', $scope.sections[7].name);
+                  localDB.setLastSync().then( function() {
+                      deferred.resolve(data_3s.data);
+                  }
 
+              );
+            
+          });
+
+        
+
+        //at this point we have all the 3s info and it should be saved so lets run
+
+
+
+      }, 
+      function(no_data_3s) {
+        console.log('for some reason we couldnt get any 3s data',no_data_3s);
+        deferred.reject(no_data_3s);
+      }
+      );
+      return deferred.promise;
+
+      
+  };
 
     function getSourceSections() {
       var deferred = $q.defer();
@@ -373,10 +432,16 @@ console.log(section_id);
   	);
 
 
+$scope.init=function() {
 
   $scope.user = User.getUser();
   $scope.pageClass='menuPage';
+  $scope.refresh3s().then(  
 
+     ); 
+
+}
+$scope.init();
 
 
 

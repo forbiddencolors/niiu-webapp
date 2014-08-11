@@ -1,12 +1,92 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', 'niiuSyncer', 'localDB','$q','Articleservice', '$routeParams', 'constants','User', function ($scope, niiuSyncer, localDB, $q, Articleservice, $routeParams, constants, User) {
+  .controller('UserhomeCtrl', ['$scope', '$window', 'niiuSyncer', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, $window, niiuSyncer, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
 
   	
 
-  	$scope.pageClass='userHome';
+  	$window.scrollTo(0,0);
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+  	$scope.nav_top=angular.element('#topnav').css('top');
+
+
+
+  	$scope.pageClass="titlePage";
+
+
+    $scope.slide_interval="10000";
+
+
+  	$scope.makeSlides = function(titlePageContentObject) {
+  		//takes page articles and returns them as an array of slides
+  		var articleSlides=[];
+  		for (var i=0;i<titlePageContentObject.articles.length;i++) {
+  			if (titlePageContentObject.articles[i].media.length) {
+  				articleSlides[articleSlides.length]={ 
+  						imgTitle: titlePageContentObject.articles[i].title,
+  						imgSection: $scope.contentObject[titlePageContentObject.articles[i].sectionIndex].subject,
+  						imgUrl: $scope.media_path+titlePageContentObject.articles[i].media[0].path,
+  						imgLink:"#/article/"+titlePageContentObject.articles[i].id
+  						}
+  			}
+  		}
+  		console.log('articleSlides looks like',articleSlides);
+
+  		return articleSlides;
+
+  	}
+
+  	$scope.getCarouselScope = function() {
+
+  		console.log('heres this scope, ',$scope); 
+  	}
+
+  	$scope.toggleMenu = function(onOff) {
+  		User.toggleMenu(onOff);
+  	}
+
+  	$scope.sendThat = function(msg) {
+  		console.log(msg);
+
+  	}
+
+  	$scope.nextSectionSwipe = function() {
+  
+    	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
+  
+    	
+    	$location.path("/sectionView/"+User.getNextSection());
+
+
+    };
+
+    $scope.previousSectionSwipe = function() {
+  		
+  		var previousSection=User.getPreviousSection();
+    	console.log('user swiped back to section',previousSection );
+  
+
+   		angular.element('.page').addClass('backswipe');
+    	$location.path("/sectionView/"+previousSection);
+
+
+    };
+
+
+
+  	$scope.getLogoPath = function(source_id) {
+  		//console.log('this source_id is',(Math.floor(source_id*1)>0));
+  		//console.log('why are we calling this',$scope.slides)
+  		if(source_id) {
+  			return constants.SOURCE_LOGO_PATH;
+  			//return ('yes '+Math.floor(source_id));
+  		} else {
+  			return "";
+  			//return ('no '+Math.floor(source_id));
+  		}
+  	}
+
+
   	//$scope.user=User.getUser();
 
   	/*  //this would generate a content Object from nothing, but we'd rather do it from the articles and 3s we can access here
@@ -57,15 +137,16 @@ angular.module('niiuWebappApp')
 
 			  			    niiuSyncer.syncArticles($scope.user, sync_time, update_time).then(function(articleBlob) {
 
-			  			    	console.log('The api sync response looked like this',articleBlob);
+			  			    	console.log('Good Luck, the api sync response looked like this',articleBlob);
 
 
+			  			    	Articleservice.init(articleBlob.contents.data.articles);
 			  			    	deferred.resolve(articleBlob);
 			  			    	
 
 
 			  			    }, function(server_error) {
-			  			    		console.log('The api sync response looked like this',server_error);
+			  			    		console.log('Bad Luck, the api sync response looked like this',server_error);
 			  			    		deferred.reject(server_error);
 			  			    }
 
@@ -94,45 +175,59 @@ console.log('are we online?',navigator.onLine);
 
 
 function refreshArticles() {
-
+	var deferred=$q.defer();
 	//replace the scope articles if we have new ones
 	getArticleList().then( function(theList){
 			console.log('article list is finished',theList);
-			$scope.articles=theList.contents.data.articles;
+			
 
 
 			//Put the articles into the service so we can get at them later
 			Articleservice.init(theList.contents.data.articles);
 
+			var cleaned_articles=Articleservice.getArticles();
+			$scope.articles=cleaned_articles;
+
 			//put the articles in the db so we can get to them if the user is offline or leaves the site
-			localDB.addArticlesToDB(theList.contents.data.articles);
+			localDB.addArticlesToDB(cleaned_articles).then(function(added_articles) {
+				console.log('articles added',added_articles);
+				User.getContentObject();
+				deferred.resolve(cleaned_articles);
+			});
+			
 
 		},  function(noList) {
 			console.log('crap our attempt to get a list failed.',noList);
+			deferred.reject(noList);
 		}
-	);
 
+	);
+	return deferred.promise;
 }
 
 
 	function refresh3s() {
-
+			var deferred=$q.defer();
 			niiuSyncer.sync3s().then(function(data_3s) {
 			console.log('here is some 3s data',data_3s);
 				console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
 				//add sections to DB
-				localDB.put3s(data_3s.data);
-				localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
-				localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
-				localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
-				localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
-				localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
-				localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection);
-				localDB.setLastSync();
-				//add sections to Scope
-				$scope.sections=data_3s.data.contents.data.newSections;
-				$scope.sources=data_3s.data.contents.data.newSources;
-				console.log('section 7 is called', $scope.sections[7].name);
+					localDB.put3s(data_3s.data).then( function() {
+						localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
+						localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
+						localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
+						localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
+						localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
+						localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection);
+						localDB.setLastSync();
+						//add sections to Scope
+						$scope.sections=data_3s.data.contents.data.newSections;
+						$scope.sources=data_3s.data.contents.data.newSources;
+						console.log('section 7 is called', $scope.sections[7].name);
+						deferred.resolve(data_3s.data);
+					});
+
+				
 
 				//at this point we have all the 3s info and it should be saved so lets run
 
@@ -141,8 +236,10 @@ function refreshArticles() {
 			}, 
 			function(no_data_3s) {
 				console.log('for some reason we couldnt get any 3s data',no_data_3s);
+				deferred.reject(no_data_3s);
 			}
 			);
+			return deferred.promise;
 
 			
 	}
@@ -154,14 +251,35 @@ function refreshArticles() {
 		//when last sync is a bit old maybe 10mins
 		//when people first login
 		//when people trigger a refresh (like dragging down in the ios app)
-		refresh3s();
-		refreshArticles();
-		User.getContentObject().then(function(returned_contentObject) {
-			console.log("does the getContentObject returns a promise all right.",returned_contentObject);
-			$scope.contentObject = returned_contentObject;
-		},function(returned_content_error) {
-			console.log("we didnt get the contentObject at all right?",returned_content_error);
-		}
+		refresh3s().then(function(new3s) {
+			refreshArticles().then(function(new_article_blob) {
+				console.log('this is the list of new articles',new_article_blob);
+
+			//Put the articles into the service so we can get at them later
+			Articleservice.init(new_article_blob);
+			var cleaned_articles = Articleservice.getArticles();
+			var newContentObject = User.setContentObject(new3s,cleaned_articles);
+			$scope.contentObject = newContentObject;
+			$scope.slides = $scope.makeSlides(newContentObject[0]);
+			console.log('the slides are',$scope.slides);
+			$scope.articles = cleaned_articles;
+			$scope.user = User.getUser();
+			console.log('The new contentObject is like',$scope.contentObject);
+
+				/*
+				User.setContentObject(new3s,new_articles).then(function(returned_contentObject) {
+						console.log("does the getContentObject returns a promise all right.",returned_contentObject);
+						$scope.contentObject = returned_contentObject;
+					},function(returned_content_error) {
+						console.log("we didnt get the contentObject at all right?",returned_content_error);
+					}
+				)
+				*/
+			
+			}//end refreshArticles
+			)
+		}//end refresh3s
+
 
 		);
 	} else {
@@ -170,8 +288,9 @@ function refreshArticles() {
 		User.getContentObject().then(function(returned_contentObject) {
 			console.log("retrieved contentObject.",returned_contentObject);
 			$scope.contentObject = returned_contentObject;
+			$scope.slides = $scope.makeSlides(returned_contentObject[0]);
 		},function(returned_content_error) {
-			console.log("we didnt get the contentObject at all right?",returned_content_error);
+			console.log("we didnt get the contentObject from the db right?",returned_content_error);
 		}
 
 			);
@@ -180,12 +299,46 @@ function refreshArticles() {
 		//put the article array into the service
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
-			Articleservice.init(db_articles);
-			$scope.articles=db_articles;
-			console.log('checking for my methods', User);
-			//$scope.contentObject = User.getContentObject($scope.db3s,db_articles);
-			console.log('our $scope.contentObject is',$scope);
-			console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
+			if (db_articles.length>0) {
+				Articleservice.init(db_articles);
+				$scope.articles=db_articles;
+				console.log('checking for my methods', User);
+				User.getContentObject($scope.db3s,db_articles).then(function(returned_contentObject) {
+					
+					$scope.contentObject = returned_contentObject;
+					console.log('our $scope.contentObject is',$scope.contentObject);
+					//$scope.slides = $scope.makeSlides($scope.contentObject[0]);
+				},function(error_contentObject) {
+					console.log("couldnt make a contentObject from the DB",error_contentObject);
+				}
+					);
+				
+				
+				console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
+			} else {
+				console.log('unfortunately there are no articles in the db lets get some from the api');
+				getArticleList().then(function(new_article_blob) {
+					console.log('fortunately now we do have some articles',new_article_blob);
+					Articleservice.init(new_article_blob.contents.data.articles);
+					$scope.articles=Articleservice.getArticles();
+					console.log('after we strip duplicates there are only ',$scope.articles);
+					localDB.addArticlesToDB(Articleservice.getArticles());
+					User.getContentObject().then(function(returned_contentObject) {
+						console.log("creating a new contentObject I hope",returned_contentObject);
+
+						$scope.contentObject = returned_contentObject;
+						$scope.slides = $scope.makeSlides(returned_contentObject[0]);
+					},function(returned_content_error) {
+						console.log("no new content Object",returned_content_error);
+					});
+
+
+
+				}, function(new_article_error) {
+					console.log('getting the new articles we receieved the following error',new_article_error)
+				});
+
+			}
 		});
 		/*
 

@@ -42,11 +42,11 @@ angular.module('niiuWebappApp')
                 "data": {
                     "last3SSync": last_sync_time,
                     "lastContentSync": last_sync_time,
-                    "user_id": currentUser.id,
+                    "user_id": current_user.id,
                    "version": 200.7,
                    "article_ids": [ ],
                    "contentProfile": {
-                       "id": currentUser.contentProfile.id,
+                       "id": current_user.contentProfile.id,
                        "localID": 2,
                        "isPublic": 1,
                        "name": "Default Content Profile",
@@ -57,7 +57,7 @@ angular.module('niiuWebappApp')
                   "forceSync": true
                 }
               };
-
+              console.log('Creating article object', articleData);
 
             return articleData;
       }
@@ -190,6 +190,52 @@ angular.module('niiuWebappApp')
             return articleData;
       },
 
+
+      getSharedArticle: function(article_id) {
+
+            var deferred= $q.defer();
+
+            var guestArticleObject = {
+                  "action": "get_article",
+                 "api": "content",
+                 "apiKey": constants.GUEST_API_KEY,
+                 "appGuid": constants.NIIU_APP_GUID,
+                 "data": {
+                     "articleIDs": [
+                         article_id
+                     ],
+                    "userID": constants.GUEST_ID
+                  }
+            }
+
+
+                 $http.post(constants.NIIU_API_URL+"articles/get_article", "data="+angular.toJson(guestArticleObject), {
+                        
+                    }).success(function(guestResponse){
+                        console.log('heres the guest article response from the niiu api', guestResponse);
+                        
+                        if (guestResponse.contents.status==200) {
+
+                            console.log('The guest article response was good', guestResponse);
+
+                          deferred.resolve(guestResponse);
+                        
+                        } else {
+                                
+                                console.log('The guest article response wasnt so good...', guestResponse);
+                                
+                                deferred.reject(guestResponse);
+                        }
+
+                    }).error(function(guestArticleError){
+                        console.log('this was a guest article error',guestArticleError);
+                        deferred.reject(guestArticleError);
+                     });
+                    //hang on we don't have an answer yet
+                    return deferred.promise;
+
+                
+            },
 
 
 
@@ -381,11 +427,6 @@ angular.module('niiuWebappApp')
                           
 
                 }
-
-
-
-
-
 
 
         );

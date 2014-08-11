@@ -1,14 +1,79 @@
-  <ul class="nav" ng-controller="usermenuCtrl">
-    <li><a ng-href="#/customize" ng-show="user!=null">{{ 'menu_settings' | translate}}</a></li>
-    <li><a ng-href="#/userHome" ng-show="user!=null">{{ 'menu_titlepage' | translate}}</a></li>
-    <!--li><a ng-href="#/customize" ng-show="user!=null">Customize</a></li-->
-    <li><a ng-href="#/sectionHome" ng-show="user!=null">{{ 'menu_titlepage' | translate}}</a></li>
-    <li><a ng-href="#/userHome/refresh" ng-show="user!=null">{{ 'menu_refresh' | translate}}</a></li>
-    <!--li><a ng-href="" ng-click="nextSection()" ng-show="user!=null">Next Section</a></li-->
-    <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null">{{ 'menu_next' | translate}}</a></li>
-    <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
-    <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
-  <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
-  </ul>
-  <p class="errors" ng-show="error">{{error}}</p>
+            <!-- offcanvas menu -->
+    <nav id="niiuAppmenu" ng-controller="usermenuCtrl">
+      <ul class="mm-list mm-panel mm-opened mm-current">
+        <li id="searchBar">
+
+<!--suggestion html -->          
+<script type="text/ng-template" id="customTemplate.html">
+  <a >
+      <span bind-html="match.label | typeaheadHighlight:query"></span>
+  </a>
+</script>
+
+    <form >
+      <input type="text" ng-model="selected" typeahead="state.title for state in contentArticles | filter:$viewValue | limitTo:8" class="form-control" placeholder="{{'menu_search' | translate}}..." typeahead-on-select="captureSelection($item, $model, $label)">
+    </form>
+
+
+        </li>
+        <li><a class="mHome" ng-href="#/userHome" ng-click="toggleMenu()" translate>menu_titlepage</a></li>
+        <li><a href="" ng-click="getContentObject()" class="mSources" translate>menu_sections</a>
+
+                      <!-- Add Sources here -->
+                      <a ng-href="#/sectionView/{{$index}}" ng-click="toggleMenu()" ng-repeat="user_section in contentObject" ng-show="!$first" class="selectedSource" >
+                        <div class="sourceTitle">
+                          <span class="label label-default label-subject"  ng-if="user_section.subject" >{{user_section.source.name}}</span>
+                          <h4 class="list-group-item-heading label-source" >{{user_section.subject}}</h4>
+                        </div>
+                      </a>
+
+              
+
+
+        </li>
+        <li><a class="mFavorite" href=""  translate>menu_favorites</a></li>
+        <li><a class="mSettings" href="#/customize" ng-click="toggleMenu()" translate>menu_settings</a>
+          <ul>
+            
+            <!--li><a href="" translate>menu_profile</a></li -->
+            <li><a ng-href="#/userHome/refresh" ng-click="toggleMenu()" translate>menu_refresh</a></li>
+            <li><a ng-href="#/customize" ng-click="toggleMenu()" translate>menu_editsections</a></li>
+            <li><div ><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> /<a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+            <li><a ng-click="logout();" href="" translate>menu_logout</a></li>
+          </ul>
+
+        </li>
+        <li><a class="mHelp" href="" translate>menu_help</a></li>
+        <li><a class="mFeedback" ng-click="toggleMenu()" ng-href="https://docs.google.com/forms/d/1RtuQyTzNAfQ3qfITBLl0ZdapHplZanxjF60fKfRInvU/viewform?entry.331930778&entry.1900651166={{user.eMail}}&entry.1585641298&entry.383221606&entry.488870576&entry.75199030={{browser}}" target="_blank" translate>menu_feedback</a></li>
+        
+      </ul>
+
+    </nav>
+
+    
+
+    
+  <!--nav bar -->
+<!--  
+  <div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
+    <ul class="nav" ng-controller="usermenuCtrl">
+      <li><a ng-href="#/customize" ng-show="user!=null" translate>menu_settings</a></li>
+      <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
+
+      <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
+      <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
+
+      <li><a ng-href="#/userHome/refresh" ng-show="user!=null" translate>menu_refresh</a></li>
+
+      
+      <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
+      <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
+    <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+    </ul>
+
+
+    </div> -->
+
+  <alert ng-show="error" type="info" >{{error}}</alert>
+
 

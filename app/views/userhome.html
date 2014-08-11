@@ -1,21 +1,98 @@
-<h3>{{ 'welcome' | translate}} {{user.firstName}}</h3>
+
+	<div class="row">
+		<!--top bar -->
+	
+	<!-- <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" ng-include="partials/usermenu.html"></div> -->
+
+	<div ng-include="layoutPartial('topBar')"></div>
+
+
+	<div ng-controller="CarouselCtrl" class="col-xs-12" >  
+	    <carousel interval="slide_interval"  id="niiuCarousel" class="news-slider" disable-animation="true">
+	      <slide ng-repeat="slide in slides" active="slide.active" class="slider" >
+	      	
+	      		<article>
+		      		<div class="image-content"> <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ></div>
+	                <div class="text-content">
+	                  <a href="{{slide.imgLink}}" ng-click="toggleMenu(false)">
+		                  <label>{{slide.imgSection}}</label>
+		                  <h2>{{slide.imgTitle | truncate : 80}}</h2>
+	                  </a>
+	                </div>
+	                
+	              </article>
+	          
+
+
+<!--
+	        
+	        <img ng-src="{{slide.imgUrl}}" class="center-block imgSlide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
+	        <div class="carousel-caption">
+	        	
+	        	
+	        	<a href="{{slide.imgLink}}">	
+	          		<h4>{{slide.imgTitle}}</h4>
+	          	</a>
+	          
+
+	        </div>
+-->
+	      </slide>
+	    </carousel>
+	    </div>
+	</div>
 
 
 
 
-	<h3>{{'menu_sections' | translate}}</h3>
+	<div class="col-xs-12 mmenu" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >
+	<!-- h3>{{ 'menu_titlepage' | translate}}</h3 -->
 
+	<ul class="list-unstyled">
+		<li class="col-xs-12" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " >
+			<div class="row">
+				<a ng-href="#/article/{{article.id}}" ng-click="toggleMenu(false)" class="list-group-item clearfix">
+				<figure class="pull-left newsSource">
+					<img src="{{getLogoPath(1)}}{{article.source_logo}}" width="46" height="46" />
+				</figure>
+				<div  class="newsTitle" >
+						<span class="label label-default label-subject">{{contentObject[article.sectionIndex].subject }}</span> 
+						<h4 class="list-group-item-heading">{{article.title}}</h4>
+					<!--div ng-bind-html="article.subtitle | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div-->
 
-	<ul class="sections row">
-		<li class="col-6 col-sm-6 col-lg-4" ng-repeat="user_section in contentObject">
-			<a class="btn btn-default" href="#" role="button" ng-href="#/sectionView/{{$index}}">
-			{{user_section.title}}
-			</a>
+						
+				</div>
+				</a>
+			</div>
+
 		</li>
 	</ul>
 
 
-	<h3>{{ 'menu_titlepage' | translate}}</h3>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-xs-12" style="margin-top:120px;" >
+<alert ng-hide="contentObject[0]" type="info" ><span translate style="color:#3a87ad;">msg_wait</span></alert>
+	
+	
+
+
+<!--
+
+	
 	<div ng:repeat="page in contentObject">
 		<strong>{{page.source.name}} {{page.section.name}}  {{page.subsection.name}}  / {{page.source.id}} -
 		{{page.custom_section.id}} -
@@ -32,35 +109,6 @@
 
 	</div>
 
-
-
-
-
-	<p>Here are some articles for you</p>
-
-	<ul class="articles row">
-		<li class="col-xs-12 col-sm-6 col-6 btn btn-default" ng-repeat="article in articles | orderBy:'-published_date' track by article.id ">
-			<div  class="article" style="background-image:url('{{media_path}}{{article.media[0].path}}');"> 
-				<a ng-href="#/article/{{article.id}}">
-				<h4 >{{article.title}}</h4>  {{article.id}} - {{article.published_date}}
-				<div ng-bind-html="article.subtitle | truncate:100"  class="article_truncated">{{article.content | truncate:100}}</div></a>
-				<a class="btn" href="" ng-click="isArticleOpen = !isArticleOpen">Read More &raquo;</a></a>
-
-					
-			</div>
-			
-			<div class="col-12" ng-init="isArticleOpen = false" ng-show="isArticleOpen" id="article_{{article.id}}" >
-			<!--a class="btn btn-default" href="#" role="button" ng-href="/article/{{article.id}}">Read more &raquo;</a-->
-
-
-	
-			</div>
-
-
-
-		</li>
-	</ul>
-
 <!--
 	<p>Here are all sections</p>
 
@@ -70,3 +118,7 @@
 		</li>
 	</ul>
 -->
+</div>
+
+
+

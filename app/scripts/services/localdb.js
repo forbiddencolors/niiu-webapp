@@ -340,7 +340,7 @@ angular.module('niiuWebappApp')
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt enter soome articles into the db because', failed_stuff);
+                console.log('We couldnt enter some articles into the db because', failed_stuff);
                 deferred.reject(failed_stuff);
               }
               );
@@ -734,7 +734,7 @@ angular.module('niiuWebappApp')
           var local_table = connectDB();
 
           console.log('getting ready to add sources to DB ', sources_array);
-          local_table.add('sources',sources_array).done(
+          local_table.put('sources',sources_array).done(
               function(entered_stuff) {
                 console.log('We entered sources into the db', entered_stuff);
                 deferred.resolve(entered_stuff);
@@ -757,7 +757,7 @@ angular.module('niiuWebappApp')
           var local_table = connectDB();
 
           console.log('getting ready to add sections to DB ', section_array);
-          local_table.add('sections',section_array).done(
+          local_table.put('sections',section_array).done(
               function(entered_stuff) {
                 console.log('We entered sections into the db', entered_stuff);
                 deferred.resolve(entered_stuff);

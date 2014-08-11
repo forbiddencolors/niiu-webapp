@@ -3,7 +3,7 @@
 angular.module('niiuWebappApp')
   .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', 'User', 'getByPropertyFilter', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants, User ) {
 
-    
+ $scope.pageClass="loginHome";   
 
 $scope.retrieveUser = function() {
   	//retrieve logged in user
