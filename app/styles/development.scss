@@ -291,6 +291,26 @@ div.front_view, div.section_view {
 min-height: 300px;
 	}
 
+
+
+.sectionPage h4.articleTitle {
+		font-family: alright_sansbold;
+		font-size: 16px;
+		margin-top: 5px;
+	}
+
+
+
+@media (min-width: 500) {
+	 .sectionPage h4.articleTitle {
+		font-family: alright_sansbold;
+		font-size: 27px;
+		margin-top: 5px;
+	}
+
+}
+
+
 .sectionPage {
 
 
@@ -326,11 +346,9 @@ min-height: 300px;
 		color:#ffffff;
 	}
 
-	h4.articleTitle {
-		font-family: alright_sansbold;
-		font-size: 23px;
-		margin-top: 5px;
-	}
+
+
+
 
 	li.single, li.double {
 	 /* min-height: 200px;
