@@ -83,6 +83,12 @@ angular.module('niiuWebappApp')
 
     };
 
+    $scope.goSection =  function(sectionId) {
+        User.toggleMenu();
+        User.setCurrentSection(sectionId);
+
+    };
+
     $scope.captureSelection = function(item, model, label) {
         console.log('the searcher selected this item',item);
         console.log('the searcher selected this model',model);
