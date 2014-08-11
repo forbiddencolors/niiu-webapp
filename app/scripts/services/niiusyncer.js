@@ -32,8 +32,9 @@ angular.module('niiuWebappApp')
 
 
 
-    function createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array) {
+    function createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array, article_array) {
 
+        article_array = article_array || [];
         section_array = section_array || [];
               var articleData = {
                 "api": "content",
