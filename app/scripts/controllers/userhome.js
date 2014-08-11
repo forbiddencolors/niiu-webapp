@@ -251,6 +251,7 @@ function refreshArticles() {
 		//when last sync is a bit old maybe 10mins
 		//when people first login
 		//when people trigger a refresh (like dragging down in the ios app)
+		console.log('starting refresh mode');
 		refresh3s().then(function(new3s) {
 			refreshArticles().then(function(new_article_blob) {
 				console.log('this is the list of new articles',new_article_blob);
@@ -260,6 +261,8 @@ function refreshArticles() {
 			var cleaned_articles = Articleservice.getArticles();
 			var newContentObject = User.setContentObject(new3s,cleaned_articles);
 			$scope.contentObject = newContentObject;
+			localDB.addArticlesToDB(cleaned_articles);
+			console.log('the refreshed contentObj is',$scope.contentObject);
 			$scope.slides = $scope.makeSlides(newContentObject[0]);
 			console.log('the slides are',$scope.slides);
 			$scope.articles = cleaned_articles;

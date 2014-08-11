@@ -333,17 +333,29 @@ angular.module('niiuWebappApp')
           var local_table = connectDB();
 
           console.log('getting ready to add articles to DB ', article_array);
-          local_table.put('article',article_array).done(
-              function(entered_stuff) {
-                console.log('We entered articles into the db', entered_stuff);
-                deferred.resolve(entered_stuff);
-              }
-            ).fail(
-              function(failed_stuff) {
-                console.log('We couldnt enter some articles into the db because', failed_stuff);
-                deferred.reject(failed_stuff);
-              }
-              );
+          //local_table.clear('article');
+          local_table.count('article').done(function(article_count) {
+              console.log('we start with this many articles in the db ',article_count);
+            
+            local_table.put('article',article_array).done(
+                function(entered_stuff) {
+                  console.log('We entered articles into the db', entered_stuff);
+
+                local_table.count('article').done(function(article_count) {
+                  console.log('now we have this many articles in the db ',article_count);
+                });
+
+                  deferred.resolve(entered_stuff);
+                }
+              ).fail(
+                function(failed_stuff) {
+                  console.log('We couldnt enter some articles into the db because', failed_stuff);
+                  deferred.reject(failed_stuff);
+                }
+                );
+
+          }); //pre addition article count
+
 
           return deferred.promise;
 

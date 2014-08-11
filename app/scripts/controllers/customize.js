@@ -6,24 +6,7 @@ angular.module('niiuWebappApp')
 
   	console.log('the scope at this point is like this', $scope);
   	console.log('the root scope at this point is like', $rootScope);
-    niiuSyncer.createMenuObj().then(function(menuObj) {
-        console.log('The MenuObj looks like this',menuObj);
-        $scope.menuObj=menuObj;
-        $scope.importUserSections(User.getUser().contentProfile.items);
-        $scope.treeArray=[];
 
-
-        for (var i in menuObj) {
-          console.log('making treeObj');
-         console.log( 'menuObj['+i+'] is in the house', menuObj[i]);
-          $scope.treeArray.push(menuObj[i]);
-
-        }
-
-        console.log('The treeArray looks like this',$scope.treeArray);
-
-    }
-   );
 
    $scope.sectionsToAdd = [];
    //console.log("are there user sections?",User.getUser().contentProfile.items);
@@ -437,6 +420,26 @@ $scope.init=function() {
   $scope.user = User.getUser();
   $scope.pageClass='menuPage';
   $scope.refresh3s().then(  
+      niiuSyncer.createMenuObj().then(function(menuObj) {
+          console.log('The MenuObj looks like this',menuObj);
+          $scope.menuObj=menuObj;
+          $scope.importUserSections(User.getUser().contentProfile.items);
+          $scope.treeArray=[];
+
+
+          for (var i in menuObj) {
+            console.log('making treeObj');
+           console.log( 'menuObj['+i+'] is in the house', menuObj[i]);
+            $scope.treeArray.push(menuObj[i]);
+
+          }
+
+          console.log('The treeArray looks like this',$scope.treeArray);
+
+      }
+     )
+
+
 
      ); 
 

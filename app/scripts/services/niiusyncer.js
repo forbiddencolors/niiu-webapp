@@ -336,9 +336,16 @@ angular.module('niiuWebappApp')
 
                             ) {
                             console.log('time to do something with '+"sec_"+SectionSubMap.section_id+", source_"+SourceSubMap.source_id+", "+"sub_"+SourceSubMap.subsection_id);
-                          if (!this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections) {
+                          console.log('what is this typeof anyway',(typeof(this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id])=='undefined'));
+                          if (typeof(this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id])=='undefined') {
+                              //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id]={};
+                              this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id]={};
+                            }
+                          if (typeof(this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections)=='undefined') {
+                              //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id]={};
                               this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections={};
                             }
+
                             //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
                             this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
                           }

@@ -5,7 +5,7 @@ angular.module('niiuWebappApp')
     $window.scrollTo(0,0);
     $scope.media_path=constants.ARTICLE_MEDIA_PATH;
     $scope.pageClass = "articlePage";
-    $scope.slide_interval = -10;
+    $scope.slide_interval = 90000;
 
 
 
