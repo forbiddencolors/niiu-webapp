@@ -40,13 +40,14 @@ angular.module('niiuWebappApp')
         }  
         */
         
-        if (data3s===undefined) data3s=localDB.get3sFromDB();
-        if (dataArticles==undefined) { 
+        if (typeof(data3s)=='undefined') data3s=localDB.get3sFromDB();
+        if (typeof(dataArticles)=='undefined') { 
             dataArticles=localDB.loadArticlesFromDB().then(function(done) {
             console.log('now we have some contentObject articles from the DB',done);
             });
         } else {
-                localDB.addArticlesToDB(dataArticles);
+               //if dataArticles isn't undefined then they must already be there so lets just move along.
+               // localDB.addArticlesToDB(dataArticles);
 
             }
         var user_sections=user.contentProfile.items;

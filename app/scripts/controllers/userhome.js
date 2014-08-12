@@ -257,15 +257,15 @@ function refreshArticles() {
 				console.log('this is the list of new articles',new_article_blob);
 
 			//Put the articles into the service so we can get at them later
-			Articleservice.init(new_article_blob);
-			var cleaned_articles = Articleservice.getArticles();
-			var newContentObject = User.setContentObject(new3s,cleaned_articles);
+			//Articleservice.init(new_article_blob);
+			//var cleaned_articles = Articleservice.getArticles();
+			var newContentObject = User.setContentObject(new3s,new_article_blob);
 			$scope.contentObject = newContentObject;
-			localDB.addArticlesToDB(cleaned_articles);
+			//localDB.addArticlesToDB(cleaned_articles);
 			console.log('the refreshed contentObj is',$scope.contentObject);
 			$scope.slides = $scope.makeSlides(newContentObject[0]);
 			console.log('the slides are',$scope.slides);
-			$scope.articles = cleaned_articles;
+			$scope.articles = new_article_blob;
 			$scope.user = User.getUser();
 			console.log('The new contentObject is like',$scope.contentObject);
 
