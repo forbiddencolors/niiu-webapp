@@ -7,9 +7,9 @@
 
 
 	<ul class="list-unstyled articles row">
-		<li ng-class="{'single col-xs-12':($index%3===0),'double col-xs-6':!($index%3===0)}" ng-repeat="article in pageContent.articles | orderBy:'-sections.content_priority' track by article.id " style="background-image: linear-gradient(to bottom, rgba(62, 62, 64, 0.3), rgba(62, 62, 64, .9)), url('{{media_path}}{{article.media[0].path}}');">
+		<li ng-class="{'single col-xs-12':($index%3===0),'double col-xs-6':!($index%3===0)}" ng-repeat="article in pageContent.articles | orderBy:'-published_date' track by article.id " style="background-image: linear-gradient(to bottom, rgba(62, 62, 64, 0.3), rgba(62, 62, 64, .9)), url('{{media_path}}{{article.media[0].path}}');">
 			<a ng-href="#/article/{{article.id}}" class="articleLink" ng-click="toggleMenu(false)">
-			<div class="col-xs-12"><h4 class="articleTitle">{{article.title | truncate:80}}</h4></div>
+			<div class="col-xs-12"><h4 class="articleTitle">{{article.title | truncate:80}}</h4>{{article.published_date}}</div>
 			<div class="intro col-xs-12 articleText hidden-xs"><p><span ng-bind-html="article.content | truncate:120 | htmlToPlaintext" /> →</p></div>
 
 		</li>
