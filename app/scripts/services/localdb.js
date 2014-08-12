@@ -7,7 +7,7 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_db';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'id'},{name:'last_content_sync',keyPath:'time'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
       //add additional indexes {name:'sectionSubsections',keyPath:'id',indexes:[{keyPath: "section_id"},{keyPath:"subsection_id"}]}]
 
 
@@ -92,7 +92,7 @@ angular.module('niiuWebappApp')
 
 
         function getLastContentTime() {
-          /*
+          
           var default_time='0000-00-00 00:00:00';
 
           console.log('looking for the last sync time');
@@ -107,10 +107,15 @@ angular.module('niiuWebappApp')
           
            local_table.get("full3s","3s").done(
               function(pulled_3s) {
+                console.log('3s from table',pulled_3s);
+              if (typeof(pulled_3s.contents.data.lastContentSync)!='undefined') {
                 var last_sync_time =pulled_3s.contents.data.lastContentSync;
+              } else {
+                var last_sync_time =pulled_3s.contents.data.last3SSync;
+              }
 
                 console.log('last Content Sync time from the 3s table',last_sync_time);
-                //console.log('We got the full3s object from the db', pulled_3s);
+                console.log('We got the full3s object from the db', pulled_3s);
                 
 
 
@@ -124,7 +129,7 @@ angular.module('niiuWebappApp')
               );
 
           return deferred.promise;
-          */
+          
 
           //this LastContentSync is not always available.
 
@@ -143,11 +148,21 @@ angular.module('niiuWebappApp')
         },
 
         getSyncAge: function() {
+          var deferred = $q.defer();
           var now = getCurrentTime();
-          var lastSync = '';
-          return syncAge;
+          getLastContentTime().then(function(lastContentUpdateTime) {
+            var syncAge = Math.abs((new Date(now)-new Date(lastContentUpdateTime))/1000);
+            console.log('time since the last update is ',syncAge);
+            deferred.resolve(syncAge);
 
 
+
+          }
+
+          );
+          
+          
+          return deferred.promise;
 
 
 
@@ -655,18 +670,26 @@ angular.module('niiuWebappApp')
            var deferred = $q.defer();
            console.log('save the whole 3s', data_3s)
           var local_table = connectDB();
+          
 
-          local_table.put('full3s',data_3s).done(
-              function(entered_3s) {
-                console.log('We entered the full3s object into the db', entered_3s);
-                deferred.resolve(entered_3s);
-              }
-            ).fail(
-              function(failed_stuff) {
-                console.log('We couldnt enter full3s object into the db because', failed_stuff);
-                deferred.reject(failed_stuff);
-              }
-              );
+            local_table.put('full3s',data_3s.data).done(
+                function(entered_3s) {
+                  console.log('We entered the full3s object into the db', entered_3s);
+                  //also save the 3s sync time
+                    local_table.put('last_3s_sync',{'id':'time','syncTime':data_3s.data.contents.data.last3SSync}).done(
+                        function(saved_3s_time) {
+                          deferred.resolve(entered_3s);
+                        }
+                      );
+                  
+                }
+              ).fail(
+                function(failed_stuff) {
+                  console.log('We couldnt enter full3s object into the db because', failed_stuff);
+                  deferred.reject(failed_stuff);
+                }
+                );
+             
             return deferred.promise;
             /*
 

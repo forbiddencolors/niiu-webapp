@@ -14,7 +14,7 @@ angular.module('niiuWebappApp')
   	$scope.pageClass="titlePage";
 
 
-    $scope.slide_interval="10000";
+    $scope.slide_interval="5000";
 
 
   	$scope.makeSlides = function(titlePageContentObject) {
@@ -124,6 +124,7 @@ angular.module('niiuWebappApp')
     var deferred = $q.defer();
 
 
+
     function getArticleList() {
 
 	  	
@@ -137,7 +138,7 @@ angular.module('niiuWebappApp')
 
 			  			    niiuSyncer.syncArticles($scope.user, sync_time, update_time).then(function(articleBlob) {
 
-			  			    	console.log('Good Luck, the api sync response looked like this',articleBlob);
+			  			    	console.log('Good Luck, api sync response looked like this',articleBlob);
 
 
 			  			    	Articleservice.init(articleBlob.contents.data.articles);
@@ -244,7 +245,19 @@ function refreshArticles() {
 			
 	}
 
-	console.log('the current sync is this old, ',localDB.getSyncAge());
+	localDB.getSyncAge().then(function(content_sync_age) {
+		console.log('the current sync is this old, ',content_sync_age);
+		if(content_sync_age>60*15) {
+			console.log('sync for new articles');
+			refresh3s().then(
+					function() {
+						refreshArticles();
+					}
+				);
+		} else {
+			console.log('not time to sync for articles');
+		}
+	});
 
 	if (0 || $routeParams.refresh=='refresh') {
 		//currently we are refreshing everytime the page loads, but probably we should do this only 

@@ -414,11 +414,14 @@ angular.module('niiuWebappApp')
                               
                               if (threeSResponse.status==200) {
 
-                                  console.log('The 3s response was good. new sync time is ', threeSResponse);
+                                  console.log('The 3s response was good. new sync time is ', threeSResponse.data.contents.data.last3SSync);
 
 
-                              
-                              deferred.resolve(threeSResponse);
+                                localDB.put3s(threeSResponse).then(function() {                             
+                                  console.log('the new 3s sync info should be in the db now',threeSResponse)
+                                  deferred.resolve(threeSResponse);
+
+                                });
                               
                               } else {
                                       

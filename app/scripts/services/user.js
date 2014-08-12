@@ -145,17 +145,22 @@ angular.module('niiuWebappApp')
                                 console.log('homeArticles count'+i,homeArticles);
                                 //not a pretty formula but it says for if there are less than 2*the amount of sections we have, add an article to the homepage
                                 //so if there we are making section three and we have less than six articles on the home page add another.
-                              if (homeArticles.length < (i+1)*homeArticlesNum || dataArticles[h].published_date>homeArticles[homeArticles.length+1].published_date) {
-                                
-                                //add a couple articles to the titlepage
+                              var  currentHomeArticle= (i+1)*homeArticlesNum;
+                              if (homeArticles.length < currentHomeArticle) {
 
-                             //   pageArticles[0].push(dataArticles[h]);
-                                
+                                        homeArticles.push(dataArticles[h])
+                                        console.log('add new homeArticle')
+                                } else if (dataArticles[h].published_date>homeArticles[currentHomeArticle-1].published_date) {
+                                        //add a couple articles to the titlepage
 
-                                homeArticles.push(dataArticles[h])
-                                console.log('homeArticles.push')
+                                     //   pageArticles[0].push(dataArticles[h]);
+                                        
 
+                                        homeArticles[currentHomeArticle-1]=dataArticles[h];
+                                        console.log('update with newer homeArticle dated',dataArticles[h].published_date)
                               }
+                              
+                              
 
                     }
 
