@@ -6,8 +6,8 @@ angular.module('niiuWebappApp')
     // ...
 
     // Tobias: 
-    //v ar currentUser = User.getUser();
-    var currentUser = $rootScope.user;
+    var currentUser = User.getUser();
+    //var currentUser = $rootScope.user;
     var last3SSync = {};
     var menuObj = {};
     var sourceObj = {};

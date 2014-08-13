@@ -121,16 +121,15 @@ angular.module('niiuWebappApp')
   	);
 
 
-    var deferred = $q.defer();
+    function getNewArticleList() {
+    	console.log('running getNewArticleList function');
 
-
-
-    function getArticleList() {
+    	var deferred = $q.defer();
 
 	  	
 	  	localDB.getLastSync().then(
 	  		function(sync_time) {
-	  			    console.log('ive got the sync time in userHome' ,sync_time);
+	  			    console.log('ive got the sync time in getNewArticleList' ,sync_time);
 
 	  			    localDB.getLastProfileUpdate().then(function(update_time) {
 
@@ -140,7 +139,64 @@ angular.module('niiuWebappApp')
 
 			  			    	console.log('Good Luck, api sync response looked like this',articleBlob);
 
+			  			    	localDB.setLastContentSync(articleBlob.contents.data.lastContentSync);
+			  			    	Articleservice.init(articleBlob.contents.data.articles);
+			  			    	deferred.resolve(articleBlob);
+			  			    	
 
+
+			  			    }, function(server_error) {
+			  			    		console.log('Bad Luck, the api sync response looked like this',server_error);
+			  			    		deferred.reject(server_error);
+			  			    }
+
+
+
+			  			    	);
+			  			    
+
+			  			}
+				);
+
+	  		},
+	  		function(error) {
+	  			console.log('we werent able to get a sync time, so we wont bother getting any articles', error);
+	  			deferred.reject(error);
+
+	  		});
+
+	  	return deferred.promise;
+    } //end $scope.articleList    
+
+
+
+
+
+
+
+
+
+    function getArticleList() {
+    	console.log('running getArticleList function');
+
+    	var deferred = $q.defer();
+
+	  	
+	  	localDB.getLastSync().then(
+	  		function(sync_time) {
+	  			    console.log('ive got the sync time in userHome' ,sync_time);
+
+	  			    localDB.getOldProfileUpdate().then(function(update_time) {
+
+
+
+			  			    console.log('now ive also got the update time. So its time to send an article sync.', update_time);
+
+			  			    niiuSyncer.syncArticles($scope.user, sync_time, update_time).then(function(articleBlob) {
+
+			  			    	console.log('Good Luck, api sync response looked like this',articleBlob);
+
+			  			    	localDB.setLastContentSync(articleBlob.contents.data.lastContentSync);
 			  			    	Articleservice.init(articleBlob.contents.data.articles);
 			  			    	deferred.resolve(articleBlob);
 			  			    	
@@ -245,21 +301,28 @@ function refreshArticles() {
 			
 	}
 
-	localDB.getSyncAge().then(function(content_sync_age) {
+	function syncCheck() {
+		localDB.getSyncAge().then(function(content_sync_age) {
 		console.log('the current sync is this old, ',content_sync_age);
-		if(content_sync_age>60*15) {
-			console.log('sync for new articles');
-			refresh3s().then(
-					function() {
-						refreshArticles();
-					}
-				);
-		} else {
-			console.log('not time to sync for articles');
-		}
-	});
+			if(content_sync_age>constants.SYNC_INTERVAL) {
+				console.log('sync for new articles');
+				/*
+				refresh3s().then(
+						function() {
+							refreshArticles();
+						}
+					);
+				*/
+				doRefresh();
+				return true;
+			} else {
+				console.log('not time to sync for articles');
+				return false;
+			}
+		});
+	}
 
-	if (0 || $routeParams.refresh=='refresh') {
+	function doRefresh() {
 		//currently we are refreshing everytime the page loads, but probably we should do this only 
 		//when last sync is a bit old maybe 10mins
 		//when people first login
@@ -293,12 +356,17 @@ function refreshArticles() {
 				*/
 			
 			}//end refreshArticles
-			)
+			);
 		}//end refresh3s
 
-
 		);
-	} else {
+		
+	} 
+
+
+
+	function init() {
+
 		//load3s();
 		console.log('lets get some articles!');
 		User.getContentObject().then(function(returned_contentObject) {
@@ -307,11 +375,22 @@ function refreshArticles() {
 			$scope.slides = $scope.makeSlides(returned_contentObject[0]);
 		},function(returned_content_error) {
 			console.log("we didnt get the contentObject from the db right?",returned_content_error);
+			doRefresh();
+
 		}
 
-			);
+		);
+
+		if($routeParams.refresh=='refresh') {
+			doRefresh();
+		} else {
+			syncCheck();
+		}
 		
+	}
 		
+	function getLocalStuff() {
+		//seems like you only need to do this if you don't get a contentObject...
 		//put the article array into the service
 		localDB.loadArticlesFromDB().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
@@ -319,7 +398,7 @@ function refreshArticles() {
 				Articleservice.init(db_articles);
 				$scope.articles=db_articles;
 				console.log('checking for my methods', User);
-				User.getContentObject($scope.db3s,db_articles).then(function(returned_contentObject) {
+				User.setContentObject($scope.db3s,db_articles).then(function(returned_contentObject) {
 					
 					$scope.contentObject = returned_contentObject;
 					console.log('our $scope.contentObject is',$scope.contentObject);
@@ -351,7 +430,8 @@ function refreshArticles() {
 
 
 				}, function(new_article_error) {
-					console.log('getting the new articles we receieved the following error',new_article_error)
+					console.log('getting the new articles we receieved the following error',new_article_error);
+					console.log('maybe we should doRefresh()...');
 				});
 
 			}
@@ -407,7 +487,7 @@ function refreshArticles() {
 		
 		
 
-	
+	init();
 
 
 

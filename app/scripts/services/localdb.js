@@ -7,7 +7,7 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_db';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'id'},{name:'last_content_sync',keyPath:'time'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'id'},{name:'last_content_sync',keyPath:'id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
       //add additional indexes {name:'sectionSubsections',keyPath:'id',indexes:[{keyPath: "section_id"},{keyPath:"subsection_id"}]}]
 
 
@@ -63,23 +63,19 @@ angular.module('niiuWebappApp')
           //continue using the same integer to refer to the record with the last sync time
 
           
-           local_table.get("full3s","3s").done(
-              function(pulled_3s) {
-                if(pulled_3s===undefined) {
-                  deferred.reject(default_time);
-                  console.log('we couldnt pull the 3s from the db',pulled_3s);
-                } else {
-                    var last_sync_time =pulled_3s.contents.data.last3SSync;
-
-                    console.log('last sync time from the 3s table',last_sync_time);
+           local_table.get("last_3s_sync","time").done(
+              function(pulled_3s_time) {
+                
+                    console.log('last sync time from the 3s table',pulled_3s_time);
                     //console.log('We got the full3s object from the db', pulled_3s);
 
+                    var last_sync_time =pulled_3s_time.syncTime;
                     deferred.resolve(last_sync_time);
-                    }
+                    
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                console.log('We couldnt get tthe last_3s_sync time from the db because', failed_stuff);
                 deferred.reject(default_time);
               }
               );
@@ -105,17 +101,15 @@ angular.module('niiuWebappApp')
           //continue using the same integer to refer to the record with the last sync time
 
           
-           local_table.get("full3s","3s").done(
-              function(pulled_3s) {
-                console.log('3s from table',pulled_3s);
-              if (typeof(pulled_3s.contents.data.lastContentSync)!='undefined') {
-                var last_sync_time =pulled_3s.contents.data.lastContentSync;
-              } else {
-                var last_sync_time =pulled_3s.contents.data.last3SSync;
-              }
+           local_table.get("last_content_sync","time").done(
+              function(pulled_sync_time) {
+                console.log('last_content_sync time from table',pulled_sync_time);
+              if (typeof(pulled_sync_time.syncTime)!='undefined') {
+                var last_sync_time =pulled_sync_time.syncTime;
+              } 
 
-                console.log('last Content Sync time from the 3s table',last_sync_time);
-                console.log('We got the full3s object from the db', pulled_3s);
+                console.log('last Content Sync time from the last_content_sync table',last_sync_time);
+               
                 
 
 
@@ -123,7 +117,7 @@ angular.module('niiuWebappApp')
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                console.log('We couldnt get the last_content_sync object from the db because', failed_stuff);
                 deferred.reject(default_time);
               }
               );
@@ -152,7 +146,7 @@ angular.module('niiuWebappApp')
           var now = getCurrentTime();
           getLastContentTime().then(function(lastContentUpdateTime) {
             var syncAge = Math.abs((new Date(now)-new Date(lastContentUpdateTime))/1000);
-            console.log('time since the last update is ',syncAge);
+            console.log('We sync articles after '+(60*15)+' seconds. Time since the last update is ',syncAge);
             deferred.resolve(syncAge);
 
 
@@ -275,8 +269,24 @@ angular.module('niiuWebappApp')
 
           },
 
+           setLastContentSync: function(syncTime) {
+            var deferred = $q.defer();
 
-          getLastProfileUpdate:  function() {
+              var local_table = connectDB();
+              local_table.put('last_content_sync',{'id':'time','syncTime':syncTime}).done(
+                            function(saved_contentsync_time) {
+                              console.log('just set the content sync time in the db',syncTime)
+                              deferred.resolve(saved_contentsync_time);
+                            }
+                        ).fail(function(wtf) {
+                            console.log('I couldnt update the content sync time in the db because',wtf);
+                        });
+              return deferred.promise;
+
+           },
+
+
+          getOldProfileUpdate:  function() {
             //we will change this in the db if there has been a setting change
             var default_time='2012-12-12 12:12:12';
 
@@ -287,6 +297,30 @@ angular.module('niiuWebappApp')
             var deferred = $q.defer();
 
             deferred.resolve(default_time);
+
+            return deferred.promise;
+
+
+          },
+          getLastProfileUpdate:  function() {
+            //we will change this in the db if there has been a setting change
+                var default_time='2012-12-12 12:12:12';
+
+                //we could just refer the default time here without a promise, but in case we get it from the db the promise makes sense.
+                //return default_time;
+
+                var lastContentTime = getLastContentTime();
+
+                lastContentTime.then(function(contentTime) {
+                    deferred.resolve(contentTime);
+                },
+                function(no_contentTime) {
+                    console.log('no luck getting the real content update time so using the default'+default_time,no_contentTime);
+                    deferred.resolve(default_time);
+
+                }
+
+              );
 
             return deferred.promise;
 
