@@ -103,17 +103,22 @@ angular.module('niiuWebappApp')
           
            local_table.get("last_content_sync","time").done(
               function(pulled_sync_time) {
-                console.log('last_content_sync time from table',pulled_sync_time);
-              if (typeof(pulled_sync_time.syncTime)!='undefined') {
-                var last_sync_time =pulled_sync_time.syncTime;
-              } 
-
-                console.log('last Content Sync time from the last_content_sync table',last_sync_time);
+                if (pulled_sync_time) {
+                          console.log('last_content_sync time from table',pulled_sync_time);
+                        if (typeof(pulled_sync_time.syncTime)!='undefined') {
+                          var last_sync_time =pulled_sync_time.syncTime;
+                        } 
+                    console.log('last Content Sync time from the last_content_sync table',last_sync_time);
+                    deferred.resolve(last_sync_time);
+                  } else {
+                      console.log('we couldnt get the last content_sync_time so we use a default time', default_time);
+                      deferred.resolve(default_time); 
+                  }
                
                 
 
 
-                deferred.resolve(last_sync_time);
+                
               }
             ).fail(
               function(failed_stuff) {

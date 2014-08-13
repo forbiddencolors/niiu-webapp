@@ -20,11 +20,11 @@ angular.module('niiuWebappApp')
 
 
     var last_sync_time=localDB.getLastSync().then(function(sync_time) {
-      console.log('the last sync time in the db is',sync_time);
+      console.log('the last 3s sync time in the db is',sync_time);
       return sync_time;
     },
     function(sync_error) {
-      console.log('unfortunately we couldnt find a sync time in the db',sync_error);
+      console.log('unfortunately we couldnt find a 3s sync time in the db',sync_error);
       return "0000-00-00 00:00:00";
     }
 

@@ -99,26 +99,7 @@ angular.module('niiuWebappApp')
   		}
   		);
   	*/
-  	localDB.get3sFromDB().then(function(data_3s) {
-  		$scope.db3s=data_3s;
-  		console.log('we got some data',data_3s);
-  		getArticleList();
-  	},function(no_3s) {
-  		console.log('there is no 3s in the db',no_3s);
-  		niiuSyncer.sync3s().then(function(data_3s) {
-  			console.log('instead we just did a real 3s',data_3s);
 
-  			localDB.put3s(data_3s.data).then(function(saved) {
-  				getArticleList();
-
-  			}
-
-  				);
-  		}
-
-  			)
-  	}
-  	);
 
 
     function getNewArticleList() {
@@ -186,19 +167,22 @@ angular.module('niiuWebappApp')
 	  		function(sync_time) {
 	  			    console.log('ive got the sync time in userHome' ,sync_time);
 
-	  			    localDB.getOldProfileUpdate().then(function(update_time) {
+	  			   // localDB.getOldProfileUpdate().then(function(update_time) {
 
 
 
-			  			    console.log('now ive also got the update time. So its time to send an article sync.', update_time);
+			  			    //console.log('now ive also got an old update time. So its time to send an article sync.', update_time);
 
-			  			    niiuSyncer.syncArticles($scope.user, sync_time, update_time).then(function(articleBlob) {
+			  			    //niiuSyncer.syncArticles($scope.user, sync_time, update_time).then(function(articleBlob) {
+			  			    localDB.loadArticlesFromDB().then(function(article_array){
+			  			    	console.log('not syncing but I Got some articles from the DB,',article_array);
 
-			  			    	console.log('Good Luck, api sync response looked like this',articleBlob);
-
-			  			    	localDB.setLastContentSync(articleBlob.contents.data.lastContentSync);
-			  			    	Articleservice.init(articleBlob.contents.data.articles);
-			  			    	deferred.resolve(articleBlob);
+			  			    	//localDB.setLastContentSync(articleBlob.contents.data.lastContentSync);
+			  			    	//make sure the articles are set in the articleService
+			  			    	Articleservice.init(article_array);
+			  			    	var cleaned_articles=Articleservice.getArticles();
+								$scope.articles=cleaned_articles;
+			  			    	deferred.resolve(cleaned_articles);
 			  			    	
 
 
@@ -215,12 +199,7 @@ angular.module('niiuWebappApp')
 			  			}
 				);
 
-	  		},
-	  		function(error) {
-	  			console.log('we werent able to get a sync time, so we wont bother getting any articles', error);
-	  			deferred.reject(error);
-
-	  		});
+	  		
 
 	  	return deferred.promise;
     } //end $scope.articleList
@@ -304,7 +283,7 @@ function refreshArticles() {
 	function syncCheck() {
 		localDB.getSyncAge().then(function(content_sync_age) {
 		console.log('the current sync is this old, ',content_sync_age);
-			if(content_sync_age>constants.SYNC_INTERVAL) {
+			if(  content_sync_age>constants.SYNC_INTERVAL) { //never do this for now
 				console.log('sync for new articles');
 				/*
 				refresh3s().then(
@@ -316,7 +295,9 @@ function refreshArticles() {
 				doRefresh();
 				return true;
 			} else {
-				console.log('not time to sync for articles');
+				
+				console.log('not time to sync for articles, lets get stuff from the db',content_sync_age);
+				getLocalStuff();
 				return false;
 			}
 		});
@@ -392,12 +373,31 @@ function refreshArticles() {
 	function getLocalStuff() {
 		//seems like you only need to do this if you don't get a contentObject...
 		//put the article array into the service
-		localDB.loadArticlesFromDB().then( function(db_articles) {
+		getArticleList().then( function(db_articles) {
 			console.log('got the following articles from the db',db_articles);
 			if (db_articles.length>0) {
+
+
+					localDB.get3sFromDB().then(function(last3s) {
+							console.log('we have everything to set the contentObject in the getArticleList function');
+							var newContentObject = User.setContentObject(last3s,db_articles);
+							$scope.contentObject = newContentObject;
+							$scope.slides = $scope.makeSlides(newContentObject[0]);
+							console.log('the slides from the DB ContentObject are',$scope.slides);
+							$scope.articles = db_articles;
+							//$scope.user = User.getUser();
+							console.log('The new contentObject is like',$scope.contentObject);
+
+
+					},function(no_3s) {
+						console.log('interesting we didnt get a 3s from the DB this time', no_3s);
+					}
+					);
+
+				/*  //this stuff is happening in getArticles()
 				Articleservice.init(db_articles);
-				$scope.articles=db_articles;
-				console.log('checking for my methods', User);
+				$scope.articles=Articleservice.getArticles();
+				console.log('setting contentObject with articles from DB');
 				User.setContentObject($scope.db3s,db_articles).then(function(returned_contentObject) {
 					
 					$scope.contentObject = returned_contentObject;
@@ -407,12 +407,11 @@ function refreshArticles() {
 					console.log("couldnt make a contentObject from the DB",error_contentObject);
 				}
 					);
-				
-				
 				console.log('article list is a typeof array',($scope.articles instanceof Array), $scope.articles[3] )
+				*/
 			} else {
-				console.log('unfortunately there are no articles in the db lets get some from the api');
-				getArticleList().then(function(new_article_blob) {
+				console.log('unfortunately there are no articles in the db lets getNewArticleList from the api');
+				getNewArticleList().then(function(new_article_blob) {
 					console.log('fortunately now we do have some articles',new_article_blob);
 					Articleservice.init(new_article_blob.contents.data.articles);
 					$scope.articles=Articleservice.getArticles();
@@ -435,52 +434,34 @@ function refreshArticles() {
 				});
 
 			}
-		});
-		/*
 
-		localDB.loadSourcesFromDB().then( function(db_sources) {
-			console.log('got the following sources from the db',db_sources);
-			$scope.sources=db_sources;
+
 
 
 		});
 
-		localDB.loadSectionsFromDB().then( function(db_sections) {
-			console.log('got the following sections from the db',db_sections);
-			$scope.sections=db_sections;
-
-
-		}); 
-
-		localDB.loadSubSectionsFromDB().then( function(db_subsections) {
-			console.log('got the following subsections from the db',db_subsections);
-			$scope.subsections=db_subsections;
-
-
-		}); 
-*/
 /*
-		//this is probably how we should get the 3s info here but whatever.
-		localDB.load3s().then( function(array[section_array , subsection_array, source_array ]) {
+		localDB.get3sFromDB().then(function(data_3s) {
+	  		$scope.db3s=data_3s;
+	  		console.log('we got some data',data_3s);
+	  		getArticleList();
+	  	},function(no_3s) {
+	  		console.log('there is no 3s in the db',no_3s);
+	  		niiuSyncer.sync3s().then(function(data_3s) {
+	  			console.log('instead we just did a real 3s',data_3s);
 
-				$scope.sections=section_array;
-				$scope.sources=source_array;
+	  			localDB.put3s(data_3s.data).then(function(saved) {
+	  				getArticleList();
 
-			}
-		);
+	  			}
 
-*/
-/*
-//sorting test
-    $scope.sort_items = [
-       {date: '2019-01-19 00:16:00',house:'red'},
-       {date: '2017-03-19 00:16:00', house:'blue'},
-       
-       {date: '2012-03-11 00:00:00', house:'orange'},
-      {date: '2012-03-19 00:16:00', house:'green'},
-        {date: '2014-03-19 00:00:00', house:'tan'}
-    ];
-*/
+	  				);
+	  		}
+
+	  			)
+	  	}
+	  	);
+	 */
 				
 
 	}
