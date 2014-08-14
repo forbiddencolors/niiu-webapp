@@ -26,6 +26,8 @@ angular.module('niiuWebappApp')
       //$scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth);
       //console.log('FB data prepared for niiu Authentication');
       //console.log($scope.niiuUser);
+    }, function(no_login_error) {
+      $scope.error=no_login_error;
     });
 
     

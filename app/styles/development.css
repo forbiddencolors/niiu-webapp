@@ -505,6 +505,10 @@ button, button.btn, a.btn {
     width: 100%; }
   .login-wrapper h3 {
     text-transform: uppercase; }
+  .login-wrapper .error {
+    color: #f51226;
+    text-align: center;
+    font-size: 80%; }
 
 .form-group input {
   border-radius: 0px;

@@ -227,8 +227,8 @@ this is how we could chain a couple promises together to handle user logic
                             console.log('that was an error...');
                             var error_message=userData.contents.message;
                             console.log(error_message);
-                            //error(error_message);
-                            $rootScope.error=error_message;
+                            //error=error_message;
+                            //$rootScope.error=error_message;
                             deferred.reject(error_message);
                     }
 
