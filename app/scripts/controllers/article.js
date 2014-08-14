@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('ArticleCtrl', function ($scope, $window, $routeParams, $location, Articleservice, User, constants) {
+  .controller('ArticleCtrl', function ($scope, $window, $routeParams, $location, Articleservice, User, constants, $q) {
     $window.scrollTo(0,0);
     $scope.media_path=constants.ARTICLE_MEDIA_PATH;
     $scope.pageClass = "articlePage";
@@ -15,11 +15,62 @@ angular.module('niiuWebappApp')
 
     };
 
+    function getArticleSourceName(source_id) {
+      var deferred=$q.defer();
+        Articleservice.getSourceName(source_id).then(function(source_name) {
+          console.log('getArticleSourceName: just got a name for this article source ',source_name);
+          deferred.resolve( source_name);
+
+          },function(not_source_name) {
+            console.log('getArticleSourceName: failed to get the source name for this article',not_source_name);
+            deferred.reject( not_source_name);
+          });
+        return deferred.promise;
+    }
+
+
+
+    function getArticleSubject(section,subsection,custom_id) {
+      var deferred=$q.defer();
+      console.log('getArticleSubject: looking for the title between section/subsection/custom '+section+'/'+subsection+'/'+custom_id);
+      if(custom_id) {
+          deferred.resolve(custom_id);
+          console.log('getArticleSubject: subject is ',custom_id);
+
+      } 
+
+      if (subsection) {
+          Articleservice.getSubSectionName(subsection).then(function(subSectionName) {
+              deferred.resolve(subSectionName);
+              console.log('getArticleSubject: subject is ',subSectionName);
+          });
+      }
+
+      if (section) {
+          Articleservice.getSectionName(section).then(function(sectionName) {
+              deferred.resolve(sectionName);
+              console.log('getArticleSubject: subject is ',sectionName);
+          });
+      }
+
+      return deferred.promise;
+
+
+    }
+
 
   	Articleservice.getArticle($routeParams.articleId).then(function(article) {
           //get article
           $scope.article=article;
           $scope.published_dateObj = Date.parse(article.published_date);
+          getArticleSourceName(article.source_id).then(function(sourceName) {
+            $scope.article.sourceName = sourceName;
+          }
+            );
+          getArticleSubject(article.sections.section_id,article.sections.subsection_id,article.sections.custom_section).then(
+            function(article_subject) {
+              $scope.article.subject = article_subject;
+            });
 
 
           console.log('try slides');

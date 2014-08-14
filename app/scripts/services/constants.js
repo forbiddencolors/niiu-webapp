@@ -20,7 +20,7 @@ angular.module('niiuWebappApp')
                 MAXIMUM_SECTIONS : 10,
                 CUSTOM_SECTION_LOGO : '/images/icon_custom_section_blank.png',
                 ENVIRONMENT : 'dev',
-                SYNC_INTERVAL: 15*60
+                SYNC_INTERVAL: 100 //15*60
 
 
 });

@@ -102,8 +102,19 @@ angular.module('niiuWebappApp')
 
 
 
-    function getNewArticleList() {
-    	console.log('running getNewArticleList function');
+    function getNewArticleList(all_articles) {
+    	//only use a new updateTime if you want to update the users sections
+    	var contentUpdateTime = localDB.getOldProfileUpdate();
+
+    	if(typeof(all_articles)!='undefined') {
+    			console.log('sync we actually want to get all articles and not just the newest',all_articles);
+    			
+
+    	} else {
+    			console.log('sync - we only want to get new articles',all_articles);
+    			
+    	}
+    	console.log('getNewArticleList: running sync function');
 
     	var deferred = $q.defer();
 
@@ -112,9 +123,9 @@ angular.module('niiuWebappApp')
 	  		function(sync_time) {
 	  			    console.log('ive got the sync time in getNewArticleList' ,sync_time);
 
-	  			    localDB.getLastProfileUpdate().then(function(update_time) {
+	  			    contentUpdateTime.then(function(update_time) {
 
-			  			    console.log('now ive also got the update time. So its time to send an article sync.', update_time);
+			  			    console.log('now ive also got a content update time. So its time to send an article sync.', update_time);
 
 			  			    niiuSyncer.syncArticles($scope.user, sync_time, update_time).then(function(articleBlob) {
 
@@ -131,14 +142,9 @@ angular.module('niiuWebappApp')
 			  			    		deferred.reject(server_error);
 			  			    }
 
-
-
-			  			    	);
-			  			    
-
-			  			}
+			  			);			  			    
+			  		}
 				);
-
 	  		},
 	  		function(error) {
 	  			console.log('we werent able to get a sync time, so we wont bother getting any articles', error);
@@ -158,14 +164,21 @@ angular.module('niiuWebappApp')
 
 
     function getArticleList() {
-    	console.log('running getArticleList function');
+    	console.log('not syncing but running getArticleList function');
 
     	var deferred = $q.defer();
+    	var articleList=Articleservice.getArticles();
+    	console.log('getArticleList: We just got the articleList from the articleService',articleList);
+    	if(articleList.length>0) { //if we already have our articles just return them and get outta here.
+    		console.log('getArticleList: okay there is already a list of articles around here so lets use that.');
+    		$scope.articles=articleList;
+    		deferred.resolve(articleList);
+    	} else { //otherwise lets load the articles out of the db
 
 	  	
-	  	localDB.getLastSync().then(
-	  		function(sync_time) {
-	  			    console.log('ive got the sync time in userHome' ,sync_time);
+	  	//localDB.getLastSync().then(
+	  	//	function(sync_time) {
+	  	//		    console.log('ive got the sync time in userHome' ,sync_time);
 
 	  			   // localDB.getOldProfileUpdate().then(function(update_time) {
 
@@ -187,8 +200,9 @@ angular.module('niiuWebappApp')
 
 
 			  			    }, function(server_error) {
-			  			    		console.log('Bad Luck, the api sync response looked like this',server_error);
+			  			    		console.log('Bad Luck, the getting articles from the db didnt work.',server_error);
 			  			    		deferred.reject(server_error);
+			  			    		//probably we would want to do a refresh here, but we can put it somewhere higher up and fail for now.
 			  			    }
 
 
@@ -196,16 +210,15 @@ angular.module('niiuWebappApp')
 			  			    	);
 			  			    
 
-			  			}
-				);
+			  		//	}
+				//);
+			}
 
 	  		
 
 	  	return deferred.promise;
     } //end $scope.articleList
 
-//get the prior articles from the scope
-console.log('just seeing if theres a scope here',$scope);
 
 console.log('are we online?',navigator.onLine);
 
@@ -213,7 +226,7 @@ console.log('are we online?',navigator.onLine);
 function refreshArticles() {
 	var deferred=$q.defer();
 	//replace the scope articles if we have new ones
-	getArticleList().then( function(theList){
+	getNewArticleList().then( function(theList){
 			console.log('article list is finished',theList);
 			
 
@@ -244,24 +257,28 @@ function refreshArticles() {
 
 	function refresh3s() {
 			var deferred=$q.defer();
+			console.log('running refresh3s');
 			niiuSyncer.sync3s().then(function(data_3s) {
-			console.log('here is some 3s data',data_3s);
-				console.log('>>> here are the sections ' ,data_3s.data.contents.data.newSections);
+			console.log('just ran sync3s which got new 3s data and saved it');	
+			console.log('here is some 3s data in refresh3s',data_3s);
+				console.log('refresh3s here are the sections ' ,data_3s.data.contents.data.newSections);
 				//add sections to DB
-					localDB.put3s(data_3s.data).then( function() {
-						localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
+					//localDB.put3s(data_3s.data).then( function(success_3s) {
+						console.log('successfully saved 3s',data_3s)
+						/*localDB.addSectionsToDB(data_3s.data.contents.data.newSections);
 						localDB.addSourcesToDB(data_3s.data.contents.data.newSources);
 						localDB.addSourceSectionsToDB(data_3s.data.contents.data.newSourceSection);
 						localDB.addSectionSubsectionsToDB(data_3s.data.contents.data.newSectionSubsection);
 						localDB.addSubSectionsToDB(data_3s.data.contents.data.newSubsections);
 						localDB.addSourceSubsectionsToDB(data_3s.data.contents.data.newSourceSubsection);
-						localDB.setLastSync();
+						*/
+						//localDB.setLastSync(); //this happens already as part of sync3s
 						//add sections to Scope
 						$scope.sections=data_3s.data.contents.data.newSections;
 						$scope.sources=data_3s.data.contents.data.newSources;
 						console.log('section 7 is called', $scope.sections[7].name);
 						deferred.resolve(data_3s.data);
-					});
+					
 
 				
 
@@ -308,10 +325,12 @@ function refreshArticles() {
 		//when last sync is a bit old maybe 10mins
 		//when people first login
 		//when people trigger a refresh (like dragging down in the ios app)
-		console.log('starting refresh mode');
-		refresh3s().then(function(new3s) {
+		console.log('starting refresh sync mode in doRefresh');
+		refresh3s().then(function(new3s) { 
+				console.log('refresh3s had a successful sync, now we have to refresharticles ',new3s);
 			refreshArticles().then(function(new_article_blob) {
-				console.log('this is the list of new articles',new_article_blob);
+
+				console.log('refreshArticles sync this is the list of new articles',new_article_blob);
 
 			//Put the articles into the service so we can get at them later
 			//Articleservice.init(new_article_blob);
@@ -336,8 +355,14 @@ function refreshArticles() {
 				)
 				*/
 			
-			}//end refreshArticles
+			},function(no_refresh_articles) {
+				console.log('refreshArticles did not sync because', no_refresh_articles);
+
+			}
 			);
+		},function(no_refresh3s) {
+			console.log('refresh3s failed to sync because',no_refresh3s);
+
 		}//end refresh3s
 
 		);
@@ -374,12 +399,12 @@ function refreshArticles() {
 		//seems like you only need to do this if you don't get a contentObject...
 		//put the article array into the service
 		getArticleList().then( function(db_articles) {
-			console.log('got the following articles from the db',db_articles);
+			console.log('getLocalStuff: got the following articles from the db',db_articles);
 			if (db_articles.length>0) {
 
 
 					localDB.get3sFromDB().then(function(last3s) {
-							console.log('we have everything to set the contentObject in the getArticleList function');
+							console.log('getLocalStuff: we have everything to set the contentObject in the getArticleList function');
 							var newContentObject = User.setContentObject(last3s,db_articles);
 							$scope.contentObject = newContentObject;
 							$scope.slides = $scope.makeSlides(newContentObject[0]);
@@ -411,7 +436,7 @@ function refreshArticles() {
 				*/
 			} else {
 				console.log('unfortunately there are no articles in the db lets getNewArticleList from the api');
-				getNewArticleList().then(function(new_article_blob) {
+				getNewArticleList('all').then(function(new_article_blob) {
 					console.log('fortunately now we do have some articles',new_article_blob);
 					Articleservice.init(new_article_blob.contents.data.articles);
 					$scope.articles=Articleservice.getArticles();

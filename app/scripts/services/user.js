@@ -8,6 +8,7 @@ angular.module('niiuWebappApp')
     var contentObject = [];
     var currentSection = 0;
     var hideMenu = true;
+
     function makeSectionUrls() {
             //Get list of section urls to rotate through
                 var user_sections=contentObject;
@@ -22,6 +23,8 @@ angular.module('niiuWebappApp')
             console.log('next section urls ', section_urls); 
             return section_urls;
         }
+
+
 
 
 
@@ -201,7 +204,7 @@ angular.module('niiuWebappApp')
                 }
                 */
                 
-                    console.log('do I still have a sourceObj?',thisSourceObj);
+                    console.log('MakeContentObject: do I still have a sourceObj?',thisSourceObj);
                     console.log('Do we have a source?'+i,(thisSourceObj));
                     console.log('Do we have a source with a name',(!thisSourceObj.hasOwnProperty('name')));
                     //when we are dealing with a custom section fill in the other contentObject properties 
@@ -228,21 +231,21 @@ angular.module('niiuWebappApp')
 
                     if(thisSourceObj) {
 
-                        console.log('blanko!!!',(typeof thisSourceObj.name!=='undefined'));
+                        console.log('MakeContentObject: got a source!!!',(typeof thisSourceObj.name!=='undefined'));
 
                         console.log('in this case',thisSubsectionObj);
                         if ( thisSourceObj.name) {
                             page_title = thisSourceObj.name+" >> ";
-                            console.log('blanko source',thisSourceObj.name);
+                            console.log('MakeContentObject:  source',thisSourceObj.name);
                         }
                         if (thisSubsectionObj.name) {
                             page_title += thisSubsectionObj.name;
                             page_subject = thisSubsectionObj.name;
-                            console.log('blanko subsection',thisSubsectionObj.name);
+                            console.log('MakeContentObject:  subsection',thisSubsectionObj.name);
                         } else if (thisSectionObj.name) {
                             page_title += thisSectionObj.name;
                             page_subject = thisSectionObj.name;
-                            console.log('blanko section',thisSectionObj.name);
+                            console.log('MakeContentObject: section',thisSectionObj.name);
                         }
                     }
                     if(user_sections[i]) {

@@ -104,7 +104,7 @@ angular.module('niiuWebappApp')
               var deferred = $q.defer();
 
               var last_sync_time=localDB.getLastSync().then(function(sync_time) {
-                console.log('the last sync time in the db is',sync_time);
+                console.log('creating 3sobject and the last 3s sync time in the db is',sync_time);
                 return sync_time;
               },
 
@@ -414,12 +414,16 @@ angular.module('niiuWebappApp')
                               
                               if (threeSResponse.status==200) {
 
-                                  console.log('The 3s response was good. new sync time is ', threeSResponse.data.contents.data.last3SSync);
+                                  console.log('The 3s response from niiusyncer.sync3s was good. new sync time is ', threeSResponse.data.contents.data.last3SSync);
+                                  
 
 
-                                localDB.put3s(threeSResponse).then(function() {                             
-                                  console.log('the new 3s sync info should be in the db now',threeSResponse)
+                                localDB.put3s(threeSResponse).then(function(saved_3s) {                             
+                                  console.log('the new 3s sync info should be in the db now',saved_3s)
                                   deferred.resolve(threeSResponse);
+
+                                },function(notsaved_3s) {
+                                  console.log('no luck saving the 3s sync',notsaved_3s);
 
                                 });
                               
