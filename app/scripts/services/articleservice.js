@@ -269,7 +269,16 @@ angular.module('niiuWebappApp')
 	  				
 	  				localDB.loadArticlesFromDB().then(function(db_articles) {
 	  					init(db_articles);
-	  					deferred.resolve(articles[i]);
+	  						//find the article we were looking for
+			  				var i=0, len=articles.length;
+					      	for (; i<len; i++) {
+					      		if (articles[i].id == article_id) {
+					      			console.log('heres a matching article',articles[i]);
+					      			deferred.resolve(articles[i]);
+					  			}
+
+					  		}
+	  					
 	  					
 	  				}
 

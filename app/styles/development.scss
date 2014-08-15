@@ -310,6 +310,21 @@ min-height: 300px;
 
 }
 
+.sectionation {
+position:fixed;
+margin:2px auto;
+bottom:2px;
+z-index:100;
+width:100%;
+text-align: center;
+
+	.carousel-indicators {
+		z-index: auto;
+		bottom:5px;
+	}
+
+}
+
 
 .sectionPage {
 
