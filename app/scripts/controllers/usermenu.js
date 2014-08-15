@@ -12,9 +12,9 @@ angular.module('niiuWebappApp')
         var deferred = $q.defer();
          User.getContentObject().then(function(gotContentObject) {
             $scope.contentObject=gotContentObject;
-            console.log('the menu got a contentObject',contentObject);
+            console.log('getContentObject: the menu got a contentObject',contentObject);
             $scope.contentArticles= User.getContentArticles();
-            console.log('the menu has an article list called contentArticles',contentArticles);
+            console.log('getContentObject: the menu has an article list called contentArticles',contentArticles);
             /*
             User.getContentArticles().then(function(newArticles) {
                 console.log('got some new articles for here',newArticles);
@@ -38,6 +38,7 @@ angular.module('niiuWebappApp')
     
     $scope.logout = function() {
     	//niiuAuthenticator.changeUser();
+        User.toggleMenu();
     	User.deleteUser();
     	console.log('just deleted the User');
     	niiuAuthenticator.logout();
@@ -121,7 +122,7 @@ angular.module('niiuWebappApp')
                 function(contentObject) {
                // console.log('init is still running!',contentArticles);
                     //$scope.contentArticles=contentArticles;
-                    console.log('now we have contentArticles',$scope.contentArticles);
+                    console.log('init: now we have contentArticles',$scope.contentArticles);
 
                 }
             );

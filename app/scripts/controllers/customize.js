@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('CustomizeCtrl', function ($rootScope, $window, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
+  .controller('CustomizeCtrl', function ($rootScope, $window, $scope, niiuSyncer, localDB, $q, $location, User,constants, Articleservice) {
     $window.scrollTo(0,0);
 
   	console.log('the scope at this point is like this', $scope);
@@ -165,20 +165,21 @@ $scope.importUserSections = function(user_sections) {
       var syncObject=niiuSyncer.createSectionObject($scope.user,sync_time,update_time,json_section_array);
       console.log('this is the object that should update your sections',syncObject);
       niiuSyncer.syncNewSections(syncObject).then(function(syncResponse) {
-          console.log('successfully updated sections!!',syncResponse);
+          console.log('syncSections: successfully updated sections!!',syncResponse);
           //syncResponse.contents.data.contentProfile.items;
           User.setContentProfile(syncResponse.contents.data.contentProfile);
 
           //instead of syncResponse we need 3s
           localDB.get3sFromDB().then(function(current3s){
           User.setContentObject(current3s, syncResponse.contents.data.articles);
+          Articleservice.init(syncResponse.contents.data.articles);
           
             $scope.user=User.getUser();
             User.saveCurrentUser().then(function(saved_user) {
 
                           console.log('the updated user has the following contentProfile',$scope.user);
 
-                          $location.path('/userHome/');
+                          $location.path('/userHome/refresh');
                     }
 
                     );

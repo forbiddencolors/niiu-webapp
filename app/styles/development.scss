@@ -866,7 +866,15 @@ input.password {
     animation-duration:0.5s;
 
 }
+/*
+.titlePage.article_row.ng-enter {
 
+	   opacity:0;  
+    -webkit-animation:fadeIn ease-in 4s;  
+    -moz-animation:fadeIn ease-in 4s;
+    animation:fadeIn ease-in 4s;
+	}
+*/
 
 .page.ng-leave { 
     -webkit-animation:slideOutLeft 0.3s both ease-in;

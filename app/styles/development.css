@@ -586,6 +586,14 @@ input.password {
   -moz-animation-duration: 0.5s;
   animation-duration: 0.5s; }
 
+.titlePage.article_row.ng-enter {
+  opacity: 0;
+  /* make things invisible upon start */
+  -webkit-animation: fadeIn ease-in 4s;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: fadeIn ease-in 4s;
+  animation: fadeIn ease-in 4s; }
+
 .page.ng-leave {
   -webkit-animation: slideOutLeft 0.3s both ease-in;
   -moz-animation: slideOutLeft 0.3s both ease-in;

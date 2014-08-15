@@ -194,6 +194,14 @@ angular.module('niiuWebappApp')
 
         }
 
+        function init(article_array) {
+
+
+			//we dont want duplicate articles in the service so
+			articles=eliminateDuplicateArticles(article_array);
+
+        }
+
         function getSubSectionNameById(id) {
         	var deferred=$q.defer();
         	if(subSectionList.length==0) { 
@@ -232,7 +240,7 @@ angular.module('niiuWebappApp')
 		init: function(article_array) {
 
 			//we dont want duplicate articles in the service so
-			articles=eliminateDuplicateArticles(article_array);
+			init(article_array);
 			
 
 		},
@@ -260,7 +268,7 @@ angular.module('niiuWebappApp')
 	  				//create a promise and get this from the db
 	  				
 	  				localDB.loadArticlesFromDB().then(function(db_articles) {
-	  					articles=db_articles;
+	  					init(db_articles);
 	  					deferred.resolve(articles[i]);
 	  					
 	  				}
