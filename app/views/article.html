@@ -3,7 +3,7 @@
         <!-- Article Controls -->
         <div class="row articleControls" ng-controller="ShareCtrl" >
             <div class="col-xs-12">
-              <div class="pull-right articleDate" ng-if="published_dateObj>0">{{published_dateObj | date:'yyyy-MM-dd'}}</div>
+              <div class="pull-right articleDate" ng-if="published_dateObj>0">{{published_dateObj | date:'dd.MM.yyyy'}}</div>
               <ul class="nav nav-pills">
               	  <li><a href="" class="back_btn" ng-click="backSwipe()" ><span translate>icon_back</span></a></li>
                   <li><a href="" class="fav_btn"><span>Favourite</span></a></li>

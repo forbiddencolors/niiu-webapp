@@ -790,3 +790,13 @@ input.password {
 @-webkit-keyframes slideOutLeft {
     to      { -webkit-transform: translateX(-100%); }
 }*/
+.page.loading.ng-leave, .page.loading.ng-enter {
+  -moz-transition-property: none;
+  -webkit-transition-property: none;
+  -o-transition-property: none;
+  transition-property: none;
+  -webkit-animation: none;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: none;
+  -o-animation: none;
+  animation: none; }

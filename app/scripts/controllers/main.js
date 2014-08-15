@@ -3,17 +3,21 @@
 angular.module('niiuWebappApp')
   .controller('MainCtrl', ['$scope', '$location','niiuAuthenticator', 'Facebook', '$rootScope', 'localDB', 'constants', 'User', 'getByPropertyFilter', function ($scope, $location, niiuAuthenticator, Facebook, $rootScope, localDB, constants, User ) {
 
- $scope.pageClass="loginHome";   
+ $scope.pageClass="loading";   
 
 $scope.retrieveUser = function() {
-  	//retrieve logged in user
-    var  priorUser=localDB.getLastUser().then(function(priorUser) {
+       
+    localDB.getLastUser().then(function(priorUser) {
 
       console.log('we do have a prior user', priorUser);
       niiuAuthenticator.changeUser(priorUser) ;
       $location.path('/userHome');
+    },function(noPriorUser){
+      //there is no user in db
+      $scope.noUser = true;
+       $scope.pageClass="loginHome";
+      console.log('we have no user :( show login',userID);
     }
-
     ).catch( function(e) {
       console.log('we didnt find a user in the db because ',e);
       $scope.error=e;
