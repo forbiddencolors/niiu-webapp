@@ -7,7 +7,7 @@ angular.module('niiuWebappApp')
 
 
       var default_table_name =  'niiu_user_db';
-      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'sync_id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
+      var default_schema =  { stores:[{ name:'niiu_user', keyPath:"user" },{name:'last_3s_sync',keyPath:'id'},{name:'last_content_sync',keyPath:'id'},{name:'article',keyPath:'id'}, {name:'sections',keyPath:'id'}, {name:'sources',keyPath:'id'}, {name:'subSections',keyPath:'id'}, {name:'sourceSubsections',keyPath:'id'},  {name:'sourceSections',keyPath:'id'}, {name:'sectionSubsections',keyPath:'id'}, {name:'full3s',keyPath:'contents.api'}] };  
       //add additional indexes {name:'sectionSubsections',keyPath:'id',indexes:[{keyPath: "section_id"},{keyPath:"subsection_id"}]}]
 
 
@@ -63,23 +63,22 @@ angular.module('niiuWebappApp')
           //continue using the same integer to refer to the record with the last sync time
 
           
-           local_table.get("full3s","3s").done(
-              function(pulled_3s) {
-                if(pulled_3s===undefined) {
-                  deferred.reject(default_time);
-                  console.log('we couldnt pull the 3s from the db',pulled_3s);
-                } else {
-                    var last_sync_time =pulled_3s.contents.data.last3SSync;
-
-                    console.log('last sync time from the 3s table',last_sync_time);
+           local_table.get("last_3s_sync","time").done(
+              function(pulled_3s_time) {
+                    
+                    var last_sync_time = default_time;
+                    console.log('last sync time from the 3s table',pulled_3s_time);
                     //console.log('We got the full3s object from the db', pulled_3s);
-
+                    if(pulled_3s_time) {
+                      var last_sync_time =pulled_3s_time.syncTime;
+                      
+                    } 
                     deferred.resolve(last_sync_time);
-                    }
+                      
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                console.log('We couldnt get tthe last_3s_sync time from the db because', failed_stuff);
                 deferred.reject(default_time);
               }
               );
@@ -92,8 +91,8 @@ angular.module('niiuWebappApp')
 
 
         function getLastContentTime() {
-          /*
-          var default_time='0000-00-00 00:00:00';
+          
+          var default_time='2012-12-12 12:12:12';
 
           console.log('looking for the last sync time');
           //create or open the 3s table in the default db
@@ -105,30 +104,70 @@ angular.module('niiuWebappApp')
           //continue using the same integer to refer to the record with the last sync time
 
           
-           local_table.get("full3s","3s").done(
-              function(pulled_3s) {
-                var last_sync_time =pulled_3s.contents.data.lastContentSync;
+           local_table.get("last_content_sync","time").done(
+              function(pulled_sync_time) {
+                if (pulled_sync_time) {
+                          console.log('last_content_sync time from table',pulled_sync_time);
+                    if (typeof(pulled_sync_time.syncTime)!='undefined') {
+                            var last_sync_time =pulled_sync_time.syncTime;
+                          } 
+                      console.log('last Content Sync time from the last_content_sync table',last_sync_time);
+                      deferred.resolve(last_sync_time);
+                    } else {
+                        console.log('we couldnt get the last content_sync_time so we use a default time', default_time);
+                        deferred.resolve(default_time); 
+                    }
 
-                console.log('last Content Sync time from the 3s table',last_sync_time);
-                //console.log('We got the full3s object from the db', pulled_3s);
-                
-
-
-                deferred.resolve(last_sync_time);
               }
             ).fail(
               function(failed_stuff) {
-                console.log('We couldnt get the full3s object from the db because', failed_stuff);
+                console.log('We couldnt get the last_content_sync object from the db because', failed_stuff);
                 deferred.reject(default_time);
               }
               );
 
           return deferred.promise;
-          */
+          
 
           //this LastContentSync is not always available.
 
         }
+
+        function setLast3sSync(sync_time) {
+
+
+          var current_time=sync_time || getCurrentTime();
+          
+          console.log(current_time);
+
+          console.log('setting the last 3s sync time');
+          //create or open the 3s table in the default db
+          var local_table = connectDB();
+          console.log('at least we got the sync table ',local_table);
+
+          var deferred = $q.defer();
+
+          var last_sync_object = {'id':'time', 'syncTime':current_time};
+          
+          //put a new record with the current time into the db
+          local_table.put('last_3s_sync' ,last_sync_object).done(function(last_sync_record) {
+              
+              console.log('setLastSync: we just set the current last_3s_sync time in the db ', last_sync_record);
+
+              //console.log('just checking that we can get the user from db');
+              
+              deferred.resolve(last_sync_record);
+
+            }).fail(function(e) {
+              console.log('hmm couldnt save the current sync time')
+              
+              deferred.reject(e);
+            });
+
+           return deferred.promise;
+
+          }
+
 
     
     
@@ -143,11 +182,21 @@ angular.module('niiuWebappApp')
         },
 
         getSyncAge: function() {
+          var deferred = $q.defer();
           var now = getCurrentTime();
-          var lastSync = '';
-          return syncAge;
+          getLastContentTime().then(function(lastContentUpdateTime) {
+            var syncAge = Math.abs((new Date(now)-new Date(lastContentUpdateTime))/1000);
+            console.log('We sync articles after '+constants.SYNC_INTERVAL+' seconds. Time since the last update is ',syncAge);
+            deferred.resolve(syncAge);
 
 
+
+          }
+
+          );
+          
+          
+          return deferred.promise;
 
 
 
@@ -218,50 +267,33 @@ angular.module('niiuWebappApp')
 
         setLastSync: function(sync_time) {
 
+          console.log('setLastSync: calling setLast3sSync()');
+          var syncSetPromise = setLast3sSync(sync_time);
 
-          var current_time=sync_time || getCurrentTime();
-          
-          console.log(current_time);
-
-          
-
-        
-
-          console.log('setting the last sync time');
-          //create or open the 3s table in the default db
-          var local_table = connectDB();
-          console.log('at least we got the sync table ',local_table);
-
-          var deferred = $q.defer();
-
-          var last_sync_object = {sync_id:constants.USER_LOCATOR, last_sync_time:current_time};
-          
-          //put a new record with the current time into the db
-          local_table.put(sync_table_name ,last_sync_object).done(function(last_sync_record) {
-              
-              console.log('we just set the current sync time ', last_sync_record);
-
-              //console.log('just checking that we can get the user from db');
-
-              
-              
-              deferred.resolve(last_sync_record);
-
-
-            }).fail(function(e) {
-              console.log('hmm couldnt save the current sync time')
-              
-              deferred.reject(e);
-            });
-
-           return deferred.promise;
+          return syncSetPromise;
 
            
 
           },
 
+           setLastContentSync: function(syncTime) {
+            var deferred = $q.defer();
 
-          getLastProfileUpdate:  function() {
+              var local_table = connectDB();
+              local_table.put('last_content_sync',{'id':'time','syncTime':syncTime}).done(
+                            function(saved_contentsync_time) {
+                              console.log('just set the content sync time in the db',syncTime)
+                              deferred.resolve(saved_contentsync_time);
+                            }
+                        ).fail(function(wtf) {
+                            console.log('I couldnt update the content sync time in the db because',wtf);
+                        });
+              return deferred.promise;
+
+           },
+
+
+          getOldProfileUpdate:  function() {
             //we will change this in the db if there has been a setting change
             var default_time='2012-12-12 12:12:12';
 
@@ -272,6 +304,31 @@ angular.module('niiuWebappApp')
             var deferred = $q.defer();
 
             deferred.resolve(default_time);
+
+            return deferred.promise;
+
+
+          },
+          getLastProfileUpdate:  function() {
+            //we will change this in the db if there has been a setting change
+                var default_time='2012-12-12 12:12:12';
+                var deferred = $q.defer();
+
+                //we could just refer the default time here without a promise, but in case we get it from the db the promise makes sense.
+                //return default_time;
+
+                var lastContentTime = getLastContentTime();
+
+                lastContentTime.then(function(contentTime) {
+                    deferred.resolve(contentTime);
+                },
+                function(no_contentTime) {
+                    console.log('no luck getting the real content update time so using the default'+default_time,no_contentTime);
+                    deferred.resolve(default_time);
+
+                }
+
+              );
 
             return deferred.promise;
 
@@ -332,18 +389,32 @@ angular.module('niiuWebappApp')
 
           var local_table = connectDB();
 
-          console.log('getting ready to add articles to DB ', article_array);
-          local_table.put('article',article_array).done(
-              function(entered_stuff) {
-                console.log('We entered articles into the db', entered_stuff);
-                deferred.resolve(entered_stuff);
-              }
-            ).fail(
-              function(failed_stuff) {
-                console.log('We couldnt enter some articles into the db because', failed_stuff);
-                deferred.reject(failed_stuff);
-              }
-              );
+          console.log('addArticlesToDB: getting ready to add articles to DB ', article_array);
+          local_table.clear('article').done(function(cleared_articles) {
+            local_table.count('article').done(function(article_count) {
+                console.log('we start with this many articles in the db ',article_count);
+              
+              local_table.put('article',article_array).done(
+                  function(entered_stuff) {
+                    console.log('We entered articles into the db', entered_stuff);
+
+                  local_table.count('article').done(function(article_count) {
+                    console.log('now we have this many articles in the db ',article_count);
+                  });
+
+                    deferred.resolve(entered_stuff);
+                  }
+                ).fail(
+                  function(failed_stuff) {
+                    console.log('We couldnt enter some articles into the db because', failed_stuff);
+                    deferred.reject(failed_stuff);
+                  }
+                  );
+
+            }); //pre addition article count
+
+          }); //pre addition article clear
+
 
           return deferred.promise;
 
@@ -455,9 +526,15 @@ angular.module('niiuWebappApp')
             console.log('getting db articles');
             local_table.values('article').done(function(data) {
               console.log('here are all the articles from the DB',data);
-              
+              if(data) {
               deferred.resolve(data);
+              } else {
+                deferred.reject('no articles in db');
+              }
 
+            }).fail(function(no_articles) {
+
+              deferred.reject('didnt get any articles from db',no_articles);
             });
 
           return deferred.promise;
@@ -641,18 +718,40 @@ angular.module('niiuWebappApp')
            var deferred = $q.defer();
            console.log('save the whole 3s', data_3s)
           var local_table = connectDB();
+          console.log('we have the table at least', local_table);
 
-          local_table.put('full3s',data_3s).done(
-              function(entered_3s) {
-                console.log('We entered the full3s object into the db', entered_3s);
-                deferred.resolve(entered_3s);
-              }
-            ).fail(
-              function(failed_stuff) {
-                console.log('We couldnt enter full3s object into the db because', failed_stuff);
-                deferred.reject(failed_stuff);
-              }
-              );
+            local_table.put('full3s',data_3s.data).done(
+                function(entered_3s) {
+                  console.log('We entered the full3s object into the db', entered_3s);
+                  //also save the 3s sync time
+                    setLast3sSync(data_3s.data.contents.data.last3SSync).then(
+                      function(set_3ssync_time) {
+                          console.log('put3s: saved 3s time in last_3s_sync',set_3ssync_time);
+                          deferred.resolve(entered_3s);
+                      },function(notset_3ssync_time) {
+                          console.log('put3s: we couldnt save the 3s in last_3s_sync');
+                          deferred.resolve(entered_3s);
+                      }
+
+                      );
+                    /*
+                    local_table.put('last_3s_sync',{'id':'time','syncTime':data_3s.data.contents.data.last3SSync}).done(
+                        function(saved_3s_time) {
+                          console.log('saved 3s time in last_3s_sync');
+                          
+                          console.log('finished put3s')
+                        }
+                      );
+                    */
+                  
+                }
+              ).fail(
+                function(failed_stuff) {
+                  console.log('We couldnt enter full3s object into the db because', failed_stuff);
+                  deferred.reject(failed_stuff);
+                }
+                );
+             
             return deferred.promise;
             /*
 

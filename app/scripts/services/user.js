@@ -8,6 +8,7 @@ angular.module('niiuWebappApp')
     var contentObject = [];
     var currentSection = 0;
     var hideMenu = true;
+
     function makeSectionUrls() {
             //Get list of section urls to rotate through
                 var user_sections=contentObject;
@@ -22,6 +23,8 @@ angular.module('niiuWebappApp')
             console.log('next section urls ', section_urls); 
             return section_urls;
         }
+
+
 
 
 
@@ -40,13 +43,14 @@ angular.module('niiuWebappApp')
         }  
         */
         
-        if (data3s===undefined) data3s=localDB.get3sFromDB();
-        if (dataArticles==undefined) { 
+        if (typeof(data3s)=='undefined') data3s=localDB.get3sFromDB();
+        if (typeof(dataArticles)=='undefined') { 
             dataArticles=localDB.loadArticlesFromDB().then(function(done) {
             console.log('now we have some contentObject articles from the DB',done);
             });
         } else {
-                localDB.addArticlesToDB(dataArticles);
+               //if dataArticles isn't undefined then they must already be there so lets just move along.
+               // localDB.addArticlesToDB(dataArticles);
 
             }
         var user_sections=user.contentProfile.items;
@@ -144,17 +148,22 @@ angular.module('niiuWebappApp')
                                 console.log('homeArticles count'+i,homeArticles);
                                 //not a pretty formula but it says for if there are less than 2*the amount of sections we have, add an article to the homepage
                                 //so if there we are making section three and we have less than six articles on the home page add another.
-                              if (homeArticles.length < (i+1)*homeArticlesNum ) {
-                                
-                                //add a couple articles to the titlepage
+                              var  currentHomeArticle= (i+1)*homeArticlesNum;
+                              if (homeArticles.length < currentHomeArticle) {
 
-                             //   pageArticles[0].push(dataArticles[h]);
-                                
+                                        homeArticles.push(dataArticles[h])
+                                        console.log('add new homeArticle')
+                                } else if (dataArticles[h].published_date>homeArticles[currentHomeArticle-1].published_date) {
+                                        //add a couple articles to the titlepage
 
-                                homeArticles.push(dataArticles[h])
-                                console.log('homeArticles.push')
+                                     //   pageArticles[0].push(dataArticles[h]);
+                                        
 
+                                        homeArticles[currentHomeArticle-1]=dataArticles[h];
+                                        console.log('update with newer homeArticle dated',dataArticles[h].published_date)
                               }
+                              
+                              
 
                     }
 
@@ -195,7 +204,7 @@ angular.module('niiuWebappApp')
                 }
                 */
                 
-                    console.log('do I still have a sourceObj?',thisSourceObj);
+                    console.log('MakeContentObject: do I still have a sourceObj?',thisSourceObj);
                     console.log('Do we have a source?'+i,(thisSourceObj));
                     console.log('Do we have a source with a name',(!thisSourceObj.hasOwnProperty('name')));
                     //when we are dealing with a custom section fill in the other contentObject properties 
@@ -222,21 +231,21 @@ angular.module('niiuWebappApp')
 
                     if(thisSourceObj) {
 
-                        console.log('blanko!!!',(typeof thisSourceObj.name!=='undefined'));
+                        console.log('MakeContentObject: got a source!!!',(typeof thisSourceObj.name!=='undefined'));
 
                         console.log('in this case',thisSubsectionObj);
                         if ( thisSourceObj.name) {
                             page_title = thisSourceObj.name+" >> ";
-                            console.log('blanko source',thisSourceObj.name);
+                            console.log('MakeContentObject:  source',thisSourceObj.name);
                         }
                         if (thisSubsectionObj.name) {
                             page_title += thisSubsectionObj.name;
                             page_subject = thisSubsectionObj.name;
-                            console.log('blanko subsection',thisSubsectionObj.name);
+                            console.log('MakeContentObject:  subsection',thisSubsectionObj.name);
                         } else if (thisSectionObj.name) {
                             page_title += thisSectionObj.name;
                             page_subject = thisSectionObj.name;
-                            console.log('blanko section',thisSectionObj.name);
+                            console.log('MakeContentObject: section',thisSectionObj.name);
                         }
                     }
                     if(user_sections[i]) {

@@ -6,8 +6,8 @@ angular.module('niiuWebappApp')
     // ...
 
     // Tobias: 
-    //v ar currentUser = User.getUser();
-    var currentUser = $rootScope.user;
+    var currentUser = User.getUser();
+    //var currentUser = $rootScope.user;
     var last3SSync = {};
     var menuObj = {};
     var sourceObj = {};
@@ -20,11 +20,11 @@ angular.module('niiuWebappApp')
 
 
     var last_sync_time=localDB.getLastSync().then(function(sync_time) {
-      console.log('the last sync time in the db is',sync_time);
+      console.log('the last 3s sync time in the db is',sync_time);
       return sync_time;
     },
     function(sync_error) {
-      console.log('unfortunately we couldnt find a sync time in the db',sync_error);
+      console.log('unfortunately we couldnt find a 3s sync time in the db',sync_error);
       return "0000-00-00 00:00:00";
     }
 
@@ -32,8 +32,9 @@ angular.module('niiuWebappApp')
 
 
 
-    function createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array) {
+    function createArticleObject(current_user,last_sync_time, last_cp_update_time, section_array, article_array) {
 
+        article_array = article_array || [];
         section_array = section_array || [];
               var articleData = {
                 "api": "content",
@@ -103,7 +104,7 @@ angular.module('niiuWebappApp')
               var deferred = $q.defer();
 
               var last_sync_time=localDB.getLastSync().then(function(sync_time) {
-                console.log('the last sync time in the db is',sync_time);
+                console.log('creating 3sobject and the last 3s sync time in the db is',sync_time);
                 return sync_time;
               },
 
@@ -335,9 +336,16 @@ angular.module('niiuWebappApp')
 
                             ) {
                             console.log('time to do something with '+"sec_"+SectionSubMap.section_id+", source_"+SourceSubMap.source_id+", "+"sub_"+SourceSubMap.subsection_id);
-                          if (!this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections) {
+                          console.log('what is this typeof anyway',(typeof(this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id])=='undefined'));
+                          if (typeof(this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id])=='undefined') {
+                              //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id]={};
+                              this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id]={};
+                            }
+                          if (typeof(this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections)=='undefined') {
+                              //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id]={};
                               this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections={};
                             }
+
                             //this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
                             this["sec_"+SectionSubMap.section_id].sources["source_"+SourceSubMap.source_id].subsections["sub_"+SourceSubMap.subsection_id]=SubsectionObj["sub_"+SourceSubMap.subsection_id];
                           }
@@ -406,11 +414,18 @@ angular.module('niiuWebappApp')
                               
                               if (threeSResponse.status==200) {
 
-                                  console.log('The 3s response was good. new sync time is ', threeSResponse);
+                                  console.log('The 3s response from niiusyncer.sync3s was good. new sync time is ', threeSResponse.data.contents.data.last3SSync);
+                                  
 
 
-                              
-                              deferred.resolve(threeSResponse);
+                                localDB.put3s(threeSResponse).then(function(saved_3s) {                             
+                                  console.log('the new 3s sync info should be in the db now',saved_3s)
+                                  deferred.resolve(threeSResponse);
+
+                                },function(notsaved_3s) {
+                                  console.log('no luck saving the 3s sync',notsaved_3s);
+
+                                });
                               
                               } else {
                                       

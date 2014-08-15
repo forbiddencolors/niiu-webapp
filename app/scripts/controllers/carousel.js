@@ -3,7 +3,7 @@
 angular.module('niiuWebappApp')
   .controller('CarouselCtrl', function ($scope) {
 
-  	$scope.slide_interval="5000";
+  
 
 
 

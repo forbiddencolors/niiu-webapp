@@ -49,7 +49,7 @@
 	<!-- h3>{{ 'menu_titlepage' | translate}}</h3 -->
 
 	<ul class="list-unstyled">
-		<li class="col-xs-12" ng-repeat="article in contentObject[0].articles | orderBy:'-published_date' track by article.id " >
+		<li class="col-xs-12 article_row" ng-repeat="article in contentObject[0].articles | orderBy:'-sections.content_priority' track by article.id " >
 			<div class="row">
 				<a ng-href="#/article/{{article.id}}" ng-click="toggleMenu(false)" class="list-group-item clearfix">
 				<figure class="pull-left newsSource">

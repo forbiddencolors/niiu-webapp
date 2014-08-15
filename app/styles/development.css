@@ -505,6 +505,10 @@ button, button.btn, a.btn {
     width: 100%; }
   .login-wrapper h3 {
     text-transform: uppercase; }
+  .login-wrapper .error {
+    color: #f51226;
+    text-align: center;
+    font-size: 80%; }
 
 .form-group input {
   border-radius: 0px;
@@ -581,6 +585,14 @@ input.password {
   -webkit-animation-duration: 0.5s;
   -moz-animation-duration: 0.5s;
   animation-duration: 0.5s; }
+
+.titlePage.article_row.ng-enter {
+  opacity: 0;
+  /* make things invisible upon start */
+  -webkit-animation: fadeIn ease-in 4s;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: fadeIn ease-in 4s;
+  animation: fadeIn ease-in 4s; }
 
 .page.ng-leave {
   -webkit-animation: slideOutLeft 0.3s both ease-in;

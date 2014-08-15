@@ -20,7 +20,7 @@
         <li><a href="" ng-click="getContentObject()" class="mSources" translate>menu_sections</a>
 
                       <!-- Add Sources here -->
-                      <a ng-href="#/sectionView/{{$index}}" ng-click="toggleMenu()" ng-repeat="user_section in contentObject" ng-show="!$first" class="selectedSource" >
+                      <a ng-href="#/sectionView/{{$index}}" ng-click="goSection($index)" ng-repeat="user_section in contentObject" ng-show="!$first" class="selectedSource" >
                         <div class="sourceTitle">
                           <span class="label label-default label-subject"  ng-if="user_section.subject" >{{user_section.source.name}}</span>
                           <h4 class="list-group-item-heading label-source" >{{user_section.subject}}</h4>

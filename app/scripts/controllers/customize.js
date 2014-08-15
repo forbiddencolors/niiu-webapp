@@ -1,29 +1,12 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('CustomizeCtrl', function ($rootScope, $window, $scope, niiuSyncer, localDB, $q, $location, User,constants) {
+  .controller('CustomizeCtrl', function ($rootScope, $window, $scope, niiuSyncer, localDB, $q, $location, User,constants, Articleservice) {
     $window.scrollTo(0,0);
 
   	console.log('the scope at this point is like this', $scope);
   	console.log('the root scope at this point is like', $rootScope);
-    niiuSyncer.createMenuObj().then(function(menuObj) {
-        console.log('The MenuObj looks like this',menuObj);
-        $scope.menuObj=menuObj;
-        $scope.importUserSections(User.getUser().contentProfile.items);
-        $scope.treeArray=[];
 
-
-        for (var i in menuObj) {
-          console.log('making treeObj');
-         console.log( 'menuObj['+i+'] is in the house', menuObj[i]);
-          $scope.treeArray.push(menuObj[i]);
-
-        }
-
-        console.log('The treeArray looks like this',$scope.treeArray);
-
-    }
-   );
 
    $scope.sectionsToAdd = [];
    //console.log("are there user sections?",User.getUser().contentProfile.items);
@@ -182,20 +165,21 @@ $scope.importUserSections = function(user_sections) {
       var syncObject=niiuSyncer.createSectionObject($scope.user,sync_time,update_time,json_section_array);
       console.log('this is the object that should update your sections',syncObject);
       niiuSyncer.syncNewSections(syncObject).then(function(syncResponse) {
-          console.log('successfully updated sections!!',syncResponse);
+          console.log('syncSections: successfully updated sections!!',syncResponse);
           //syncResponse.contents.data.contentProfile.items;
           User.setContentProfile(syncResponse.contents.data.contentProfile);
 
           //instead of syncResponse we need 3s
           localDB.get3sFromDB().then(function(current3s){
           User.setContentObject(current3s, syncResponse.contents.data.articles);
+          Articleservice.init(syncResponse.contents.data.articles);
           
             $scope.user=User.getUser();
             User.saveCurrentUser().then(function(saved_user) {
 
                           console.log('the updated user has the following contentProfile',$scope.user);
 
-                          $location.path('/userHome/');
+                          $location.path('/userHome/refresh');
                     }
 
                     );
@@ -437,6 +421,26 @@ $scope.init=function() {
   $scope.user = User.getUser();
   $scope.pageClass='menuPage';
   $scope.refresh3s().then(  
+      niiuSyncer.createMenuObj().then(function(menuObj) {
+          console.log('The MenuObj looks like this',menuObj);
+          $scope.menuObj=menuObj;
+          $scope.importUserSections(User.getUser().contentProfile.items);
+          $scope.treeArray=[];
+
+
+          for (var i in menuObj) {
+            console.log('making treeObj');
+           console.log( 'menuObj['+i+'] is in the house', menuObj[i]);
+            $scope.treeArray.push(menuObj[i]);
+
+          }
+
+          console.log('The treeArray looks like this',$scope.treeArray);
+
+      }
+     )
+
+
 
      ); 
 
