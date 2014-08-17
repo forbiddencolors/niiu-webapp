@@ -177,6 +177,23 @@ angular.module('niiuWebappApp')
         	return deferred.promise;
         }
 
+        function getSourceLogoById(id) {
+        	var deferred=$q.defer();
+        	if(sectionList.length==0) { 
+        		initPromise.then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
+        			var sourceObject= $filter('getByProperty')(sourceList, "id", id);
+        			deferred.resolve(sourceObject.logo);
+        			});
+        	} else {
+        		var sourceObject= $filter('getByProperty')(sourceList, "id", id);
+        		deferred.resolve(sourceObject.logo);
+        	}
+        	
+        	console.log('getSourceLogoById: looking in this sourceObject', sourceObject);
+        	return deferred.promise;
+
+        }
+
         function getSectionNameById(id) {
         	var deferred=$q.defer();
         	if(sectionList.length==0) { 
@@ -193,6 +210,7 @@ angular.module('niiuWebappApp')
         	return deferred.promise;
 
         }
+
 
         function init(article_array) {
 
@@ -269,7 +287,16 @@ angular.module('niiuWebappApp')
 	  				
 	  				localDB.loadArticlesFromDB().then(function(db_articles) {
 	  					init(db_articles);
-	  					deferred.resolve(articles[i]);
+	  						//find the article we were looking for
+			  				var i=0, len=articles.length;
+					      	for (; i<len; i++) {
+					      		if (articles[i].id == article_id) {
+					      			console.log('heres a matching article',articles[i]);
+					      			deferred.resolve(articles[i]);
+					  			}
+
+					  		}
+	  					
 	  					
 	  				}
 
@@ -292,6 +319,10 @@ angular.module('niiuWebappApp')
         getSourceList: function() {
 
             return listSources();
+        },
+        getSourceLogo: function(id) {
+
+            return getSourceLogoById(id); 
         },
         getSourceName: function(id) {
             return getSourceNameById(id); 

@@ -28,30 +28,46 @@ angular.module('niiuWebappApp')
         return deferred.promise;
     }
 
+    function getArticleSourceLogo(source_id) {
+      var deferred=$q.defer();
+        Articleservice.getSourceLogo(source_id).then(function(source_logo) {
+          console.log('getArticleSourceLogo: just got a logo for this article source ',source_logo);
+          deferred.resolve( source_logo);
+
+          },function(not_source_logo) {
+            console.log('getArticleSourceLogo: failed to get the source logo for this article',not_source_logo);
+            deferred.reject( not_source_logo);
+          });
+        return deferred.promise;
+    }
+
+
+
 
 
     function getArticleSubject(section,subsection,custom_id) {
       var deferred=$q.defer();
       console.log('getArticleSubject: looking for the title between section/subsection/custom '+section+'/'+subsection+'/'+custom_id);
-      if(custom_id) {
-          deferred.resolve(custom_id);
-          console.log('getArticleSubject: subject is ',custom_id);
-
-      } 
 
       if (subsection) {
           Articleservice.getSubSectionName(subsection).then(function(subSectionName) {
               deferred.resolve(subSectionName);
               console.log('getArticleSubject: subject is ',subSectionName);
           });
-      }
-
-      if (section) {
+      } else  {
           Articleservice.getSectionName(section).then(function(sectionName) {
               deferred.resolve(sectionName);
               console.log('getArticleSubject: subject is ',sectionName);
           });
       }
+
+      /* we never use a custom section title for an article subject
+      if(custom_id) {
+          deferred.resolve(custom_id);
+          console.log('getArticleSubject: subject is ',custom_id);
+
+      } 
+      */
 
       return deferred.promise;
 
@@ -66,6 +82,12 @@ angular.module('niiuWebappApp')
           getArticleSourceName(article.source_id).then(function(sourceName) {
             $scope.article.sourceName = sourceName;
           }
+
+            );
+          getArticleSourceLogo(article.source_id).then(function(sourceLogo) {
+            $scope.article.source_logo = sourceLogo;
+          }
+          
             );
           getArticleSubject(article.sections.section_id,article.sections.subsection_id,article.sections.custom_section).then(
             function(article_subject) {

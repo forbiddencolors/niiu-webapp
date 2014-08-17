@@ -201,6 +201,17 @@ div.front_view, div.section_view {
     font-family: alright_sansbold;
     font-size: 27px;
     margin-top: 5px; } }
+.sectionation {
+  position: fixed;
+  margin: 2px auto;
+  bottom: 2px;
+  z-index: 100;
+  width: 100%;
+  text-align: center; }
+  .sectionation .carousel-indicators {
+    z-index: auto;
+    bottom: 5px; }
+
 .sectionPage {
     /* no slider on sectionPage
 
@@ -586,14 +597,15 @@ input.password {
   -moz-animation-duration: 0.5s;
   animation-duration: 0.5s; }
 
+/*
 .titlePage.article_row.ng-enter {
-  opacity: 0;
-  /* make things invisible upon start */
-  -webkit-animation: fadeIn ease-in 4s;
-  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-  -moz-animation: fadeIn ease-in 4s;
-  animation: fadeIn ease-in 4s; }
 
+	   opacity:0;  
+    -webkit-animation:fadeIn ease-in 4s;  
+    -moz-animation:fadeIn ease-in 4s;
+    animation:fadeIn ease-in 4s;
+	}
+*/
 .page.ng-leave {
   -webkit-animation: slideOutLeft 0.3s both ease-in;
   -moz-animation: slideOutLeft 0.3s both ease-in;
@@ -778,3 +790,13 @@ input.password {
 @-webkit-keyframes slideOutLeft {
     to      { -webkit-transform: translateX(-100%); }
 }*/
+.page.loading.ng-leave, .page.loading.ng-enter {
+  -moz-transition-property: none;
+  -webkit-transition-property: none;
+  -o-transition-property: none;
+  transition-property: none;
+  -webkit-animation: none;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: none;
+  -o-animation: none;
+  animation: none; }

@@ -18,6 +18,7 @@
     "menu_current_section": "Current Section",
     "menu_logout": "Logout",
     "menu_editsections": "Edit Sections",
+    "home_news_loading": "Loading your news...",
     "menu_login_register": "Login or Register",
     "icon_back" : "Back",
     "msg_wait" : "Please wait while we load your articles...",

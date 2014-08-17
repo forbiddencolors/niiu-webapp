@@ -310,6 +310,21 @@ min-height: 300px;
 
 }
 
+.sectionation {
+position:fixed;
+margin:2px auto;
+bottom:2px;
+z-index:100;
+width:100%;
+text-align: center;
+
+	.carousel-indicators {
+		z-index: auto;
+		bottom:5px;
+	}
+
+}
+
 
 .sectionPage {
 
@@ -1022,6 +1037,17 @@ input.password {
  
 
 
+.page.loading.ng-leave,.page.loading.ng-enter, {
+		-moz-transition-property: none;
+		-webkit-transition-property: none;
+		-o-transition-property: none;
+		transition-property: none;
+
+		    -webkit-animation:none;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:none;
+    -o-animation:none;
+    animation:none;
+	}
 
 
 
