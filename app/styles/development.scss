@@ -317,10 +317,15 @@ bottom:2px;
 z-index:100;
 width:100%;
 text-align: center;
+background-image: radial-gradient(rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.9)), radial-gradient(rgba(62, 62, 64, 0.9), rgba(62, 62, 64, 0));
+
 
 	.carousel-indicators {
 		z-index: auto;
 		bottom:5px;
+		background-image: radial-gradient(rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.9)), radial-gradient(rgba(62, 62, 64, 0.9), rgba(62, 62, 64, 0));
+
+		
 	}
 
 }
@@ -366,6 +371,11 @@ text-align: center;
 		color:#ffffff;
 	}
 
+	.articleLink .article_logo {
+		float:left;
+		height:25px;
+		margin:0px 5px 5px 0px;
+	}
 
 
 
@@ -713,6 +723,16 @@ input.required {
 	background-color:#ffffff;
 }
 
+
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
 
 .jumbotron {
 	background-color: transparent;

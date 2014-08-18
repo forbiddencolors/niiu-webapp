@@ -8,6 +8,7 @@ angular.module('niiuWebappApp')
   	$window.scrollTo(0,0);
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
   	$scope.nav_top=angular.element('#topnav').css('top');
+  	$scope.logo_path=constants.SOURCE_LOGO_PATH;
 
 
 
@@ -73,7 +74,7 @@ angular.module('niiuWebappApp')
     };
 
 
-
+/*
   	$scope.getLogoPath = function(source_id) {
   		//console.log('this source_id is',(Math.floor(source_id*1)>0));
   		//console.log('why are we calling this',$scope.slides)
@@ -85,6 +86,7 @@ angular.module('niiuWebappApp')
   			//return ('no '+Math.floor(source_id));
   		}
   	}
+  */
 
 
   	//$scope.user=User.getUser();

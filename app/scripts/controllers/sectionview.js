@@ -9,7 +9,8 @@ angular.module('niiuWebappApp')
 	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
 
 
-	//$scope.logo_path=constants.SOURCE_LOGO_PATH;
+	
+  console.log('the logo path is ',$scope.logo_path);
 
 	$scope.nextSectionSwipe = function() {
   
@@ -37,6 +38,10 @@ angular.module('niiuWebappApp')
     	User.toggleMenu(onOff);
 
     };
+
+    $scope.getLogoPath=function() {
+      return constants.SOURCE_LOGO_PATH;
+    }
 
     $scope.goSection = function(sectionId) {
 
