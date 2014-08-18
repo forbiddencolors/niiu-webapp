@@ -212,6 +212,9 @@ div.front_view, div.section_view {
     z-index: auto;
     bottom: 5px; }
 
+.sectionPage, .articlePage, .menuPage {
+  padding-top: 60px; }
+
 .sectionPage {
     /* no slider on sectionPage
 
