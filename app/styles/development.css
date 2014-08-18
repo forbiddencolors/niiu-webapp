@@ -8,6 +8,7 @@ body {
   background-position: 63% 0%;
   color: white;
   background-color: #3e3e40;
+<<<<<<< HEAD
   height: 100%;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000315}}
@@ -67,6 +68,47 @@ body .col-centered {
   float: none;
   margin: 0 auto;
 }
+=======
+  height: 100%; }
+  body a, body p a {
+    color: white;
+    text-decoration: underline;
+    font-weight: bold; }
+  body .page {
+    /*width:100vw;*/ }
+  body .nav, body .pagination, body .carousel, body .panel-title a {
+    cursor: pointer; }
+  body div.section_view, body div.front_view {
+    /**/
+    min-height: 80vh;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+  body div.topbar {
+    height: 100px;
+    width: 100%;
+    border-bottom: 1px solid #000000; }
+  body .label-source, body .label-subject {
+    background: none;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: 'alright_sansregular';
+    color: #ffffff;
+    padding-left: 0;
+    white-space: nowrap; }
+  body .label-subject {
+    color: #00a651; }
+  body .custom-section-label {
+    color: #ffffff;
+    margin-top: 10px;
+    display: block; }
+  body .sourceTitle .label-subject {
+    font-family: 'alright_sansbold';
+    font-size: 18px; }
+  body .col-centered {
+    float: none;
+    margin: 0 auto; }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000377}}
 .active .navbar, .active .navbar-fixed-top {
@@ -88,13 +130,17 @@ body .col-centered {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\0000393}}
 .navbar {
-  background-color: #3e3e40;
+  background-color: #5c5d5f;
   /*:2px 5px 2px 2px;*/
   padding: 7px 2px;
   /*padding: 0px 2px;*/
   border: 0px;
+<<<<<<< HEAD
   height: 60px;
 }
+=======
+  height: 70px; }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003104}}
 .share_btn .hideme {
@@ -197,12 +243,12 @@ div.navbar #logo {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003223}}
 .row-offcanvas {
   position: relative;
- /*
--webkit-transition: all 0.1s ease-out;
--moz-transition: all 0.1s ease-out;
-transition: all 0.1s ease-out;
-
- /*Sams transitions*/
+  /*
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+  
+   /*Sams transitions*/
   -webkit-transition: left 0.4s ease;
   -moz-transition: left 0.4s ease;
   -ms-transition: left 0.4s ease;
@@ -299,8 +345,12 @@ div.front_view, div.section_view {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003334}}
 .sectionPage, .articlePage, .menuPage {
+<<<<<<< HEAD
   padding-top: 60px;
 }
+=======
+  padding-top: 70px; }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003339}}
 .sectionPage {
@@ -433,9 +483,14 @@ div.front_view, div.section_view {
   font-family: 'Andada', serif;
   font-size: 21px;
   font-weight: bold;
+<<<<<<< HEAD
   padding: 20px 0 10px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003495}}
+=======
+  text-align: left;
+  padding: 20px 0 10px; }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 .articlePage .articletext {
   font-family: 'Andada', serif;
   font-size: 21px;
@@ -780,7 +835,7 @@ button, button.btn, a.btn {
   text-align: center;
 }
 
-/* white seemed a bit to bright to me
+ /* white seemed a bit to bright to me
 ::-webkit-input-placeholder {
    color: #fff !important;
 }
@@ -921,10 +976,14 @@ input.password {
 
   /* line 960, development.scss */
   to {
+<<<<<<< HEAD
     opacity: 1;
   }
 }
 
+=======
+    opacity: 1; } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-moz-keyframes fadeIn {
   /* line 961, development.scss */
   from {
@@ -933,10 +992,14 @@ input.password {
 
   /* line 961, development.scss */
   to {
+<<<<<<< HEAD
     opacity: 1;
   }
 }
 
+=======
+    opacity: 1; } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @keyframes fadeIn {
   /* line 962, development.scss */
   from {
@@ -945,11 +1008,15 @@ input.password {
 
   /* line 962, development.scss */
   to {
+<<<<<<< HEAD
     opacity: 1;
   }
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003964}}
+=======
+    opacity: 1; } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 .fade-in {
   opacity: 0;
   /* make things invisible upon start */
@@ -971,51 +1038,75 @@ input.password {
   /* line 982, development.scss */
   from {
     opacity: 0.5;
+<<<<<<< HEAD
     -webkit-transform: scale(0.1);
   }
 }
 
+=======
+    -webkit-transform: scale(0.1); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-moz-keyframes scaleUp {
   /* line 985, development.scss */
   from {
     opacity: 0.5;
+<<<<<<< HEAD
     -moz-transform: scale(0.1);
   }
 }
 
+=======
+    -moz-transform: scale(0.1); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-webkit-keyframes scaleUp {
   /* line 988, development.scss */
   from {
     opacity: 0.5;
+<<<<<<< HEAD
     -webkit-transform: scale(0.1);
   }
 }
 
+=======
+    -webkit-transform: scale(0.1); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 /* scale down */
 @keyframes scaleDown {
   /* line 995, development.scss */
   to {
     opacity: 0.3;
+<<<<<<< HEAD
     -webkit-transform: scale(0.9);
   }
 }
 
+=======
+    -webkit-transform: scale(0.9); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-moz-keyframes scaleDown {
   /* line 998, development.scss */
   to {
     opacity: 0.3;
+<<<<<<< HEAD
     -moz-transform: scale(0.9);
   }
 }
 
+=======
+    -moz-transform: scale(0.9); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-webkit-keyframes scaleDown {
   /* line 1001, development.scss */
   to {
     opacity: 0.3;
+<<<<<<< HEAD
     -webkit-transform: scale(0.9);
   }
 }
 
+=======
+    -webkit-transform: scale(0.9); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 /* slide in from the right */
 @keyframes slideInRight {
   /* line 1007, development.scss */
@@ -1025,10 +1116,14 @@ input.password {
 
   /* line 1008, development.scss */
   to {
+<<<<<<< HEAD
     transform: translateX(0);
   }
 }
 
+=======
+    transform: translateX(0); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-moz-keyframes slideInRight {
   /* line 1011, development.scss */
   from {
@@ -1037,10 +1132,14 @@ input.password {
 
   /* line 1012, development.scss */
   to {
+<<<<<<< HEAD
     -moz-transform: translateX(0);
   }
 }
 
+=======
+    -moz-transform: translateX(0); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-webkit-keyframes slideInRight {
   /* line 1015, development.scss */
   from {
@@ -1049,10 +1148,14 @@ input.password {
 
   /* line 1016, development.scss */
   to {
+<<<<<<< HEAD
     -webkit-transform: translateX(0);
   }
 }
 
+=======
+    -webkit-transform: translateX(0); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 /* slide out to the right */
 @keyframes slideOutRight {
   /* line 1022, development.scss */
@@ -1062,10 +1165,14 @@ input.password {
 
   /* line 1023, development.scss */
   to {
+<<<<<<< HEAD
     transform: translateX(100%);
   }
 }
 
+=======
+    transform: translateX(100%); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-moz-keyframes slideOutRight {
   /* line 1026, development.scss */
   from {
@@ -1074,10 +1181,14 @@ input.password {
 
   /* line 1027, development.scss */
   to {
+<<<<<<< HEAD
     -moz-transform: translateX(100%);
   }
 }
 
+=======
+    -moz-transform: translateX(100%); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-webkit-keyframes slideOutRight {
   /* line 1030, development.scss */
   from {
@@ -1086,10 +1197,14 @@ input.password {
 
   /* line 1031, development.scss */
   to {
+<<<<<<< HEAD
     -webkit-transform: translateX(100%);
   }
 }
 
+=======
+    -webkit-transform: translateX(100%); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 /* slide out to the left */
 @keyframes slideOutLeft {
   /* line 1038, development.scss */
@@ -1099,10 +1214,14 @@ input.password {
 
   /* line 1039, development.scss */
   to {
+<<<<<<< HEAD
     transform: translateX(-100%);
   }
 }
 
+=======
+    transform: translateX(-100%); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-moz-keyframes slideOutLeft {
   /* line 1042, development.scss */
   from {
@@ -1111,10 +1230,14 @@ input.password {
 
   /* line 1043, development.scss */
   to {
+<<<<<<< HEAD
     -moz-transform: translateX(-100%);
   }
 }
 
+=======
+    -moz-transform: translateX(-100%); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 @-webkit-keyframes slideOutLeft {
   /* line 1046, development.scss */
   from {
@@ -1123,10 +1246,14 @@ input.password {
 
   /* line 1047, development.scss */
   to {
+<<<<<<< HEAD
     -webkit-transform: translateX(-100%);
   }
 }
 
+=======
+    -webkit-transform: translateX(-100%); } }
+>>>>>>> 43ca9eaf77bdc0b1b45b0087db1af6fed2dd228c
 /*@keyframes slideOutLeft {
     to      { transform: translateX(-100%); }
 }
