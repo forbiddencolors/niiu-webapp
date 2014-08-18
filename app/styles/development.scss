@@ -501,6 +501,8 @@ background-repeat:no-repeat;
         }
 
 
+
+
 	#niiuCarousel .slider {
 		/*width:100%;
 		
@@ -517,8 +519,38 @@ background-repeat:no-repeat;
 
     }
 
+    .articleControls, .articleBody {
+    	margin:0px 15px;
+    }
 
+ .articleBody .subheading{
+      font-family: 'Andada', serif;
+      font-size: 21px;
+      font-weight: bold;
+      padding:20px 0px 10px 0px;
+    }
 
+   .articleBody .articletext{
+      font-family: 'Andada', serif;
+      font-size: 21px;
+      padding:20px 0;
+    }
+
+    .articleBody {
+    margin-top:20px;
+    }
+
+    .articleControls a {
+         padding: 5px;
+        }
+
+       .articleDate {
+         
+          font-size: 21px;
+          margin-right: 10px;
+          margin-top: 22px;
+          
+        }
 
 
 }

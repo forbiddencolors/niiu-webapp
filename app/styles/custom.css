@@ -270,9 +270,11 @@ div.sourceTitle span.label-source {
       text-decoration: none;
     }
 
+/*
     .sectionPage div.sourceTitle, .articlePage div.sourceTitle {
       padding: 20px;  
     } 
+    */
 
     .sectionPage div.sourceTitle p {
       font-family: 'Andada', serif;
@@ -314,20 +316,22 @@ niiu-webappv1 Sctionpage
     }
 
         div.articleControls .articleDate {
+         /*
           font-size: 21px;
           margin-right: 20px;
           margin-top: 30px;
+          */
         }
 
         div.articleControls .nav {
-          margin-left: 20px;
-          margin-right: 20px;
+         /* margin-left: 20px;
+          margin-right: 20px;*/
           padding-top: 5px;
           border-bottom: 1px solid #707070;
         }
 
         div.articleControls ul li a {
-          padding: 10px 5px;
+         /* padding: 10px 5px; */
         }
 
         div.articleControls ul li a:hover, div.articleControls ul li a:focus{
@@ -366,15 +370,3 @@ niiu-webappv1 Sctionpage
           font-size: 36px;
         }
 
-        div.articleBody p.subheading{
-          font-family: 'Andada', serif;
-          font-size: 21px;
-          font-weight: bold;
-          padding:20px 0 10px;
-        }
-
-        div.articleBody p.articletext{
-          font-family: 'Andada', serif;
-          font-size: 21px;
-          padding:20px 0;
-        }
