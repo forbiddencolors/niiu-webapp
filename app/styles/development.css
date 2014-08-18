@@ -12,9 +12,6 @@ body {
     color: white;
     text-decoration: underline;
     font-weight: bold; }
-  body p.subheading {
-    color: gray;
-    text-align: center; }
   body .page {
     /*width:100vw;*/ }
   body .nav, body .pagination, body .carousel, body .panel-title a {
@@ -39,6 +36,10 @@ body {
     white-space: nowrap; }
   body .label-subject {
     color: #00a651; }
+  body .custom-section-label {
+    color: #ffffff;
+    margin-top: 10px;
+    display: block; }
   body .sourceTitle .label-subject {
     font-family: 'alright_sansbold';
     font-size: 18px; }
@@ -59,12 +60,12 @@ body {
   background-color: #3e3e40; }
 
 .navbar {
-  background-color: #3e3e40;
+  background-color: #5c5d5f;
   /*:2px 5px 2px 2px;*/
   padding: 7px 2px;
   /*padding: 0px 2px;*/
   border: 0px;
-  height: 60px; }
+  height: 70px; }
 
 .share_btn .hideme {
   display: none;
@@ -140,12 +141,12 @@ div.navbar #logo {
  */
 .row-offcanvas {
   position: relative;
- /*
--webkit-transition: all 0.1s ease-out;
--moz-transition: all 0.1s ease-out;
-transition: all 0.1s ease-out;
-
- /*Sams transitions*/
+  /*
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+  
+   /*Sams transitions*/
   -webkit-transition: left 0.4s ease;
   -moz-transition: left 0.4s ease;
   -ms-transition: left 0.4s ease;
@@ -213,7 +214,7 @@ div.front_view, div.section_view {
     bottom: 5px; }
 
 .sectionPage, .articlePage, .menuPage {
-  padding-top: 60px; }
+  padding-top: 70px; }
 
 .sectionPage {
     /* no slider on sectionPage
@@ -299,6 +300,7 @@ div.front_view, div.section_view {
   font-family: 'Andada', serif;
   font-size: 21px;
   font-weight: bold;
+  text-align: left;
   padding: 20px 0 10px; }
 .articlePage .articletext {
   font-family: 'Andada', serif;
@@ -531,7 +533,7 @@ button, button.btn, a.btn {
   color: white;
   text-align: center; }
 
-/* white seemed a bit to bright to me
+ /* white seemed a bit to bright to me
 ::-webkit-input-placeholder {
    color: #fff !important;
 }
@@ -656,21 +658,18 @@ input.password {
 
   to {
     opacity: 1; } }
-
 @-moz-keyframes fadeIn {
   from {
     opacity: 0; }
 
   to {
     opacity: 1; } }
-
 @keyframes fadeIn {
   from {
     opacity: 0; }
 
   to {
     opacity: 1; } }
-
 .fade-in {
   opacity: 0;
   /* make things invisible upon start */
@@ -691,33 +690,27 @@ input.password {
   from {
     opacity: 0.5;
     -webkit-transform: scale(0.1); } }
-
 @-moz-keyframes scaleUp {
   from {
     opacity: 0.5;
     -moz-transform: scale(0.1); } }
-
 @-webkit-keyframes scaleUp {
   from {
     opacity: 0.5;
     -webkit-transform: scale(0.1); } }
-
 /* scale down */
 @keyframes scaleDown {
   to {
     opacity: 0.3;
     -webkit-transform: scale(0.9); } }
-
 @-moz-keyframes scaleDown {
   to {
     opacity: 0.3;
     -moz-transform: scale(0.9); } }
-
 @-webkit-keyframes scaleDown {
   to {
     opacity: 0.3;
     -webkit-transform: scale(0.9); } }
-
 /* slide in from the right */
 @keyframes slideInRight {
   from {
@@ -725,21 +718,18 @@ input.password {
 
   to {
     transform: translateX(0); } }
-
 @-moz-keyframes slideInRight {
   from {
     -moz-transform: translateX(100%); }
 
   to {
     -moz-transform: translateX(0); } }
-
 @-webkit-keyframes slideInRight {
   from {
     -webkit-transform: translateX(100%); }
 
   to {
     -webkit-transform: translateX(0); } }
-
 /* slide out to the right */
 @keyframes slideOutRight {
   from {
@@ -747,21 +737,18 @@ input.password {
 
   to {
     transform: translateX(100%); } }
-
 @-moz-keyframes slideOutRight {
   from {
     -moz-transform: translateX(0); }
 
   to {
     -moz-transform: translateX(100%); } }
-
 @-webkit-keyframes slideOutRight {
   from {
     -webkit-transform: translateX(0); }
 
   to {
     -webkit-transform: translateX(100%); } }
-
 /* slide out to the left */
 @keyframes slideOutLeft {
   from {
@@ -769,21 +756,18 @@ input.password {
 
   to {
     transform: translateX(-100%); } }
-
 @-moz-keyframes slideOutLeft {
   from {
     -moz-transform: translateX(0); }
 
   to {
     -moz-transform: translateX(-100%); } }
-
 @-webkit-keyframes slideOutLeft {
   from {
     -webkit-transform: translateX(0); }
 
   to {
     -webkit-transform: translateX(-100%); } }
-
 /*@keyframes slideOutLeft {
     to      { transform: translateX(-100%); }
 }
