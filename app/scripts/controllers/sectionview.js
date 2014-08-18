@@ -32,9 +32,16 @@ angular.module('niiuWebappApp')
 
     };
 
+
     $scope.toggleMenu = function(onOff) {
     	User.toggleMenu(onOff);
 
+    };
+
+    $scope.goSection = function(sectionId) {
+
+      User.setCurrentSection(sectionId);
+      $location.path("#/sectionView/"+sectionId); //this could happen in the set function too.
     };
 
 	User.getContentObject().then(function(contentObjArray) {
@@ -42,6 +49,7 @@ angular.module('niiuWebappApp')
 
 
 	$scope.pageContent = contentObjArray[$routeParams.contentObjId];
+  $scope.contentObject=contentObjArray;
 	$scope.logo_path=$scope.pageContent.custom_section.id===null ? constants.SOURCE_LOGO_PATH : "";
 	$scope.pageClass = $scope.pageContent.type === "titlePage" ? "userHome" : "sectionPage";
 	console.log('the pageClass is ',$scope.pageClass);

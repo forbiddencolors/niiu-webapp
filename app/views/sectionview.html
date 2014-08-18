@@ -29,13 +29,12 @@
 -->
 
 
-
-</div>
 <div class="sectionation">
       <ol class="carousel-indicators" >
+        <!--ol class="carousel-indicators" ng-show="contentObject.length > 1"-->
         <!--li ng-repeat="pages in contentObject track by $index" ng-class="{active: isActive(slide)}" ng-click="select(slide)" class="ng-scope"></li -->
-        <li ng-repeat="pages in contentObject track by $index"></li>
-        <li>yo</li>
+        <li ng-repeat="pages in contentObject track by $index" ng-click="goSection($index)" ng-class="{active: currentSection==$index}"></li>
     </ol>
 
+</div>
 </div>
