@@ -46,7 +46,7 @@ angular.module('niiuWebappApp')
     $scope.goSection = function(sectionId) {
 
       User.setCurrentSection(sectionId);
-      $location.path("#/sectionView/"+sectionId); //this could happen in the set function too.
+     // $location.path("/sectionView/"+sectionId); //this could happen in the set function too.
     };
 
 	User.getContentObject().then(function(contentObjArray) {

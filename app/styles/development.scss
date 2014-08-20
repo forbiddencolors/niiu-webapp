@@ -1,6 +1,20 @@
 
 
 body {
+
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  /* max-width: 950px;  or 950px */
+}
+
+#topnav {
+  margin-right: auto;
+  margin-left: auto;
+  /*max-width: 950px;  or 950px */
+  overflow:hidden;
+}
+
 	margin: 0px;
 	padding: 0px;
 	
@@ -75,7 +89,7 @@ body {
 
 }
 
- .active .navbar, .active .navbar-fixed-top {
+ .active .navbar-offset {
 
 	left:75%;
 	}
@@ -88,19 +102,27 @@ body {
 }
 
 #topnav.affix navbar {
-    background-color:#3e3e40;
+    
+}
+.navbar {
+background:transparent;
+}
+.navbar-default {
+	border-width:0px;
+	background-color:#5c5d5f;
 }
 
-.navbar {
-	background-color:#5c5d5f;
-	/*:2px 5px 2px 2px;*/
+.navbar-offset {
+		
+	border: none;
 	padding:7px 2px;
 
 	/*padding: 0px 2px;*/
-	border:0px;
 	height:70px;
 
 }
+
+
 
 .share_btn .hideme {
 display:none;
@@ -318,17 +340,22 @@ bottom:2px;
 z-index:100;
 width:100%;
 text-align: center;
-background-image: radial-gradient(rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.9)), radial-gradient(rgba(62, 62, 64, 0.9), rgba(62, 62, 64, 0));
+/*background-image: radial-gradient(rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.9)), radial-gradient(rgba(62, 62, 64, 0.9), rgba(62, 62, 64, 0));*/
 
 
 	.carousel-indicators {
 		z-index: auto;
 		bottom:5px;
-		background-image: radial-gradient(rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.9)), radial-gradient(rgba(62, 62, 64, 0.9), rgba(62, 62, 64, 0));
+		background-color:rgba(62, 62, 64, 0.3);
+		/*background-image: radial-gradient(rgba(62, 62, 64, 0.3), rgba(62, 62, 64, 0)), radial-gradient( rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.3));*/
 
 		
 	}
 
+}
+
+div.active .sectionation  {
+	display:none;
 }
 
 
@@ -573,6 +600,18 @@ background-repeat:no-repeat;
 
 }
 
+.termsPage, .privacyPage, .helpPage {
+
+	.termstext, .privacytext, .helptext {
+	      font-family: 'Andada', serif;
+	      /*font-size: 21px;*/
+	      padding:60px 15px 20px 15px;
+
+	}
+
+
+}
+
 
 
 /*User Menu*/
@@ -640,7 +679,7 @@ background-repeat:no-repeat;
 	}
 
 	#niiuAppmenu {
-		padding-top:50px;
+	  padding-top:80px;
 	  background: #5c5d5f;
 	  color: #fff;
 	}

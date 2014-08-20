@@ -1,11 +1,47 @@
-  <ul class="nav nav-pills pull-right" ng-controller="loginmenuCtrl">
-  	<li ng-hide="niiuAuthenticator.isLoggedIn()"><a ng-href="#/">niiu</a></li>
-    <li ng-hide="niiuAuthenticator.isLoggedIn()"><a ng-href="#/emailLogin">Login</a></li>
-    <li><a ng-href="#/registration" ng-hide="niiuAuthenticator.isLoggedIn()">Registration</a></li>
-    <li><a href="" ng-show="user!=null" ng-click="logout()">Logout {{user.firstName}}</a></li>
-  </ul>
-<div id="alertBox" data-ng-show="error" class="alert alert-danger"><button type="button" data-ng-click="error = null;" class="close">×</button><span data-ng-bind="error" class="ng-binding">{{error}}</span></div>
-</div>
+            <!-- offcanvas menu -->
+    <nav id="niiuAppmenu" ng-controller="usermenuCtrl">
+      <ul class="mm-list mm-panel mm-opened mm-current">
+        <li><a class="mHome" ng-href="#/userHome" ng-click="toggleMenu()" translate>menu_titlepage</a></li>
+        <li><a class="mSettings" translate>menu_settings</a>
+          <ul>
+            
+            <li><a  href="/" translate>menu_login</a></li>
+            <li><div ><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> /<a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+            
+          </ul>
 
+        </li>
+        <li><a class="mHelp" href="#/help" ng-click="toggleMenu()" translate>menu_help</a></li>
+        <li><a class="mFeedback" ng-click="toggleMenu()" ng-href="https://docs.google.com/forms/d/1RtuQyTzNAfQ3qfITBLl0ZdapHplZanxjF60fKfRInvU/viewform?entry.331930778&entry.1900651166={{user.eMail}}&entry.1585641298&entry.383221606&entry.488870576&entry.75199030={{browser}}" target="_blank" translate>menu_feedback</a></li>
+        
+      </ul>
+
+    </nav>
+
+    
+
+    
+  <!--nav bar -->
+<!--  
+  <div collapse="navCollapsed" class="nav-collapse collapse navbar-responsive-collapse">
+    <ul class="nav" ng-controller="usermenuCtrl">
+      <li><a ng-href="#/customize" ng-show="user!=null" translate>menu_settings</a></li>
+      <li><a ng-href="#/userHome" ng-show="user!=null" translate>menu_homepage</a></li>
+
+      <li><a ng-href="" ng-click="currentPage()" ng-show="user!=null" translate>menu_current_section</a></li>
+      <li><a ng-href="" ng-click="nextPage()" ng-show="user!=null" translate>menu_next_section</a></li>
+
+      <li><a ng-href="#/userHome/refresh" ng-show="user!=null" translate>menu_refresh</a></li>
+
+      
+      <li><a href="" ng-show="user!=null" ng-click="logout()">{{ 'menu_logout' | translate}} {{user.firstName}}</a></li>
+      <li><div class="lang_widget"><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / 
+    <a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
+    </ul>
+
+
+    </div> -->
+
+  <alert ng-show="error" type="info" >{{error}}</alert>
 
 

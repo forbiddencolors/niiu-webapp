@@ -43,7 +43,7 @@
 
     <!-- Add your site or application content here -->
     <!--div class="container" -->
-      <div class="container-fluid col-xs-12 col-lg-8" style="overflow-x: hidden;">
+      <div class="container-fluid col-xs-12 col-md-10 col-lg-8" style="overflow-x: hidden;min-height:100vh;">
         <div id="canvasrow" class="row row-offcanvas row-offcanvas-left">
             <div id="canvasnav" class="col-xs-9 sidebar-offcanvas" ng-include="layoutPartial('headerUrl')"></div> 
             <div ng-view="" class="page {{ pageClass }}">
@@ -156,6 +156,7 @@
         <script src="scripts/controllers/articleshare.js"></script>
         <script src="scripts/controllers/sharethanks.js"></script>
         <script src="scripts/controllers/guestmenu.js"></script>
+        <script src="scripts/controllers/help.js"></script>
         <!-- endbuild -->
 </body>
 </html>

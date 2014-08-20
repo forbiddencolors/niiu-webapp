@@ -23,5 +23,6 @@
     "icon_back" : "Back",
     "msg_wait" : "Please wait while we load your articles...",
     "header_thanks" : "Thanks",
+    "header_help" : "Help",
     "msg_thanks" : "Your article has been shared."
 }

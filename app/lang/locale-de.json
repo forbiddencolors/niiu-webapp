@@ -23,5 +23,6 @@
     "icon_back" : "Züruck",
     "msg_wait" : "Ihre Inhalte werden geladen...",
     "header_thanks" : "Danke",
+    "header_help" : "Hilfe",
     "msg_thanks" : "Ihre article wurde gepostet."
 }
