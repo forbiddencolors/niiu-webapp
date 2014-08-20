@@ -97,8 +97,16 @@ body {
 #topnav.affix, #topnav {
     position: fixed;
     top: 0px;
+    right:0px;
+    height:70px;
+    left:0px;
+    padding:0px;
     z-index:100;
     width:100%;
+}
+
+#topnav .navbar-fixed-top {
+	/*position:absolute;*/
 }
 
 #topnav.affix navbar {
@@ -106,10 +114,12 @@ body {
 }
 .navbar {
 background:transparent;
+background-color:#5c5d5f;
+padding:0px;
 }
 .navbar-default {
 	border-width:0px;
-	background-color:#5c5d5f;
+	
 }
 
 .navbar-offset {
@@ -146,10 +156,7 @@ color:#ffffff;
 background-color:#5c5d5f;
 }
 
-.row-offcanvas-left.active #topnav, .row-offcanvas-left.active#topnav.affix {
-	position:relative;
-	left:75%;
-}
+
 
 #canvasnav {
 

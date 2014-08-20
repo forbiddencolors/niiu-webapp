@@ -397,7 +397,7 @@ angular.module('niiuWebappApp')
         setCurrentSection:function(secNum) {
             console.log('go to section',secNum);
             currentSection = secNum;
-            $location.path('#/sectionView/'+secNum);
+            $location.path('/sectionView/'+secNum);
         },
         getNextSection:function() {
             console.log(' go forward currentSection is currently'+currentSection );

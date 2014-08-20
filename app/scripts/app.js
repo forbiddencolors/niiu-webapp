@@ -184,7 +184,7 @@ angular.module('niiuWebappApp', [
 
 
   // enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/', '/registration', '/articleShare' , '/help', '/tour', '/emailLogin', '/forgotPass', '/privacy', '/terms', '/shareThanks' ];
+  var routesThatDontRequireAuth = ['/', '/registration', '/articleShare' , '/tour', '/emailLogin', '/forgotPass', '/privacy', '/terms', '/shareThanks' ];
 
   // check if current location matches route  
   var publicViews = function (route) {
