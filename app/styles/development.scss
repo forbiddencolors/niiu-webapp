@@ -102,11 +102,24 @@ body {
     left:0px;
     padding:0px;
     z-index:100;
-    width:100%;
+    margin:0px -15px;
+
 }
 
 #topnav .navbar-fixed-top {
 	/*position:absolute;*/
+}
+
+.ng-leave .navbar ,.ng-enter .navbar  {
+		-moz-transition-property: none;
+		-webkit-transition-property: none;
+		-o-transition-property: none;
+		transition-property: none;
+
+		    -webkit-animation:none;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:none;
+    -o-animation:none;
+    animation:none;
 }
 
 #topnav.affix navbar {
@@ -129,6 +142,11 @@ padding:0px;
 
 	/*padding: 0px 2px;*/
 	height:70px;
+
+	#menu {
+	  margin-top: 10px;
+	  margin-left: 0px;
+	}
 
 }
 
