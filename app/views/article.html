@@ -3,24 +3,26 @@
         <!-- Article Controls -->
         <div class="row articleControls" ng-controller="ShareCtrl" >
             <div class="col-xs-12">
-              <div class="pull-right articleDate" ng-if="published_dateObj>0">{{published_dateObj | date:'dd.MM.yyyy'}}</div>
-              <ul class="nav nav-pills">
-                  <li><a href="" class="fav_btn"><span>Favourite</span></a></li>
-                  <li class="dropdown" on-toggle="toggled(open)">
-				      <a href class="dropdown-toggle share_btn"><span class="hideme">Share</span></a>
-				      <ul class="dropdown-menu">
-				        <li>
-				          <a href=""  ng-click="fbShare(article.id,article.title,article.content, slides[0].imgUrl)" >Facebook Share</a>
-				          <a href=""  ng-click="twitterShare(article.id,article.title,article.content)">Twitter Share</a>
-				        </li>
-				        <li><a  href="mailto:?subject={{article.title}} via niiu&body={{article.content | htmlToPlaintext | truncate: 100}} {{generateUrl(article.id)}}">
-				        	Email Share
-				        </a>
-				      </ul>
-				    
-                  </li>
+              <div class="col-xs-6 pull-right articleDate" ng-if="published_dateObj>0">{{published_dateObj | date:'dd.MM.yyyy'}}</div>
+              
+	              <ul class="nav nav-pills">
+	                  <li><a href="" class="fav_btn"><span>Favourite</span></a></li>
+	                  <li class="dropdown" on-toggle="toggled(open)">
+					      <a href class="dropdown-toggle share_btn"><span class="hideme">Share</span></a>
+					      <ul class="dropdown-menu">
+					        <li>
+					          <a href=""  ng-click="fbShare(article.id,article.title,article.content, slides[0].imgUrl)" >Facebook Share</a>
+					          <a href=""  ng-click="twitterShare(article.id,article.title,article.content)">Twitter Share</a>
+					        </li>
+					        <li><a  href="mailto:?subject={{article.title}} via niiu&body={{article.content | htmlToPlaintext | truncate: 100}} {{generateUrl(article.id)}}">
+					        	Email Share
+					        </a>
+					      </ul>
+					    
+	                  </li>
 
-              </ul>
+	              </ul>
+        
             </div>
         </div>
 

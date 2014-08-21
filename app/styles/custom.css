@@ -61,10 +61,7 @@ body {
   max-width: 76px;
 }
 
-#menu {
-  margin-top: 12px;
-  /*margin-left: 5px;*/
-}
+
 
 /* Shadow classes */
 
@@ -103,13 +100,13 @@ niiu-webappv1 Slider
           .news-slider .text-content h2 {
             margin-left:10px;
             margin-top: 0;
-            font-size: 24px;
+            font-size: 20px;
           }
           .news-slider .text-content a {
             text-decoration:none;
           }
           .news-slider .text-content label {
-            margin-top: 70px;
+            margin-top: 50px;
             margin-left:10px;
             color: #00a453;
           }
@@ -221,10 +218,6 @@ div.newsTitle  {
     }
     */
 
-
-    .navbar-fixed-top, .navbar-fixed-bottom {
-    	/*position: absolute;*/
-    }
 
 .menuPage {
   ul .sections {

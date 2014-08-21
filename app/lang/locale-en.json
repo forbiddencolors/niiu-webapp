@@ -23,6 +23,10 @@
     "icon_back" : "Back",
     "msg_wait" : "Please wait while we load your articles...",
     "header_thanks" : "Thanks",
+    "menu_lang" : "Language",
     "header_help" : "Help",
+    "header_privacy" : "Privacy",
+    "header_terms" : "Terms of Use",
+    "header_suggest" : "Suggestions",
     "msg_thanks" : "Your article has been shared."
 }

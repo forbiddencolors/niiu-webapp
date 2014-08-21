@@ -106,9 +106,20 @@ body {
 
 }
 
-#topnav .navbar-fixed-top {
-	/*position:absolute;*/
+
+
+.titlePage .navbar {
+  background:transparent;
 }
+
+.navbar-fixed-top {
+  
+  position:fixed;
+  top:0px;
+
+}
+
+
 
 .ng-leave .navbar ,.ng-enter .navbar  {
 		-moz-transition-property: none;
@@ -180,7 +191,7 @@ background-color:#5c5d5f;
 
 
 	.sourceTitle .label-source {
-	  font-family: alright_sansregular;
+	  font-family: 'alright_sansbold';
 	  font-size: 14px;
 	}
 
@@ -188,20 +199,21 @@ background-color:#5c5d5f;
     	background: none;
     	font-weight: normal;
     	font-size: 14px;
-    	font-family: 'alright_sansregular';
     	color:#ffffff;
     	padding-left: 0;
     	white-space:nowrap;
     }
 
     .label-subject {
-    	color: #00a651;
+    	/*color: #00a651;*/
     }
 
    	.sourceTitle h4.list-group-item-heading {
-		font-family: alright_sansbold;
-		font-size: 18px;
+		font-family: 'alright_sansregular';
+		font-size: 14px;
 		margin-top: 3px;
+		margin-bottom:0px;
+		color:#00a651;
 	}
 
 
@@ -257,6 +269,10 @@ div.navbar {
     	padding-top:0px;
     	padding-right:5px;
 
+    }
+
+    .src_logo {
+    	padding-right:2px;
     }
 
 
@@ -318,6 +334,12 @@ div.navbar {
 	height:350px;*/
 
 }
+
+.carousel-indicators {
+		bottom:0px;
+		margin-bottom:2px;
+		
+	}
 
 
 /*login background */
@@ -552,6 +574,15 @@ background-repeat:no-repeat;
           padding:20px 20px;
         }
 
+        .articletext {
+        	h1,h2,h3,h4,h5,h6,p {
+        		font-family: 'Andada', serif;
+        		font-size: 21px;
+        		font-weight:900;
+        	}
+
+        }
+
 
 
 
@@ -601,6 +632,7 @@ background-repeat:no-repeat;
           font-size: 21px;
           margin-right: 10px;
           margin-top: 22px;
+          text-align:right;
           
         }
 
@@ -625,9 +657,9 @@ background-repeat:no-repeat;
 
 }
 
-.termsPage, .privacyPage, .helpPage {
+.termsPage, .privacyPage, .helpPage, .settingsPage {
 
-	.termstext, .privacytext, .helptext {
+	.termstext, .privacytext, .helptext, .settingstext {
 	      font-family: 'Andada', serif;
 	      /*font-size: 21px;*/
 	      padding:60px 15px 20px 15px;
@@ -774,7 +806,7 @@ background-repeat:no-repeat;
 	#niiuAppmenu li a.selectedSource{
 	  	background: #4b4c4d;
 	  	border-bottom: 1px solid #636363;
-	  	padding:10px 5px 10px 20px;
+	  	padding:5px 5px 5px 20px;
 		}
 
 	    #niiuAppmenu li a.selectedSource:before {

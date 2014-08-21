@@ -11,7 +11,7 @@
 </script>
 
     <form >
-      <input type="text" ng-model="selected" typeahead="state.title for state in contentArticles | filter:$viewValue | limitTo:8" class="form-control" placeholder="{{'menu_search' | translate}}..." typeahead-on-select="captureSelection($item, $model, $label)">
+      <input type="text" ng-model="selected" typeahead="state.title for state in contentArticles | filter:$viewValue | limitTo:8" class="form-control" placeholder="{{'menu_search' | translate}}..." typeahead-on-select="captureSelection($item, $model, $label)" onfocus="this.value=''">
     </form>
 
 
@@ -22,8 +22,9 @@
                       <!-- Add Sources here -->
                       <a ng-href="#/sectionView/{{$index}}" ng-click="goSection($index)" ng-repeat="user_section in contentObject" ng-show="!$first" class="selectedSource" >
                         <div class="sourceTitle">
-                          <span class="label label-default label-subject"  ng-if="user_section.subject" >{{user_section.source.name}}</span>
-                          <h4 class="list-group-item-heading label-source" >{{user_section.subject}}</h4>
+                          <h4 class="list-group-item-heading label-subject" >{{user_section.subject}}</h4>
+                          <span class="label label-default label-source"  ng-if="user_section.subject" >{{user_section.source.name}}</span>
+                          
                         </div>
                       </a>
 
@@ -32,25 +33,60 @@
 
         </li>
         <li><a class="mFavorite" href=""  translate>menu_favorites</a></li>
-        <li><a class="mSettings" href="#/customize" ng-click="toggleMenu()" translate>menu_settings</a>
-          <ul>
-            
-            <!--li><a href="" translate>menu_profile</a></li -->
-            <li><a ng-href="#/userHome/refresh" ng-click="toggleMenu()" translate>menu_refresh</a></li>
-            <li><a ng-href="#/customize" ng-click="toggleMenu()" translate>menu_editsections</a></li>
-            <li><div ><a href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> /<a href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></div></li>
-            <li><a ng-click="logout();" href="" translate>menu_logout</a></li>
-          </ul>
-
+        <li><a class="mSettings" href="#/settings" ng-click="toggleMenu()" translate>menu_settings</a>
         </li>
         <li><a class="mHelp" ng-href="#/help" ng-click="toggleMenu()" translate>menu_help</a></li>
-        <li><a class="mFeedback" ng-click="toggleMenu()" ng-href="https://docs.google.com/forms/d/1RtuQyTzNAfQ3qfITBLl0ZdapHplZanxjF60fKfRInvU/viewform?entry.331930778&entry.1900651166={{user.eMail}}&entry.1585641298&entry.383221606&entry.488870576&entry.75199030={{browser}}" target="_blank" translate>menu_feedback</a></li>
+        <li><a ng-href="#/userHome" href="javascript:void(0)" data-uv-lightbox="classic_widget" data-uv-mode="full" data-uv-primary-color="#00a650" data-uv-link-color="#007dbf" data-uv-default-mode="feedback" data-uv-forum-id="262282" data-uv-topic-id="59736" class="mFeedback" id="mFeedback" ng-click="toggleMenu()" translate>menu_feedback</a></li>
         
       </ul>
 
     </nav>
 
-    
+
+
+<script>
+// Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/w71DQQNDlDSRAoYauVMHg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+//
+// UserVoice Javascript SDK developer documentation:
+// https://www.uservoice.com/o/javascript-sdk
+//
+
+// Set colors
+UserVoice.push(['set', {
+  accent_color: '#448dd6',
+  trigger_color: 'white',
+  trigger_background_color: 'rgba(46, 49, 51, 0.6)'
+}]);
+
+// Identify the user and pass traits
+// To enable, replace sample data with actual user traits and uncomment the line
+UserVoice.push(['identify', {
+  //email:      'john.doe@example.com', // User’s email address
+  //name:       'John Doe', // User’s real name
+  //created_at: 1364406966, // Unix timestamp for the date the user signed up
+  //id:         123, // Optional: Unique id of the user (if set, this should not change)
+  //type:       'Owner', // Optional: segment your users by type
+  //account: {
+  //  id:           123, // Optional: associate multiple users with a single account
+  //  name:         'Acme, Co.', // Account name
+  //  created_at:   1364406966, // Unix timestamp for the date the account was created
+  //  monthly_rate: 9.99, // Decimal; monthly rate of the account
+  //  ltv:          1495.00, // Decimal; lifetime value of the account
+  //  plan:         'Enhanced' // Plan name for the account
+  //}
+}]);
+
+// Add default trigger to the bottom-right corner of the window:
+//UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+
+// Or, use your own custom trigger:
+//UserVoice.push(['addTrigger', '#mFeedback', { mode: 'contact' }]);
+
+// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
+</script>
 
     
   <!--nav bar -->

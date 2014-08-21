@@ -113,6 +113,12 @@ angular.module('niiuWebappApp', [
         headerUrl: 'views/partials/usermenu.html',
         pageClass: 'helpPage'
       })
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsCtrl',
+        headerUrl: 'views/partials/usermenu.html',
+        pageClass: 'settingsPage'
+      })
       .otherwise({
         redirectTo: '/'
       });

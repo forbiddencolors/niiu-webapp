@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('HelpCtrl', function ($scope, $window) {
+  .controller('HelpCtrl', function ($scope, $window, User) {
     $window.scrollTo(0,0);
     $scope.pageClass='helpPage';
 
@@ -9,5 +9,9 @@ angular.module('niiuWebappApp')
         User.toggleMenu(); 
      
     }
+
+    //UserVoice Custom buttons
+    // Or, use your own custom trigger:
+	UserVoice.push(['addTrigger', '#helpContact', { mode: 'contact' }]);
 
   });

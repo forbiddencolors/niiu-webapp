@@ -1,0 +1,22 @@
+<div ng-include="layoutPartial('topBar')" ></div>
+
+        <!-- Terms Content -->
+
+<div class="col-xs-12 terms_view helpBody" ng-swipe-right="backSwipe()">
+    <div class="settingstext" >
+	<h2 translate>menu_settings</h2>
+	<ul>
+		<li><a ng-href="#/userHome/refresh"  translate>menu_refresh</a></li>
+		<li><a ng-href="#/customize"  translate>menu_editsections</a></li>
+		<li><span translate>menu_lang</span>: <nobr ><a ng-href="" class="lang" ng-click="changeLanguage('de')" translate="menu_lang_de"></a> / <a ng-href="" class="lang" ng-click="changeLanguage('en')" translate="menu_lang_en" ></a></nobr></li>
+        <li><a ng-click="logout();" href="" translate>menu_logout</a></li>
+	</ul>
+
+
+           
+
+    </div>
+    
+
+</div>
+

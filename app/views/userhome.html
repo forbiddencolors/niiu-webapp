@@ -16,7 +16,8 @@
 	                <div class="text-content">
 	                  <a href="{{slide.imgLink}}" ng-click="toggleMenu(false)">
 		                  <label>{{slide.imgSection}}</label>
-		                  <h2>{{slide.imgTitle | truncate : 80}}</h2>
+		                  <h2 class="visible-xs">{{slide.imgTitle | truncate : 45}}</h2>
+		                  <h2 class="hidden-xs">{{slide.imgTitle | truncate : 120}}</h2>
 	                  </a>
 	                </div>
 	                
