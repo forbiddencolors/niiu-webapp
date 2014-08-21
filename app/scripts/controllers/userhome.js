@@ -10,12 +10,16 @@ angular.module('niiuWebappApp')
   	$scope.nav_top=angular.element('#topnav').css('top');
   	$scope.logo_path=constants.SOURCE_LOGO_PATH;
 
+        
+
+
 
 
   	$scope.pageClass="titlePage";
 
 
     $scope.slide_interval="5000";
+    User.setCurrentSection(0);
 
 
   	$scope.makeSlides = function(titlePageContentObject) {

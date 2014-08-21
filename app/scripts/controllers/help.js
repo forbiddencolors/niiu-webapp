@@ -10,8 +10,6 @@ angular.module('niiuWebappApp')
      
     }
 
-    //UserVoice Custom buttons
-    // Or, use your own custom trigger:
-	UserVoice.push(['addTrigger', '#helpContact', { mode: 'contact' }]);
+
 
   });

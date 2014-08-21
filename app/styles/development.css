@@ -506,7 +506,7 @@ div.active .sectionation {
   padding: 20px 20px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003578}}
-.articlePage .articletext h1, .articlePage .articletext h2, .articlePage .articletext h3, .articlePage .articletext h4, .articlePage .articletext h5, .articlePage .articletext h6, .articlePage .articletext p {
+.articlePage .articletext h1, .articlePage .articletext h2, .articlePage .articletext h3, .articlePage .articletext h4, .articlePage .articletext h5, .articlePage .articletext h6 {
   font-family: 'Andada', serif;
   font-size: 21px;
   font-weight: 900;
