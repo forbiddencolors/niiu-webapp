@@ -493,7 +493,7 @@ div.active .sectionation {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003563}}
 .articlePage .subheading {
-  font-family: 'Andada', serif;
+  /* font-family: 'Andada', serif; */
   font-size: 21px;
   font-weight: bold;
   text-align: left;
@@ -501,13 +501,12 @@ div.active .sectionation {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003571}}
 .articlePage .articletext {
-  font-family: 'Andada', serif;
+  /* font-family: 'Andada', serif; */
   font-size: 21px;
   padding: 20px 20px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003578}}
 .articlePage .articletext h1, .articlePage .articletext h2, .articlePage .articletext h3, .articlePage .articletext h4, .articlePage .articletext h5, .articlePage .articletext h6 {
-  font-family: 'Andada', serif;
   font-size: 21px;
   font-weight: 900;
 }
@@ -531,7 +530,7 @@ div.active .sectionation {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/forbiddencolors\/Work\/Projects\/niiu\/niiu-webapp\/app\/styles\/development\.scss}line{font-family:\00003609}}
 .articlePage .articleBody .subheading {
-  font-family: 'Andada', serif;
+  /*font-family: 'Andada', serif;*/
   font-size: 21px;
   font-weight: bold;
   padding: 20px 0px 10px 0px;

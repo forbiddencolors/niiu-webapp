@@ -20,6 +20,7 @@ angular.module('niiuWebappApp')
 
     $scope.slide_interval="5000";
     User.setCurrentSection(0);
+    $scope.stopClick=false;
 
 
   	$scope.makeSlides = function(titlePageContentObject) {
@@ -54,25 +55,43 @@ angular.module('niiuWebappApp')
   		console.log(msg);
 
   	}
+  	$scope.goArticle = function(id,click) {
+  		console.log('we saw a click event',click);
 
-  	$scope.nextSectionSwipe = function() {
-  
+  		if($scope.stopClick) {
+  			console.log('we stopped the click!',click);
+  			return;
+  		}
+  		console.log('maybe you swiped but that click was not stopped');
+  		$location.path('/article/'+id);
+  	}
+
+
+  	$scope.nextSectionSwipe = function(click) {
+  		$scope.stopClick=true;
+  		
+  		console.log('user swiped, stop click!',click);
     	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
   
     	
     	$location.path("/sectionView/"+User.getNextSection());
+    	
+    	
+
 
 
     };
 
-    $scope.previousSectionSwipe = function() {
-  		
+    $scope.previousSectionSwipe = function(click) {
+  		$scope.stopClick=true;
+
   		var previousSection=User.getPreviousSection();
     	console.log('user swiped back to section',previousSection );
   
 
    		angular.element('.page').addClass('backswipe');
     	$location.path("/sectionView/"+previousSection);
+    	
 
 
     };

@@ -7,6 +7,7 @@ angular.module('niiuWebappApp')
     var contentArticles = [];
     $scope.browser=navigator.userAgent;
     $scope.user=User.getUser();
+    
 
     $scope.getContentObject = function() {
         var deferred = $q.defer();

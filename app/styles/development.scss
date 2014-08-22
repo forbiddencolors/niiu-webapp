@@ -561,7 +561,7 @@ background-repeat:no-repeat;
         }
 
      .subheading{
-          font-family: 'Andada', serif;
+         /* font-family: 'Andada', serif; */
           font-size: 21px;
           font-weight: bold;
           text-align: left;
@@ -569,14 +569,14 @@ background-repeat:no-repeat;
         }
 
       .articletext{
-          font-family: 'Andada', serif;
+         /* font-family: 'Andada', serif; */
           font-size: 21px;
           padding:20px 20px;
         }
 
         .articletext {
         	h1,h2,h3,h4,h5,h6 {
-        		font-family: 'Andada', serif;
+        		
         		font-size: 21px;
         		font-weight:900;
         	}
@@ -607,7 +607,7 @@ background-repeat:no-repeat;
     }
 
  .articleBody .subheading{
-      font-family: 'Andada', serif;
+      /*font-family: 'Andada', serif;*/
       font-size: 21px;
       font-weight: bold;
       padding:20px 0px 10px 0px;

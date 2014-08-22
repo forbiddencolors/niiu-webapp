@@ -7,14 +7,15 @@ angular.module('niiuWebappApp')
 	
 	$scope.currentSection = User.getCurrentSection();
 	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
+  $scope.stopClick=false;
 
 
 	
   console.log('the logo path is ',$scope.logo_path);
 
 	$scope.nextSectionSwipe = function() {
-  
-    	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
+      $scope.stopClick=true;
+    	console.log('user swiped forward to ', User.getNextSectionUrl($location.path()));
   
     	$location.path("/sectionView/"+User.getNextSection());
     	
@@ -23,7 +24,7 @@ angular.module('niiuWebappApp')
     };
 
     $scope.previousSectionSwipe = function() {
-  		
+      $scope.stopClick=true;
   		var previousSection=User.getPreviousSection();
     	console.log('user swiped back to section',previousSection );
   		angular.element('.page').addClass('backswipe');
@@ -48,6 +49,17 @@ angular.module('niiuWebappApp')
       User.setCurrentSection(sectionId);
      // $location.path("/sectionView/"+sectionId); //this could happen in the set function too.
     };
+
+    $scope.goArticle = function(id) {
+      User.toggleMenu(false);
+      if($scope.stopClick) {
+        console.log('this click was stopped!');
+          return;
+      }
+      console.log('this click was not stopped');
+      $location.path('/article/'+id);
+
+    }
 
 	User.getContentObject().then(function(contentObjArray) {
 

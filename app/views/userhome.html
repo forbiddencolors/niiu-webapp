@@ -16,7 +16,7 @@
 	                <div class="text-content">
 	                  <a href="{{slide.imgLink}}" ng-click="toggleMenu(false)">
 		                  <label>{{slide.imgSection}}</label>
-		                  <h2 class="visible-xs">{{slide.imgTitle | truncate : 45}}</h2>
+		                  <h2 class="visible-xs">{{slide.imgTitle | truncate : 40}}</h2>
 		                  <h2 class="hidden-xs">{{slide.imgTitle | truncate : 120}}</h2>
 	                  </a>
 	                </div>
@@ -46,13 +46,13 @@
 
 
 
-	<div class="col-xs-12 mmenu" ng-swipe-left="nextSectionSwipe()" ng-swipe-right="previousSectionSwipe()" >
+	<div class="col-xs-12 mmenu" >
 	<!-- h3>{{ 'menu_titlepage' | translate}}</h3 -->
 
 	<ul class="list-unstyled">
 		<li class="col-xs-12 article_row" ng-repeat="article in contentObject[0].articles | orderBy:'-sections.content_priority' track by article.id " >
 			<div class="row">
-				<a ng-href="#/article/{{article.id}}" ng-click="toggleMenu(false)" class="list-group-item clearfix">
+				<a ng-href="#/article/{{article.id}}" ng-click="goArticle(article.id);$event.preventDefault()" ng-swipe-left="nextSectionSwipe($event)" ng-swipe-right="previousSectionSwipe($event)" class="list-group-item clearfix">
 				<figure class="pull-left newsSource">
 					<img src="{{logo_path}}{{article.source_logo}}" width="46" height="46" />
 				</figure>
