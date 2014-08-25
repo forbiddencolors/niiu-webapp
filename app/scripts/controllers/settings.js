@@ -16,7 +16,7 @@ angular.module('niiuWebappApp')
 
     $scope.logout = function() {
     	//niiuAuthenticator.changeUser();
-        User.toggleMenu();
+        User.toggleMenu(false);
     	User.deleteUser();
     	console.log('just deleted the User');
     	niiuAuthenticator.logout();

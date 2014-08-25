@@ -19,7 +19,7 @@ angular.module('niiuWebappApp')
     var niiuUser = niiuAuthenticator.login(loginInfo).then(function(result) {
       var niiuObject = result;
       console.log('lets resolve niiu user');
-      console.log(niiuObject);
+      console.log('we got a niiu User, lets go to home!',niiuObject);
       // redirect back to login
       $location.path('/userHome/refresh');
 
@@ -27,6 +27,7 @@ angular.module('niiuWebappApp')
       //console.log('FB data prepared for niiu Authentication');
       //console.log($scope.niiuUser);
     }, function(no_login_error) {
+      console.log('login didnt work because', no_login_error);
       $scope.error=no_login_error;
     });
 

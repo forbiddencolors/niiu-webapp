@@ -628,7 +628,7 @@ background-repeat:no-repeat;
     }
 
     .articleBody {
-    margin:20px 15px;
+    margin:20px 0px;
     }
 
     .articleControls a {
@@ -946,6 +946,9 @@ button, button.btn, a.btn {
 
 	.login-header {
 		width: 100%;
+		.subheading {
+			text-align:center;
+		}
 	}
 
 	h3 {
