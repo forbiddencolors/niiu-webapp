@@ -105,7 +105,7 @@ angular.module('niiuWebappApp')
                     //if ($scope.article.media[i]) {
                       //console.log('making slides',$scope.slides);
                       $scope.slides.push( {
-                        imgUrl:$scope.media_path+$scope.article.media[i].path,
+                        imgUrl:$scope.article.media[i].path,
                         imgText:$scope.article.media[i].caption
                       } );
 

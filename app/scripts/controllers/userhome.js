@@ -31,7 +31,7 @@ angular.module('niiuWebappApp')
   				articleSlides[articleSlides.length]={ 
   						imgTitle: titlePageContentObject.articles[i].title,
   						imgSection: $scope.contentObject[titlePageContentObject.articles[i].sectionIndex].subject,
-  						imgUrl: $scope.media_path+titlePageContentObject.articles[i].media[0].path,
+  						imgUrl: titlePageContentObject.articles[i].media[0].path,
   						imgLink:"#/article/"+titlePageContentObject.articles[i].id
   						}
   			}

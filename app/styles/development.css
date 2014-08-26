@@ -387,7 +387,8 @@ div.active .sectionation {
   font-size: 21px;
   padding: 20px 0; }
 .articlePage .articleBody {
-  margin: 20px 0px; }
+  margin: 20px 0px;
+  padding: 15px; }
 .articlePage .articleControls a {
   padding: 5px; }
 .articlePage .articleDate {
