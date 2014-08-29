@@ -1,0 +1,9 @@
+<div class="sectionation row">
+  <div class=" col-xs-12 col-md-10 col-lg-8">
+
+      <ol class="carousel-indicators">
+        <li ng-repeat="pages in contentObject track by $index" ng-click="goSection($index);$event.preventDefault();" ng-class="{active: currentSection==$index}"></li>
+    </ol>
+
+  </div>
+</div>

@@ -15,29 +15,7 @@
 		</li>
 	</ul>
 
-<!--
-        <span  ng-class="{'row fullBox':($index%3===0),'row halfBox':!($index%3===0)}"  ng-repeat="article in pageContent.articles"  >
-            <div ng-class="{'col-xs-12':($index%3===0),'col-xs-6':!($index%3===0)}">
-              <a ng-href="#/article/{{article.id}}">
-                <div class="sourceTitle">
-                  <h4 class="list-group-item-heading">{{article.title}}</h4>
-                  <p ng-bind-html="article.content | truncate:150 | htmlToPlaintext"></p>
-                </div>
-              </a>
-            </div>
-        </span>
--->
 
 
-<div class="sectionation row">
-  <div class=" col-xs-12 col-md-10 col-lg-8">
-
-      <ol class="carousel-indicators" >
-        <!--ol class="carousel-indicators" ng-show="contentObject.length > 1"-->
-        <!--li ng-repeat="pages in contentObject track by $index" ng-class="{active: isActive(slide)}" ng-click="select(slide)" class="ng-scope"></li -->
-        <li ng-repeat="pages in contentObject track by $index" ng-click="goSection($index)" ng-class="{active: currentSection==$index}"></li>
-    </ol>
-
-</div>
-</div>
+<div ng-include src="'/views/partials/sectionation.html'" ></div>
 </div>

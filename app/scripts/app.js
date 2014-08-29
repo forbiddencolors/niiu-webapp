@@ -9,7 +9,9 @@ angular.module('niiuWebappApp', [
   'ngTouch',
   'ui.bootstrap',
   'pascalprecht.translate',
-  'ui.tree'
+  'ui.tree',
+  'angulartics', 
+  'angulartics.google.analytics'
 ])
   .config(function ($routeProvider, $httpProvider, $translateProvider) {
     $routeProvider
