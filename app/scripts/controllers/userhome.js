@@ -9,6 +9,7 @@ angular.module('niiuWebappApp')
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
   	$scope.nav_top=angular.element('#topnav').css('top');
   	$scope.logo_path=constants.SOURCE_LOGO_PATH;
+  	$scope.currentSection = 0;
 
         
 
@@ -41,6 +42,13 @@ angular.module('niiuWebappApp')
   		return articleSlides;
 
   	}
+
+  	$scope.goSection = function(sectionId) {
+
+      User.setCurrentSection(sectionId);
+      $scope.stopClick=true;
+      $location.path("/sectionView/"+sectionId); //this could happen in the set function too.
+    };
 
   	$scope.getCarouselScope = function() {
 

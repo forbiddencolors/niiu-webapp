@@ -44,7 +44,7 @@ angular.module('niiuWebappApp')
                     "last3SSync": last_sync_time,
                     "lastContentSync": last_sync_time,
                     "user_id": current_user.id,
-                   "version": 222,
+                   "version": constants.APP_VERSION,
                    "article_ids": [ ],
                    "contentProfile": {
                        "id": current_user.contentProfile.id,

@@ -16,7 +16,7 @@ $scope.retrieveUser = function() {
       //there is no user in db
       $scope.noUser = true;
        $scope.pageClass="loginHome";
-      console.log('we have no user :( show login',userID);
+      console.log('we have no user :( show login',noPriorUser);
     }
     ).catch( function(e) {
       console.log('we didnt find a user in the db because ',e);

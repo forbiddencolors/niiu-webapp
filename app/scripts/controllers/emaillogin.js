@@ -5,6 +5,14 @@ angular.module('niiuWebappApp')
 
     // add email login page class
   $scope.pageClass = 'email-login';
+
+  $scope.emailPlusCheck = function(email) {
+    if (email.indexOf('+')) {
+      $scope.error="Sorry the + sign is not suported currently";
+    } else {
+      $scope.error="";
+    }
+  }
     
   $scope.niiu_login = function(loginInfo) {
     console.log('Niiu Login!');

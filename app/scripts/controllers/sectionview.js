@@ -47,7 +47,8 @@ angular.module('niiuWebappApp')
     $scope.goSection = function(sectionId) {
 
       User.setCurrentSection(sectionId);
-     // $location.path("/sectionView/"+sectionId); //this could happen in the set function too.
+      $scope.stopClick=true;
+      $location.path("/sectionView/"+sectionId); //this could happen in the set function too.
     };
 
     $scope.goArticle = function(id) {

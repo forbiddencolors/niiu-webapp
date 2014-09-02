@@ -43,6 +43,148 @@ angular.module('niiuWebappApp')
         
     }
 
+    function createFreeSubscription(userId, apiKey) {
+            var deferred = $q.defer();
+
+              var freeSubscriptionObject={
+                   "action": "create",
+                   "api": "subscription",
+                   "appGuid": "3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c",
+                   "apiKey": apiKey,
+                   "data": {
+                       "productID": 34,
+                       "userID": userId,
+                       "version": constants.APP_VERSION
+                  }
+              };
+
+              $http.post(constants.NIIU_API_URL+'subscriptions/create', "data="+angular.toJson(freeSubscriptionObject), {
+                    
+                }).success(function(userData){
+                  console.log('new subscription was a success!', userData);
+                  deferred.resolve(userData);
+                });
+
+                return deferred.promise;
+  }
+
+
+    function loginUser(user, success, error) {
+
+      //create a promise
+                var deferred = $q.defer();
+
+                console.log('heres the loginInfo')
+                console.log(user);
+                var loginReq = new Object();
+                loginReq.api="user";
+                loginReq.action="authenticate";
+                loginReq.appGuid=constants.NIIU_APP_GUID;
+                loginReq.data=user;
+                var loginReqString=angular.toJson(user);
+
+                console.log('heres the login string');
+                console.log(angular.toJson(loginReq));
+
+
+                $http.post(constants.NIIU_API_URL+'users/authenticate', "data="+angular.toJson(loginReq), {
+                    
+                }).success(function(userData){
+                    console.log('heres the response from the niiu api')
+                    console.log(userData);
+                    if (userData.contents.status==200) {
+
+                        var newUser=userData.contents.data;
+                        newUser.username=userData.contents.data.firstName+' '+userData.contents.data.lastName;
+                        //newUser.role=userRoles.user;
+                        if (newUser.contentProfile.isActive=='true') {
+                          newUser.connected=true;
+                        }
+                        
+                        // remove this
+                        setUser(newUser);
+/*
+this is how we could chain a couple promises together to handle user logic
+
+                        var getUserPromise = User.getUser();
+                        var setUserPromise = User.setUser(newUser);
+                        // Add this
+                        $q.then(setUserPromise)
+                          .then(getUserPromise)
+
+*/
+
+                        User.setUser(newUser).then(function() {
+                          deferred.resolve(User.getUser());
+                        }, function(error) {
+                          // User.deleteUser();
+                          // Redirect to "/"
+                          deferred.reject(error);
+                        });
+
+
+
+
+                        $rootScope.error="";
+                    //changeUser(newUser);
+                    //success(newUser);
+                    deferred.resolve(newUser);
+                    
+                    } else if(userData.contents.status==402) { //expired subscription
+                        console.log('I think users subscription is expired.',userData);
+                        deferred.notify('Your subscription is expired, please wait while I try to renew it.');
+                        
+
+                        //Get New Subscription
+                        createFreeSubscription(userData.contents.data.id, userData.contents.data.apiKey).then(
+                            function(newSubscription) {
+                              console.log('Renewed Subscription.',newSubscription);
+                              deferred.notify('Renewed User Subscription '+newSubscription);
+                              //log the user in againl
+                              loginUser(user, success, error).then(
+                                function(finallyLoggedIn) {
+                                  deferred.resolve(finallyLoggedIn);
+                                },
+                                function(stillNotIn) {
+                                  console.log('logging in with the new subscription still didnt work');
+                                  deferred.reject(stillNotIn);
+                                }
+                                );
+
+                            },
+                            function(stillNoSubscription) {
+                              deferred.reject('Users subscription is expired. '+stillNoSubscription);
+                            }
+                          );
+
+                         
+
+                    } else {
+                            
+                            console.log('that was an error...');
+                            var error_message=userData.contents.message;
+                            console.log(error_message);
+                            //error=error_message;
+                            //$rootScope.error=error_message;
+                            deferred.reject(error_message);
+                    }
+
+                }).error(function(error){
+                    deferred.reject(error);
+                 });
+                //hang on we don't have an answer yet
+                return deferred.promise;
+
+            }
+
+
+
+
+
+    
+
+    
+
     
 
     // Public API here
@@ -96,17 +238,19 @@ angular.module('niiuWebappApp')
 
         var emailReset = {"eMail" : email};
         passwordReset.data=emailReset;
-        $http.post(constants.NIIU_API_URL + 'users/forgot_password', "data="+angular.toJson(passwordReset)).success(function(resetResponse) {
-                console.log(resetResponse.contents.status);
-                if (resetResponse.contents.status==200) {
-                    console.log("Yea! check your email, your reset is being sent ");
-                    console.log(resetResponse.contents.data);
+        $http.post(constants.NIIU_API_URL + 'users/forgot_password', "data="+angular.toJson(passwordReset)).then(function(resetResponse) {
+                console.log(resetResponse);
+                if (resetResponse.data.contents.status==200) {
+                    console.log("Yea! check your email, your reset is being sent ",resetResponse);
+                    //console.log(resetResponse.contents.data);
                     deferred.resolve(resetResponse);
                 } else {
-                  console.log("sorry that didn't work at all");
-                  console.log(resetResponse);
-                  deferred.reject(resetResponse.message);
+                  console.log("ForgotPassword didn't work at all", resetResponse.data.contents.message);
+                  deferred.reject(resetResponse.data.contents.message);
                 }
+        },function(failed_response) {
+                  console.log('forgotpassword reset failed because of',failed_response )
+                  deferred.reject(failed_response);
         });
           return deferred.promise;
 
@@ -124,8 +268,9 @@ angular.module('niiuWebappApp')
 
                 console.log('posting', userReg)
                 $http.post(constants.NIIU_API_URL + '/users/register', "data="+angular.toJson(userReg)).success(function(regData) {
-                console.log(regData.contents.status);
-                console.log("Yeah youre registered! ", regData.contents.data);
+                console.log(regData);
+                console.log("Yeah youre registered! ", regData);
+                console.log('but wait your subscription level is',regData.subscription);
                 
 
                     var newUser = regData.contents.data;
@@ -164,6 +309,10 @@ angular.module('niiuWebappApp')
             },
       
             login: function(user, success, error) {
+
+                return loginUser(user, success, error);
+
+                /*
                 //create a promise
                 var deferred = $q.defer();
 
@@ -196,22 +345,23 @@ angular.module('niiuWebappApp')
                         
                         // remove this
                         setUser(newUser);
-/*
-this is how we could chain a couple promises together to handle user logic
-
-                        var getUserPromise = User.getUser();
-                        var setUserPromise = User.setUser(newUser);
-                        // Add this
-                        $q.then(setUserPromise)
+//
+//              this is how we could chain a couple promises together to handle user logic
+//
+//                        var getUserPromise = User.getUser();
+//                        var setUserPromise = User.setUser(newUser);
+//                        // Add this
+//                        $q.then(setUserPromise)
                           .then(getUserPromise)
 
-*/
+
 
                         User.setUser(newUser).then(function() {
                           deferred.resolve(User.getUser());
                         }, function(error) {
                           // User.deleteUser();
                           // Redirect to "/"
+                          deferred.reject(error);
                         });
 
 
@@ -222,6 +372,24 @@ this is how we could chain a couple promises together to handle user logic
                     //success(newUser);
                     deferred.resolve(newUser);
                     
+                    } else if(userData.contents.status==402) { //expired subscription
+                        console.log('I think users subscription is expired.',userData);
+                        deferred.notify('Your subscription is expired, please wait while I try to renew it.');
+                        
+
+                        //Get New Subscription
+                        createFreeSubscription(userData.contents.data.id, userData.contents.data.apiKey).then(
+                            function(newSubscription) {
+                              console.log('Renewed Subscription.',newSubscription);
+                              deferred.notify(newSubscription);
+                            },
+                            function(stillNoSubscription) {
+                              deferred.reject('Users subscription is expired. '+stillNoSubscription);
+                            }
+                          );
+
+                         
+
                     } else {
                             
                             console.log('that was an error...');
@@ -239,7 +407,8 @@ this is how we could chain a couple promises together to handle user logic
                 return deferred.promise;
 
             }
-
+          */
+        }
 
 
 
