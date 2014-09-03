@@ -50,7 +50,7 @@ angular.module('niiuWebappApp')
             console.log(response);
           });
         } else if (response.status == 'not_authorized' || 'unknown') {
-              console.log("youre not logged in and the response is: ");
+              console.log("youre not logged in and the response is: ", response);
               console.log(response);
           FB.login(function(response) {
             if (response.authResponse) {

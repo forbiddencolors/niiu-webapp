@@ -423,6 +423,26 @@ angular.module('niiuWebappApp')
 
             return currentSection;
         },
+        getMaxSections: function() {
+            if (user !== {}){
+                if(  user.subscription.max_sections) {
+                    return user.subscription.max_sections;
+                } else {
+                    return 10;
+                }
+            } else {
+                console.log('dont know how many sections this user should have');
+                return 0;
+            }
+
+        },
+        checkPremium: function() {
+            if(user.subscription.premium_content>0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         getContentObject: function() {
             var deferred=$q.defer();
                 if (contentObject.length<1) {
