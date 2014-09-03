@@ -7,7 +7,7 @@ angular.module('niiuWebappApp')
                 FACEBOOK_APP_ID: '642106902524261',
                 FACEBOOK_APP_SECRET: '3698a3cdf3071e66de86ce201a5e2ca4',
                 NIIU_APP_GUID : '3fc8274c-3ad4-4cc4-b5c6-9eaba0734a3c',
-                NIIU_API_URL : 'http://kirkthedev.com/niiu/double_proxy_x.php?url=http://dev.niiu.de/' ,
+                NIIU_API_URL : 'http://kirkthedev.com/niiuproxy/double_proxy_x.php?url=http://dev.niiu.de/' ,
                 USER_LOCATOR : 10210,
                 GUEST_ID : 1451,
                 GUEST_API_KEY : "e8719e4cb4082f33fe25c240a250342950920ff4",
@@ -20,7 +20,8 @@ angular.module('niiuWebappApp')
                 MAXIMUM_SECTIONS : 10,
                 CUSTOM_SECTION_LOGO : '/images/icon_custom_section_blank.png',
                 ENVIRONMENT : 'dev',
-                SYNC_INTERVAL: 100 //15*60
+                SYNC_INTERVAL: 100 ,//15*60
+                APP_VERSION: 222
 
 
 });

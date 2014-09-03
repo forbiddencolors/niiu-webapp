@@ -23,5 +23,10 @@
     "icon_back" : "Züruck",
     "msg_wait" : "Ihre Inhalte werden geladen...",
     "header_thanks" : "Danke",
+    "menu_lang" : "Sprache",
+    "header_help" : "Hilfe",
+    "header_privacy" : "Datenschutz",
+    "header_terms" : "Nutzungsbedingungen",
+    "header_suggest" : "Vorschläge?",
     "msg_thanks" : "Ihre article wurde gepostet."
 }

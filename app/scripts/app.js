@@ -9,7 +9,9 @@ angular.module('niiuWebappApp', [
   'ngTouch',
   'ui.bootstrap',
   'pascalprecht.translate',
-  'ui.tree'
+  'ui.tree',
+  'angulartics', 
+  'angulartics.google.analytics'
 ])
   .config(function ($routeProvider, $httpProvider, $translateProvider) {
     $routeProvider
@@ -47,12 +49,26 @@ angular.module('niiuWebappApp', [
       .when('/privacy', {
         templateUrl: 'views/privacy.html',
         headerUrl: 'views/partials/loginmenu.html',
-        controller: 'PrivacyCtrl'
+        controller: 'PrivacyCtrl',
+        pageClass: 'privacyPage'
       })
       .when('/terms', {
         templateUrl: 'views/terms.html',
         headerUrl: 'views/partials/loginmenu.html',
-        controller: 'TermsCtrl'
+        controller: 'TermsCtrl',
+        pageClass: 'termsPage'
+      })
+      .when('/privacyuser', {
+        templateUrl: 'views/privacy.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'PrivacyCtrl',
+        pageClass: 'privacyPage'
+      })
+      .when('/termsuser', {
+        templateUrl: 'views/terms.html',
+        headerUrl: 'views/partials/usermenu.html',
+        controller: 'TermsCtrl',
+        pageClass: 'termsPage'
       })
       .when('/customize', {
         templateUrl: 'views/customize.html',
@@ -92,6 +108,18 @@ angular.module('niiuWebappApp', [
       .when('/shareThanks', {
         templateUrl: 'views/sharethanks.html',
         controller: 'SharethanksCtrl'
+      })
+      .when('/help', {
+        templateUrl: 'views/help.html',
+        controller: 'HelpCtrl',
+        headerUrl: 'views/partials/usermenu.html',
+        pageClass: 'helpPage'
+      })
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsCtrl',
+        headerUrl: 'views/partials/usermenu.html',
+        pageClass: 'settingsPage'
       })
       .otherwise({
         redirectTo: '/'

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .service('User', function User(localDB, $filter, $q, constants) {
+  .service('User', function User(localDB, $filter, $q, constants, $location) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var user = {};
     /* ContentObject is array of up to 11 pageObjects */
@@ -395,7 +395,9 @@ angular.module('niiuWebappApp')
             return currentSection;
         },
         setCurrentSection:function(secNum) {
+            console.log('User.setCurentSection to section',secNum);
             currentSection = secNum;
+            //$location.path('/sectionView/'+secNum);
         },
         getNextSection:function() {
             console.log(' go forward currentSection is currently'+currentSection );

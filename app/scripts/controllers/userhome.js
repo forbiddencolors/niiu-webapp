@@ -8,6 +8,11 @@ angular.module('niiuWebappApp')
   	$window.scrollTo(0,0);
   	$scope.media_path=constants.ARTICLE_MEDIA_PATH;
   	$scope.nav_top=angular.element('#topnav').css('top');
+  	$scope.logo_path=constants.SOURCE_LOGO_PATH;
+  	$scope.currentSection = 0;
+
+        
+
 
 
 
@@ -15,6 +20,8 @@ angular.module('niiuWebappApp')
 
 
     $scope.slide_interval="5000";
+    User.setCurrentSection(0);
+    $scope.stopClick=false;
 
 
   	$scope.makeSlides = function(titlePageContentObject) {
@@ -25,7 +32,7 @@ angular.module('niiuWebappApp')
   				articleSlides[articleSlides.length]={ 
   						imgTitle: titlePageContentObject.articles[i].title,
   						imgSection: $scope.contentObject[titlePageContentObject.articles[i].sectionIndex].subject,
-  						imgUrl: $scope.media_path+titlePageContentObject.articles[i].media[0].path,
+  						imgUrl: titlePageContentObject.articles[i].media[0].path,
   						imgLink:"#/article/"+titlePageContentObject.articles[i].id
   						}
   			}
@@ -35,6 +42,13 @@ angular.module('niiuWebappApp')
   		return articleSlides;
 
   	}
+
+  	$scope.goSection = function(sectionId) {
+
+      User.setCurrentSection(sectionId);
+      $scope.stopClick=true;
+      $location.path("/sectionView/"+sectionId); //this could happen in the set function too.
+    };
 
   	$scope.getCarouselScope = function() {
 
@@ -49,31 +63,49 @@ angular.module('niiuWebappApp')
   		console.log(msg);
 
   	}
+  	$scope.goArticle = function(id,click) {
+  		console.log('we saw a click event',click);
 
-  	$scope.nextSectionSwipe = function() {
-  
+  		if($scope.stopClick) {
+  			console.log('we stopped the click!',click);
+  			return;
+  		}
+  		console.log('maybe you swiped but that click was not stopped');
+  		$location.path('/article/'+id);
+  	}
+
+
+  	$scope.nextSectionSwipe = function(click) {
+  		$scope.stopClick=true;
+  		
+  		console.log('user swiped, stop click!',click);
     	console.log('user swiped to ', User.getNextSectionUrl($location.path()));
   
     	
     	$location.path("/sectionView/"+User.getNextSection());
+    	
+    	
+
 
 
     };
 
-    $scope.previousSectionSwipe = function() {
-  		
+    $scope.previousSectionSwipe = function(click) {
+  		$scope.stopClick=true;
+
   		var previousSection=User.getPreviousSection();
     	console.log('user swiped back to section',previousSection );
   
 
    		angular.element('.page').addClass('backswipe');
     	$location.path("/sectionView/"+previousSection);
+    	
 
 
     };
 
 
-
+/*
   	$scope.getLogoPath = function(source_id) {
   		//console.log('this source_id is',(Math.floor(source_id*1)>0));
   		//console.log('why are we calling this',$scope.slides)
@@ -85,6 +117,7 @@ angular.module('niiuWebappApp')
   			//return ('no '+Math.floor(source_id));
   		}
   	}
+  */
 
 
   	//$scope.user=User.getUser();

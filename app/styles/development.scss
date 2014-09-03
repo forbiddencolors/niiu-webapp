@@ -1,6 +1,20 @@
 
 
 body {
+
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  /* max-width: 950px;  or 950px */
+}
+
+#topnav {
+  margin-right: auto;
+  margin-left: auto;
+  /*max-width: 950px;  or 950px */
+  overflow:hidden;
+}
+
 	margin: 0px;
 	padding: 0px;
 	
@@ -16,11 +30,6 @@ body {
 		color: white;
 		text-decoration: underline;
 		font-weight: bold;
-	}
-
-	p.subheading {
-		color: gray;
-		text-align: center;
 	}
 
 	.page {
@@ -60,6 +69,12 @@ body {
     	color: #00a651;
     }
 
+    .custom-section-label {
+    	color:#ffffff;
+    	margin-top:10px;
+    	display: block;
+    }
+
     .sourceTitle .label-subject {
 		font-family: 'alright_sansbold';
 		font-size: 18px; 
@@ -74,7 +89,7 @@ body {
 
 }
 
- .active .navbar, .active .navbar-fixed-top {
+ .active .navbar-offset {
 
 	left:75%;
 	}
@@ -82,24 +97,71 @@ body {
 #topnav.affix, #topnav {
     position: fixed;
     top: 0px;
+    right:0px;
+    height:70px;
+    left:0px;
+    padding:0px;
     z-index:100;
-    width:100%;
+    margin:0px -15px;
+
+}
+
+
+
+.titlePage .navbar {
+  background:transparent;
+}
+
+.navbar-fixed-top {
+  
+  position:fixed;
+  top:0px;
+
+}
+
+
+
+.ng-leave .navbar ,.ng-enter .navbar  {
+		-moz-transition-property: none;
+		-webkit-transition-property: none;
+		-o-transition-property: none;
+		transition-property: none;
+
+		    -webkit-animation:none;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation:none;
+    -o-animation:none;
+    animation:none;
 }
 
 #topnav.affix navbar {
-    background-color:#3e3e40;
+    
+}
+.navbar {
+background:transparent;
+background-color:#5c5d5f;
+padding:0px;
+}
+.navbar-default {
+	border-width:0px;
+	
 }
 
-.navbar {
-	background-color:#3e3e40;
-	/*:2px 5px 2px 2px;*/
+.navbar-offset {
+		
+	border: none;
 	padding:7px 2px;
 
 	/*padding: 0px 2px;*/
-	border:0px;
-	height:60px;
+	height:70px;
+
+	#menu {
+	  margin-top: 10px;
+	  margin-left: 0px;
+	}
 
 }
+
+
 
 .share_btn .hideme {
 display:none;
@@ -123,16 +185,13 @@ color:#ffffff;
 background-color:#5c5d5f;
 }
 
-.row-offcanvas-left.active #topnav, .row-offcanvas-left.active#topnav.affix {
-	position:relative;
-	left:75%;
-}
+
 
 #canvasnav {
 
 
 	.sourceTitle .label-source {
-	  font-family: alright_sansregular;
+	  font-family: 'alright_sansbold';
 	  font-size: 14px;
 	}
 
@@ -140,20 +199,21 @@ background-color:#5c5d5f;
     	background: none;
     	font-weight: normal;
     	font-size: 14px;
-    	font-family: 'alright_sansregular';
     	color:#ffffff;
     	padding-left: 0;
     	white-space:nowrap;
     }
 
     .label-subject {
-    	color: #00a651;
+    	/*color: #00a651;*/
     }
 
    	.sourceTitle h4.list-group-item-heading {
-		font-family: alright_sansbold;
-		font-size: 18px;
+		font-family: 'alright_sansregular';
+		font-size: 14px;
 		margin-top: 3px;
+		margin-bottom:0px;
+		color:#00a651;
 	}
 
 
@@ -209,6 +269,10 @@ div.navbar {
     	padding-top:0px;
     	padding-right:5px;
 
+    }
+
+    .src_logo {
+    	padding-right:2px;
     }
 
 
@@ -271,6 +335,12 @@ div.navbar {
 
 }
 
+.carousel-indicators {
+		bottom:0px;
+		margin-bottom:2px;
+		
+	}
+
 
 /*login background */
 
@@ -317,13 +387,28 @@ bottom:2px;
 z-index:100;
 width:100%;
 text-align: center;
+/*background-image: radial-gradient(rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.9)), radial-gradient(rgba(62, 62, 64, 0.9), rgba(62, 62, 64, 0));*/
+
 
 	.carousel-indicators {
 		z-index: auto;
 		bottom:5px;
+		background-color:rgba(62, 62, 64, 0.3);
+		/*background-image: radial-gradient(rgba(62, 62, 64, 0.3), rgba(62, 62, 64, 0)), radial-gradient( rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.3));*/
+
+		
 	}
 
 }
+
+div.active .sectionation  {
+	display:none;
+}
+
+
+  .sectionPage, .articlePage, .menuPage {
+    padding-top: 70px;
+  }
 
 
 .sectionPage {
@@ -361,6 +446,11 @@ text-align: center;
 		color:#ffffff;
 	}
 
+	.articleLink .article_logo {
+		float:left;
+		height:25px;
+		margin:0px 5px 5px 0px;
+	}
 
 
 
@@ -471,17 +561,37 @@ background-repeat:no-repeat;
         }
 
      .subheading{
-          font-family: 'Andada', serif;
+          font-family: 'Andada', serif; 
           font-size: 21px;
           font-weight: bold;
+          text-align: left;
           padding:20px 0 10px;
         }
 
       .articletext{
-          font-family: 'Andada', serif;
+          font-family: 'Andada', serif; 
           font-size: 21px;
           padding:20px 20px;
         }
+
+        .articletext {
+        	h1,h2,h3,h4,h5,h6 {
+        		font-family: 'Andada', serif; 
+        		font-size: 21px;
+        		font-weight:900;
+        	}
+
+        	p {
+        	
+        		font-family: 'Andada', serif; 
+        		font-size: 21px;
+        		font-weight:normal;
+        		padding:20px 0;
+        	}
+
+        }
+
+
 
 
 	#niiuCarousel .slider {
@@ -500,8 +610,40 @@ background-repeat:no-repeat;
 
     }
 
+    .articleControls {
+    	margin:0px 15px;
+    }
 
+ .articleBody .subheading{
+      /*font-family: 'Andada', serif;*/
+      font-size: 21px;
+      font-weight: bold;
+      padding:20px 0px 10px 0px;
+    }
 
+   .articleBody .articletext{
+      font-family: 'Andada', serif;
+      font-size: 21px;
+      padding:20px 0;
+    }
+
+    .articleBody {
+    margin:20px 0px;
+    padding: 15px;
+    }
+
+    .articleControls a {
+         padding: 5px;
+        }
+
+       .articleDate {
+         
+          font-size: 21px;
+          margin-right: 10px;
+          margin-top: 22px;
+          text-align:right;
+          
+        }
 
 
 }
@@ -520,6 +662,18 @@ background-repeat:no-repeat;
 
 	}
 
+
+
+}
+
+.termsPage, .privacyPage, .helpPage, .settingsPage {
+
+	.termstext, .privacytext, .helptext, .settingstext {
+	      font-family: 'Andada', serif;
+	      /*font-size: 21px;*/
+	      padding:60px 15px 20px 15px;
+
+	}
 
 
 }
@@ -591,7 +745,7 @@ background-repeat:no-repeat;
 	}
 
 	#niiuAppmenu {
-		padding-top:50px;
+	  padding-top:80px;
 	  background: #5c5d5f;
 	  color: #fff;
 	}
@@ -661,7 +815,7 @@ background-repeat:no-repeat;
 	#niiuAppmenu li a.selectedSource{
 	  	background: #4b4c4d;
 	  	border-bottom: 1px solid #636363;
-	  	padding:10px 5px 10px 20px;
+	  	padding:5px 5px 5px 20px;
 		}
 
 	    #niiuAppmenu li a.selectedSource:before {
@@ -708,6 +862,16 @@ input.required {
 	background-color:#ffffff;
 }
 
+
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
 
 .jumbotron {
 	background-color: transparent;
@@ -783,6 +947,9 @@ button, button.btn, a.btn {
 
 	.login-header {
 		width: 100%;
+		.subheading {
+			text-align:center;
+		}
 	}
 
 	h3 {

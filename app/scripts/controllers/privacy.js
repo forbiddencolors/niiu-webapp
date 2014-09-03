@@ -7,4 +7,5 @@ angular.module('niiuWebappApp')
       'AngularJS',
       'Karma'
     ];
+    $scope.pageClass='privacyPage';
   });

@@ -5,6 +5,14 @@ angular.module('niiuWebappApp')
 
     // add email login page class
   $scope.pageClass = 'email-login';
+
+  $scope.emailPlusCheck = function(email) {
+    if (email.indexOf('+')) {
+      $scope.error="Sorry the + sign is not suported currently";
+    } else {
+      $scope.error="";
+    }
+  }
     
   $scope.niiu_login = function(loginInfo) {
     console.log('Niiu Login!');
@@ -19,7 +27,7 @@ angular.module('niiuWebappApp')
     var niiuUser = niiuAuthenticator.login(loginInfo).then(function(result) {
       var niiuObject = result;
       console.log('lets resolve niiu user');
-      console.log(niiuObject);
+      console.log('we got a niiu User, lets go to home!',niiuObject);
       // redirect back to login
       $location.path('/userHome/refresh');
 
@@ -27,6 +35,7 @@ angular.module('niiuWebappApp')
       //console.log('FB data prepared for niiu Authentication');
       //console.log($scope.niiuUser);
     }, function(no_login_error) {
+      console.log('login didnt work because', no_login_error);
       $scope.error=no_login_error;
     });
 

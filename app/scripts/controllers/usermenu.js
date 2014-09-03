@@ -7,6 +7,7 @@ angular.module('niiuWebappApp')
     var contentArticles = [];
     $scope.browser=navigator.userAgent;
     $scope.user=User.getUser();
+    
 
     $scope.getContentObject = function() {
         var deferred = $q.defer();
@@ -35,15 +36,6 @@ angular.module('niiuWebappApp')
     }
 
 
-    
-    $scope.logout = function() {
-    	//niiuAuthenticator.changeUser();
-        User.toggleMenu();
-    	User.deleteUser();
-    	console.log('just deleted the User');
-    	niiuAuthenticator.logout();
-
-    };
 
     $scope.toggleMenu = function() {
         User.toggleMenu(); 
@@ -110,9 +102,6 @@ angular.module('niiuWebappApp')
        }
     };
 
-    $scope.changeLanguage = function (langKey) {
-        $translate.use(langKey);
-      };
 
     $scope.init = function() {
         console.log('at least init ran');

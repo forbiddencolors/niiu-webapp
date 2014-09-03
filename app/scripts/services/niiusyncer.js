@@ -44,7 +44,7 @@ angular.module('niiuWebappApp')
                     "last3SSync": last_sync_time,
                     "lastContentSync": last_sync_time,
                     "user_id": current_user.id,
-                   "version": 200.7,
+                   "version": constants.APP_VERSION,
                    "article_ids": [ ],
                    "contentProfile": {
                        "id": current_user.contentProfile.id,
@@ -199,6 +199,7 @@ angular.module('niiuWebappApp')
             var guestArticleObject = {
                   "action": "get_article",
                  "api": "content",
+                 "version" : 222,
                  "apiKey": constants.GUEST_API_KEY,
                  "appGuid": constants.NIIU_APP_GUID,
                  "data": {
@@ -209,7 +210,7 @@ angular.module('niiuWebappApp')
                   }
             }
 
-
+                  console.log('here is the guestarticle request object', guestArticleObject);
                  $http.post(constants.NIIU_API_URL+"articles/get_article", "data="+angular.toJson(guestArticleObject), {
                         
                     }).success(function(guestResponse){

@@ -1,0 +1,11 @@
+  <ul class="nav nav-pills pull-right" ng-controller="loginmenuCtrl">
+  	<li ng-hide="niiuAuthenticator.isLoggedIn()"><a ng-href="#/">niiu</a></li>
+    <li ng-hide="niiuAuthenticator.isLoggedIn()"><a ng-href="#/emailLogin">Login</a></li>
+    <li><a ng-href="#/registration" ng-hide="niiuAuthenticator.isLoggedIn()">Registration</a></li>
+    <li><a href="" ng-show="user!=null" ng-click="logout()">Logout {{user.firstName}}</a></li>
+  </ul>
+<div id="alertBox" data-ng-show="error" class="alert alert-danger"><button type="button" data-ng-click="error = null;" class="close">×</button><span data-ng-bind="error" class="ng-binding">{{error}}</span></div>
+</div>
+
+
+

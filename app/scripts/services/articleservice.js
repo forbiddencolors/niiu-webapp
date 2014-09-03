@@ -160,7 +160,7 @@ angular.module('niiuWebappApp')
         function getSourceNameById(id) {
         	var deferred=$q.defer();
             if(sectionList.length==0) { 
-	            initPromise.then(function(initialized) {
+	            getInitPromise().then(function(initialized) {
 
 	               var sourceObject= $filter('getByProperty')(sourceList, "id", id);
 	               console.log('getSourceNameById: looking for the sourceObject', sourceObject);
@@ -180,7 +180,7 @@ angular.module('niiuWebappApp')
         function getSourceLogoById(id) {
         	var deferred=$q.defer();
         	if(sectionList.length==0) { 
-        		initPromise.then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
+        		getInitPromise().then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
         			var sourceObject= $filter('getByProperty')(sourceList, "id", id);
         			deferred.resolve(sourceObject.logo);
         			});
@@ -197,7 +197,7 @@ angular.module('niiuWebappApp')
         function getSectionNameById(id) {
         	var deferred=$q.defer();
         	if(sectionList.length==0) { 
-        		initPromise.then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
+        		getInitPromise().then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
         			var sectionObject= $filter('getByProperty')(sectionList, "id", id);
         			deferred.resolve(sectionObject.name);
         			});
@@ -223,9 +223,10 @@ angular.module('niiuWebappApp')
         function getSubSectionNameById(id) {
         	var deferred=$q.defer();
         	if(subSectionList.length==0) { 
-        		initPromise.then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
+        		getInitPromise().then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
         			var subSectionObject= $filter('getByProperty')(subSectionList, "subsection_id", id);
         			deferred.resolve(subSectionObject);
+                    console.log('getSubSectionNAmeById: getInitPromise done',initialized);
         			});
         	} else {
         		var subSectionObject= $filter('getByProperty')(subSectionList, "id", id);
@@ -237,13 +238,18 @@ angular.module('niiuWebappApp')
 
         }
 
+        function getInitPromise() {
+
+            return initPromise;
+        }
+
         function pageInit() {
     		initSourcesAndSections().then(
 
     			function(page_initialized) {
     				
     				initPromise.resolve('initialized');
-    				console.log('pageInit: initialized sources and sections',initPromise.promise);
+    				console.log('pageInit: initPromise set: initialized sources and sections',initPromise.promise);
 
     		});
     		return initPromise.promise;

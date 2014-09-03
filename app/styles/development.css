@@ -8,13 +8,19 @@ body {
   color: white;
   background-color: #3e3e40;
   height: 100%; }
+  body .container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    /* max-width: 950px;  or 950px */ }
+  body #topnav {
+    margin-right: auto;
+    margin-left: auto;
+    /*max-width: 950px;  or 950px */
+    overflow: hidden; }
   body a, body p a {
     color: white;
     text-decoration: underline;
     font-weight: bold; }
-  body p.subheading {
-    color: gray;
-    text-align: center; }
   body .page {
     /*width:100vw;*/ }
   body .nav, body .pagination, body .carousel, body .panel-title a {
@@ -39,6 +45,10 @@ body {
     white-space: nowrap; }
   body .label-subject {
     color: #00a651; }
+  body .custom-section-label {
+    color: #ffffff;
+    margin-top: 10px;
+    display: block; }
   body .sourceTitle .label-subject {
     font-family: 'alright_sansbold';
     font-size: 18px; }
@@ -46,25 +56,53 @@ body {
     float: none;
     margin: 0 auto; }
 
-.active .navbar, .active .navbar-fixed-top {
+.active .navbar-offset {
   left: 75%; }
 
 #topnav.affix, #topnav {
   position: fixed;
   top: 0px;
+  right: 0px;
+  height: 70px;
+  left: 0px;
+  padding: 0px;
   z-index: 100;
-  width: 100%; }
+  margin: 0px -15px; }
 
-#topnav.affix navbar {
-  background-color: #3e3e40; }
+.titlePage .navbar {
+  background: transparent; }
+
+.navbar-fixed-top {
+  position: fixed;
+  top: 0px; }
+
+.ng-leave .navbar, .ng-enter .navbar {
+  -moz-transition-property: none;
+  -webkit-transition-property: none;
+  -o-transition-property: none;
+  transition-property: none;
+  -webkit-animation: none;
+  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation: none;
+  -o-animation: none;
+  animation: none; }
 
 .navbar {
-  background-color: #3e3e40;
-  /*:2px 5px 2px 2px;*/
+  background: transparent;
+  background-color: #5c5d5f;
+  padding: 0px; }
+
+.navbar-default {
+  border-width: 0px; }
+
+.navbar-offset {
+  border: none;
   padding: 7px 2px;
   /*padding: 0px 2px;*/
-  border: 0px;
-  height: 60px; }
+  height: 70px; }
+  .navbar-offset #menu {
+    margin-top: 10px;
+    margin-left: 0px; }
 
 .share_btn .hideme {
   display: none;
@@ -81,27 +119,24 @@ body {
   color: #ffffff;
   background-color: #5c5d5f; }
 
-.row-offcanvas-left.active #topnav, .row-offcanvas-left.active#topnav.affix {
-  position: relative;
-  left: 75%; }
-
 #canvasnav .sourceTitle .label-source {
-  font-family: alright_sansregular;
+  font-family: 'alright_sansbold';
   font-size: 14px; }
 #canvasnav .label-source, #canvasnav .label-subject {
   background: none;
   font-weight: normal;
   font-size: 14px;
-  font-family: 'alright_sansregular';
   color: #ffffff;
   padding-left: 0;
   white-space: nowrap; }
 #canvasnav .label-subject {
-  color: #00a651; }
+  /*color: #00a651;*/ }
 #canvasnav .sourceTitle h4.list-group-item-heading {
-  font-family: alright_sansbold;
-  font-size: 18px;
-  margin-top: 3px; }
+  font-family: 'alright_sansregular';
+  font-size: 14px;
+  margin-top: 3px;
+  margin-bottom: 0px;
+  color: #00a651; }
 
 div.navbar a.home_btn {
   text-indent: -9999px;
@@ -133,6 +168,8 @@ div.navbar #logo {
   top: 0px;
   padding-top: 0px;
   padding-right: 5px; }
+div.navbar .src_logo {
+  padding-right: 2px; }
 
 /*
  * Off Canvas
@@ -177,6 +214,10 @@ transition: all 0.1s ease-out;
   /*overflow:hidden;
   height:350px;*/ }
 
+.carousel-indicators {
+  bottom: 0px;
+  margin-bottom: 2px; }
+
 /*login background */
 div.container.page.loginHome {
   background-image: url("../images/login-bg-image.jpg");
@@ -207,10 +248,19 @@ div.front_view, div.section_view {
   bottom: 2px;
   z-index: 100;
   width: 100%;
-  text-align: center; }
+  text-align: center;
+  /*background-image: radial-gradient(rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.9)), radial-gradient(rgba(62, 62, 64, 0.9), rgba(62, 62, 64, 0));*/ }
   .sectionation .carousel-indicators {
     z-index: auto;
-    bottom: 5px; }
+    bottom: 5px;
+    background-color: rgba(62, 62, 64, 0.3);
+    /*background-image: radial-gradient(rgba(62, 62, 64, 0.3), rgba(62, 62, 64, 0)), radial-gradient( rgba(62, 62, 64, 0), rgba(62, 62, 64, 0.3));*/ }
+
+div.active .sectionation {
+  display: none; }
+
+.sectionPage, .articlePage, .menuPage {
+  padding-top: 70px; }
 
 .sectionPage {
     /* no slider on sectionPage
@@ -245,6 +295,10 @@ div.front_view, div.section_view {
     /*overflow:hidden;*/ }
   .sectionPage a:hover, .sectionPage a.articleLink {
     color: #ffffff; }
+  .sectionPage .articleLink .article_logo {
+    float: left;
+    height: 25px;
+    margin: 0px 5px 5px 0px; }
   .sectionPage li.single, .sectionPage li.double {
     /* min-height: 200px;
      max-height: 200px;*/
@@ -296,11 +350,21 @@ div.front_view, div.section_view {
   font-family: 'Andada', serif;
   font-size: 21px;
   font-weight: bold;
+  text-align: left;
   padding: 20px 0 10px; }
 .articlePage .articletext {
   font-family: 'Andada', serif;
   font-size: 21px;
   padding: 20px 20px; }
+.articlePage .articletext h1, .articlePage .articletext h2, .articlePage .articletext h3, .articlePage .articletext h4, .articlePage .articletext h5, .articlePage .articletext h6 {
+  font-family: 'Andada', serif;
+  font-size: 21px;
+  font-weight: 900; }
+.articlePage .articletext p {
+  font-family: 'Andada', serif;
+  font-size: 21px;
+  font-weight: normal;
+  padding: 20px 0; }
 .articlePage #niiuCarousel .slider {
   /*width:100%;
   
@@ -311,11 +375,37 @@ div.front_view, div.section_view {
   max-height: 100vh; }
 .articlePage #niiuCarousel .slider img {
   margin: auto; }
+.articlePage .articleControls {
+  margin: 0px 15px; }
+.articlePage .articleBody .subheading {
+  /*font-family: 'Andada', serif;*/
+  font-size: 21px;
+  font-weight: bold;
+  padding: 20px 0px 10px 0px; }
+.articlePage .articleBody .articletext {
+  font-family: 'Andada', serif;
+  font-size: 21px;
+  padding: 20px 0; }
+.articlePage .articleBody {
+  margin: 20px 0px;
+  padding: 15px; }
+.articlePage .articleControls a {
+  padding: 5px; }
+.articlePage .articleDate {
+  font-size: 21px;
+  margin-right: 10px;
+  margin-top: 22px;
+  text-align: right; }
 
 .menuPage .sections li .btn {
   background-color: transparent; }
 .menuPage .add_custom_section {
   margin-bottom: 20px; }
+
+.termsPage .termstext, .termsPage .privacytext, .termsPage .helptext, .termsPage .settingstext, .privacyPage .termstext, .privacyPage .privacytext, .privacyPage .helptext, .privacyPage .settingstext, .helpPage .termstext, .helpPage .privacytext, .helpPage .helptext, .helpPage .settingstext, .settingsPage .termstext, .settingsPage .privacytext, .settingsPage .helptext, .settingsPage .settingstext {
+  font-family: 'Andada', serif;
+  /*font-size: 21px;*/
+  padding: 60px 15px 20px 15px; }
 
 /*User Menu*/
 .header {
@@ -366,7 +456,7 @@ li#searchBar input {
   color: #fff; }
 
 #niiuAppmenu {
-  padding-top: 50px;
+  padding-top: 80px;
   background: #5c5d5f;
   color: #fff; }
 
@@ -424,7 +514,7 @@ li#searchBar input {
 #niiuAppmenu li a.selectedSource {
   background: #4b4c4d;
   border-bottom: 1px solid #636363;
-  padding: 10px 5px 10px 20px; }
+  padding: 5px 5px 5px 20px; }
 
 #niiuAppmenu li a.selectedSource:before {
   display: flex; }
@@ -460,6 +550,14 @@ li#searchBar input {
 
 input.required {
   background-color: #ffffff; }
+
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5; }
+
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px; }
 
 .jumbotron {
   background-color: transparent;
@@ -514,6 +612,8 @@ button, button.btn, a.btn {
   width: 100%; }
   .login-wrapper .login-header {
     width: 100%; }
+    .login-wrapper .login-header .subheading {
+      text-align: center; }
   .login-wrapper h3 {
     text-transform: uppercase; }
   .login-wrapper .error {

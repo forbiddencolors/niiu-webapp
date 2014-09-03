@@ -1,5 +1,10 @@
-<h3>Reset Password</h3>
-  <form class="form-horizontal" ng-submit="forgotPass(niiuForgotForm)" name="forgotForm" role="form" style="margin-top:50px;">
+        <!-- Terms Content -->
+
+<div class="col-xs-12 terms_view helpBody" ng-swipe-right="backSwipe()">
+    <div class="helptext" >
+    <h2 translate>Reset Password</h2>
+
+      <form class="form-horizontal" ng-submit="forgotPass(niiuForgotForm)" name="forgotForm" role="form" style="margin-top:50px;">
     <div class="form-group">
         <label class="control-label col-sm-2" for="eMail"> Email Address</label>
         <div class="col-sm-10">
@@ -12,3 +17,10 @@
         </div>
     </div>
 </form>
+<div class="error" ng-bind-htmlr="notice"></div>
+<div class="error" ng-bind="error"></div>
+
+
+
+</div>
+

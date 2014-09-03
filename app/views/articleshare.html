@@ -43,7 +43,7 @@
 					    <carousel interval="slide_interval"  id="niiuCarousel"  >
 					      <slide ng-repeat="slide in slides" active="slide.active" class="slider">
 					        <!--img ng-src="{{slide.imgUrl}}" style="margin:auto;height:305px;width:100%" -->
-					        <img ng-src="{{slide.imgUrl}}" class="img-responsive dark-shadow" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
+					        <img ng-src="{{slide.imgUrl}}" onerror="this.src={{media_path}}{{slide.imgUrl}}"   class="img-responsive dark-shadow" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" >
 					        <div class="carousel-caption">  	
 					        		
 					          		<!--div ng-bind-html="slide.imgText" / -->

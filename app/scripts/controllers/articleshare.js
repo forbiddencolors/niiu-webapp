@@ -16,6 +16,10 @@ angular.module('niiuWebappApp')
 
 	}
 
+ $scope.getDevSrc = function(index) {
+  console.log('tried for backup',$index)
+  return $scope.media_path+$scope.slides[index].imgUrl;
+}
 
 	$scope.getSharedArticle2 = function(article_id) {
 
@@ -26,6 +30,7 @@ angular.module('niiuWebappApp')
                  "api": "content",
                  "apiKey": constants.GUEST_API_KEY,
                  "appGuid": constants.NIIU_APP_GUID,
+                 "version": 222,
                  "data": {
                      "articleIDs": [
                          article_id
@@ -33,7 +38,7 @@ angular.module('niiuWebappApp')
                     "userID": constants.GUEST_ID
                   }
             };
-
+                  console.log('heres the guestarticle request object',guestArticleObject);
 
                  $http.post(constants.NIIU_API_URL+"articles/get_article", "data="+angular.toJson(guestArticleObject), {
                         
@@ -84,7 +89,7 @@ angular.module('niiuWebappApp')
                     //if ($scope.article.media[i]) {
                       //console.log('making slides',$scope.slides);
                       $scope.slides.push( {
-                        imgUrl:$scope.media_path+$scope.article.media[i].path,
+                        imgUrl:$scope.article.media[i].path,
                         imgText:$scope.article.media[i].caption
                       } );
 
