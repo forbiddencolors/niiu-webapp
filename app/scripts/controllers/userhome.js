@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', '$window', 'niiuSyncer', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, $window, niiuSyncer, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
+  .controller('UserhomeCtrl', ['$scope', '$window', 'niiuSyncer', 'niiuAuthenticator', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, $window, niiuSyncer, niiuAuthenticator, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
 
   	
 
@@ -389,12 +389,28 @@ function refreshArticles() {
 				*/
 			
 			},function(no_refresh_articles) {
-				console.log('refreshArticles did not sync because', no_refresh_articles);
+				console.log('refreshArticles did not sync because', no_refresh_articles.contents.status);
+				if (no_refresh_articles.contents.status==402) {
+					console.log('doRefresh: making freemium subscription for userId '+$scope.user.id+' using apikey '+$scope.user.apiKey);
+					niiuAuthenticator.makeFreemium($scope.user.id,$scope.user.apiKey).then(function(new_subscription){
+							console.log('DoRefresh: now your subscription has been updated go get your articles again');
+							doRefresh();
+						},
+						function(no_subscription) {
+							console.log('Sorry we couldnt make you a new subscription');
+							$scope.error=no_subscription;
+
+						}
+
+					);
+
+				}
 
 			}
 			);
 		},function(no_refresh3s) {
 			console.log('refresh3s failed to sync because',no_refresh3s);
+			$scope.error=no_refresh3s;
 
 		}//end refresh3s
 

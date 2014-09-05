@@ -46,22 +46,24 @@ angular.module('niiuWebappApp')
         if (response.status == 'connected') {
           FB.api('/me', function(response) {
             resolve(null, response, deferred);
-            console.log("youre logged in and the response is: ");
-            console.log(response);
+            console.log("youre logged in and the response is: ",response);
+       
           });
         } else if (response.status == 'not_authorized' || 'unknown') {
               console.log("youre not logged in and the response is: ", response);
               console.log(response);
           FB.login(function(response) {
             if (response.authResponse) {
-              var access_token =   FB.getAuthResponse()['accessToken'];
-              console.log('the access token should be in the following response');
-              console.log(FB.getAuthResponse());
-              auth = FB.getAuthResponse();
+              
+
+              var auth = FB.getAuthResponse();
+              var access_token =   auth['accessToken'];
+              console.log('the access token should be in the following response', response.authResponse);
 
 
               FB.api('/me', function(response) {
                 resolve(null, response, deferred);
+                console.log('this response should have some user info', response);
               });
             } else {
               console.log("it seems like you opted not to authorize");

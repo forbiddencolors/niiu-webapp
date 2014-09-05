@@ -408,6 +408,11 @@ this is how we could chain a couple promises together to handle user logic
 
             }
           */
+        },
+        makeFreemium: function(userId,apiKey) {
+          var freemium=createFreeSubscription(userId, apiKey) ;
+          return freemium;
+
         }
 
 
