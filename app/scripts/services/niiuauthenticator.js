@@ -239,7 +239,7 @@ this is how we could chain a couple promises together to handle user logic
         var emailReset = {"eMail" : email};
         passwordReset.data=emailReset;
         $http.post(constants.NIIU_API_URL + 'users/forgot_password', "data="+angular.toJson(passwordReset)).then(function(resetResponse) {
-                console.log(resetResponse);
+                console.log('we just sent a password reset request and the response was... ', resetResponse);
                 if (resetResponse.data.contents.status==200) {
                     console.log("Yea! check your email, your reset is being sent ",resetResponse);
                     //console.log(resetResponse.contents.data);

@@ -185,6 +185,12 @@ color:#ffffff;
 background-color:#5c5d5f;
 }
 
+.error {
+	color:#f51226;
+	text-align: center;
+	font-size: 80%;
+
+}
 
 
 #canvasnav {
@@ -666,9 +672,9 @@ background-repeat:no-repeat;
 
 }
 
-.termsPage, .privacyPage, .helpPage, .settingsPage {
+.termsPage, .privacyPage, .helpPage, .settingsPage, .forgotPage {
 
-	.termstext, .privacytext, .helptext, .settingstext {
+	.termstext, .privacytext, .helptext, .settingstext, .forgottext {
 	      font-family: 'Andada', serif;
 	      /*font-size: 21px;*/
 	      padding:60px 15px 20px 15px;

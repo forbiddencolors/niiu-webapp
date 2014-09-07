@@ -119,6 +119,11 @@ body {
   color: #ffffff;
   background-color: #5c5d5f; }
 
+.error {
+  color: #f51226;
+  text-align: center;
+  font-size: 80%; }
+
 #canvasnav .sourceTitle .label-source {
   font-family: 'alright_sansbold';
   font-size: 14px; }
@@ -402,7 +407,7 @@ div.active .sectionation {
 .menuPage .add_custom_section {
   margin-bottom: 20px; }
 
-.termsPage .termstext, .termsPage .privacytext, .termsPage .helptext, .termsPage .settingstext, .privacyPage .termstext, .privacyPage .privacytext, .privacyPage .helptext, .privacyPage .settingstext, .helpPage .termstext, .helpPage .privacytext, .helpPage .helptext, .helpPage .settingstext, .settingsPage .termstext, .settingsPage .privacytext, .settingsPage .helptext, .settingsPage .settingstext {
+.termsPage .termstext, .termsPage .privacytext, .termsPage .helptext, .termsPage .settingstext, .termsPage .forgottext, .privacyPage .termstext, .privacyPage .privacytext, .privacyPage .helptext, .privacyPage .settingstext, .privacyPage .forgottext, .helpPage .termstext, .helpPage .privacytext, .helpPage .helptext, .helpPage .settingstext, .helpPage .forgottext, .settingsPage .termstext, .settingsPage .privacytext, .settingsPage .helptext, .settingsPage .settingstext, .settingsPage .forgottext, .forgotPage .termstext, .forgotPage .privacytext, .forgotPage .helptext, .forgotPage .settingstext, .forgotPage .forgottext {
   font-family: 'Andada', serif;
   /*font-size: 21px;*/
   padding: 60px 15px 20px 15px; }
