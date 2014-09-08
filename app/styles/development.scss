@@ -350,7 +350,7 @@ div.navbar {
 
 /*login background */
 
-div.container.page.loginHome {
+div.page.loginHome {
 	background-image: url('../images/login-bg-image.jpg');
 	/*width:100vw;*/
 	height:100vh;
@@ -842,6 +842,8 @@ background-repeat:no-repeat;
 	border-top: 1px solid white;
 	color: white;
 	font-size: 9px;
+	position: absolute;
+	width:100%;
 }
 
 .butterfly {
@@ -950,6 +952,7 @@ button, button.btn, a.btn {
 
 	padding: 30px;
 	width: 100%;
+	height:100vh;
 
 	.login-header {
 		width: 100%;
@@ -1011,6 +1014,7 @@ input.password {
 	color: white;
 	font-size: 8px;
 	padding-top: 25px;
+	width:100%;
 
 }
 
