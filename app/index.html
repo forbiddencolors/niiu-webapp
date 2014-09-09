@@ -13,24 +13,24 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.09092014.css" />
-    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.09092014.css" />
+    <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.0909112014.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.0909112014.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.09092014.css">
+    <link rel="stylesheet" href="styles/main.0909112014.css">
     <!-- endbuild -->
-    <link rel="stylesheet" href="styles/development.09092014.css">
-    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.09092014.css">
+    <link rel="stylesheet" href="styles/development.0909212014.css">
+    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.0909112014.css">
 
     <!--Sam CSS-->
- <!--   <link  rel="stylesheet" href="styles/slippry.09092014.css">
+ <!--   <link  rel="stylesheet" href="styles/slippry.0909112014.css">
  -->
-    <link rel="stylesheet" href="styles/jquery.mmenu.all.09092014.css" >
+    <link rel="stylesheet" href="styles/jquery.mmenu.all.0909112014.css" >
     <link href="http://fonts.googleapis.com/css?family=Andada" rel="stylesheet" type="text/css">
 
 
-    <link rel="stylesheet" href="styles/custom.09092014.css" >
+    <link rel="stylesheet" href="styles/custom.0909112014.css" >
 
     
 
@@ -43,7 +43,7 @@
 
     <!-- Add your site or application content here -->
     <!--div class="container" -->
-      <div class="container-fluid col-xs-12 col-md-10 col-lg-8" style="overflow-x: hidden;min-height:100vh;">
+      <div class="container-fluid col-xs-12 col-md-10 col-lg-8" style="overflow-x: hidden;min-height:100vh;" id="niiuBody">
         <div id="canvasrow" class="row row-offcanvas row-offcanvas-left">
             <div id="canvasnav" class="col-xs-9 sidebar-offcanvas" ng-include="layoutPartial('headerUrl')"></div> 
             <div ng-view="" class="page {{ pageClass }}">
@@ -68,7 +68,7 @@
       // ga('send', 'pageview');  //this is getting handled by angulartics
     </script>
     <script src="http://connect.facebook.net/en_US/all.js"></script>
-    <script src="bower_components/ydn-db/ydn.db-isw-sql.09092014.js"></script>
+    <script src="bower_components/ydn-db/ydn.db-isw-sql.0909112014.js"></script>
     <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/w71DQQNDlDSRAoYauVMHg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
 
@@ -85,88 +85,124 @@
       </script>
 
     <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.09092014.js"></script>
-    <script src="bower_components/json3/lib/json3.min.09092014.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.0909112014.js"></script>
+    <script src="bower_components/json3/lib/json3.min.0909112014.js"></script>
     <![endif]-->
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/jquery.09092014.js"></script>
-    <script src="bower_components/angular/angular.09092014.js"></script>
-    <script src="bower_components/sass-bootstrap/dist/js/bootstrap.09092014.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.09092014.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.09092014.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.09092014.js"></script>
-    <script src="bower_components/angular-route/angular-route.09092014.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.09092014.js"></script>
-    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.09092014.js"></script>
-    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.09092014.js"></script>
-    <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.09092014.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.09092014.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.09092014.js"></script>
-    <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.09092014.js"></script>
-    <script src="bower_components/jquery-waypoints/waypoints.09092014.js"></script>
-    <script src="bower_components/SHA-1/sha1.09092014.js"></script>
-    <script src="bower_components/angulartics/src/angulartics.09092014.js"></script>
-    <script src="bower_components/angulartics/src/angulartics-ga-cordova.09092014.js"></script>
-    <script src="bower_components/angulartics/src/angulartics-ga.09092014.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.09092014.js"></script>
+    <script src="bower_components/jquery/jquery.0909112014.js"></script>
+    <script src="bower_components/angular/angular.0909112014.js"></script>
+    <script src="bower_components/sass-bootstrap/dist/js/bootstrap.0909112014.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.0909112014.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.0909112014.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.0909112014.js"></script>
+    <script src="bower_components/angular-route/angular-route.0909112014.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.0909112014.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.0909112014.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.0909112014.js"></script>
+    <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.0909112014.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.0909112014.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.0909112014.js"></script>
+    <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.0909112014.js"></script>
+    <script src="bower_components/jquery-waypoints/waypoints.0909112014.js"></script>
+    <script src="bower_components/SHA-1/sha1.0909112014.js"></script>
+    <script src="bower_components/angulartics/src/angulartics.0909112014.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-ga-cordova.0909112014.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-ga.0909112014.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.0909112014.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.js"></script>
-    <script src="bower_components/viewport-units-buggyfill/viewport-units-buggyfill.09092014.js"></script>
+    <script src="bower_components/viewport-units-buggyfill/viewport-units-buggyfill.0909112014.js"></script>
     <script>window.viewportUnitsBuggyfill.init();</script>
+    <script>
+    //disable orientation change
+    /*
+    var rotate = 0 - window.orientation;
+    window.setAttribute("transform:rotate("+rotate+"deg);-ms-transform:rotate("+rotate+"deg);-webkit-transform:rotate("+rotate+"deg)", "style");
+    */
+
+    window.addEventListener('orientationchange', handleOrientation, false);
+        function handleOrientation() {
+         var rotate = 0 - orientation;
+        if (orientation == 0) {
+          //portraitMode, do your stuff here
+               // alert(document.querySelector( '#niiuBody' ));
+               // alert($('#niiuBody'));
+               // alert('landscape rotate '+rotate+' degrees');
+          //angular.element(document.querySelector( '#niiuBody' )).setAttribute("transform:rotate("+rotate+"deg);-ms-transform:rotate("+rotate+"deg);-webkit-transform:rotate("+rotate+"deg)", "style");
+        }
+        else if (orientation == 90) {
+          //landscapeMode
+          alert('landscape rotate '+rotate+' degrees');
+          angular.element(document.querySelector( '#niiuBody' )).setAttribute("transform:rotate("+rotate+"deg);-ms-transform:rotate("+rotate+"deg);-webkit-transform:rotate("+rotate+"deg)", "style");
+        }
+        else if (orientation == -90) {
+          //landscapeMode
+          //alert('negative landscape');
+        }
+        else if (orientation == 180) {
+          //portraitMode
+          //alert('negative portrait');
+        }
+        else {
+        }
+    }
+
+    </script>
+
 <!-- from Sam -->
  
  
 <!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.09092014.js"></script>
-    <script src="bower_components/sam/slippry.min.09092014.js"></script>
-    <script src="bower_components/sam/jquery.mmenu.min.all.09092014.js"></script>
-    <script src="bower_components/sam/custom.09092014.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.0909112014.js"></script>
+    <script src="bower_components/sam/slippry.min.0909112014.js"></script>
+    <script src="bower_components/sam/jquery.mmenu.min.all.0909112014.js"></script>
+    <script src="bower_components/sam/custom.0909112014.js"></script>
  
 -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.09092014.js"></script>
-        <script src="scripts/controllers/registration.09092014.js"></script>
-        <script src="scripts/controllers/loginmenu.09092014.js"></script>
-        <script src="scripts/controllers/usermenu.09092014.js"></script>
-        <script src="scripts/services/constants.09092014.js"></script>
-        <script src="scripts/services/localdb.09092014.js"></script>
-        <script src="scripts/services/niiuauthenticator.09092014.js"></script>
-        <script src="scripts/controllers/emaillogin.09092014.js"></script>
-        <script src="scripts/controllers/userhome.09092014.js"></script>
-        <script src="scripts/services/facebook.09092014.js"></script>
-        <script src="scripts/controllers/sectionhome.09092014.js"></script>
-        <script src="scripts/services/niiusyncer.09092014.js"></script>
-        <script src="scripts/controllers/forgotpass.09092014.js"></script>
-        <script src="scripts/controllers/privacy.09092014.js"></script>
-        <script src="scripts/controllers/terms.09092014.js"></script>
-        <script src="scripts/controllers/customize.09092014.js"></script>
-        <script src="scripts/services/user.09092014.js"></script>
-        <script src="scripts/filters/getbyproperty.09092014.js"></script>
-        <script src="scripts/controllers/sectionhome.09092014.js"></script>
-        <script src="scripts/controllers/article.09092014.js"></script>
-        <script src="scripts/filters/truncate.09092014.js"></script>
-        <script src="scripts/services/articleservice.09092014.js"></script>
-        <script src="scripts/filters/sectionfilter.09092014.js"></script>
-        <script src="scripts/filters/replaceumlauts.09092014.js"></script>
-        <script src="scripts/controllers/sectionview.09092014.js"></script>
+        <script src="scripts/app.0909112014.js"></script>
+        <script src="scripts/controllers/main.0909112014.js"></script>
+        <script src="scripts/controllers/registration.0909112014.js"></script>
+        <script src="scripts/controllers/loginmenu.0909112014.js"></script>
+        <script src="scripts/controllers/usermenu.0909112014.js"></script>
+        <script src="scripts/services/constants.0909112014.js"></script>
+        <script src="scripts/services/localdb.0909112014.js"></script>
+        <script src="scripts/services/niiuauthenticator.0909112014.js"></script>
+        <script src="scripts/controllers/emaillogin.0909112014.js"></script>
+        <script src="scripts/controllers/userhome.0909112014.js"></script>
+        <script src="scripts/services/facebook.0909112014.js"></script>
+        <script src="scripts/controllers/sectionhome.0909112014.js"></script>
+        <script src="scripts/services/niiusyncer.0909112014.js"></script>
+        <script src="scripts/controllers/forgotpass.0909112014.js"></script>
+        <script src="scripts/controllers/privacy.0909112014.js"></script>
+        <script src="scripts/controllers/terms.0909112014.js"></script>
+        <script src="scripts/controllers/customize.0909112014.js"></script>
+        <script src="scripts/services/user.0909112014.js"></script>
+        <script src="scripts/filters/getbyproperty.0909112014.js"></script>
+        <script src="scripts/controllers/sectionhome.0909112014.js"></script>
+        <script src="scripts/controllers/article.0909112014.js"></script>
+        <script src="scripts/filters/truncate.0909112014.js"></script>
+        <script src="scripts/services/articleservice.0909112014.js"></script>
+        <script src="scripts/filters/sectionfilter.0909112014.js"></script>
+        <script src="scripts/filters/replaceumlauts.0909112014.js"></script>
+        <script src="scripts/controllers/sectionview.0909112014.js"></script>
         <!--script src="scripts/directives/truncatebysize.js"></script-->
-        <script src="scripts/filters/htmltoplaintext.09092014.js"></script>
-        <script src="scripts/controllers/carousel.09092014.js"></script>
-        <script src="scripts/filters/encodebase62.09092014.js"></script>
-        <script src="scripts/controllers/share.09092014.js"></script>
-        <script src="scripts/controllers/topbar.09092014.js"></script>
-        <script src="scripts/directives/disableanimation.09092014.js"></script>
-        <script src="scripts/controllers/articleshare.09092014.js"></script>
-        <script src="scripts/controllers/sharethanks.09092014.js"></script>
-        <script src="scripts/controllers/guestmenu.09092014.js"></script>
-        <script src="scripts/controllers/help.09092014.js"></script>
-        <script src="scripts/controllers/settings.09092014.js"></script>
+        <script src="scripts/filters/htmltoplaintext.0909112014.js"></script>
+        <script src="scripts/controllers/carousel.0909112014.js"></script>
+        <script src="scripts/filters/encodebase62.0909112014.js"></script>
+        <script src="scripts/controllers/share.0909112014.js"></script>
+        <script src="scripts/controllers/topbar.0909112014.js"></script>
+        <script src="scripts/directives/disableanimation.0909112014.js"></script>
+        <script src="scripts/controllers/articleshare.0909112014.js"></script>
+        <script src="scripts/controllers/sharethanks.0909112014.js"></script>
+        <script src="scripts/controllers/guestmenu.0909112014.js"></script>
+        <script src="scripts/controllers/help.0909112014.js"></script>
+        <script src="scripts/controllers/settings.0909112014.js"></script>
         <!-- endbuild -->
 </body>
 </html>
