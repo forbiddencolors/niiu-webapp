@@ -43,6 +43,10 @@ angular.module('niiuWebappApp')
 
   	}
 
+  	$scope.refreshNow = function() {
+  		doRefresh();
+  	}
+
   	$scope.goSection = function(sectionId) {
 
       User.setCurrentSection(sectionId);
