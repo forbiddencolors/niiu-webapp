@@ -35,7 +35,9 @@ angular.module('niiuWebappApp')
 
 $scope.niiu_register = function(regInfo) {
     console.log('Niiu Registration!');
-    console.log('the registration stuff is');
+    console.log('the registration stuff is',regInfo);
+
+
 
 
 

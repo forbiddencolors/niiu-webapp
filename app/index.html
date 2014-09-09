@@ -117,41 +117,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.js"></script>
     <script src="bower_components/viewport-units-buggyfill/viewport-units-buggyfill.0909112014.js"></script>
     <script>window.viewportUnitsBuggyfill.init();</script>
-    <script>
-    //disable orientation change
-    /*
-    var rotate = 0 - window.orientation;
-    window.setAttribute("transform:rotate("+rotate+"deg);-ms-transform:rotate("+rotate+"deg);-webkit-transform:rotate("+rotate+"deg)", "style");
-    */
-
-    window.addEventListener('orientationchange', handleOrientation, false);
-        function handleOrientation() {
-         var rotate = 0 - orientation;
-        if (orientation == 0) {
-          //portraitMode, do your stuff here
-               // alert(document.querySelector( '#niiuBody' ));
-               // alert($('#niiuBody'));
-               // alert('landscape rotate '+rotate+' degrees');
-          //angular.element(document.querySelector( '#niiuBody' )).setAttribute("transform:rotate("+rotate+"deg);-ms-transform:rotate("+rotate+"deg);-webkit-transform:rotate("+rotate+"deg)", "style");
-        }
-        else if (orientation == 90) {
-          //landscapeMode
-          alert('landscape rotate '+rotate+' degrees');
-          angular.element(document.querySelector( '#niiuBody' )).setAttribute("transform:rotate("+rotate+"deg);-ms-transform:rotate("+rotate+"deg);-webkit-transform:rotate("+rotate+"deg)", "style");
-        }
-        else if (orientation == -90) {
-          //landscapeMode
-          //alert('negative landscape');
-        }
-        else if (orientation == 180) {
-          //portraitMode
-          //alert('negative portrait');
-        }
-        else {
-        }
-    }
-
-    </script>
 
 <!-- from Sam -->
  
