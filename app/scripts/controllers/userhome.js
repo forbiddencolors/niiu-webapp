@@ -430,7 +430,7 @@ function refreshArticles() {
 		console.log('lets get some articles!');
 		User.getContentObject().then(function(returned_contentObject) {
 			console.log("retrieved contentObject.",returned_contentObject);
-			$scope.contentObject = returned_contentObject;
+			$scope.contentObject = User.getContentObjectNow();
 			$scope.slides = $scope.makeSlides(returned_contentObject[0]);
 		},function(returned_content_error) {
 			console.log("we didnt get the contentObject from the db right?",returned_content_error);
