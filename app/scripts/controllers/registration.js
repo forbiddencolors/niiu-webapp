@@ -3,7 +3,7 @@
 angular.module('niiuWebappApp')
   .controller('RegistrationCtrl' , ['$scope', 'niiuAuthenticator', '$rootScope', 'localDB', 'constants', function ($scope, niiuAuthenticator, $rootScope, localDB, constants ) {
 
-
+    $scope.pageClass="registration";
 
     //see if we have a users information in the DB
     var user_table=localDB.init('niiu_user_table', constants.USER_TABLE_SCHEMA );
@@ -35,7 +35,9 @@ angular.module('niiuWebappApp')
 
 $scope.niiu_register = function(regInfo) {
     console.log('Niiu Registration!');
-    console.log('the registration stuff is');
+    console.log('the registration stuff is',regInfo);
+
+
 
 
 

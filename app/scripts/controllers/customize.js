@@ -14,6 +14,8 @@ angular.module('niiuWebappApp')
    $scope.isCollapsed = true;
    $scope.isSubCollapsed = true;
 
+   $scope.isPremium=User.checkPremium();
+
 
 
   	function getSections() {
@@ -83,7 +85,7 @@ angular.module('niiuWebappApp')
         } else {
           console.log('this section seems new',duplicates);
 
-              if($scope.sectionsToAdd.length>=constants.MAXIMUM_SECTIONS) {
+              if($scope.sectionsToAdd.length>=User.getMaxSections()) {
                   $scope.error="You have reached your maximum number of sections. Please remove some if you would like to add new ones";
               } else {
                   $scope.sectionsToAdd.push(newSection);

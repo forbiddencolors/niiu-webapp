@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('niiuWebappApp')
-  .controller('UserhomeCtrl', ['$scope', '$window', 'niiuSyncer', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, $window, niiuSyncer, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
+  .controller('UserhomeCtrl', ['$scope', '$window', 'niiuSyncer', 'niiuAuthenticator', 'localDB', '$q','$location','Articleservice', '$routeParams', 'constants','User', function ($scope, $window, niiuSyncer, niiuAuthenticator, localDB, $q, $location, Articleservice, $routeParams, constants, User) {
 
   	
 
@@ -41,6 +41,10 @@ angular.module('niiuWebappApp')
 
   		return articleSlides;
 
+  	}
+
+  	$scope.refreshNow = function() {
+  		doRefresh();
   	}
 
   	$scope.goSection = function(sectionId) {
@@ -389,12 +393,28 @@ function refreshArticles() {
 				*/
 			
 			},function(no_refresh_articles) {
-				console.log('refreshArticles did not sync because', no_refresh_articles);
+				console.log('refreshArticles did not sync because', no_refresh_articles.contents.status);
+				if (no_refresh_articles.contents.status==402) {
+					console.log('doRefresh: making freemium subscription for userId '+$scope.user.id+' using apikey '+$scope.user.apiKey);
+					niiuAuthenticator.makeFreemium($scope.user.id,$scope.user.apiKey).then(function(new_subscription){
+							console.log('DoRefresh: now your subscription has been updated go get your articles again');
+							doRefresh();
+						},
+						function(no_subscription) {
+							console.log('Sorry we couldnt make you a new subscription');
+							$scope.error=no_subscription;
+
+						}
+
+					);
+
+				}
 
 			}
 			);
 		},function(no_refresh3s) {
 			console.log('refresh3s failed to sync because',no_refresh3s);
+			$scope.error=no_refresh3s;
 
 		}//end refresh3s
 
@@ -410,7 +430,7 @@ function refreshArticles() {
 		console.log('lets get some articles!');
 		User.getContentObject().then(function(returned_contentObject) {
 			console.log("retrieved contentObject.",returned_contentObject);
-			$scope.contentObject = returned_contentObject;
+			$scope.contentObject = User.getContentObjectNow();
 			$scope.slides = $scope.makeSlides(returned_contentObject[0]);
 		},function(returned_content_error) {
 			console.log("we didnt get the contentObject from the db right?",returned_content_error);

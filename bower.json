@@ -7,13 +7,23 @@
     "es5-shim": "~2.1.0",
     "jquery": "~1.10.2",
     "sass-bootstrap": "~3.0.2",
-    "angular-resource": "1.2.6",
-    "angular-cookies": "1.2.6",
-    "angular-sanitize": "1.2.6",
-    "angular-route": "1.2.6"
+    "angular-resource": "",
+    "angular-cookies": "",
+    "angular-sanitize": "",
+    "angular-route": "",
+    "angular-translate": "",
+    "angular-translate-loader-static-files": "",
+    "angular-translate-storage-local": "",
+    "angular-translate-storage-cookie": "",
+    "angular-bootstrap": "~0.11.0",
+    "angular-animate": "~1.2.23",
+    "angular-ui-tree": "",
+    "angulartics": "",
+    "viewport-units-buggyfill": "0.3.1",
+    "angular-touch": ""
   },
   "devDependencies": {
-    "angular-mocks": "1.2.6",
-    "angular-scenario": "1.2.6"
+    "angular-mocks": "",
+    "angular-scenario": ""
   }
 }

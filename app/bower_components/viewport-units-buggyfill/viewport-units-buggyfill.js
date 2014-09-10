@@ -60,7 +60,6 @@
     if (!initialized) {
       return;
     }
-    console.log('looking for vieport');
     findProperties();
     updateStyles();
   }
@@ -78,9 +77,7 @@
       }
       forEach.call(sheet.cssRules, findDeclarations);
     });
-    console.log('changing these declarations',declarations)
     return declarations;
-
   }
 
   function findDeclarations(rule) {

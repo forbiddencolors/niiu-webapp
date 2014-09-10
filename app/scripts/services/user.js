@@ -6,6 +6,7 @@ angular.module('niiuWebappApp')
     var user = {};
     /* ContentObject is array of up to 11 pageObjects */
     var contentObject = [];
+    var contentArticles=[];
     var currentSection = 0;
     var hideMenu = true;
 
@@ -347,7 +348,70 @@ angular.module('niiuWebappApp')
         return contentObject;
     }  //end makeContentObject
 
-   
+   function getOrMakeContentObject() {
+    var deferred=$q.defer();
+
+            
+                if (contentObject.length<1) {
+                    localDB.get3sFromDB().then(function(data_3s) {
+                       var local_db3s=data_3s;
+                       localDB.loadArticlesFromDB().then(function(db_data) {
+                        var db_articles = db_data;
+                        console.log('3s data we are about to pass', local_db3s);
+                        makeContentObject(local_db3s,db_articles);
+                        console.log('created a new contentObject right',contentObject)
+                        //console.log('right',deferred.promise);
+                        deferred.resolve( contentObject);
+                       },function(error_articles) {
+                            deferred.reject( error_articles);
+                       });
+                    }, function(error_3s) {
+                            deferred.reject( error_3s);
+                    });
+
+
+                    
+                } else {
+                    console.log('we already have a contentObject',contentObject);
+                    deferred.resolve( contentObject);
+
+                } 
+              
+                
+                console.log('heres the contentObject we are getting',contentObject)
+                return deferred.promise;
+                
+
+    }
+
+
+    function getOrMakeContentArticles() {
+            console.log('pulling articles from contentObject',contentObject);
+           // var deferred=$q.defer();
+            
+            if(contentObject.length>0) {
+                for (var i=0;i<contentObject.length;i++) {
+                    contentArticles=contentArticles.concat(contentObject[i].articles);
+                    console.log('adding to contentObject',contentArticles);
+                }
+                console.log('here are your contentArticles ', contentArticles);
+                return contentArticles;
+            } else {
+                console.log('no contentObject for contentArticles ');
+                makeContentObject().then(function(newContentObj) {
+                    /*
+                    for (var i=0;i<contentObject.length;i++) {
+                        contentArticles.concat(contentObject[i].articles);
+                    }
+                    */
+                    console.log('made new contentObject for contentArticles',newContentObj);
+                    getOrMakeContentArticles();
+
+                }); 
+            }
+
+
+        }
 
 
 
@@ -423,65 +487,34 @@ angular.module('niiuWebappApp')
 
             return currentSection;
         },
-        getContentObject: function() {
-            var deferred=$q.defer();
-                if (contentObject.length<1) {
-                    localDB.get3sFromDB().then(function(data_3s) {
-                       var local_db3s=data_3s;
-                       localDB.loadArticlesFromDB().then(function(db_data) {
-                        var db_articles = db_data;
-                        console.log('3s data we are about to pass', local_db3s);
-                        makeContentObject(local_db3s,db_articles);
-                        console.log('created a new contentObject right',contentObject)
-                        //console.log('right',deferred.promise);
-                        deferred.resolve( contentObject);
-                       },function(error_articles) {
-                            deferred.reject( error_articles);
-                       });
-                    }, function(error_3s) {
-                            deferred.reject( error_3s);
-                    });
-
-
-                    
+        getMaxSections: function() {
+            if (user !== {}){
+                if(  user.subscription.max_sections) {
+                    return user.subscription.max_sections;
                 } else {
-                    console.log('we already have a contentObject');
-                    deferred.resolve( contentObject);
-
-                } 
-              
-                
-                console.log('heres the contentObject we are getting',contentObject)
-                return deferred.promise;
-                
-
-        },
-        getContentArticles: function() {
-            console.log('pulling articles from contentObject',contentObject);
-           // var deferred=$q.defer();
-            var contentArticles=[];
-            if(contentObject.length>0) {
-                for (var i=0;i<contentObject.length;i++) {
-                    contentArticles=contentArticles.concat(contentObject[i].articles);
-                    console.log('adding to contentObject',contentArticles);
+                    return 10;
                 }
-                console.log('here are your contentArticles ', contentArticles);
-                return contentArticles;
             } else {
-                console.log('no contentObject for contentArticles ');
-                makeContentObject().then(function(newContentObj) {
-                    /*
-                    for (var i=0;i<contentObject.length;i++) {
-                        contentArticles.concat(contentObject[i].articles);
-                    }
-                    */
-                    console.log('made new contentObject for contentArticles',newContentObj);
-                    getContentArticles();
-
-                }); 
+                console.log('dont know how many sections this user should have');
+                return 0;
             }
 
+        },
+        checkPremium: function() {
+            if(user.subscription.premium_content>0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        getContentObject: getOrMakeContentObject,
+        getContentObjectNow: function() {
+            return contentObject;
+        },
+        getContentArticles: getOrMakeContentArticles,
 
+        getContentArticlesNow: function() {
+            return contentArticles;
         },
         setContentObject: function(data3s,dataArticles) {
 

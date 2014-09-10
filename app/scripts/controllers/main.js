@@ -57,14 +57,7 @@ $dialog.dialog({}).open(url);
 
     console.log(Facebook)
     var socialUser = Facebook.getUser(FB)
-    $scope.user = socialUser;
-    console.log('is this the facebook user already?',FB);
 
-    console.log('fb auth response');
-    console.log(FB.getAuthResponse());
-    $scope.auth = FB.getAuthResponse();
-    console.log('heres the current auth');
-    console.log($scope.auth);
 
     //var socialObject= new Object();
 
@@ -73,10 +66,15 @@ $dialog.dialog({}).open(url);
       var socialObject = result;
       console.log('lets resolve social user', socialObject);
       console.log(socialObject);
+          $scope.user = socialUser;
+          console.log('is this the facebook user already?',socialUser);
+          $scope.auth = FB.getAuthResponse();
+          console.log('fb auth response',$scope.auth);
 
 
-      $scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth).then(function(){
-          console.log('we should be moving to the userhome');
+      $scope.niiuUser=Facebook.niiuAuth(socialObject,$scope.auth).then(function(newUser){
+          
+          console.log('I think we have a user and we should be moving to the userhome',newUser);
           $location.path('/userHome');
       });
       console.log('FB data prepared for niiu Authentication');

@@ -3,7 +3,7 @@
 angular.module('niiuWebappApp')
 .controller('ForgotpassCtrl', ['$scope', '$rootScope', 'niiuAuthenticator',  function ($scope, $rootScope, niiuAuthenticator) {
 
-
+$scope.pageClass = "forgotPage";
 
 $scope.forgotPass = function(email_address) {
 
@@ -13,8 +13,8 @@ $scope.forgotPass = function(email_address) {
 
 			$scope.error=response.contents.message;
 		} else {	
-		$scope.notice="Please check your eMail for instructions on resetting your password.<p><p><a ng-href='/'>Home</a></p>";
-		$scope.error="";
+		$scope.error="Please check your eMail for instructions on resetting your password.<br><a href='/'>Home</a></p>";
+		
 		}
 
 

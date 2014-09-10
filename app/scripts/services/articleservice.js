@@ -197,7 +197,7 @@ angular.module('niiuWebappApp')
         function getSectionNameById(id) {
         	var deferred=$q.defer();
         	if(sectionList.length==0) { 
-        		getInitPromise().then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
+        		pageInit().then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
         			var sectionObject= $filter('getByProperty')(sectionList, "id", id);
         			deferred.resolve(sectionObject.name);
         			});
@@ -223,7 +223,7 @@ angular.module('niiuWebappApp')
         function getSubSectionNameById(id) {
         	var deferred=$q.defer();
         	if(subSectionList.length==0) { 
-        		getInitPromise().then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
+        		pageInit().then( function(initialized) {//kind of unneccesary because init calls this but we cant run this function till its finished
         			var subSectionObject= $filter('getByProperty')(subSectionList, "subsection_id", id);
         			deferred.resolve(subSectionObject);
                     console.log('getSubSectionNAmeById: getInitPromise done',initialized);
